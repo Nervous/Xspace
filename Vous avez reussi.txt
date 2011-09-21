@@ -1,1 +1,0 @@
-Si vous lisez ce .txt dans votre dossier, c'est que vous avez réussi à pull !
