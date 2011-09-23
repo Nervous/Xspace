@@ -20,9 +20,10 @@ namespace Xspace
         SpriteBatch spriteBatch;
         Texture2D vaisseauJoueur;
         Song musique;
-        Vector2 emplacementJoueur, deplacementJoueurDirectionY;
+        Vector2 emplacementJoueur, deplacementJoueurDirectionY, deplacementJoueurDirectionX;
         int ecranSizeX, ecranSizeY, temp_haut;
         float vitesseVaisseau;
+        private KeyboardState keyboardState;
         public Xspace()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -40,6 +41,7 @@ namespace Xspace
             ecranSizeY = 480;
             emplacementJoueur = new Vector2(20, ecranSizeY / 2 - vaisseauJoueur.Height / 2);
             deplacementJoueurDirectionY = Vector2.Normalize(new Vector2(0, 5));
+            deplacementJoueurDirectionX = Vector2.Normalize(new Vector2(5, 0));
             temp_haut = 1;
         }
 
@@ -65,9 +67,30 @@ namespace Xspace
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
+            keyboardState = Keyboard.GetState();
 
+            // deplacements au clavier (sans limitations pour l'instant)
+            if (keyboardState.IsKeyDown(Keys.Z))
+            {
+                emplacementJoueur -= deplacementJoueurDirectionY * vitesseVaisseau * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            }
+
+            if (keyboardState.IsKeyDown(Keys.S))
+            {
+                emplacementJoueur += deplacementJoueurDirectionY * vitesseVaisseau * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            }
+
+            if (keyboardState.IsKeyDown(Keys.Q))
+            {
+                emplacementJoueur -= deplacementJoueurDirectionX * vitesseVaisseau * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            }
+
+            if (keyboardState.IsKeyDown(Keys.D))
+            {
+                emplacementJoueur += deplacementJoueurDirectionX * vitesseVaisseau * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            }
         
-
+                /*
             if (temp_haut == 0)
             {
                 emplacementJoueur += deplacementJoueurDirectionY * vitesseVaisseau * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -79,7 +102,7 @@ namespace Xspace
                 if (emplacementJoueur.Y < 21)
                     temp_haut = 0;
                 emplacementJoueur -= deplacementJoueurDirectionY * vitesseVaisseau * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            }
+            } */
 
             base.Update(gameTime);
         }

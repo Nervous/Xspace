@@ -1,1 +1,2 @@
 C:\Users\Emmanuel\Desktop\Xspace\Xspace\XspaceContent\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Antoine\Desktop\Xspace\Xspace\XspaceContent\obj\x86\Debug\ResolveAssemblyReference.cache
