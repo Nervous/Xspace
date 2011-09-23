@@ -19,13 +19,16 @@ namespace Xspace
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         private Texture2D vaisseauJoueur;
-        Vector2 emplacementJoueur, deplacementJoueurY;
+        Vector2 emplacementJoueur, deplacementJoueurDirectionY;
         int ecranSizeX, ecranSizeY, temp_haut;
-
+        float vitesseVaisseau;
         public Xspace()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            IsFixedTimeStep = false;
+            graphics.SynchronizeWithVerticalRetrace = false;
+            vitesseVaisseau = 0.45f;
         }
 
 
@@ -36,7 +39,8 @@ namespace Xspace
             ecranSizeX = 800;
             ecranSizeY = 480;
             emplacementJoueur = new Vector2(20, ecranSizeY / 2 - vaisseauJoueur.Height / 2);
-            deplacementJoueurY = new Vector2(0, 5);
+            deplacementJoueurDirectionY = Vector2.Normalize(new Vector2(0, 5));
+
             temp_haut = 1;
         }
 
@@ -62,7 +66,7 @@ namespace Xspace
 
             if (temp_haut == 0)
             {
-                emplacementJoueur += deplacementJoueurY;
+                emplacementJoueur += deplacementJoueurDirectionY * vitesseVaisseau * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
                 if (emplacementJoueur.Y > 430)
                     temp_haut = 1;
             }
@@ -70,7 +74,7 @@ namespace Xspace
             {
                 if (emplacementJoueur.Y < 21)
                     temp_haut = 0;
-                emplacementJoueur -= deplacementJoueurY;
+                emplacementJoueur -= deplacementJoueurDirectionY * vitesseVaisseau * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             }
 
             base.Update(gameTime);
