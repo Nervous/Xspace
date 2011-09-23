@@ -1,3 +1,4 @@
 Content\Vaisseau.xnb
 Content\musique.xnb
 Content\musique.wma
+Content\space_bg.xnb

@@ -24,6 +24,7 @@ namespace Xspace
         int ecranSizeX, ecranSizeY, temp_haut;
         float vitesseVaisseau;
         private KeyboardState keyboardState;
+        
         public Xspace()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -45,14 +46,16 @@ namespace Xspace
             temp_haut = 1;
         }
 
-
+        private ScrollingBackground fond_ecran;
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             vaisseauJoueur = Content.Load<Texture2D>("Vaisseau");
             musique = Content.Load<Song>("musique");
             MediaPlayer.Play(musique);
-            
+            fond_ecran = new ScrollingBackground();
+            Texture2D fond_image = Content.Load<Texture2D>("space_bg");
+            fond_ecran.Load(GraphicsDevice, fond_image);    
         }
 
 
@@ -69,45 +72,35 @@ namespace Xspace
                 this.Exit();
             keyboardState = Keyboard.GetState();
 
+            float fps_fix = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+
             if (keyboardState.IsKeyDown(Keys.Z))
             {
                 if(emplacementJoueur.Y - vaisseauJoueur.Height /2 + 20 >= 0) 
                     /* Limite bizarre : c'est normal, le sprite actuel est mal foutu : bordure inutile sur les côtés, on peut pas connaitre la taille 
                      exacte du vaisseau avec vaisseauJoueur.Width. Ca sera résolu quand on arrangera le sprite */
-                    emplacementJoueur -= deplacementJoueurDirectionY * vitesseVaisseau * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                    emplacementJoueur -= deplacementJoueurDirectionY * vitesseVaisseau * fps_fix;
             }
 
             if (keyboardState.IsKeyDown(Keys.S))
             {
                 if (emplacementJoueur.Y - vaisseauJoueur.Height / 2 - 10 <= 400)
-                    emplacementJoueur += deplacementJoueurDirectionY * vitesseVaisseau * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                    emplacementJoueur += deplacementJoueurDirectionY * vitesseVaisseau * fps_fix;
             }
 
             if (keyboardState.IsKeyDown(Keys.Q))
             {
                 if (emplacementJoueur.X - vaisseauJoueur.Width / 2 + 20 >= 0)
-                    emplacementJoueur -= deplacementJoueurDirectionX * vitesseVaisseau * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                    emplacementJoueur -= deplacementJoueurDirectionX * vitesseVaisseau * fps_fix;
             }
 
             if (keyboardState.IsKeyDown(Keys.D))
             {
                 if (emplacementJoueur.X - vaisseauJoueur.Width / 2 - 10 <= 720)
-                    emplacementJoueur += deplacementJoueurDirectionX * vitesseVaisseau * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                    emplacementJoueur += deplacementJoueurDirectionX * vitesseVaisseau * fps_fix;
             }
-        
-                /*
-            if (temp_haut == 0)
-            {
-                emplacementJoueur += deplacementJoueurDirectionY * vitesseVaisseau * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-                if (emplacementJoueur.Y > 430)
-                    temp_haut = 1;
-            }
-            else
-            {
-                if (emplacementJoueur.Y < 21)
-                    temp_haut = 0;
-                emplacementJoueur -= deplacementJoueurDirectionY * vitesseVaisseau * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            } */
+        // vitesse du background
+            fond_ecran.Update(fps_fix);
 
             base.Update(gameTime);
         }
@@ -116,8 +109,10 @@ namespace Xspace
         {
             GraphicsDevice.Clear(Color.Black);
             spriteBatch.Begin();
+            fond_ecran.Draw(spriteBatch);
             spriteBatch.Draw(vaisseauJoueur, emplacementJoueur, Color.White);
             spriteBatch.End();
+
 
             base.Draw(gameTime);
         }

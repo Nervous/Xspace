@@ -2,3 +2,6 @@
 23/09 - Création structure de base du jeu 
 Deplacements du vaisseau + limites bords écrans
 Image de base vaisseau + musique
+
+24/09 - 1:12: Ajout du scrollingbackground,
+et du fps_fix (green l'avait déjà ajouté, mais j'ai defini la cte avec un nom plus court)
