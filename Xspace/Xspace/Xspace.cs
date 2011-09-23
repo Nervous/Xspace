@@ -18,7 +18,8 @@ namespace Xspace
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        private Texture2D vaisseauJoueur;
+        Texture2D vaisseauJoueur;
+        Song musique;
         Vector2 emplacementJoueur, deplacementJoueurDirectionY;
         int ecranSizeX, ecranSizeY, temp_haut;
         float vitesseVaisseau;
@@ -35,12 +36,10 @@ namespace Xspace
         protected override void Initialize()
         {
             base.Initialize();
-            vaisseauJoueur = Content.Load<Texture2D>("Vaisseau");
             ecranSizeX = 800;
             ecranSizeY = 480;
             emplacementJoueur = new Vector2(20, ecranSizeY / 2 - vaisseauJoueur.Height / 2);
             deplacementJoueurDirectionY = Vector2.Normalize(new Vector2(0, 5));
-
             temp_haut = 1;
         }
 
@@ -48,8 +47,10 @@ namespace Xspace
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
-
+            vaisseauJoueur = Content.Load<Texture2D>("Vaisseau");
+            musique = Content.Load<Song>("musique");
+            MediaPlayer.Play(musique);
+            
         }
 
 
@@ -58,11 +59,14 @@ namespace Xspace
 
         }
 
+
         protected override void Update(GameTime gameTime)
         {
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
+
+        
 
             if (temp_haut == 0)
             {
