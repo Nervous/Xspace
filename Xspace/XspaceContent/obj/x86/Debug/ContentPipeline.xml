@@ -7,8 +7,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Vaisseau.xnb</Output>
-      <Time>2011-09-23T23:17:20.0133472+02:00</Time>
+      <Output>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Vaisseau.xnb</Output>
+      <Time>2011-09-23T21:01:47.1940028+02:00</Time>
     </Item>
     <Item>
       <Source>musique.mp3</Source>
@@ -16,9 +16,9 @@
       <Importer>Mp3Importer</Importer>
       <Processor>SongProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\bin\x86\Debug\Content\musique.xnb</Output>
-      <Extra>C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\bin\x86\Debug\Content\musique.wma</Extra>
-      <Time>2011-09-23T23:17:20.1633558+02:00</Time>
+      <Output>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\bin\x86\Debug\Content\musique.xnb</Output>
+      <Extra>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\bin\x86\Debug\Content\musique.wma</Extra>
+      <Time>2011-09-23T22:01:18.3752626+02:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
@@ -26,10 +26,10 @@
       <TargetProfile>HiDef</TargetProfile>
       <BuildConfiguration>Debug</BuildConfiguration>
       <CompressContent>false</CompressContent>
-      <RootDirectory>C:\Users\Antoine\Desktop\Xspace\Xspace\XspaceContent\</RootDirectory>
-      <LoggerRootDirectory>C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\</LoggerRootDirectory>
-      <IntermediateDirectory>C:\Users\Antoine\Desktop\Xspace\Xspace\XspaceContent\obj\x86\Debug\</IntermediateDirectory>
-      <OutputDirectory>C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\bin\x86\Debug\Content\</OutputDirectory>
+      <RootDirectory>C:\Users\Emmanuel\Desktop\Xspace\Xspace\XspaceContent\</RootDirectory>
+      <LoggerRootDirectory>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\Users\Emmanuel\Desktop\Xspace\Xspace\XspaceContent\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\bin\x86\Debug\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>
@@ -57,8 +57,8 @@
         <Value>2010-08-23T12:41:18+02:00</Value>
       </Assembly>
       <Assembly>
-        <Key>C:\windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
-        <Value>2011-07-01T16:44:03.7559627+02:00</Value>
+        <Key>C:\Windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
+        <Value>2011-06-05T17:55:10.5385568+02:00</Value>
       </Assembly>
     </Assemblies>
   </Asset>

@@ -69,25 +69,30 @@ namespace Xspace
                 this.Exit();
             keyboardState = Keyboard.GetState();
 
-            // deplacements au clavier (sans limitations pour l'instant)
             if (keyboardState.IsKeyDown(Keys.Z))
             {
-                emplacementJoueur -= deplacementJoueurDirectionY * vitesseVaisseau * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                if(emplacementJoueur.Y - vaisseauJoueur.Height /2 + 20 >= 0) 
+                    /* Limite bizarre : c'est normal, le sprite actuel est mal foutu : bordure inutile sur les côtés, on peut pas connaitre la taille 
+                     exacte du vaisseau avec vaisseauJoueur.Width. Ca sera résolu quand on arrangera le sprite */
+                    emplacementJoueur -= deplacementJoueurDirectionY * vitesseVaisseau * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             }
 
             if (keyboardState.IsKeyDown(Keys.S))
             {
-                emplacementJoueur += deplacementJoueurDirectionY * vitesseVaisseau * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                if (emplacementJoueur.Y - vaisseauJoueur.Height / 2 - 10 <= 400)
+                    emplacementJoueur += deplacementJoueurDirectionY * vitesseVaisseau * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             }
 
             if (keyboardState.IsKeyDown(Keys.Q))
             {
-                emplacementJoueur -= deplacementJoueurDirectionX * vitesseVaisseau * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                if (emplacementJoueur.X - vaisseauJoueur.Width / 2 + 20 >= 0)
+                    emplacementJoueur -= deplacementJoueurDirectionX * vitesseVaisseau * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             }
 
             if (keyboardState.IsKeyDown(Keys.D))
             {
-                emplacementJoueur += deplacementJoueurDirectionX * vitesseVaisseau * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                if (emplacementJoueur.X - vaisseauJoueur.Width / 2 - 10 <= 720)
+                    emplacementJoueur += deplacementJoueurDirectionX * vitesseVaisseau * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             }
         
                 /*
