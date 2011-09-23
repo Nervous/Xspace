@@ -1,0 +1,1 @@
+Pour ouvrir le proj' suffit de lancer le .sln
