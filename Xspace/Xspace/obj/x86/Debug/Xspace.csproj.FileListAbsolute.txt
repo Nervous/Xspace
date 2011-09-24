@@ -4,7 +4,6 @@ C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\obj\x86\Debug\ResolveAssemblyRefe
 C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
 C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\obj\x86\Debug\Xspace.exe
 C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\obj\x86\Debug\Xspace.pdb
-C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Vaisseau.xnb
 C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\bin\x86\Debug\Content\musique.xnb
 C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\bin\x86\Debug\Content\musique.wma
 C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\obj\x86\Debug\ResolveAssemblyReference.cache
@@ -18,3 +17,4 @@ C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\bin\x86\Debug\Xspace.exe
 C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\bin\x86\Debug\Xspace.pdb
 C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\bin\x86\Debug\Content\space_bg.xnb
 C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\bin\x86\Debug\Content\space_bg.xnb
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Vaisseau_joueur.xnb

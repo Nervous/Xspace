@@ -42,8 +42,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Vaisseau.png">
-      <Name>Vaisseau</Name>
+    <Compile Include="Vaisseau_joueur.png">
+      <Name>Vaisseau_joueur</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
