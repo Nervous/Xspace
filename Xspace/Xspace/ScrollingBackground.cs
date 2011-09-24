@@ -19,7 +19,7 @@ namespace Xspace
 
         private Vector2 screenposition, origine, texturesize;
         private Texture2D ma_texture;
-        private int screenHeight, screenWidth;
+        private int screenHeight;
         private float vitesseBackground;
 
         public ScrollingBackground() // Constructeur

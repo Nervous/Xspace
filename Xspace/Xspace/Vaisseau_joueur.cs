@@ -16,7 +16,7 @@ namespace Xspace
         protected KeyboardState keyboardState;
 
         public Vaisseau_joueur(Texture2D sprite)
-            : base(sprite, 100, 100, 0.45f)
+            : base(sprite, 100, 100, 0.45f, new Vector2(15, 225))
         { }
 
 

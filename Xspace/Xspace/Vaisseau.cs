@@ -32,13 +32,13 @@ namespace Xspace
             _deplacementDirectionY = Vector2.Normalize(new Vector2(0, 5));
         }
 
-        public Vaisseau(Texture2D texture, int vie, int armure, float vitesseVaisseau)
+        public Vaisseau(Texture2D texture, int vie, int armure, float vitesseVaisseau, Vector2 startPosition)
         {
             _textureVaisseau = texture;
             _vie = vie;
             _armure = armure;
             _vitesseVaisseau = vitesseVaisseau;
-            _emplacement = Vector2.Zero;
+            _emplacement = startPosition;
             _deplacementDirectionX = Vector2.Normalize(new Vector2(5, 0));
             _deplacementDirectionY = Vector2.Normalize(new Vector2(0, 5));
         }
