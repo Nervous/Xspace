@@ -22,7 +22,7 @@ namespace Xspace
         private int screenHeight;
         private float vitesseBackground;
 
-        public ScrollingBackground() // Constructeur
+        public ScrollingBackground() 
         {
             vitesseBackground = 0.7f; 
         }

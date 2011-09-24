@@ -15,9 +15,12 @@ namespace Xspace
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        private Texture2D textureVaisseau_joueur;
+        private Texture2D textureVaisseau_joueur, textureMissile_joueur_base;
         private Song musique;
+        private KeyboardState keyboardState;
+        // TODO : Déclaration de tous les objets Vaisseau en dessous
         private Vaisseau_joueur joueur1;
+        // TODO : Déclaration de tous les objets missiles en dessous
         
         public Xspace()
         {
@@ -47,11 +50,13 @@ namespace Xspace
             textureVaisseau_joueur = Content.Load<Texture2D>("Vaisseau_joueur"); 
 
             // TODO : Chargement de toutes les textures des missiles en dessous
+            textureMissile_joueur_base = Content.Load<Texture2D>("MissileJoueur_Base");
 
             // TODO : Chargement de tous les objets vaisseau en dessous
             joueur1 = new Vaisseau_joueur(textureVaisseau_joueur);
 
             // TODO : Chargement de tous les objets missiles en dessous
+            
         }
 
 
@@ -63,9 +68,16 @@ namespace Xspace
 
         protected override void Update(GameTime gameTime)
         {
+
             float fps_fix = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            fond_ecran.Update(fps_fix); // Vitesse BG
+            fond_ecran.Update(fps_fix);
             joueur1.Update(fps_fix); // Update du joueur
+            // <=== Update des précédents missiles ici 
+            keyboardState = Keyboard.GetState();
+            if (keyboardState.IsKeyDown(Keys.Space))
+            {
+                // Création des nouveaux missiles
+            }
 
             base.Update(gameTime);
         }

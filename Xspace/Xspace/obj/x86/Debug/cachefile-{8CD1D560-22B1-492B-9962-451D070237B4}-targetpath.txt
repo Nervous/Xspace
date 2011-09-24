@@ -2,3 +2,4 @@ Content\space_bg.xnb
 Content\musique.xnb
 Content\musique.wma
 Content\Vaisseau_joueur.xnb
+Content\MissileJoueur_Base.xnb
