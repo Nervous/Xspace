@@ -63,11 +63,10 @@ namespace Xspace
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-                this.Exit();
             float fps_fix = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             fond_ecran.Update(fps_fix); // Vitesse BG
             joueur1.Update(fps_fix); // Update du joueur
+
             base.Update(gameTime);
         }
 
@@ -78,7 +77,6 @@ namespace Xspace
             fond_ecran.Draw(spriteBatch);
             joueur1.Draw(spriteBatch); // Draw du joueur
             spriteBatch.End();
-
 
             base.Draw(gameTime);
         }
