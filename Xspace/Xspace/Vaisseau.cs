@@ -18,9 +18,6 @@ namespace Xspace
         protected float _vitesseVaisseau;
         protected int _vie, _armure;
 
-        
-
-
         public Vaisseau(Texture2D texture)
         {
             _textureVaisseau = texture;
@@ -42,6 +39,11 @@ namespace Xspace
             _deplacementDirectionX = Vector2.Normalize(new Vector2(5, 0));
             _deplacementDirectionY = Vector2.Normalize(new Vector2(0, 5));
         }
+
+        public int vie
+        {
+            get { return _vie; }
+        }	
 
         public void Update()
         {

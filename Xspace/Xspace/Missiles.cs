@@ -7,6 +7,5 @@ namespace Xspace
 {
     class Missiles
     {
-        
     }
 }
