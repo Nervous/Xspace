@@ -17,3 +17,4 @@ C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\bin\x86\Debug\Content\musique.wma
 C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\bin\x86\Debug\Xspace.exe
 C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\bin\x86\Debug\Xspace.pdb
 C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\bin\x86\Debug\Content\space_bg.xnb
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\bin\x86\Debug\Content\space_bg.xnb

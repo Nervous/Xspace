@@ -16,11 +16,16 @@ namespace Xspace
 
 
         // scrolling background
-        private ScrollingBackground fond_ecran;
+
         private Vector2 screenposition, origine, texturesize;
         private Texture2D ma_texture;
-        private int screenHeight;
-        private int screenWidth;
+        private int screenHeight, screenWidth;
+        private float vitesseBackground;
+
+        public ScrollingBackground() // Constructeur
+        {
+            vitesseBackground = 0.7f; 
+        }
 
         public void Load(GraphicsDevice device, Texture2D backgroundTexture)
         {
@@ -36,7 +41,7 @@ namespace Xspace
         }
         public void Update(float dX)
         {
-            screenposition.X -= dX;
+            screenposition.X -= dX * vitesseBackground;
             screenposition.X = screenposition.X % ma_texture.Width;
         }
 

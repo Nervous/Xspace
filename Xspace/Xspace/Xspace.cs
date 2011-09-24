@@ -18,11 +18,11 @@ namespace Xspace
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Texture2D vaisseauJoueur;
-        Song musique;
-        Vector2 emplacementJoueur, deplacementJoueurDirectionY, deplacementJoueurDirectionX;
-        int ecranSizeX, ecranSizeY, temp_haut;
-        float vitesseVaisseau;
+        private Texture2D vaisseauJoueur;
+        private Song musique;
+        private Vector2 emplacementJoueur, deplacementJoueurDirectionY, deplacementJoueurDirectionX;
+        private int ecranSizeX, ecranSizeY, temp_haut;
+        private float vitesseVaisseau;
         private KeyboardState keyboardState;
         
         public Xspace()
