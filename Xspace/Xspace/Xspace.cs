@@ -21,6 +21,8 @@ namespace Xspace
         // TODO : Déclaration de tous les objets Vaisseau en dessous
         private Vaisseau_joueur joueur1;
         // TODO : Déclaration de tous les objets missiles en dessous
+        private Missiles missileJoueur;
+        int lastCheckedTime, lastTime;
         
         public Xspace()
         {
@@ -28,6 +30,7 @@ namespace Xspace
             Content.RootDirectory = "Content";
             IsFixedTimeStep = false;
             graphics.SynchronizeWithVerticalRetrace = false;
+            lastTime = 0;
         }
 
 
@@ -56,7 +59,7 @@ namespace Xspace
             joueur1 = new Vaisseau_joueur(textureVaisseau_joueur);
 
             // TODO : Chargement de tous les objets missiles en dessous
-            
+            missileJoueur = new Missiles(textureMissile_joueur_base);
         }
 
 
@@ -70,14 +73,24 @@ namespace Xspace
         {
 
             float fps_fix = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            lastTime = 0;
             fond_ecran.Update(fps_fix);
             joueur1.Update(fps_fix); // Update du joueur
             // <=== Update des précédents missiles ici 
             keyboardState = Keyboard.GetState();
             if (keyboardState.IsKeyDown(Keys.Space))
             {
-                // Création des nouveaux missiles
+                missileJoueur.afficherMissile(joueur1.position);
             }
+
+            // if ((int)gameTime.ElapsedGameTime.TotalMilliseconds - lastTime > 500)
+            //{
+                missileJoueur.avancerMissile();
+            //   lastTime += (int)gameTime.ElapsedGameTime.TotalMilliseconds - lastTime;
+            //}
+            
+
+               
 
             base.Update(gameTime);
         }
@@ -88,6 +101,7 @@ namespace Xspace
             spriteBatch.Begin();
             fond_ecran.Draw(spriteBatch);
             joueur1.Draw(spriteBatch); // Draw du joueur
+            missileJoueur.Draw(spriteBatch);
             spriteBatch.End();
 
             base.Draw(gameTime);

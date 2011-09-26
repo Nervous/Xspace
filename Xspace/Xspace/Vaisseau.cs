@@ -43,7 +43,12 @@ namespace Xspace
         public int vie
         {
             get { return _vie; }
-        }	
+        }
+
+        public Vector2 position
+        {
+            get { return _emplacement; }
+        }
 
         public void Update()
         {
