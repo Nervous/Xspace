@@ -11,3 +11,7 @@
   (green l'avait déjà ajouté, mais j'ai defini la cte avec un nom plus court)
 - Création des classes : Vaisseau, Vaisseau_joueur(:Vaisseau), Missile, ayant pour but de
   simplifier largement la future implémentation de vaisseaux ennemis.
+
+26/09
+- Implémentation des missiles du joueur : Nombre illimité de missile, temps entre 2 missiles,
+  tout est géré.
