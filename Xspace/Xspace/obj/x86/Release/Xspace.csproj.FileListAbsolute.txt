@@ -1,0 +1,11 @@
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\bin\x86\Release\Content\Vaisseau_joueur.xnb
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\bin\x86\Release\Content\space_bg.xnb
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\bin\x86\Release\Content\MissileJoueur_Base.xnb
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\bin\x86\Release\Content\musique.xnb
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\bin\x86\Release\Content\musique.wma
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\bin\x86\Release\Xspace.exe
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\bin\x86\Release\Xspace.pdb
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\obj\x86\Release\ResolveAssemblyReference.cache
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\obj\x86\Release\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\obj\x86\Release\Xspace.exe
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\obj\x86\Release\Xspace.pdb

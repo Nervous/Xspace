@@ -21,8 +21,10 @@ namespace Xspace
         // TODO : Déclaration de tous les objets Vaisseau en dessous
         private Vaisseau_joueur joueur1;
         // TODO : Déclaration de tous les objets missiles en dessous
-        private Missiles missileJoueur;
-        int lastCheckedTime, lastTime;
+        Missiles[] missileJoueur;
+        int nbreMaxMissiles;
+        float fps_fix;
+        double time, lastTime;
         
         public Xspace()
         {
@@ -30,6 +32,7 @@ namespace Xspace
             Content.RootDirectory = "Content";
             IsFixedTimeStep = false;
             graphics.SynchronizeWithVerticalRetrace = false;
+            nbreMaxMissiles = 50;
             lastTime = 0;
         }
 
@@ -59,7 +62,17 @@ namespace Xspace
             joueur1 = new Vaisseau_joueur(textureVaisseau_joueur);
 
             // TODO : Chargement de tous les objets missiles en dessous
-            missileJoueur = new Missiles(textureMissile_joueur_base);
+            missileJoueur = new Missiles[nbreMaxMissiles];
+            for (int i = 0; i < nbreMaxMissiles; i++)
+                missileJoueur[i] = new Missiles(textureMissile_joueur_base);
+
+            if (missileJoueur[0] == null)
+                Exit();
+            for (int i = 0; i < nbreMaxMissiles - 1; i++)
+            {
+                if (missileJoueur[i] != null)
+                    missileJoueur[i].initialiserTexture(textureMissile_joueur_base);
+            }
         }
 
 
@@ -72,22 +85,31 @@ namespace Xspace
         protected override void Update(GameTime gameTime)
         {
 
-            float fps_fix = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            lastTime = 0;
+            fps_fix = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            time += gameTime.ElapsedGameTime.TotalMilliseconds;
             fond_ecran.Update(fps_fix);
             joueur1.Update(fps_fix); // Update du joueur
             // <=== Update des précédents missiles ici 
             keyboardState = Keyboard.GetState();
             if (keyboardState.IsKeyDown(Keys.Space))
             {
-                missileJoueur.afficherMissile(joueur1.position);
+                for (int i = 0; i < nbreMaxMissiles; i++)
+                {
+                    if (missileJoueur[i] != null && missileJoueur[i].estAffiche == false && (time - lastTime > 250 || lastTime == 0))
+                    {
+                            missileJoueur[i].afficherMissile(joueur1.position);
+                            lastTime = time;
+                            break;
+                    }
+                }
             }
 
-            // if ((int)gameTime.ElapsedGameTime.TotalMilliseconds - lastTime > 500)
-            //{
-                missileJoueur.avancerMissile();
-            //   lastTime += (int)gameTime.ElapsedGameTime.TotalMilliseconds - lastTime;
-            //}
+            for (int i = 0; i < nbreMaxMissiles; i++)
+            {
+                if (missileJoueur[i] != null)
+                    missileJoueur[i].avancerMissile(fps_fix);
+                
+            }
             
 
                
@@ -101,7 +123,11 @@ namespace Xspace
             spriteBatch.Begin();
             fond_ecran.Draw(spriteBatch);
             joueur1.Draw(spriteBatch); // Draw du joueur
-            missileJoueur.Draw(spriteBatch);
+            for (int i = 0; i < nbreMaxMissiles - 1; i++)
+            {
+                if (missileJoueur[i] != null)
+                    missileJoueur[i].Draw(spriteBatch);
+            }
             spriteBatch.End();
 
             base.Draw(gameTime);

@@ -24,7 +24,7 @@ namespace Xspace
             _textureMissile = texture;
             _vie = 1;
             _degats = 10;
-            _vitesseMissile = 0.45f;
+            _vitesseMissile = 0.60f;
             _emplacement = Vector2.Zero;
             _deplacementDirectionX = Vector2.Normalize(new Vector2(7, 0));
             _deplacementDirectionY = Vector2.Normalize(new Vector2(0, 7));
@@ -43,6 +43,16 @@ namespace Xspace
             _estAffiche = false;
         }
 
+        public void initialiserTexture(Texture2D texture)
+        {
+            _textureMissile = texture;
+        }
+
+        public bool estAffiche
+        {
+            get { return _estAffiche; }
+        }
+
         public bool afficherMissile(Vector2 startPosition)
         {
             this._estAffiche = true;
@@ -50,9 +60,9 @@ namespace Xspace
             return this._estAffiche;
         }
 
-        public void avancerMissile()
+        public void avancerMissile(float fps_fix)
         {
-            _emplacement += _deplacementDirectionX;
+            _emplacement += fps_fix*_deplacementDirectionX*_vitesseMissile;
         }
 
         public void Update()
