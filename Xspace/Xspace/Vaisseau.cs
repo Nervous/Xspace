@@ -17,6 +17,8 @@ namespace Xspace
         protected Texture2D _textureVaisseau;
         protected float _vitesseVaisseau;
         protected int _vie, _armure;
+        protected bool existe;
+        protected string _typeVaisseau;
 
         public Vaisseau(Texture2D texture)
         {
@@ -29,6 +31,34 @@ namespace Xspace
             _deplacementDirectionY = Vector2.Normalize(new Vector2(0, 5));
         }
 
+        protected bool constr(Texture2D texture, int vie, int armure, float vitesseVaisseau, Vector2 startPosition, bool bexiste)
+        {
+            _textureVaisseau = texture;
+            _vie = vie;
+            _armure = armure;
+            _vitesseVaisseau = vitesseVaisseau;
+            _emplacement = startPosition;
+            _deplacementDirectionX = Vector2.Normalize(new Vector2(5, 0));
+            _deplacementDirectionY = Vector2.Normalize(new Vector2(0, 5));
+            existe = bexiste;
+
+            return true;
+        }
+
+        public Vaisseau(Texture2D texture, string typeVaisseau)
+        {
+            _typeVaisseau = typeVaisseau;
+            switch (typeVaisseau)
+            {
+                case "drone":
+                    constr(texture, 100, 0, 0.70f, new Vector2(750, 225), true);
+                    break;
+                default:
+                    constr(texture, 100, 0, 0.70f, new Vector2(750, 225), true);
+                    break;
+            }
+        }
+
         public Vaisseau(Texture2D texture, int vie, int armure, float vitesseVaisseau, Vector2 startPosition)
         {
             _textureVaisseau = texture;
@@ -38,6 +68,19 @@ namespace Xspace
             _emplacement = startPosition;
             _deplacementDirectionX = Vector2.Normalize(new Vector2(5, 0));
             _deplacementDirectionY = Vector2.Normalize(new Vector2(0, 5));
+            existe = false;
+        }
+
+        public Vaisseau(Texture2D texture, int vie, int armure, float vitesseVaisseau, Vector2 startPosition, bool bexiste)
+        {
+            _textureVaisseau = texture;
+            _vie = vie;
+            _armure = armure;
+            _vitesseVaisseau = vitesseVaisseau;
+            _emplacement = startPosition;
+            _deplacementDirectionX = Vector2.Normalize(new Vector2(5, 0));
+            _deplacementDirectionY = Vector2.Normalize(new Vector2(0, 5));
+            existe = bexiste;
         }
 
         public int vie
@@ -50,6 +93,11 @@ namespace Xspace
             get { return _emplacement; }
         }
 
+        public void creer()
+        {
+            this.existe = true;
+        }
+
         public void Update()
         {
             
@@ -57,7 +105,8 @@ namespace Xspace
 
         public void Draw(SpriteBatch batch)
         {
-            batch.Draw(_textureVaisseau, _emplacement, Color.White);
+            if(existe)
+                batch.Draw(_textureVaisseau, _emplacement, Color.White);
         }
     }
 }

@@ -20,6 +20,7 @@ namespace Xspace
         private KeyboardState keyboardState;
         // TODO : Déclaration de tous les objets Vaisseau en dessous
         private Vaisseau_joueur joueur1;
+        private Vaisseau_ennemi drone1;
         // TODO : Déclaration de tous les objets missiles en dessous
         Missiles[] missileJoueur;
         int nbreMaxMissiles;
@@ -60,6 +61,9 @@ namespace Xspace
 
             // TODO : Chargement de tous les objets vaisseau en dessous
             joueur1 = new Vaisseau_joueur(textureVaisseau_joueur);
+            drone1 = new Vaisseau_ennemi(textureVaisseau_joueur, "drone");
+            drone1.creer();
+            
 
             // TODO : Chargement de tous les objets missiles en dessous
             missileJoueur = new Missiles[nbreMaxMissiles];
@@ -106,9 +110,12 @@ namespace Xspace
 
             for (int i = 0; i < nbreMaxMissiles; i++)
             {
-                if (missileJoueur[i] != null)
+                if (missileJoueur[i] != null && missileJoueur[i].estAffiche)
+                {
                     missileJoueur[i].avancerMissile(fps_fix);
-                
+                    //missileJoueur[i].checkCollisions
+                }
+
             }
             
 
@@ -123,6 +130,7 @@ namespace Xspace
             spriteBatch.Begin();
             fond_ecran.Draw(spriteBatch);
             joueur1.Draw(spriteBatch); // Draw du joueur
+            drone1.Draw(spriteBatch);
             for (int i = 0; i < nbreMaxMissiles - 1; i++)
             {
                 if (missileJoueur[i] != null)
