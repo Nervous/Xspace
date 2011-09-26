@@ -32,7 +32,7 @@ namespace Xspace
             Content.RootDirectory = "Content";
             IsFixedTimeStep = false;
             graphics.SynchronizeWithVerticalRetrace = false;
-            nbreMaxMissiles = 50;
+            nbreMaxMissiles = 15;
             lastTime = 0;
         }
 

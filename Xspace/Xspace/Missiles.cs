@@ -56,13 +56,19 @@ namespace Xspace
         public bool afficherMissile(Vector2 startPosition)
         {
             this._estAffiche = true;
-            _emplacement = startPosition;
+            float startX = startPosition.X + 45;
+            float startY = startPosition.Y + 15;
+            Vector2 start = new Vector2(startX, startY);
+            _emplacement = start;
             return this._estAffiche;
         }
 
         public void avancerMissile(float fps_fix)
         {
-            _emplacement += fps_fix*_deplacementDirectionX*_vitesseMissile;
+            if (_emplacement.X < 850)
+                _emplacement += fps_fix * _deplacementDirectionX * _vitesseMissile;
+            else
+                this._estAffiche = false;
         }
 
         public void Update()
