@@ -53,6 +53,16 @@ namespace Xspace
             get { return _estAffiche; }
         }
 
+        public Vector2 position
+        {
+            get { return _emplacement; }
+        }
+
+        public Texture2D sprite
+        {
+            get { return _textureMissile; }
+        }
+
         public bool afficherMissile(Vector2 startPosition)
         {
             this._estAffiche = true;

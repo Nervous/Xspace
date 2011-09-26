@@ -93,6 +93,11 @@ namespace Xspace
             get { return _emplacement; }
         }
 
+        public Texture2D sprite
+        {
+            get { return _textureVaisseau; }
+        }
+
         public void creer()
         {
             this.existe = true;

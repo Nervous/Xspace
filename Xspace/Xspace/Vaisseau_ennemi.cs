@@ -18,9 +18,6 @@ namespace Xspace
             : base(sprite, typeVaisseau)
         { }
 
-        //base.constr(sprite, 100, 0, 0.70f, new Vector2(750, 225), true);
-
-
         public void Update(float fps_fix)
         {
         }
