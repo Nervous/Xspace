@@ -15,3 +15,6 @@
 26/09
 - Implémentation des missiles du joueur : Nombre illimité de missile, temps entre 2 missiles,
   tout est géré.
+
+27/09
+- Début de la gestion des collisions (dur, dur ...)

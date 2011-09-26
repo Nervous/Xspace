@@ -24,7 +24,7 @@ namespace Xspace
             _textureMissile = texture;
             _vie = 1;
             _degats = 10;
-            _vitesseMissile = 0.60f;
+            _vitesseMissile = 0.95f;
             _emplacement = Vector2.Zero;
             _deplacementDirectionX = Vector2.Normalize(new Vector2(7, 0));
             _deplacementDirectionY = Vector2.Normalize(new Vector2(0, 7));
@@ -51,6 +51,16 @@ namespace Xspace
         public bool estAffiche
         {
             get { return _estAffiche; }
+        }
+
+        public Vector2 position
+        {
+            get { return _emplacement; }
+        }
+
+        public Texture2D sprite
+        {
+            get { return _textureMissile; }
         }
 
         public bool afficherMissile(Vector2 startPosition)
