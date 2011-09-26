@@ -1,0 +1,429 @@
+<p>Les moteurs de particules sont présents dans la plupart des jeux vidéo actuels. Que ce soit pour simuler explosions, pluie ou fumée, ou pour attirer l'attention du joueur sur un point particulier, ils représentent un moyen simple d'améliorer le rendu du jeu.</p>
+<p>L'objectif de cet article est de réaliser un moteur de particules en deux dimensions, avec XNA 4.0, qui soit assez flexible pour permettre de réaliser un vaste panel d'effets.</p>
+<p><!--more--></p>
+<h2>Principe général</h2>
+<h2>Structure d'une particule</h2>
+<h3>Les informations à stocker</h3>
+<pre lang="csharp" width="20">
+public class Particle
+{
+	private readonly ParticleSettings _settings;
+	private readonly ParticlesMgr _mgr;
+
+	public bool Alive;
+
+	public Vector2 Pos { get; set; }
+	public double LifeTime { get; set; }
+	public Vector2 Velocity { get; set; }
+}
+</pre>
+<h3>Configuration de la source de particules</h3>
+<pre lang="csharp">
+public struct ParticleSettings
+{
+	public Color ColorStart { get; set; }
+
+	public int Max { get; set; }
+	public double LifeTime { get; set; }
+
+	public ParticleSettings(double lifeTime, Color colorStart, int max = 200)
+		: this()
+	{
+		ColorStart = colorStart;
+		Max = max;
+		LifeTime = lifeTime;
+	}
+}
+</pre>
+
+<h3>Constructeur et initialisation de la particule</h3>
+<pre lang="csharp">
+	public Particle(ParticlesMgr mgr)
+	{
+		_settings = mgr.Settings;
+		_mgr = mgr;
+	}
+
+	public void Reset()
+	{
+		Pos = _mgr.Pos;
+		LifeTime = _settings.LifeTime;
+
+		Alive = true;
+	}
+</pre>
+
+<h3>Dessin et mise à jour</h3>
+<pre lang="csharp">
+	public void Draw(SpriteBatch sb, Texture2D texture)
+	{
+		if (!Alive)
+			return;
+
+		sb.Draw(texture, Pos, null, _settings.ColorStart, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
+	}
+
+	public void Update(GameTime gameTime)
+	{
+		if (!Alive)
+			return;
+
+		Pos += Velocity;
+
+		LifeTime -= gameTime.ElapsedGameTime.TotalMilliseconds;
+		if (LifeTime < 0)
+			Alive = false;
+	}
+</pre>
+
+<h2>Gestion d'un pool de particules</h2>
+<h3>Le gestionnaire de particules</h3>
+<pre lang="csharp">
+public class ParticlesMgr : DrawableGameComponent
+{
+	public Vector2 Pos;
+	public ParticleSettings Settings { get { return _settings; } }
+	private readonly ParticleSettings _settings;
+
+	private readonly ParticlesGame _game;
+	private readonly List<Particle> _particles;
+	private Texture2D _texture;
+
+	public ParticlesMgr(ParticlesGame game, ParticleSettings settings)
+		: base(game)
+	{
+		_game = game;
+		_settings = settings;
+		_particles = new List<Particle>();
+		for (int i = 0; i < _settings.Max; i++)
+			_particles.Add(new Particle(this) {Velocity = Vector2.One});
+	}
+
+	protected override void LoadContent()
+	{
+		_texture = _game.Content.Load<Texture2D>("particle2");
+	}
+
+	public override void Update(GameTime gameTime)
+	{
+		var deadParticle = _particles.FirstOrDefault(p => !p.Alive);
+		if (deadParticle != null)
+			deadParticle.Reset();
+
+		foreach (var particle in _particles)
+			particle.Update(gameTime);
+	}
+
+	public override void Draw(GameTime gameTime)
+	{
+		foreach (var particle in _particles)
+			particle.Draw(_game.spriteBatch, _texture);
+	}
+}
+</pre>
+<h3>Test dans le Game</h3>
+<pre lang="csharp">
+public class ParticlesGame : Game
+{
+	GraphicsDeviceManager graphics;
+	public SpriteBatch spriteBatch;
+	// ...
+	public ParticlesGame()
+	{
+		graphics = new GraphicsDeviceManager(this)
+		{
+			PreferredBackBufferWidth = 1024,
+			PreferredBackBufferHeight = 768
+		};
+		Content.RootDirectory = "Content";
+	}
+	
+	protected override void Initialize()
+	{
+		var settings = new ParticleSettings(1000, Color.Red);
+
+		var mgr = new ParticlesMgr(this, settings) {Pos = new Vector2(300, 300)};
+		Components.Add(mgr);
+
+		base.Initialize();
+	}
+	
+	protected override void Draw(GameTime gameTime)
+	{
+		GraphicsDevice.Clear(Color.Black);
+
+		spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive);
+		base.Draw(gameTime);
+		spriteBatch.End();
+	}
+}
+</pre>
+<h3>Création de particules</h3>
+<pre lang="csharp">
+public struct ParticleSettings
+{
+	// ...
+	public double AddFrequence { get; set; }
+	public int ParticlesPerAdd { get; set; }
+
+	public ParticleSettings(double lifeTime, Color colorStart, int max = 200, double addFrequence = 0, int particlesPerAdd = 1)
+		: this()
+	{
+		// ...
+		AddFrequence = addFrequence;
+		ParticlesPerAdd = particlesPerAdd;
+	}
+}
+</pre>
+<pre lang="csharp">
+public class ParticlesMgr : DrawableGameComponent
+{
+	// ...
+	private double _elapsed;
+
+	// ...
+	public override void Update(GameTime gameTime)
+	{
+		_elapsed += gameTime.ElapsedGameTime.TotalMilliseconds;
+
+		foreach (var particle in _particles)
+			particle.Update(gameTime);
+
+		// Le nombre de particules actives
+		int nb = _settings.Max - _particles.Count(p => p.Alive);
+		// Le nombre de particules à ajouter : ParticlesPerAdd si sa valeur est différente
+		// de 0, le nombre de particules disponibles sinon
+		int add = _settings.ParticlesPerAdd == 0 ? nb : _settings.ParticlesPerAdd;
+
+		// Si on veut ajouter n particules, il en faut n disponibles
+		if (_settings.ParticlesPerAdd != 0 && nb < _settings.ParticlesPerAdd)
+			return;
+
+		// Si AddFrequence == 0, on réinitialise toutes les particules disponibles
+		if (_settings.AddFrequence == 0)
+			for (int i = 0; i < add; i++)
+				_particles.Find(p => !p.Alive).Reset();
+		else
+			// sinon, on vérifie qu'un laps de temps suffisant s'est écoulé depuis le dernier ajout
+			if (_elapsed > _settings.AddFrequence && nb > 0)
+			{
+				foreach (var particle in _particles.Where(p => !p.Alive).Take(add))
+					particle.Reset();
+				_elapsed = 0;
+			}
+	}
+
+}
+</pre>
+<pre lang="csharp">
+	var settings = new ParticleSettings(1000, Color.Red, 100, 100, 1);
+</pre>
+<h2>Extensibilité</h2>
+<pre lang="csharp">
+public static class Helper
+{
+	private static readonly Random _rnd = new Random();
+
+	public static Vector2 GetRandomVector()
+	{
+		return Vector2.Transform(Vector2.UnitX,
+								 Quaternion.CreateFromYawPitchRoll(0, 0, (float)(_rnd.NextDouble() * MathHelper.TwoPi)));
+	}
+
+	public static Vector2 GetRandomVector(float a, float b)
+	{
+		return Vector2.Transform(Vector2.UnitX,
+								 Quaternion.CreateFromYawPitchRoll(0, 0, (float)(GetRandomFloat(a, b) * MathHelper.TwoPi)));
+	}
+
+	public static float GetRandomFloat(float from = 0, float to = 1)
+	{
+		return (float)((_rnd.NextDouble() * (to - from)) + from);
+	}
+}
+</pre>
+<pre lang="csharp">
+public class Particle
+{
+	// ...
+	public void Reset()
+	{
+		Pos = _settings.Pos == null ? _mgr.Pos : _settings.Pos(_mgr.Pos);
+		LifeTime = _settings.LifeTime;
+
+		Alive = true;
+	}
+
+	// ...
+	public void Update(GameTime gameTime)
+	{
+		if (!Alive)
+			return;
+
+		if (_settings.Velocity != null)
+			Velocity = _settings.Velocity(Velocity, (_settings.LifeTime - LifeTime) / _settings.LifeTime);
+		Pos += Velocity;
+
+		LifeTime -= gameTime.ElapsedGameTime.TotalMilliseconds;
+		if (LifeTime < 0)
+			Alive = false;
+	}
+}
+</pre>
+<pre lang="csharp" escaped="true">
+ public struct ParticleSettings
+{
+	// ...
+	
+	/// &lt;summary&gt;
+	/// Delegate pour déterminer la vélocité d'une particule.
+	/// Prend en paramètre la précédente vélocité et un float
+	/// représentant le pourcentage de temps de vie écoulé
+	/// de la particule.
+	/// &lt;/summary&gt;
+	public Func<Vector2, double, Vector2> Velocity { get; set; }
+
+	/// &lt;summary&gt;
+	/// Delegate pour déterminer la position initiale d'une
+	/// particule. Prend en paramètre la position du
+	/// ParticleMgr qui l'a crée.
+	/// &lt;/summary&gt;
+	public Func<Vector2, Vector2> Pos { get; set; }
+
+	public ParticleSettings(double lifeTime, Color colorStart, int max = 200, double addFrequence = 0, int particlesPerAdd = 1,
+		Func<Vector2, double, Vector2> velocity = null, Func<Vector2, Vector2> pos = null)
+		: this()
+	{
+		ColorStart = colorStart;
+		Max = max;
+		LifeTime = lifeTime;
+		AddFrequence = addFrequence;
+		ParticlesPerAdd = particlesPerAdd;
+		Velocity = velocity;
+		Pos = pos;
+	}
+}
+</pre>
+<pre lang="csharp">
+	var settings = new ParticleSettings(1000, Color.Red, 100, 100, 1,
+		(v, t) =>
+		t == 0 ? Helper.GetRandomVector()*Helper.GetRandomFloat() : v,
+		pos => pos);
+</pre>
+<pre lang="csharp">
+	public ParticlesMgr(ParticlesGame game, ParticleSettings settings)
+		: base(game)
+	{
+		_game = game;
+		_settings = settings;
+		_particles = new List<Particle>();
+		for (int i = 0; i < _settings.Max; i++)
+			_particles.Add(new Particle(this));
+	}
+</pre>
+<h3>Plus d'extensibilité</h3>
+<pre lang="csharp">
+	public static Color Interpolate(Color a, Color b, float amount)
+	{
+		Color res = Color.Lerp(a, b, MathHelper.Clamp(amount * 1.5f, 0, 1));
+		res.A = (byte)MathHelper.Lerp(0, 255, 1 - amount);
+		return res;
+	}
+</pre>
+<pre lang="csharp">
+	public void Draw(SpriteBatch sb, Texture2D texture)
+	{
+		if (!Alive)
+			return;
+
+		var percent = (float)((_settings.LifeTime - LifeTime) / _settings.LifeTime);
+
+		sb.Draw(texture, Pos, null,
+			Helper.Interpolate(_settings.ColorStart, _settings.ColorEnd, percent),
+			0, Vector2.Zero, MathHelper.Lerp(_settings.ScaleStart, _settings.ScaleEnd, percent), SpriteEffects.None, 0);
+	}
+
+</pre>
+<pre lang="csharp">
+public struct ParticleSettings
+{
+	// ...
+	public float ScaleStart { get; set; }
+	public float ScaleEnd { get; set; }
+
+	public ParticleSettings(double lifeTime, Color colorStart, Color colorEnd, int max = 200, double addFrequence = 0, int particlesPerAdd = 1,
+            Func<Vector2, double, Vector2> velocity = null, Func<Vector2, Vector2> pos = null, float scaleStart = 1, float scaleEnd = 1)
+            : this()
+	{
+		ColorStart = colorStart;
+		ColorEnd = colorEnd;
+		Max = max;
+		LifeTime = lifeTime;
+		AddFrequence = addFrequence;
+		Velocity = velocity;
+		Pos = pos;
+		ScaleStart = scaleStart;
+		ScaleEnd = scaleEnd;
+		ParticlesPerAdd = particlesPerAdd;
+	}
+}
+</pre>
+<pre lang="csharp">
+	protected override void Initialize()
+	{
+		// RING
+		var settingsExplosion = new ParticleSettings(3000, Color.Green, new Color(0, 1f, 0.8f, 0f), 200, 0, 0,
+			(v, t) => t == 0 ? Helper.GetRandomVector() * Helper.GetRandomFloat() : v,
+			pos => pos + Helper.GetRandomVector() * 100);
+
+		var explosion = new ParticlesMgr(this, settingsExplosion) { Pos = new Vector2(170, 200) };
+		Components.Add(explosion);
+
+		// EXPLOSION
+		var settingsExplosion2 = new ParticleSettings(3000, Color.Orange, new Color(1, 0, 0, 0f), 200, 0, 0,
+			(v, t) => t == 0 ? Helper.GetRandomVector() * Helper.GetRandomFloat(0.1f) : v,
+			pos => pos);
+
+		var explosion2 = new ParticlesMgr(this, settingsExplosion2) { Pos = new Vector2(510, 200) };
+		Components.Add(explosion2);
+
+
+		// RINGS
+		var settingsExplosion3 = new ParticleSettings(2000, Color.WhiteSmoke, new Color(255, 105, 180, 0), 200, 800, 50,
+			(v, t) => t == 0 ? Helper.GetRandomVector() : v,
+			pos => pos);
+
+		var explosion3 = new ParticlesMgr(this, settingsExplosion3) { Pos = new Vector2(850, 200) };
+		Components.Add(explosion3);
+
+
+		// BLUE FIRE
+		var settingsFire = new ParticleSettings(1000, new Color(100, 147, 237, 255), new Color(0, 1f, 1f, 0f), 200, 30, 1,
+			(v, t) => Vector2.UnitY * -5,
+			pos => pos + Helper.GetRandomVector() * 10, 2, 0.4f);
+
+		var fire = new ParticlesMgr(this, settingsFire) { Pos = new Vector2(170, 600) };
+		Components.Add(fire);
+
+		// FLAME THROWER
+		var settingsFire2 = new ParticleSettings(1000, Color.White, new Color(0, 0.7f, 0.7f, 0f), 200, 1, 1,
+			(v, t) => t == 0 ? Helper.GetRandomVector(MathHelper.PiOver2, MathHelper.PiOver2 + MathHelper.Pi / 20) * 5 : v,
+			pos => pos, 0.4f, 2);
+
+		var fire2 = new ParticlesMgr(this, settingsFire2) { Pos = new Vector2(510, 600) };
+		Components.Add(fire2);
+
+		// SMOKE
+		var settingsSmoke = new ParticleSettings(5000, Color.White, new Color(128, 128, 128, 0), 200, 0, 1,
+			(v, t) => t == 0 ? Helper.GetRandomVector() : v,
+			pos => pos + Helper.GetRandomVector() * Helper.GetRandomFloat(5, 100), 1, 0.4f);
+
+		var smoke = new ParticlesMgr(this, settingsSmoke) { Pos = new Vector2(850, 600) };
+		Components.Add(smoke);
+
+		base.Initialize();
+	}
+</pre>
+<pre lang="csharp">
+
+</pre>
