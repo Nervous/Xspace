@@ -95,7 +95,7 @@ namespace Xspace
             {
                 for (int i = 0; i < nbreMaxMissiles; i++)
                 {
-                    if (missileJoueur[i] != null && missileJoueur[i].estAffiche == false && (time - lastTime > 250 || lastTime == 0))
+                    if (missileJoueur[i] != null && missileJoueur[i].estAffiche == false && (time - lastTime > 150 || lastTime == 0))
                     {
                             missileJoueur[i].afficherMissile(joueur1.position);
                             lastTime = time;
