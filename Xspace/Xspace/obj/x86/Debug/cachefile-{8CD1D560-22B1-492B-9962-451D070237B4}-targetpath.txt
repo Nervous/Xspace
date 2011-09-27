@@ -1,7 +1,7 @@
 Content\Vaisseau_joueur.xnb
-Content\space_bg.xnb
 Content\MissileJoueur_Base.xnb
 Content\missile1.xnb
+Content\space_bg.xnb
 Content\musique.xnb
 Content\musique.wma
 Content\against_the_waves.xnb
