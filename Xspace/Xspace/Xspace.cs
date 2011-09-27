@@ -106,7 +106,10 @@ namespace Xspace
                     missileActuel = listeMissiles.IndexOf(missile);
                     for (int k = 0; k < 15; k++)
                     {
-                        if (((listeMissiles[missileActuel][k].position.X + listeMissiles[missileActuel][k].sprite.Width > listeVaisseau[vaisseauActuel].position.X) && (listeMissiles[missileActuel][k].position.X + listeMissiles[missileActuel][k].sprite.Width < listeVaisseau[vaisseauActuel].position.X + listeVaisseau[vaisseauActuel].position.X)) && ((listeMissiles[missileActuel][k].position.Y + listeMissiles[missileActuel][k].sprite.Height > listeVaisseau[vaisseauActuel].position.Y) && (listeMissiles[missileActuel][k].position.Y + listeMissiles[missileActuel][k].sprite.Height < listeVaisseau[vaisseauActuel].position.Y + listeVaisseau[vaisseauActuel].position.Y)))
+                        if (((listeMissiles[missileActuel][k].position.X + listeMissiles[missileActuel][k].sprite.Width > listeVaisseau[vaisseauActuel].position.X) 
+                            && (listeMissiles[missileActuel][k].position.X + listeMissiles[missileActuel][k].sprite.Width < listeVaisseau[vaisseauActuel].position.X + listeVaisseau[vaisseauActuel].position.X))
+                            && ((listeMissiles[missileActuel][k].position.Y + listeMissiles[missileActuel][k].sprite.Height > listeVaisseau[vaisseauActuel].position.Y) 
+                            && (listeMissiles[missileActuel][k].position.Y + listeMissiles[missileActuel][k].sprite.Height < listeVaisseau[vaisseauActuel].position.Y + listeVaisseau[vaisseauActuel].sprite.Height)))
                         {
                             Exit();
                         }
