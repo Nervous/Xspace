@@ -56,6 +56,20 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MissileJoueur_Base.png">
+      <Name>MissileJoueur_Base</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="missile1.png">
+      <Name>missile1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="space_bg.jpg">
       <Name>space_bg</Name>
       <Importer>TextureImporter</Importer>
@@ -63,10 +77,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MissileJoueur_Base.png">
-      <Name>MissileJoueur_Base</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
+    <Compile Include="against_the_waves.mp3">
+      <Name>against_the_waves</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

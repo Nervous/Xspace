@@ -48,7 +48,7 @@ namespace Xspace
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            musique = Content.Load<Song>("musique");
+            musique = Content.Load<Song>("against_the_waves");
             MediaPlayer.Play(musique);
             fond_ecran = new ScrollingBackground();
             Texture2D fond_image = Content.Load<Texture2D>("space_bg");
@@ -58,7 +58,7 @@ namespace Xspace
             textureVaisseau_joueur = Content.Load<Texture2D>("Vaisseau_joueur"); 
 
             // TODO : Chargement de toutes les textures des missiles en dessous
-            textureMissile_joueur_base = Content.Load<Texture2D>("MissileJoueur_Base");
+            textureMissile_joueur_base = Content.Load<Texture2D>("missile1");
 
             // TODO : Chargement de tous les objets vaisseau en dessous
             listeVaisseauEnnemi = new Vaisseau_ennemi[100];

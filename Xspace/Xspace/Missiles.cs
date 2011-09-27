@@ -89,7 +89,7 @@ namespace Xspace
         public void Draw(SpriteBatch batch)
         {
             if (this._estAffiche)
-                batch.Draw(_textureMissile, _emplacement, Color.Green);
+                batch.Draw(_textureMissile, _emplacement, Color.DarkViolet);
         }
     }
 }
