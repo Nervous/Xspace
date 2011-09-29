@@ -21,8 +21,8 @@ namespace Xspace
         // TODO : Déclaration de tous les objets Vaisseau en dessous
         private Vaisseau_joueur joueur1;
         private Vaisseau_ennemi drone1;
-        List<Vaisseau_ennemi> listeVaisseauEnnemi;
-        List<Missiles[]> listeMissile;
+        List<Vaisseau_ennemi> listeVaisseauEnnemi, listeVaisseauEnnemiToRemove;
+        List<Missiles[]> listeMissile, listeMissileToRemove;
         // TODO : Déclaration de tous les objets missiles en dessous
         Missiles[] missileJoueur;
         int nbreMaxMissiles, i = 0, j = 0;
@@ -63,6 +63,7 @@ namespace Xspace
 
             // TODO : Chargement de tous les objets vaisseau en dessous
             listeVaisseauEnnemi = new List<Vaisseau_ennemi>();
+            listeVaisseauEnnemiToRemove = new List<Vaisseau_ennemi>();
             joueur1 = new Vaisseau_joueur(textureVaisseau_joueur);
             drone1 = new Vaisseau_ennemi(textureVaisseau_joueur, "drone");
             drone1.creer();
@@ -71,6 +72,7 @@ namespace Xspace
 
             // TODO : Chargement de tous les objets missiles en dessous
             listeMissile = new List<Missiles[]>();
+            listeMissileToRemove = new List<Missiles[]>();
             missileJoueur = new Missiles[nbreMaxMissiles];
             for (int i = 0; i < nbreMaxMissiles; i++)
                 missileJoueur[i] = new Missiles(textureMissile_joueur_base, false, 10);
@@ -85,13 +87,8 @@ namespace Xspace
         }
 
 
-        protected override void UnloadContent()
-        {
 
-        }
-
-
-        /* bool collisions(List<Vaisseau_ennemi> listeVaisseau, List<Missiles[]> listeMissiles)
+        bool collisions(List<Vaisseau_ennemi> listeVaisseau, List<Missiles[]> listeMissiles)
         {
 
             int vaisseauActuel = 0, missileActuel = 0;
@@ -112,11 +109,12 @@ namespace Xspace
                                 )
                             {
                                 // Collision missile => Vaisseau trouvée
+                                listeMissiles[missileActuel][k].kill();
+
                                 if (listeVaisseau[vaisseauActuel].hurt(listeMissiles[missileActuel][k].degats) == true)
                                 {
                                     // Vaisseau dead
                                     listeVaisseau[vaisseauActuel].kill();
-                                    listeMissiles[missileActuel][k].kill();
                                 }
                             }
                         }
@@ -125,7 +123,7 @@ namespace Xspace
             }
 
             return true;
-        } */
+        }
 
         protected override void Update(GameTime gameTime)
         {
@@ -133,14 +131,14 @@ namespace Xspace
             fps_fix = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             time += gameTime.ElapsedGameTime.TotalMilliseconds;
             fond_ecran.Update(fps_fix);
-            /*
+            
             joueur1.Update(fps_fix); // Update du joueur
             keyboardState = Keyboard.GetState();
             if (keyboardState.IsKeyDown(Keys.Space))
             {
                 for (int i = 0; i < nbreMaxMissiles; i++)
                 {
-                    if (missileJoueur[i] != null && missileJoueur[i].existe == false && (time - lastTime > 150 || lastTime == 0))
+                    if (missileJoueur[i] != null && missileJoueur[i].estAffiche == false && (time - lastTime > 150 || lastTime == 0))
                     {
                             missileJoueur[i].afficherMissile(joueur1.position);
                             lastTime = time;
@@ -158,26 +156,19 @@ namespace Xspace
 
             }
 
-            //collisions(listeVaisseauEnnemi, listeMissile);
-            /*foreach (Vaisseau_ennemi vaisseau in listeVaisseauEnnemi)
+            collisions(listeVaisseauEnnemi, listeMissile);
+
+            foreach (Vaisseau_ennemi vaisseau in listeVaisseauEnnemi)
             {
-                if (!vaisseau.existe)
-                    listeVaisseauEnnemi.Remove(vaisseau);
+                if (vaisseau.existe == false)
+                {
+                    listeVaisseauEnnemiToRemove.Add(vaisseau);
+                    i++;
+                }
             }
 
-            foreach (Missiles[] missile in listeMissile)
-            {
-                bool noMissile = false;
-                for (i = 0; i < nbreMaxMissiles; i++)
-                {
-                    if (missile[i].existe)
-                        noMissile = true;
-                }
-
-                if (noMissile)
-                    listeMissile.Remove(missile);
-            }*/
-               
+            for (j = 0; j < i; j++)
+                listeVaisseauEnnemi.Remove(listeVaisseauEnnemiToRemove[j]);
             
             base.Update(gameTime);
         }
@@ -187,16 +178,21 @@ namespace Xspace
             GraphicsDevice.Clear(Color.Black);
             spriteBatch.Begin();
             fond_ecran.Draw(spriteBatch);
-            /*joueur1.Draw(spriteBatch); // Draw du joueur
+            joueur1.Draw(spriteBatch); // Draw du joueur
             drone1.Draw(spriteBatch);
             for (int i = 0; i < nbreMaxMissiles - 1; i++)
             {
                 if (missileJoueur[i] != null && missileJoueur[i].existe)
                     missileJoueur[i].Draw(spriteBatch);
-            } */
+            } 
             spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        protected override void UnloadContent()
+        {
+
         }
     }
 }

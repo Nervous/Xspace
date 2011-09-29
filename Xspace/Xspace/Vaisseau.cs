@@ -34,7 +34,7 @@ namespace Xspace
         protected bool constr(Texture2D texture, int vie, int armure, float vitesseVaisseau, Vector2 startPosition, bool bexiste)
         {
             _textureVaisseau = texture;
-            _vie = 1000;
+            _vie = vie;
             _armure = armure;
             _vitesseVaisseau = vitesseVaisseau;
             _emplacement = startPosition;
