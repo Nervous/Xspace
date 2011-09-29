@@ -17,22 +17,23 @@ namespace Xspace
         protected Texture2D _textureMissile;
         protected int _vie, _degats;
         protected float _vitesseMissile;
-        private bool _estAffiche, _ennemi;
+        private bool _estAffiche, _ennemi, _existe;
 
-        public Missiles(Texture2D texture, bool ennemi)
+        public Missiles(Texture2D texture, bool ennemi, int degats)
         {
             _textureMissile = texture;
             _vie = 1;
-            _degats = 10;
+            _degats = degats;
             _vitesseMissile = 0.95f;
             _emplacement = Vector2.Zero;
             _deplacementDirectionX = Vector2.Normalize(new Vector2(7, 0));
             _deplacementDirectionY = Vector2.Normalize(new Vector2(0, 7));
             _estAffiche = false;
             _ennemi = ennemi;
+            _existe = false;
         }
 
-        public Missiles(Texture2D texture, int vie, int armure, float vitesseMissile, Vector2 startPosition, bool ennemi)
+        public Missiles(Texture2D texture, int vie, int degats, int armure, float vitesseMissile, Vector2 startPosition, bool ennemi)
         {
             _textureMissile = texture;
             _vie = vie;
@@ -43,6 +44,7 @@ namespace Xspace
             _deplacementDirectionY = Vector2.Normalize(new Vector2(0, 7));
             _estAffiche = false;
             _ennemi = ennemi;
+            _existe = false;
         }
 
         public void initialiserTexture(Texture2D texture)
@@ -60,6 +62,11 @@ namespace Xspace
             get { return _emplacement; }
         }
 
+        public int degats
+        {
+            get { return _degats; }
+        }
+
         public Texture2D sprite
         {
             get { return _textureMissile; }
@@ -72,6 +79,7 @@ namespace Xspace
             float startY = startPosition.Y + 15;
             Vector2 start = new Vector2(startX, startY);
             _emplacement = start;
+            this._existe = true;
             return this._estAffiche;
         }
 
@@ -81,6 +89,17 @@ namespace Xspace
                 _emplacement += fps_fix * _deplacementDirectionX * _vitesseMissile;
             else
                 this._estAffiche = false;
+        }
+
+        public void kill()
+        {
+            this._existe = false;
+            this._estAffiche = false;
+        }
+
+        public bool existe
+        {
+            get { return _existe; }
         }
 
         public void Update()

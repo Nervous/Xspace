@@ -25,7 +25,7 @@ namespace Xspace
         List<Missiles[]> listeMissile;
         // TODO : Déclaration de tous les objets missiles en dessous
         Missiles[] missileJoueur;
-        int nbreMaxMissiles;
+        int nbreMaxMissiles, i = 0, j = 0;
         float fps_fix;
         double time, lastTime;
         
@@ -73,7 +73,7 @@ namespace Xspace
             listeMissile = new List<Missiles[]>();
             missileJoueur = new Missiles[nbreMaxMissiles];
             for (int i = 0; i < nbreMaxMissiles; i++)
-                missileJoueur[i] = new Missiles(textureMissile_joueur_base, false);
+                missileJoueur[i] = new Missiles(textureMissile_joueur_base, false, 10);
 
             for (int i = 0; i < nbreMaxMissiles - 1; i++)
             {
@@ -91,7 +91,7 @@ namespace Xspace
         }
 
 
-        bool collisions(List<Vaisseau_ennemi> listeVaisseau, List<Missiles[]> listeMissiles)
+        /* bool collisions(List<Vaisseau_ennemi> listeVaisseau, List<Missiles[]> listeMissiles)
         {
 
             int vaisseauActuel = 0, missileActuel = 0;
@@ -103,19 +103,29 @@ namespace Xspace
                     missileActuel = listeMissiles.IndexOf(missile);
                     for (int k = 0; k < 15; k++)
                     {
-                        if (((listeMissiles[missileActuel][k].position.X + listeMissiles[missileActuel][k].sprite.Width > listeVaisseau[vaisseauActuel].position.X) 
-                            && (listeMissiles[missileActuel][k].position.X + listeMissiles[missileActuel][k].sprite.Width < listeVaisseau[vaisseauActuel].position.X + listeVaisseau[vaisseauActuel].sprite.Width))
-                            && ((listeMissiles[missileActuel][k].position.Y + listeMissiles[missileActuel][k].sprite.Height/2 > listeVaisseau[vaisseauActuel].position.Y) 
-                            && (listeMissiles[missileActuel][k].position.Y + listeMissiles[missileActuel][k].sprite.Height/2 < listeVaisseau[vaisseauActuel].position.Y + listeVaisseau[vaisseauActuel].sprite.Height)))
+                        if (listeMissile[missileActuel][k].existe)
                         {
-                            Exit();
+                            if (((listeMissiles[missileActuel][k].position.X + listeMissiles[missileActuel][k].sprite.Width > listeVaisseau[vaisseauActuel].position.X)
+                                && (listeMissiles[missileActuel][k].position.X + listeMissiles[missileActuel][k].sprite.Width < listeVaisseau[vaisseauActuel].position.X + listeVaisseau[vaisseauActuel].sprite.Width))
+                                && ((listeMissiles[missileActuel][k].position.Y + listeMissiles[missileActuel][k].sprite.Height / 2 > listeVaisseau[vaisseauActuel].position.Y)
+                                && (listeMissiles[missileActuel][k].position.Y + listeMissiles[missileActuel][k].sprite.Height / 2 < listeVaisseau[vaisseauActuel].position.Y + listeVaisseau[vaisseauActuel].sprite.Height))
+                                )
+                            {
+                                // Collision missile => Vaisseau trouvée
+                                if (listeVaisseau[vaisseauActuel].hurt(listeMissiles[missileActuel][k].degats) == true)
+                                {
+                                    // Vaisseau dead
+                                    listeVaisseau[vaisseauActuel].kill();
+                                    listeMissiles[missileActuel][k].kill();
+                                }
+                            }
                         }
                     }
                 }
             }
 
             return true;
-        }
+        } */
 
         protected override void Update(GameTime gameTime)
         {
@@ -123,14 +133,14 @@ namespace Xspace
             fps_fix = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             time += gameTime.ElapsedGameTime.TotalMilliseconds;
             fond_ecran.Update(fps_fix);
+            /*
             joueur1.Update(fps_fix); // Update du joueur
-            // <=== Update des précédents missiles ici 
             keyboardState = Keyboard.GetState();
             if (keyboardState.IsKeyDown(Keys.Space))
             {
                 for (int i = 0; i < nbreMaxMissiles; i++)
                 {
-                    if (missileJoueur[i] != null && missileJoueur[i].estAffiche == false && (time - lastTime > 150 || lastTime == 0))
+                    if (missileJoueur[i] != null && missileJoueur[i].existe == false && (time - lastTime > 150 || lastTime == 0))
                     {
                             missileJoueur[i].afficherMissile(joueur1.position);
                             lastTime = time;
@@ -148,9 +158,27 @@ namespace Xspace
 
             }
 
-            collisions(listeVaisseauEnnemi, listeMissile);
-               
+            //collisions(listeVaisseauEnnemi, listeMissile);
+            /*foreach (Vaisseau_ennemi vaisseau in listeVaisseauEnnemi)
+            {
+                if (!vaisseau.existe)
+                    listeVaisseauEnnemi.Remove(vaisseau);
+            }
 
+            foreach (Missiles[] missile in listeMissile)
+            {
+                bool noMissile = false;
+                for (i = 0; i < nbreMaxMissiles; i++)
+                {
+                    if (missile[i].existe)
+                        noMissile = true;
+                }
+
+                if (noMissile)
+                    listeMissile.Remove(missile);
+            }*/
+               
+            
             base.Update(gameTime);
         }
 
@@ -159,13 +187,13 @@ namespace Xspace
             GraphicsDevice.Clear(Color.Black);
             spriteBatch.Begin();
             fond_ecran.Draw(spriteBatch);
-            joueur1.Draw(spriteBatch); // Draw du joueur
+            /*joueur1.Draw(spriteBatch); // Draw du joueur
             drone1.Draw(spriteBatch);
             for (int i = 0; i < nbreMaxMissiles - 1; i++)
             {
-                if (missileJoueur[i] != null)
+                if (missileJoueur[i] != null && missileJoueur[i].existe)
                     missileJoueur[i].Draw(spriteBatch);
-            }
+            } */
             spriteBatch.End();
 
             base.Draw(gameTime);

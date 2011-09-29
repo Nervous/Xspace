@@ -17,7 +17,7 @@ namespace Xspace
         protected Texture2D _textureVaisseau;
         protected float _vitesseVaisseau;
         protected int _vie, _armure;
-        protected bool existe;
+        protected bool _existe;
         protected string _typeVaisseau;
 
         public Vaisseau(Texture2D texture)
@@ -34,13 +34,13 @@ namespace Xspace
         protected bool constr(Texture2D texture, int vie, int armure, float vitesseVaisseau, Vector2 startPosition, bool bexiste)
         {
             _textureVaisseau = texture;
-            _vie = vie;
+            _vie = 1000;
             _armure = armure;
             _vitesseVaisseau = vitesseVaisseau;
             _emplacement = startPosition;
             _deplacementDirectionX = Vector2.Normalize(new Vector2(5, 0));
             _deplacementDirectionY = Vector2.Normalize(new Vector2(0, 5));
-            existe = bexiste;
+            _existe = bexiste;
 
             return true;
         }
@@ -68,7 +68,7 @@ namespace Xspace
             _emplacement = startPosition;
             _deplacementDirectionX = Vector2.Normalize(new Vector2(5, 0));
             _deplacementDirectionY = Vector2.Normalize(new Vector2(0, 5));
-            existe = false;
+            _existe = false;
         }
 
         public Vaisseau(Texture2D texture, int vie, int armure, float vitesseVaisseau, Vector2 startPosition, bool bexiste)
@@ -80,12 +80,22 @@ namespace Xspace
             _emplacement = startPosition;
             _deplacementDirectionX = Vector2.Normalize(new Vector2(5, 0));
             _deplacementDirectionY = Vector2.Normalize(new Vector2(0, 5));
-            existe = bexiste;
+            _existe = bexiste;
         }
 
         public int vie
         {
             get { return _vie; }
+        }
+
+        public bool existe
+        {
+            get { return _existe; }
+        }
+
+        public void kill()
+        {
+            this._existe = false;
         }
 
         public Vector2 position
@@ -100,7 +110,13 @@ namespace Xspace
 
         public void creer()
         {
-            this.existe = true;
+            this._existe = true;
+        }
+
+        public bool hurt(int ammount)
+        {
+            this._vie -= ammount;
+            return (this._vie < 0);
         }
 
         public void Update()
