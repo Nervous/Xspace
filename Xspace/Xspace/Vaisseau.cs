@@ -53,6 +53,12 @@ namespace Xspace
                 case "drone":
                     constr(texture, 100, 0, 0.70f, new Vector2(750, 225), true);
                     break;
+                case "drone2":
+                    constr(texture, 100, 0, 0.70f, new Vector2(750, 100), true);
+                    break;
+                case "drone3":
+                    constr(texture, 100, 0, 0.70f, new Vector2(750, 300), true);
+                    break;
                 default:
                     constr(texture, 100, 0, 0.70f, new Vector2(750, 225), true);
                     break;
