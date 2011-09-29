@@ -91,11 +91,8 @@ namespace Xspace
         }
 
 
-        bool collisions(List<Vaisseau_ennemi> listeVaisseau, List<Missiles[]> listeMissiles) // TODO : Remplacer par Missiles[][] listeMissiles !!
+        bool collisions(List<Vaisseau_ennemi> listeVaisseau, List<Missiles[]> listeMissiles)
         {
-            /* Ne gère QUE les collisions vaisseau / missile, pour le moment.
-             * Pour que cette fonction s'éxecute correctement, il faut absolument que les tableaux soient ordonnés de la sorte que toutes les cases
-             * possédant un objet soient au début, et ainsi que, dès que la fonction rencontre une case vide, elle puisse s'arrêter. */
 
             int vaisseauActuel = 0, missileActuel = 0;
             foreach(Vaisseau_ennemi vaisseau in listeVaisseau)
@@ -108,8 +105,8 @@ namespace Xspace
                     {
                         if (((listeMissiles[missileActuel][k].position.X + listeMissiles[missileActuel][k].sprite.Width > listeVaisseau[vaisseauActuel].position.X) 
                             && (listeMissiles[missileActuel][k].position.X + listeMissiles[missileActuel][k].sprite.Width < listeVaisseau[vaisseauActuel].position.X + listeVaisseau[vaisseauActuel].sprite.Width))
-                            && ((listeMissiles[missileActuel][k].position.Y + listeMissiles[missileActuel][k].sprite.Height > listeVaisseau[vaisseauActuel].position.Y) 
-                            && (listeMissiles[missileActuel][k].position.Y + listeMissiles[missileActuel][k].sprite.Height < listeVaisseau[vaisseauActuel].position.Y + listeVaisseau[vaisseauActuel].sprite.Height)))
+                            && ((listeMissiles[missileActuel][k].position.Y + listeMissiles[missileActuel][k].sprite.Height/2 > listeVaisseau[vaisseauActuel].position.Y) 
+                            && (listeMissiles[missileActuel][k].position.Y + listeMissiles[missileActuel][k].sprite.Height/2 < listeVaisseau[vaisseauActuel].position.Y + listeVaisseau[vaisseauActuel].sprite.Height)))
                         {
                             Exit();
                         }
