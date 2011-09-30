@@ -181,8 +181,8 @@ namespace Xspace
             GraphicsDevice.Clear(Color.Black);
             spriteBatch.Begin();
             fond_ecran.Draw(spriteBatch);
-            joueur1.Draw(spriteBatch); // Draw du joueur
-            drone1.Draw(spriteBatch);
+            joueur1.Draw(spriteBatch, GraphicsDevice.Viewport); // Draw du joueur
+            drone1.Draw(spriteBatch, GraphicsDevice.Viewport);
             for (int i = 0; i < nbreMaxMissiles - 1; i++)
             {
                 if (missileJoueur[i] != null && missileJoueur[i].existe)
