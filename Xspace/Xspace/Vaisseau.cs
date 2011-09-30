@@ -16,7 +16,7 @@ namespace Xspace
         protected Vector2 _emplacement, _deplacementDirectionY, _deplacementDirectionX;
         protected Texture2D _textureVaisseau;
         protected float _vitesseVaisseau;
-        protected int _vie, _armure;
+        protected int _vie, _armure, _timingAttack, lastTime;
         protected bool _existe;
         protected string _typeVaisseau;
         protected bool _ennemi;
@@ -32,7 +32,7 @@ namespace Xspace
             _deplacementDirectionY = Vector2.Normalize(new Vector2(0, 5));
         }
 
-        protected bool constr(Texture2D texture, int vie, int armure, float vitesseVaisseau, Vector2 startPosition, bool bexiste, bool ennemi)
+        protected bool constr(Texture2D texture, int vie, int armure, float vitesseVaisseau, Vector2 startPosition, bool bexiste, bool ennemi, int timingAttack)
         {
             _textureVaisseau = texture;
             _vie = vie;
@@ -43,7 +43,7 @@ namespace Xspace
             _deplacementDirectionY = Vector2.Normalize(new Vector2(0, 5));
             _existe = bexiste;
             _ennemi = ennemi;
-
+            _timingAttack = timingAttack;
             return true;
         }
 
@@ -53,10 +53,10 @@ namespace Xspace
             switch (typeVaisseau)
             {
                 case "drone":
-                    constr(texture, 100, 0, 0.20f, new Vector2(750, 225), true, true);
+                    constr(texture, 100, 0, 0.20f, new Vector2(750, 225), true, true, 500);
                     break;
                 default:
-                    constr(texture, 100, 0, 0.70f, new Vector2(750, 225), true, true);
+                    constr(texture, 100, 0, 0.70f, new Vector2(750, 225), true, true, 500);
                     break;
             }
         }
@@ -132,9 +132,9 @@ namespace Xspace
             origin.Y = _textureVaisseau.Height / 2;
             if (existe)
             {
-                if (_ennemi)
+                /*if (_ennemi)
                     batch.Draw(_textureVaisseau, _emplacement, null, Color.White, MathHelper.Pi, origin, 1.0f, SpriteEffects.None, 0f);
-                else
+                else */
                     batch.Draw(_textureVaisseau, _emplacement, Color.White);
             }
         }
