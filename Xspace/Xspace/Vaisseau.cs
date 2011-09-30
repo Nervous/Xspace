@@ -16,7 +16,7 @@ namespace Xspace
         protected Vector2 _emplacement, _deplacementDirectionY, _deplacementDirectionX;
         protected Texture2D _textureVaisseau;
         protected float _vitesseVaisseau;
-        protected int _vie, _armure, _timingAttack, lastTime;
+        protected int _vie, _armure, _timingAttack;
         protected bool _existe;
         protected string _typeVaisseau;
         protected bool _ennemi;
@@ -60,6 +60,8 @@ namespace Xspace
                     break;
             }
         }
+
+         
 
         public Vaisseau(Texture2D texture, int vie, int armure, float vitesseVaisseau, Vector2 startPosition)
         {
@@ -125,7 +127,7 @@ namespace Xspace
         {
         }
 
-        public void Draw(SpriteBatch batch, Viewport viewport)
+        public void Draw(SpriteBatch batch)
         {
             Vector2 origin;
             origin.X = _textureVaisseau.Width / 2;

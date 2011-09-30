@@ -18,16 +18,20 @@ namespace Xspace
         private Texture2D textureVaisseau_joueur, textureMissile_joueur_base;
         private Song musique;
         private KeyboardState keyboardState;
+        private gestionLevels thisLevel;
+        private List<gestionLevels> infLevel;
         // TODO : Déclaration de tous les objets Vaisseau en dessous
         private Vaisseau_joueur joueur1;
-        private Vaisseau_ennemi drone1;
+        private Vaisseau_ennemi[] vaisseauDrone;
         List<Vaisseau_ennemi> listeVaisseauEnnemi, listeVaisseauEnnemiToRemove;
         List<Missiles[]> listeMissile, listeMissileToRemove;
         // TODO : Déclaration de tous les objets missiles en dessous
         Missiles[] missileJoueur;
-        int nbreMaxMissiles, i = 0, j = 0;
+        int nbreMaxMissiles, i = 0, j = 0, actualDrone = 0;
         float fps_fix;
         double time, lastTime;
+        char[] delimitationFilesInfo = new char[] { ' ' };
+        char[] delimitationFilesInfo2 = new char[] { ';' };
         
         public Xspace()
         {
@@ -53,7 +57,10 @@ namespace Xspace
             MediaPlayer.Play(musique);
             fond_ecran = new ScrollingBackground();
             Texture2D fond_image = Content.Load<Texture2D>("space_bg");
-            fond_ecran.Load(GraphicsDevice, fond_image);    
+            fond_ecran.Load(GraphicsDevice, fond_image);
+            thisLevel = new gestionLevels(0);
+            infLevel = new List<gestionLevels>();
+            
 
             // TODO : Chargement de toutes les textures des vaisseau en dessous
             textureVaisseau_joueur = Content.Load<Texture2D>("Vaisseau_joueur"); 
@@ -64,10 +71,8 @@ namespace Xspace
             // TODO : Chargement de tous les objets vaisseau en dessous
             listeVaisseauEnnemi = new List<Vaisseau_ennemi>();
             listeVaisseauEnnemiToRemove = new List<Vaisseau_ennemi>();
+            vaisseauDrone = new Vaisseau_ennemi[100];
             joueur1 = new Vaisseau_joueur(textureVaisseau_joueur);
-            drone1 = new Vaisseau_ennemi(textureVaisseau_joueur, "drone");
-            drone1.creer();
-            listeVaisseauEnnemi.Add(drone1);
             
 
             // TODO : Chargement de tous les objets missiles en dessous
@@ -84,6 +89,55 @@ namespace Xspace
             }
 
             listeMissile.Add(missileJoueur);
+
+
+            // TODO : Chargement du level en dessous
+
+            foreach (string info in thisLevel.getInfosLevel) // Pour chacune des lignes du level ...
+            {
+                int timing = 0;
+                string categorie = "", type = "";
+                Vaisseau_ennemi vaisseau = null;
+                foreach (string info2 in info.Split(delimitationFilesInfo)) // ... On récupère 2 infos : le type de l'objet et à quelle date il doit spawn
+                {
+                    i = 0;
+                    if (!int.TryParse(info2, out timing)) // SI l'info n'est pas un nombre, alors c'est la catégorie de l'objet (vaisseau, bonus, obstacle, etc.)
+                    {
+                        foreach (string info3 in info2.Split(delimitationFilesInfo2))
+                        {
+                            if (i == 0) // Premiere info : catégorie de l'objet
+                            {
+                                categorie = info3;
+                            }
+                            else // Deuxième info : type de l'objet
+                            {
+                                type = info3;
+                            }
+                            i++;
+                        }
+                    }
+                    else // Sinon c'est simplement sa date de spawn.
+                        timing = int.Parse(info2);
+                    
+                }
+                //Fin de lecture de la ligne : on ajoute un élement dans la liste des infos du level
+                if(categorie == "vaisseau")
+                {
+                    switch(type)
+                    {
+                        case "drone":
+                            vaisseau = vaisseauDrone[actualDrone] = new Vaisseau_ennemi(textureVaisseau_joueur, "drone");
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                infLevel.Add(new gestionLevels(categorie, vaisseau, timing));
+                j++;
+                
+
+            }
         }
 
 
@@ -130,8 +184,27 @@ namespace Xspace
 
             fps_fix = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             time += gameTime.ElapsedGameTime.TotalMilliseconds;
+
+            foreach (gestionLevels spawn in infLevel)
+            {
+                if (spawn.isTime(time))
+                {
+                    spawn.makeItSpawn();
+                    switch (spawn.Categorie)
+                    {
+                        case "vaisseau":
+                            if(spawn.Adresse != null)
+                                listeVaisseauEnnemi.Add(spawn.Adresse);
+                            else
+                                Exit();
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+
             fond_ecran.Update(fps_fix);
-            drone1.Update(fps_fix);
             joueur1.Update(fps_fix); // Update du joueur
             keyboardState = Keyboard.GetState();
             if (keyboardState.IsKeyDown(Keys.Space))
@@ -165,6 +238,8 @@ namespace Xspace
                     listeVaisseauEnnemiToRemove.Add(vaisseau);
                     i++;
                 }
+                else
+                    vaisseau.Update(fps_fix);
             }
 
             for (j = 0; j < i; j++)
@@ -181,8 +256,11 @@ namespace Xspace
             GraphicsDevice.Clear(Color.Black);
             spriteBatch.Begin();
             fond_ecran.Draw(spriteBatch);
-            joueur1.Draw(spriteBatch, GraphicsDevice.Viewport); // Draw du joueur
-            drone1.Draw(spriteBatch, GraphicsDevice.Viewport);
+            joueur1.Draw(spriteBatch); // Draw du joueur
+            foreach (Vaisseau_ennemi vaisseau in listeVaisseauEnnemi)
+            {
+                vaisseau.Draw(spriteBatch);
+            }
             for (int i = 0; i < nbreMaxMissiles - 1; i++)
             {
                 if (missileJoueur[i] != null && missileJoueur[i].existe)

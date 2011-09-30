@@ -107,6 +107,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="gestionLevels.cs" />
     <Compile Include="Missiles.cs" />
     <Compile Include="ScrollingBackground.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
