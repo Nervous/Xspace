@@ -51,13 +51,7 @@ namespace Xspace
             switch (typeVaisseau)
             {
                 case "drone":
-                    constr(texture, 100, 0, 0.70f, new Vector2(750, 225), true);
-                    break;
-                case "drone2":
-                    constr(texture, 100, 0, 0.70f, new Vector2(750, 100), true);
-                    break;
-                case "drone3":
-                    constr(texture, 100, 0, 0.70f, new Vector2(750, 300), true);
+                    constr(texture, 100, 0, 0.40f, new Vector2(750, 225), true);
                     break;
                 default:
                     constr(texture, 100, 0, 0.70f, new Vector2(750, 225), true);
@@ -122,12 +116,11 @@ namespace Xspace
         public bool hurt(int ammount)
         {
             this._vie -= ammount;
-            return (this._vie < 0);
+            return (this._vie <= 0);
         }
 
-        public void Update()
+        public void Update(float fps_fix)
         {
-            
         }
 
         public void Draw(SpriteBatch batch)

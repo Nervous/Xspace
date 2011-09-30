@@ -20,7 +20,7 @@ namespace Xspace
         private KeyboardState keyboardState;
         // TODO : Déclaration de tous les objets Vaisseau en dessous
         private Vaisseau_joueur joueur1;
-        private Vaisseau_ennemi drone1, drone2, drone3;
+        private Vaisseau_ennemi drone1;
         List<Vaisseau_ennemi> listeVaisseauEnnemi, listeVaisseauEnnemiToRemove;
         List<Missiles[]> listeMissile, listeMissileToRemove;
         // TODO : Déclaration de tous les objets missiles en dessous
@@ -66,14 +66,8 @@ namespace Xspace
             listeVaisseauEnnemiToRemove = new List<Vaisseau_ennemi>();
             joueur1 = new Vaisseau_joueur(textureVaisseau_joueur);
             drone1 = new Vaisseau_ennemi(textureVaisseau_joueur, "drone");
-            drone2 = new Vaisseau_ennemi(textureVaisseau_joueur, "drone2");
-            drone3 = new Vaisseau_ennemi(textureVaisseau_joueur, "drone3");
             drone1.creer();
-            drone2.creer();
-            drone3.creer();
             listeVaisseauEnnemi.Add(drone1);
-            listeVaisseauEnnemi.Add(drone2);
-            listeVaisseauEnnemi.Add(drone3);
             
 
             // TODO : Chargement de tous les objets missiles en dessous
@@ -81,7 +75,7 @@ namespace Xspace
             listeMissileToRemove = new List<Missiles[]>();
             missileJoueur = new Missiles[nbreMaxMissiles];
             for (int i = 0; i < nbreMaxMissiles; i++)
-                missileJoueur[i] = new Missiles(textureMissile_joueur_base, false, 10);
+                missileJoueur[i] = new Missiles(textureMissile_joueur_base, false, 50);
 
             for (int i = 0; i < nbreMaxMissiles - 1; i++)
             {
@@ -137,7 +131,7 @@ namespace Xspace
             fps_fix = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             time += gameTime.ElapsedGameTime.TotalMilliseconds;
             fond_ecran.Update(fps_fix);
-            
+            drone1.Update(fps_fix);
             joueur1.Update(fps_fix); // Update du joueur
             keyboardState = Keyboard.GetState();
             if (keyboardState.IsKeyDown(Keys.Space))
@@ -189,8 +183,6 @@ namespace Xspace
             fond_ecran.Draw(spriteBatch);
             joueur1.Draw(spriteBatch); // Draw du joueur
             drone1.Draw(spriteBatch);
-            drone2.Draw(spriteBatch);
-            drone3.Draw(spriteBatch);
             for (int i = 0; i < nbreMaxMissiles - 1; i++)
             {
                 if (missileJoueur[i] != null && missileJoueur[i].existe)

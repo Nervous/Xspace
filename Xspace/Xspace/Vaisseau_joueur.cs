@@ -20,7 +20,7 @@ namespace Xspace
         { }
 
 
-        public void Update(float fps_fix)
+        new public void Update(float fps_fix)
         {
             keyboardState = Keyboard.GetState();
             if (keyboardState.IsKeyDown(Keys.Z))

@@ -18,8 +18,24 @@ namespace Xspace
             : base(sprite, typeVaisseau)
         { }
 
-        public void Update(float fps_fix)
+        new public void Update(float fps_fix)
         {
+            switch (_typeVaisseau)
+            {
+                case "drone":
+                    if (_emplacement.X + _textureVaisseau.Width >= 0)
+                        _emplacement -= _deplacementDirectionX * _vitesseVaisseau * fps_fix;
+                    else
+                        this.kill();
+                    break;
+
+                default:
+                    if (_emplacement.X + _textureVaisseau.Width >= 0)
+                        _emplacement -= _deplacementDirectionX * _vitesseVaisseau * fps_fix;
+                    else
+                        this.kill();
+                    break;
+            }
         }
     }
 }
