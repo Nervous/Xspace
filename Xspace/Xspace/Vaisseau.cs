@@ -18,7 +18,7 @@ namespace Xspace
         protected float _vitesseVaisseau;
         protected int _vie, _armure, _timingAttack;
         protected bool _existe;
-        protected string _typeVaisseau;
+        protected string _typeVaisseau, _position;
         protected bool _ennemi;
 
         public Vaisseau(Texture2D texture)
@@ -47,16 +47,24 @@ namespace Xspace
             return true;
         }
 
-        public Vaisseau(Texture2D texture, string typeVaisseau)
+        public Vaisseau(Texture2D texture, string typeVaisseau, string position)
         {
+            Vector2 startPosition;
             _typeVaisseau = typeVaisseau;
+            _position = position;
+            if (position == "bas")
+                startPosition = new Vector2(750, 400);
+            else if (position == "haut")
+                startPosition = new Vector2(750, 50);
+            else
+                startPosition = new Vector2(750, 225);
             switch (typeVaisseau)
             {
                 case "drone":
-                    constr(texture, 100, 0, 0.20f, new Vector2(750, 225), true, true, 500);
+                    constr(texture, 100, 0, 0.20f, startPosition, true, true, 500);
                     break;
                 default:
-                    constr(texture, 100, 0, 0.70f, new Vector2(750, 225), true, true, 500);
+                    constr(texture, 100, 0, 0.70f, startPosition, true, true, 500);
                     break;
             }
         }

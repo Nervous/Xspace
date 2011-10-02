@@ -18,7 +18,7 @@ namespace Xspace
         string[] infosLevel;
 
 
-        string categorie;
+        string categorie, position;
         Vaisseau_ennemi adresse;
         double time;
         bool hasSpawned;
@@ -30,12 +30,13 @@ namespace Xspace
             infosLevel = lireFichier(pathLevel);
         }
 
-        public gestionLevels(string setCategorie, Vaisseau_ennemi setAdresse, int setTime)
+        public gestionLevels(string setCategorie, Vaisseau_ennemi setAdresse, int setTime, string setPosition)
         {
             categorie = setCategorie;
             adresse = setAdresse;
             time = setTime;
             hasSpawned = false;
+            position = setPosition;
         }
 
         public string[] lireFichier(string path)
@@ -57,6 +58,11 @@ namespace Xspace
         public string Categorie
         {
             get { return categorie; }
+        }
+
+        public string Position
+        {
+            get { return position; }
         }
 
         public bool isTime(double actualTime)

@@ -32,6 +32,7 @@ namespace Xspace
         double time, lastTime;
         char[] delimitationFilesInfo = new char[] { ' ' };
         char[] delimitationFilesInfo2 = new char[] { ';' };
+        char[] delimitationFilesInfo3 = new char[] { ':' };
         
         public Xspace()
         {
@@ -96,45 +97,59 @@ namespace Xspace
             foreach (string info in thisLevel.getInfosLevel) // Pour chacune des lignes du level ...
             {
                 int timing = 0;
-                string categorie = "", type = "";
+                string categorie = "", type = "", position = "";
                 Vaisseau_ennemi vaisseau = null;
                 foreach (string info2 in info.Split(delimitationFilesInfo)) // ... On récupère 2 infos : le type de l'objet et à quelle date il doit spawn
                 {
                     i = 0;
                     if (!int.TryParse(info2, out timing)) // SI l'info n'est pas un nombre, alors c'est la catégorie de l'objet (vaisseau, bonus, obstacle, etc.)
                     {
-                        foreach (string info3 in info2.Split(delimitationFilesInfo2))
+                        foreach (string info3 in info2.Split(delimitationFilesInfo3))
                         {
-                            if (i == 0) // Premiere info : catégorie de l'objet
+                            if(info3.Contains(";")) // Si on trouve le caratère ";", alors c'est les infos level (ex : vaisseau;drone)
                             {
-                                categorie = info3;
+                                foreach (string info4 in info3.Split(delimitationFilesInfo2))
+                                {
+                                    if (i == 0) // Premiere info : catégorie de l'objet
+                                    {
+                                        categorie = info4;
+                                    }
+                                    else // Deuxième info : type de l'objet
+                                    {
+                                        type = info4;
+                                    }
+                                    i++;
+                                }
                             }
-                            else // Deuxième info : type de l'objet
+                            else
                             {
-                                type = info3;
+                                position = info3;
                             }
-                            i++;
                         }
                     }
-                    else // Sinon c'est simplement sa date de spawn.
+                    else
                         timing = int.Parse(info2);
                     
                 }
                 //Fin de lecture de la ligne : on ajoute un élement dans la liste des infos du level
-                if(categorie == "vaisseau")
+                if (categorie == "vaisseau")
                 {
-                    switch(type)
+                    switch (type)
                     {
                         case "drone":
-                            vaisseau = vaisseauDrone[actualDrone] = new Vaisseau_ennemi(textureVaisseau_joueur, "drone");
+                            vaisseau = vaisseauDrone[actualDrone] = new Vaisseau_ennemi(textureVaisseau_joueur, "drone", position);
                             break;
                         default:
                             break;
                     }
                 }
+                else
+                {
+                    if (categorie == "drone")
+                        Exit();
+                }
 
-                infLevel.Add(new gestionLevels(categorie, vaisseau, timing));
-                j++;
+                infLevel.Add(new gestionLevels(categorie, vaisseau, timing, position));
                 
 
             }
@@ -243,7 +258,9 @@ namespace Xspace
             }
 
             for (j = 0; j < i; j++)
-                listeVaisseauEnnemi.Remove(listeVaisseauEnnemiToRemove[j]);
+            {
+                    listeVaisseauEnnemi.Remove(listeVaisseauEnnemiToRemove[j]);
+            }
 
             listeVaisseauEnnemiToRemove.Clear();
             i = 0;

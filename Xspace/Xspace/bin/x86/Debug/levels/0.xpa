@@ -1,5 +1,6 @@
-vaisseau;drone 2500
+vaisseau;drone:haut 2500
+vaisseau;drone:bas 2750
+vaisseau;drone 3000
+vaisseau;drone 3250
 vaisseau;drone 3500
-vaisseau;drone 4000
-vaisseau;drone 5000
-vaisseau;drone 7000
+vaisseau;drone 3750
