@@ -134,6 +134,7 @@ namespace Xspace
 
         public void Update(float fps_fix)
         {
+
         }
 
 
@@ -145,9 +146,9 @@ namespace Xspace
             _texturevie = Definition.texturevie;
             _emplacementvie =(new Vector2(_emplacement.X + (this.sprite.Width/2) - 4 ,_emplacement.Y -2 - (this.sprite.Height / 2)));
              //_emplacementcontourvie = (new Vector2(_emplacement.X + (this.sprite.Width / 2) - 5, _emplacement.Y - (this.sprite.Height / 2)));
-            
+            float _viefloat = (float)vie;
             Vector2 _echellevie;
-            _echellevie = new Vector2(_vie/100, 1);
+            _echellevie = new Vector2((_viefloat/100), 1);
             Vector2 origin;
             origin.X = _textureVaisseau.Width / 2;
             origin.Y = _textureVaisseau.Height / 2;
