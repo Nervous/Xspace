@@ -13,18 +13,19 @@ namespace Xspace
 {
     class Missiles
     {
-        protected Vector2 _emplacement, _deplacementDirectionY, _deplacementDirectionX;
+        protected Vector2 _emplacement, _deplacementDirectionY, _deplacementDirectionX, _start;
         protected Texture2D _textureMissile;
         protected int _vie, _degats;
-        protected float _vitesseMissile;
+        protected float _vitesseMissile, _vitesseMissile_Y;
         private bool _estAffiche, _ennemi, _existe;
-
+        int i;
         public Missiles(Texture2D texture, bool ennemi, int degats)
         {
             _textureMissile = texture;
             _vie = 1;
             _degats = degats;
             _vitesseMissile = 0.95f;
+            _vitesseMissile_Y= 0.85f;
             _emplacement = Vector2.Zero;
             _deplacementDirectionX = Vector2.Normalize(new Vector2(7, 0));
             _deplacementDirectionY = Vector2.Normalize(new Vector2(0, 7));
@@ -45,12 +46,14 @@ namespace Xspace
             _estAffiche = false;
             _ennemi = ennemi;
             _existe = false;
+            
         }
 
         public void initialiserTexture(Texture2D texture)
         {
             _textureMissile = texture;
         }
+
 
         public bool estAffiche
         {
@@ -74,6 +77,7 @@ namespace Xspace
 
         public bool afficherMissile(Vector2 startPosition)
         {
+            _start = startPosition;
             this._estAffiche = true;
             float startX = startPosition.X + 45;
             float startY = startPosition.Y + 15;
@@ -86,7 +90,27 @@ namespace Xspace
         public void avancerMissile(float fps_fix)
         {
             if (_emplacement.X < 850)
+                 
                 _emplacement += fps_fix * _deplacementDirectionX * _vitesseMissile;
+            else
+                this._estAffiche = false;
+        }
+        public void avancerMissile_2(float fps_fix)
+        {
+            if (_emplacement.X < 850)
+            {
+                if (_start.Y >= _emplacement.Y - 100)
+                {
+
+                    _emplacement += fps_fix * _deplacementDirectionY * _vitesseMissile_Y;
+
+                }
+                else
+                {
+                    _emplacement += fps_fix * _deplacementDirectionX * _vitesseMissile;
+                }    
+            
+                }
             else
                 this._estAffiche = false;
         }

@@ -228,6 +228,7 @@ namespace Xspace
                 {
                     if (missileJoueur[i] != null && missileJoueur[i].estAffiche == false && (time - lastTime > 150 || lastTime == 0))
                     {
+                        
                             missileJoueur[i].afficherMissile(joueur1.position);
                             lastTime = time;
                             break;
@@ -239,7 +240,7 @@ namespace Xspace
             {
                 if (missileJoueur[i] != null && missileJoueur[i].estAffiche)
                 {
-                    missileJoueur[i].avancerMissile(fps_fix);
+                    missileJoueur[i].avancerMissile_2(fps_fix);
                 }
 
             }

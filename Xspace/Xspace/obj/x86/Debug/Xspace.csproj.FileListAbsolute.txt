@@ -58,3 +58,17 @@ C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\obj\x86\Debug\ResolveAssem
 C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
 C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\obj\x86\Debug\Xspace.exe
 C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\obj\x86\Debug\Xspace.pdb
+C:\Users\User\Desktop\Nouveau dossier\Xspace\Xspace\bin\x86\Debug\Content\Vaisseau_joueur.xnb
+C:\Users\User\Desktop\Nouveau dossier\Xspace\Xspace\bin\x86\Debug\Content\MissileJoueur_Base.xnb
+C:\Users\User\Desktop\Nouveau dossier\Xspace\Xspace\bin\x86\Debug\Content\missile1.xnb
+C:\Users\User\Desktop\Nouveau dossier\Xspace\Xspace\bin\x86\Debug\Content\space_bg.xnb
+C:\Users\User\Desktop\Nouveau dossier\Xspace\Xspace\bin\x86\Debug\Content\musique.xnb
+C:\Users\User\Desktop\Nouveau dossier\Xspace\Xspace\bin\x86\Debug\Content\against_the_waves.xnb
+C:\Users\User\Desktop\Nouveau dossier\Xspace\Xspace\bin\x86\Debug\Content\musique.wma
+C:\Users\User\Desktop\Nouveau dossier\Xspace\Xspace\bin\x86\Debug\Content\against_the_waves.wma
+C:\Users\User\Desktop\Nouveau dossier\Xspace\Xspace\bin\x86\Debug\Xspace.exe
+C:\Users\User\Desktop\Nouveau dossier\Xspace\Xspace\bin\x86\Debug\Xspace.pdb
+C:\Users\User\Desktop\Nouveau dossier\Xspace\Xspace\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\User\Desktop\Nouveau dossier\Xspace\Xspace\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\User\Desktop\Nouveau dossier\Xspace\Xspace\obj\x86\Debug\Xspace.exe
+C:\Users\User\Desktop\Nouveau dossier\Xspace\Xspace\obj\x86\Debug\Xspace.pdb
