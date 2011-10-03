@@ -53,6 +53,7 @@ namespace Xspace
         private ScrollingBackground fond_ecran;
         protected override void LoadContent()
         {
+            Texture2D _textureVie, _textureContourVie;
             spriteBatch = new SpriteBatch(GraphicsDevice);
             musique = Content.Load<Song>("against_the_waves");
             MediaPlayer.Play(musique);
@@ -61,8 +62,10 @@ namespace Xspace
             fond_ecran.Load(GraphicsDevice, fond_image);
             thisLevel = new gestionLevels(0);
             infLevel = new List<gestionLevels>();
-            
-
+            _textureContourVie = Content.Load<Texture2D>("contourvie");
+            _textureVie = Content.Load<Texture2D>("vie");
+            Definition.texturevie =_textureVie;
+            Definition.texturecontourvie = _textureContourVie;
             // TODO : Chargement de toutes les textures des vaisseau en dessous
             textureVaisseau_joueur = Content.Load<Texture2D>("Vaisseau_joueur"); 
 

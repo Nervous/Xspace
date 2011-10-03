@@ -57,6 +57,24 @@
       <Extra>C:\Users\User\Desktop\Nouveau dossier\Xspace\Xspace\bin\x86\Debug\Content\against_the_waves.wma</Extra>
       <Time>2011-10-01T02:11:33.6089676+02:00</Time>
     </Item>
+    <Item>
+      <Source>vie.png</Source>
+      <Name>vie</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\User\Desktop\Nouveau dossier\Xspace\Xspace\bin\x86\Debug\Content\vie.xnb</Output>
+      <Time>2011-10-03T20:56:45.0030683+02:00</Time>
+    </Item>
+    <Item>
+      <Source>contourvie.png</Source>
+      <Name>contourvie</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\User\Desktop\Nouveau dossier\Xspace\Xspace\bin\x86\Debug\Content\contourvie.xnb</Output>
+      <Time>2011-10-03T20:55:02.3071944+02:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>

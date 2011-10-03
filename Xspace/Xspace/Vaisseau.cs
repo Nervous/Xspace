@@ -21,6 +21,7 @@ namespace Xspace
         protected string _typeVaisseau, _position;
         protected bool _ennemi;
 
+
         public Vaisseau(Texture2D texture)
         {
             _textureVaisseau = texture;
@@ -135,8 +136,18 @@ namespace Xspace
         {
         }
 
+
         public void Draw(SpriteBatch batch)
         {
+            Vector2 _emplacementvie;
+            Texture2D _texturecontourvie, _texturevie;
+            _texturecontourvie = Definition.texturecontourvie;
+            _texturevie = Definition.texturevie;
+            _emplacementvie =(new Vector2(_emplacement.X + (this.sprite.Width/2) - 4 ,_emplacement.Y -2 - (this.sprite.Height / 2)));
+             //_emplacementcontourvie = (new Vector2(_emplacement.X + (this.sprite.Width / 2) - 5, _emplacement.Y - (this.sprite.Height / 2)));
+            
+            Vector2 _echellevie;
+            _echellevie = new Vector2(_vie/100, 1);
             Vector2 origin;
             origin.X = _textureVaisseau.Width / 2;
             origin.Y = _textureVaisseau.Height / 2;
@@ -145,7 +156,11 @@ namespace Xspace
                 /*if (_ennemi)
                     batch.Draw(_textureVaisseau, _emplacement, null, Color.White, MathHelper.Pi, origin, 1.0f, SpriteEffects.None, 0f);
                 else */
+                // Le draw en commentaire est le contour de la barre de vie (uniquement un interet visuel)
+                //batch.Draw(_texturecontourvie, _emplacementcontourvie, null, Color.White, MathHelper.Pi, origin, 1f, SpriteEffects.None, 0f);
+                batch.Draw(_texturevie, _emplacementvie, null, Color.White, MathHelper.Pi, origin, _echellevie, SpriteEffects.None, 0f);
                     batch.Draw(_textureVaisseau, _emplacement, Color.White);
+
             }
         }
     }

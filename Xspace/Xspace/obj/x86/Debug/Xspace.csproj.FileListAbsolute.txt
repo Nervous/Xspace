@@ -72,3 +72,5 @@ C:\Users\User\Desktop\Nouveau dossier\Xspace\Xspace\obj\x86\Debug\ResolveAssembl
 C:\Users\User\Desktop\Nouveau dossier\Xspace\Xspace\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
 C:\Users\User\Desktop\Nouveau dossier\Xspace\Xspace\obj\x86\Debug\Xspace.exe
 C:\Users\User\Desktop\Nouveau dossier\Xspace\Xspace\obj\x86\Debug\Xspace.pdb
+C:\Users\User\Desktop\Nouveau dossier\Xspace\Xspace\bin\x86\Debug\Content\vie.xnb
+C:\Users\User\Desktop\Nouveau dossier\Xspace\Xspace\bin\x86\Debug\Content\contourvie.xnb
