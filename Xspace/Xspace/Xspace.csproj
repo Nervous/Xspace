@@ -111,6 +111,7 @@
     <Compile Include="gestionLevels.cs" />
     <Compile Include="Missiles.cs" />
     <Compile Include="Particules\Particule.cs" />
+    <Compile Include="Particules\ParticulesMgr.cs" />
     <Compile Include="Particules\ParticulesOptions.cs" />
     <Compile Include="ScrollingBackground.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
