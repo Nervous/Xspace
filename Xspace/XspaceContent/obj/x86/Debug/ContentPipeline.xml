@@ -7,8 +7,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\User\Desktop\Nouveau dossier\Xspace\Xspace\bin\x86\Debug\Content\Vaisseau_joueur.xnb</Output>
-      <Time>2011-10-01T02:11:33.5349634+02:00</Time>
+      <Output>C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Vaisseau_joueur.xnb</Output>
+      <Time>2011-09-26T18:10:20.7918751+02:00</Time>
     </Item>
     <Item>
       <Source>MissileJoueur_Base.png</Source>
@@ -16,8 +16,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\User\Desktop\Nouveau dossier\Xspace\Xspace\bin\x86\Debug\Content\MissileJoueur_Base.xnb</Output>
-      <Time>2011-10-01T02:11:33.5349634+02:00</Time>
+      <Output>C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\MissileJoueur_Base.xnb</Output>
+      <Time>2011-09-26T18:10:20.7908751+02:00</Time>
     </Item>
     <Item>
       <Source>missile1.png</Source>
@@ -25,8 +25,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\User\Desktop\Nouveau dossier\Xspace\Xspace\bin\x86\Debug\Content\missile1.xnb</Output>
-      <Time>2011-10-01T02:11:33.6099676+02:00</Time>
+      <Output>C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\missile1.xnb</Output>
+      <Time>2011-09-27T18:06:27.7217022+02:00</Time>
     </Item>
     <Item>
       <Source>space_bg.jpg</Source>
@@ -34,28 +34,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\User\Desktop\Nouveau dossier\Xspace\Xspace\bin\x86\Debug\Content\space_bg.xnb</Output>
-      <Time>2011-10-01T02:11:33.6709711+02:00</Time>
-    </Item>
-    <Item>
-      <Source>musique.mp3</Source>
-      <Name>musique</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SongProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\User\Desktop\Nouveau dossier\Xspace\Xspace\bin\x86\Debug\Content\musique.xnb</Output>
-      <Extra>C:\Users\User\Desktop\Nouveau dossier\Xspace\Xspace\bin\x86\Debug\Content\musique.wma</Extra>
-      <Time>2011-10-01T02:11:33.6599705+02:00</Time>
-    </Item>
-    <Item>
-      <Source>against_the_waves.mp3</Source>
-      <Name>against_the_waves</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SongProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\User\Desktop\Nouveau dossier\Xspace\Xspace\bin\x86\Debug\Content\against_the_waves.xnb</Output>
-      <Extra>C:\Users\User\Desktop\Nouveau dossier\Xspace\Xspace\bin\x86\Debug\Content\against_the_waves.wma</Extra>
-      <Time>2011-10-01T02:11:33.6089676+02:00</Time>
+      <Output>C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\space_bg.xnb</Output>
+      <Time>2011-09-27T18:11:26.4187867+02:00</Time>
     </Item>
     <Item>
       <Source>vie.png</Source>
@@ -63,8 +43,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\User\Desktop\Nouveau dossier\Xspace\Xspace\bin\x86\Debug\Content\vie.xnb</Output>
-      <Time>2011-10-03T20:56:45.0030683+02:00</Time>
+      <Output>C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\vie.xnb</Output>
+      <Time>2011-10-03T21:10:04.9562042+02:00</Time>
     </Item>
     <Item>
       <Source>contourvie.png</Source>
@@ -72,8 +52,37 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\User\Desktop\Nouveau dossier\Xspace\Xspace\bin\x86\Debug\Content\contourvie.xnb</Output>
-      <Time>2011-10-03T20:55:02.3071944+02:00</Time>
+      <Output>C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\contourvie.xnb</Output>
+      <Time>2011-10-03T21:10:04.9512039+02:00</Time>
+    </Item>
+    <Item>
+      <Source>particle2.png</Source>
+      <Name>particle2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\particle2.xnb</Output>
+      <Time>2011-10-08T02:06:45.7240505+02:00</Time>
+    </Item>
+    <Item>
+      <Source>musique.mp3</Source>
+      <Name>musique</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\musique.xnb</Output>
+      <Extra>C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\musique.wma</Extra>
+      <Time>2011-09-26T18:10:20.8648793+02:00</Time>
+    </Item>
+    <Item>
+      <Source>against_the_waves.mp3</Source>
+      <Name>against_the_waves</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\against_the_waves.xnb</Output>
+      <Extra>C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\against_the_waves.wma</Extra>
+      <Time>2011-09-27T18:30:18.1245166+02:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
@@ -81,10 +90,10 @@
       <TargetProfile>HiDef</TargetProfile>
       <BuildConfiguration>Debug</BuildConfiguration>
       <CompressContent>false</CompressContent>
-      <RootDirectory>C:\Users\User\Desktop\Nouveau dossier\Xspace\XspaceContent\</RootDirectory>
-      <LoggerRootDirectory>C:\Users\User\Desktop\Nouveau dossier\Xspace\Xspace\</LoggerRootDirectory>
-      <IntermediateDirectory>C:\Users\User\Desktop\Nouveau dossier\Xspace\XspaceContent\obj\x86\Debug\</IntermediateDirectory>
-      <OutputDirectory>C:\Users\User\Desktop\Nouveau dossier\Xspace\Xspace\bin\x86\Debug\Content\</OutputDirectory>
+      <RootDirectory>C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\XspaceContent\</RootDirectory>
+      <LoggerRootDirectory>C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\Xspace\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\XspaceContent\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>
@@ -112,8 +121,8 @@
         <Value>2010-08-23T12:41:18+02:00</Value>
       </Assembly>
       <Assembly>
-        <Key>C:\Windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
-        <Value>2011-09-24T22:09:25.3855904+02:00</Value>
+        <Key>C:\windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
+        <Value>2011-07-01T16:44:03.7559627+02:00</Value>
       </Assembly>
     </Assemblies>
   </Asset>

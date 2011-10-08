@@ -12,6 +12,9 @@ namespace Xspace
 {
     public class ParticulesOptions
     {
+        private int p;
+        private Color color;
+
         public double ActifTime { get; set; } // temps d'activité restante de la particule
         public Color CouleurInit { get; set; }
 
@@ -31,6 +34,11 @@ namespace Xspace
             }
         }
 
+
+
+
+
+        public int ParticulesMax { get; set; }
     }
 
 }

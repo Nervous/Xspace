@@ -14,7 +14,7 @@ namespace Xspace
     public class Xspace : Microsoft.Xna.Framework.Game
     {
         GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        public SpriteBatch spriteBatch;
         private Texture2D textureVaisseau_joueur, textureMissile_joueur_base;
         private Song musique;
         private KeyboardState keyboardState;
@@ -48,7 +48,10 @@ namespace Xspace
         protected override void Initialize()
         {
             base.Initialize();
-        }
+            var options = new ParticulesOptions.ParticulesOptions(1000, Color.Red);
+            var mgr = new ParticulesMgr.(this, options) {Position = new Vector2(300,300)};
+            Components.Add(mgr);
+         }
 
         private ScrollingBackground fond_ecran;
         protected override void LoadContent()
@@ -288,7 +291,7 @@ namespace Xspace
                     missileJoueur[i].Draw(spriteBatch);
             } 
             spriteBatch.End();
-
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive);
             base.Draw(gameTime);
         }
 
