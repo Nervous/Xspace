@@ -18,3 +18,7 @@
 
 27/09
 - Début de la gestion des collisions (dur, dur ...)
+
+14/10
+- Moteur à particule: 100% (exemples dans le readme particules)
+quelques correctifs à faire

@@ -31,23 +31,28 @@ namespace Xspace
 
         public void Reset()
         {
-            Position = _mgr.Position;
+            Position = _options.Position == null ? _mgr.Position : _options.Position(_mgr.Position);
             ActifTime = _options.ActifTime;// ParticuleMgr permet de creer le nombre max de particules puis de les remettre à zero lorsqu'elles sont inactives, d'où la fct Reset
             Active = true;
         }
 
-        public void Draw(SpriteBatch particule_sp, Texture2D texture_particule)
+        public void Draw(SpriteBatch sb, Texture2D texture_particule)
         {
             if (!Active)
                 return;
+            var percent = (float)((_options.ActifTime - ActifTime) / _options.ActifTime);
 
-            particule_sp.Draw(texture_particule, Position, null, _options.CouleurInit, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
+            sb.Draw(texture_particule, Position, null,
+            Helper.Interpolate(_options.CouleurInit, _options.CouleurFin, percent),
+            0, Vector2.Zero, MathHelper.Lerp(_options.TailleInit, _options.TailleFin, percent), SpriteEffects.None, 0);
         }
 
         public void Update(GameTime gameTime)
         {
             if (!Active)
                 return;
+            if (_options.Vitesse != null)
+                Vitesse = _options.Vitesse(Vitesse, (_options.ActifTime - ActifTime) / _options.ActifTime);
             Position += Vitesse;
 
             ActifTime -= gameTime.ElapsedGameTime.TotalMilliseconds;

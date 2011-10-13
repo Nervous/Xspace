@@ -20,6 +20,7 @@ namespace Xspace
         private KeyboardState keyboardState;
         private gestionLevels thisLevel;
         private List<gestionLevels> infLevel;
+        public ParticulesOptions options { get; set; }
         // TODO : Déclaration de tous les objets Vaisseau en dessous
         private Vaisseau_joueur joueur1;
         private Vaisseau_ennemi[] vaisseauDrone;
@@ -33,24 +34,33 @@ namespace Xspace
         char[] delimitationFilesInfo = new char[] { ' ' };
         char[] delimitationFilesInfo2 = new char[] { ';' };
         char[] delimitationFilesInfo3 = new char[] { ':' };
-        
+        bool particule_done;
+
         public Xspace()
         {
-            graphics = new GraphicsDeviceManager(this);
+            graphics = new GraphicsDeviceManager(this)
+            {
+                PreferredBackBufferWidth = 1180,
+                PreferredBackBufferHeight = 620
+            };
             Content.RootDirectory = "Content";
             IsFixedTimeStep = false;
             graphics.SynchronizeWithVerticalRetrace = false;
             nbreMaxMissiles = 15;
             lastTime = 0;
+            var settings = new ParticulesOptions(1000, Color.Red, Color.Red, 100, 100, 1,
+                (v, t) =>
+                t == 0 ? Helper.GetRandomVector() * Helper.GetRandomFloat() : v,
+                position => position);
+            var mgr = new ParticulesMgr(this, options) { Position = new Vector2(300, 300) };
+            Components.Add(mgr);
         }
 
 
         protected override void Initialize()
         {
-            base.Initialize();
-            var options = new ParticulesOptions.ParticulesOptions(1000, Color.Red);
-            var mgr = new ParticulesMgr.(this, options) {Position = new Vector2(300,300)};
-            Components.Add(mgr);
+		    base.Initialize();
+
          }
 
         private ScrollingBackground fond_ecran;
@@ -189,7 +199,15 @@ namespace Xspace
                                 if (listeVaisseau[vaisseauActuel].hurt(listeMissiles[missileActuel][k].degats) == true)
                                 {
                                     // Vaisseau dead
+
+                                        var settingsExplosion = new ParticulesOptions(3000, Color.Green, new Color(0, 1f, 0.8f, 0f), 250, 0, 0,
+                                        (v, t) => t == 0 ? Helper.GetRandomVector() * Helper.GetRandomFloat() : v,
+                                        pos => pos + Helper.GetRandomVector() * 100);
+                                        var explosion = new ParticulesMgr(this, settingsExplosion) { Position = listeVaisseau[vaisseauActuel].position };
+                                        Components.Add(explosion);
+ 
                                     listeVaisseau[vaisseauActuel].kill();
+                                    
                                 }
                             }
                         }
@@ -246,7 +264,7 @@ namespace Xspace
             {
                 if (missileJoueur[i] != null && missileJoueur[i].estAffiche)
                 {
-                    missileJoueur[i].avancerMissile_2(fps_fix);
+                    missileJoueur[i].avancerMissile(fps_fix);
                 }
 
             }
@@ -278,9 +296,11 @@ namespace Xspace
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
-            spriteBatch.Begin();
+           // spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive);
             fond_ecran.Draw(spriteBatch);
             joueur1.Draw(spriteBatch); // Draw du joueur
+            
             foreach (Vaisseau_ennemi vaisseau in listeVaisseauEnnemi)
             {
                 vaisseau.Draw(spriteBatch);
@@ -289,15 +309,18 @@ namespace Xspace
             {
                 if (missileJoueur[i] != null && missileJoueur[i].existe)
                     missileJoueur[i].Draw(spriteBatch);
-            } 
-            spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive);
+            }
             base.Draw(gameTime);
+            spriteBatch.End();
+            
+            
         }
 
         protected override void UnloadContent()
         {
 
         }
+
+        
     }
 }

@@ -74,3 +74,6 @@ C:\Users\User\Desktop\Nouveau dossier\Xspace\Xspace\obj\x86\Debug\Xspace.exe
 C:\Users\User\Desktop\Nouveau dossier\Xspace\Xspace\obj\x86\Debug\Xspace.pdb
 C:\Users\User\Desktop\Nouveau dossier\Xspace\Xspace\bin\x86\Debug\Content\vie.xnb
 C:\Users\User\Desktop\Nouveau dossier\Xspace\Xspace\bin\x86\Debug\Content\contourvie.xnb
+C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\vie.xnb
+C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\contourvie.xnb
+C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\particle2.xnb
