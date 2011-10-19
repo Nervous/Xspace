@@ -23,6 +23,9 @@ namespace Xspace
         new public void Update(float fps_fix)
         {
             keyboardState = Keyboard.GetState();
+
+
+
             if (keyboardState.IsKeyDown(Keys.Z))
             {
                 if (_emplacement.Y - _textureVaisseau.Height / 2 + 20 >= 0)

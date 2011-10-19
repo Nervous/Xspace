@@ -13,11 +13,14 @@ namespace Xspace
 {
     class Missiles
     {
+        KeyboardState keyboardState;
         protected Vector2 _emplacement, _deplacementDirectionY, _deplacementDirectionX, _start;
         protected Texture2D _textureMissile;
         protected int _vie, _degats;
         protected float _vitesseMissile, _vitesseMissile_Y;
         private bool _estAffiche, _ennemi, _existe;
+        bool missileType1;
+        bool missileType2;
         int i;
         public Missiles(Texture2D texture, bool ennemi, int degats)
         {
@@ -95,22 +98,12 @@ namespace Xspace
             else
                 this._estAffiche = false;
         }
-        public void avancerMissile_2(float fps_fix)
+        public void avancerMissile_enemi1(float fps_fix)
         {
             if (_emplacement.X < 850)
-            {
-                if (_start.Y >= _emplacement.Y - 100)
-                {
-
-                    _emplacement += fps_fix * _deplacementDirectionY * _vitesseMissile_Y;
-
-                }
-                else
-                {
-                    _emplacement += fps_fix * _deplacementDirectionX * _vitesseMissile;
-                }    
             
-                }
+               
+                    _emplacement -= fps_fix * _deplacementDirectionX * _vitesseMissile;
             else
                 this._estAffiche = false;
         }
@@ -133,7 +126,7 @@ namespace Xspace
 
         public void Draw(SpriteBatch batch)
         {
-            if (this._estAffiche)
+            if ((this._estAffiche))
                 batch.Draw(_textureMissile, _emplacement, Color.DarkViolet);
         }
     }
