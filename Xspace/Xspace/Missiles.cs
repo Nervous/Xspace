@@ -78,6 +78,11 @@ namespace Xspace
             get { return _textureMissile; }
         }
 
+        public bool ennemi
+        {
+            get { return _ennemi; }
+        }
+
         public bool afficherMissile(Vector2 startPosition)
         {
             _start = startPosition;

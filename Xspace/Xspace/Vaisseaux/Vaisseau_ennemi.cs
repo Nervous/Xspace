@@ -43,5 +43,10 @@ namespace Xspace
 
             
         }
+
+        public bool ennemi
+        {
+            get { return _ennemi; }
+        }
     }
 }

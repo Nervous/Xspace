@@ -94,14 +94,13 @@ namespace Xspace
             listeVaisseauEnnemiToRemove = new List<Vaisseau_ennemi>();
             vaisseauDrone = new Vaisseau_ennemi[100];
             joueur1 = new Vaisseau_joueur(textureVaisseau_joueur);
-            drone = new Vaisseau_ennemi(textureVaisseau_joueur, type_drone, position_missile_ennemi);
-            
 
             // TODO : Chargement de tous les objets missiles en dessous
             listeMissile = new List<Missiles[]>();
             listeMissileToRemove = new List<Missiles[]>();
             missileJoueur = new Missiles[nbreMaxMissiles];
             missileEnnemi = new Missiles[nbreMaxMissiles_e];
+            missiles = new Missiles(textureMissile_ennemi1, true, 50);
             for (int i = 0; i < nbreMaxMissiles; i++)
                 missileJoueur[i] = new Missiles(textureMissile_joueur_base, false, 50);
 
@@ -201,23 +200,28 @@ namespace Xspace
                     missileActuel = listeMissiles.IndexOf(missile);
                     for (int k = 0; k < 15; k++)
                     {
-                        if (listeMissile[missileActuel][k].existe)
+                        if ((vaisseau.ennemi) && (missiles.ennemi))
+                        { }
+                        else
                         {
-                            if (((listeMissiles[missileActuel][k].position.X + listeMissiles[missileActuel][k].sprite.Width > listeVaisseau[vaisseauActuel].position.X)
-                                && (listeMissiles[missileActuel][k].position.X + listeMissiles[missileActuel][k].sprite.Width < listeVaisseau[vaisseauActuel].position.X + listeVaisseau[vaisseauActuel].sprite.Width))
-                                && ((listeMissiles[missileActuel][k].position.Y + listeMissiles[missileActuel][k].sprite.Height / 2 > listeVaisseau[vaisseauActuel].position.Y)
-                                && (listeMissiles[missileActuel][k].position.Y + listeMissiles[missileActuel][k].sprite.Height / 2 < listeVaisseau[vaisseauActuel].position.Y + listeVaisseau[vaisseauActuel].sprite.Height))
-                                )
+                            if (listeMissile[missileActuel][k].existe)
                             {
-                                // Collision missile => Vaisseau trouvée
-                                listeMissiles[missileActuel][k].kill();
-
-                                if (listeVaisseau[vaisseauActuel].hurt(listeMissiles[missileActuel][k].degats) == true)
+                                if (((listeMissiles[missileActuel][k].position.X + listeMissiles[missileActuel][k].sprite.Width > listeVaisseau[vaisseauActuel].position.X)
+                                    && (listeMissiles[missileActuel][k].position.X + listeMissiles[missileActuel][k].sprite.Width < listeVaisseau[vaisseauActuel].position.X + listeVaisseau[vaisseauActuel].sprite.Width))
+                                    && ((listeMissiles[missileActuel][k].position.Y + listeMissiles[missileActuel][k].sprite.Height / 2 > listeVaisseau[vaisseauActuel].position.Y)
+                                    && (listeMissiles[missileActuel][k].position.Y + listeMissiles[missileActuel][k].sprite.Height / 2 < listeVaisseau[vaisseauActuel].position.Y + listeVaisseau[vaisseauActuel].sprite.Height))
+                                    )
                                 {
-                                    // Vaisseau dead
- 
-                                    listeVaisseau[vaisseauActuel].kill();
-                                    
+                                    // Collision missile => Vaisseau trouvée
+                                    listeMissiles[missileActuel][k].kill();
+
+                                    if (listeVaisseau[vaisseauActuel].hurt(listeMissiles[missileActuel][k].degats) == true)
+                                    {
+                                        // Vaisseau dead
+
+                                        listeVaisseau[vaisseauActuel].kill();
+
+                                    }
                                 }
                             }
                         }
@@ -270,19 +274,26 @@ namespace Xspace
                 }
             }
 
-
-            if (tirEnnemiTimer <= time)
+            foreach (Vaisseau_ennemi vaisseau in listeVaisseauEnnemi)
             {
-                for (int i = 0; i < nbreMaxMissiles_e; i++)
+                tirEnnemiTimer = 10;
+                if (vaisseau.existe)
                 {
-                    if (missileEnnemi[i] != null && missileEnnemi[i].estAffiche == false && (tirEnnemiTimer <= time))
+                    for (int i = 0; i < nbreMaxMissiles_e; i++)
                     {
-                        missileEnnemi[i].afficherMissile(drone.position);
-                        tirEnnemiTimer = 500;
-                    }
-                    else tirEnnemiTimer -= time;
+                        if (missileEnnemi[i] != null && missileEnnemi[i].estAffiche == false && (tirEnnemiTimer <= time))
+                        {
+                            missileEnnemi[i].afficherMissile(vaisseau.position);
+                            tirEnnemiTimer = 500;
+                        }
+                        else tirEnnemiTimer -= time;
+                        
 
+                    }  
                 }
+               
+                
+                
             }
             
 
