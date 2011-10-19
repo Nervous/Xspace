@@ -15,7 +15,7 @@ namespace Xspace
     {
         GraphicsDeviceManager graphics;
         public SpriteBatch spriteBatch;
-        private Texture2D textureVaisseau_joueur, textureMissile_joueur_base;
+        private Texture2D textureVaisseau_joueur, textureMissile_joueur_base, textureMissile_ennemi1;
         private Song musique;
         private KeyboardState keyboardState;
         private gestionLevels thisLevel;
@@ -23,11 +23,17 @@ namespace Xspace
         // TODO : Déclaration de tous les objets Vaisseau en dessous
         private Vaisseau_joueur joueur1;
         private Vaisseau_ennemi[] vaisseauDrone;
+        private Vaisseau_ennemi drone;
         List<Vaisseau_ennemi> listeVaisseauEnnemi, listeVaisseauEnnemiToRemove;
         List<Missiles[]> listeMissile, listeMissileToRemove;
         // TODO : Déclaration de tous les objets missiles en dessous
         Missiles[] missileJoueur;
+        Missiles[] missileEnnemi;
+        string position_missile_ennemi;
+        string type_drone;
+        Missiles missiles;
         int nbreMaxMissiles, i = 0, j = 0, actualDrone = 0;
+        int nbreMaxMissiles_e;
         float fps_fix;
         double time, lastTime;
         char[] delimitationFilesInfo = new char[] { ' ' };
@@ -35,6 +41,7 @@ namespace Xspace
         char[] delimitationFilesInfo3 = new char[] { ':' };
         bool missileType1;
         bool missileType2;
+        double tirEnnemiTimer;
 
         public Xspace()
         {
@@ -48,12 +55,14 @@ namespace Xspace
             graphics.SynchronizeWithVerticalRetrace = false;
             nbreMaxMissiles = 15;
             lastTime = 0;
+            nbreMaxMissiles_e = 20;
         }
 
 
         protected override void Initialize()
         {
 		    base.Initialize();
+            tirEnnemiTimer = 500;
 
          }
 
@@ -77,19 +86,22 @@ namespace Xspace
             textureVaisseau_joueur = Content.Load<Texture2D>("Vaisseau_joueur"); 
 
             // TODO : Chargement de toutes les textures des missiles en dessous
-            textureMissile_joueur_base = Content.Load<Texture2D>("missile1");
+            textureMissile_joueur_base = Content.Load<Texture2D>("MissileJoueur_Base");
+            textureMissile_ennemi1 = Content.Load<Texture2D>("missile1");
 
             // TODO : Chargement de tous les objets vaisseau en dessous
             listeVaisseauEnnemi = new List<Vaisseau_ennemi>();
             listeVaisseauEnnemiToRemove = new List<Vaisseau_ennemi>();
             vaisseauDrone = new Vaisseau_ennemi[100];
             joueur1 = new Vaisseau_joueur(textureVaisseau_joueur);
+            drone = new Vaisseau_ennemi(textureVaisseau_joueur, type_drone, position_missile_ennemi);
             
 
             // TODO : Chargement de tous les objets missiles en dessous
             listeMissile = new List<Missiles[]>();
             listeMissileToRemove = new List<Missiles[]>();
             missileJoueur = new Missiles[nbreMaxMissiles];
+            missileEnnemi = new Missiles[nbreMaxMissiles_e];
             for (int i = 0; i < nbreMaxMissiles; i++)
                 missileJoueur[i] = new Missiles(textureMissile_joueur_base, false, 50);
 
@@ -100,6 +112,16 @@ namespace Xspace
             }
 
             listeMissile.Add(missileJoueur);
+
+            for (int i = 0; i < nbreMaxMissiles_e; i++)
+                missileEnnemi[i] = new Missiles(textureMissile_ennemi1, true, 50);
+
+            for (int i = 0; i < nbreMaxMissiles_e - 1; i++)
+            {
+                if (missileEnnemi[i] != null)
+                    missileEnnemi[i].initialiserTexture(textureMissile_ennemi1);
+            }
+            listeMissile.Add(missileEnnemi);
 
 
             // TODO : Chargement du level en dessous
@@ -247,20 +269,43 @@ namespace Xspace
                     }
                 }
             }
-             
 
+
+            if (tirEnnemiTimer <= time)
+            {
+                for (int i = 0; i < nbreMaxMissiles_e; i++)
+                {
+                    if (missileEnnemi[i] != null && missileEnnemi[i].estAffiche == false && (tirEnnemiTimer <= time))
+                    {
+                        missileEnnemi[i].afficherMissile(drone.position);
+                        tirEnnemiTimer = 500;
+                    }
+                    else tirEnnemiTimer -= time;
+
+                }
+            }
+            
 
             for (int i = 0; i < nbreMaxMissiles; i++)
             {
-                if ((missileJoueur[i] != null && missileJoueur[i].estAffiche) && (missileType1))
+                if ((missileJoueur[i] != null && missileJoueur[i].estAffiche))
                 {
                     missileJoueur[i].avancerMissile(fps_fix);
                 }
+
                 else
                 {
-                    missileJoueur[i].avancerMissile_2(fps_fix);
+                    missileJoueur[i].avancerMissile(fps_fix);
                 }
 
+            }
+
+            for (int i = 0; i < nbreMaxMissiles_e; i++)
+            {
+                if ((missileEnnemi[i] != null) && missileEnnemi[i].estAffiche)
+                {
+                    missileEnnemi[i].avancerMissile_enemi1(fps_fix);
+                }
             }
 
             collisions(listeVaisseauEnnemi, listeMissile);
@@ -304,6 +349,12 @@ namespace Xspace
                 if (missileJoueur[i] != null && missileJoueur[i].existe)
                     missileJoueur[i].Draw(spriteBatch);
             }
+
+            for (int i = 0; i < nbreMaxMissiles_e - 1; i++)
+            {
+                if (missileEnnemi[i] != null && missileEnnemi[i].existe)
+                    missileEnnemi[i].Draw(spriteBatch);
+            }
             base.Draw(gameTime);
             spriteBatch.End();
             
@@ -315,6 +366,6 @@ namespace Xspace
 
         }
 
-        
+
     }
 }

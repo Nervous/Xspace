@@ -100,7 +100,7 @@ namespace Xspace
         }
         public void avancerMissile_enemi1(float fps_fix)
         {
-            if (_emplacement.X < 850)
+            if ((_emplacement.X < 850)&&(_emplacement.X > 0))
             
                
                     _emplacement -= fps_fix * _deplacementDirectionX * _vitesseMissile;
