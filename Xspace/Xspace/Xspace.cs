@@ -200,31 +200,36 @@ namespace Xspace
                     missileActuel = listeMissiles.IndexOf(missile);
                     for (int k = 0; k < 15; k++)
                     {
-                        if ((vaisseau.ennemi) && (missiles.ennemi))
-                        { }
-                        else
-                        {
-                            if (listeMissile[missileActuel][k].existe)
+                        
+                        
+                            if (listeMissile[missileActuel][k].existe)                           
                             {
+
                                 if (((listeMissiles[missileActuel][k].position.X + listeMissiles[missileActuel][k].sprite.Width > listeVaisseau[vaisseauActuel].position.X)
                                     && (listeMissiles[missileActuel][k].position.X + listeMissiles[missileActuel][k].sprite.Width < listeVaisseau[vaisseauActuel].position.X + listeVaisseau[vaisseauActuel].sprite.Width))
                                     && ((listeMissiles[missileActuel][k].position.Y + listeMissiles[missileActuel][k].sprite.Height / 2 > listeVaisseau[vaisseauActuel].position.Y)
                                     && (listeMissiles[missileActuel][k].position.Y + listeMissiles[missileActuel][k].sprite.Height / 2 < listeVaisseau[vaisseauActuel].position.Y + listeVaisseau[vaisseauActuel].sprite.Height))
                                     )
                                 {
-                                    // Collision missile => Vaisseau trouvée
-                                    listeMissiles[missileActuel][k].kill();
+                                    
+                                    
+                                        // Collision missile => Vaisseau trouvée
 
-                                    if (listeVaisseau[vaisseauActuel].hurt(listeMissiles[missileActuel][k].degats) == true)
+                                    if (((missiles.ennemi) && (!vaisseau.ennemi)) || ((!missiles.ennemi) && (vaisseau.ennemi)))
                                     {
-                                        // Vaisseau dead
-
-                                        listeVaisseau[vaisseauActuel].kill();
-
+                                        if (listeVaisseau[vaisseauActuel].hurt(listeMissiles[missileActuel][k].degats) == true)
+                                        {
+                                            // Vaisseau dead
+                                                listeVaisseau[vaisseauActuel].kill();
+                                                listeMissiles[missileActuel][k].kill();
+                                        }
                                     }
+                                    else { }
+                                    
+                                    
                                 }
                             }
-                        }
+                        
                     }
                 }
             }
