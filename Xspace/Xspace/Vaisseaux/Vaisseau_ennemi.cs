@@ -20,7 +20,7 @@ namespace Xspace
             : base(sprite, typeVaisseau, position)
         { }
 
-        new public void Update(float fps_fix)
+        public void Update(float fps_fix)
         {
             
 

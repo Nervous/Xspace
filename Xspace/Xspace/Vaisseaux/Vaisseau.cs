@@ -16,10 +16,13 @@ namespace Xspace
         protected Vector2 _emplacement, _deplacementDirectionY, _deplacementDirectionX;
         protected Texture2D _textureVaisseau;
         protected float _vitesseVaisseau;
-        protected int _vie, _armure, _timingAttack;
+        protected int _vie, _armure;
+        protected double _timingAttack;
         protected bool _existe;
         protected string _typeVaisseau, _position;
         protected bool _ennemi;
+        protected double _lastTir;
+        
 
 
         public Vaisseau(Texture2D texture)
@@ -33,7 +36,7 @@ namespace Xspace
             _deplacementDirectionY = Vector2.Normalize(new Vector2(0, 5));
         }
 
-        protected bool constr(Texture2D texture, int vie, int armure, float vitesseVaisseau, Vector2 startPosition, bool bexiste, bool ennemi, int timingAttack)
+        protected bool constr(Texture2D texture, int vie, int armure, float vitesseVaisseau, Vector2 startPosition, bool bexiste, bool ennemi, double timingAttack)
         {
             _textureVaisseau = texture;
             _vie = vie;
@@ -54,11 +57,11 @@ namespace Xspace
             _typeVaisseau = typeVaisseau;
             _position = position;
             if (position == "bas")
-                startPosition = new Vector2(750, 400);
+                startPosition = new Vector2(1120, 500);
             else if (position == "haut")
-                startPosition = new Vector2(750, 50);
+                startPosition = new Vector2(1120, 50);
             else
-                startPosition = new Vector2(750, 225);
+                startPosition = new Vector2(1120, 225);
             switch (typeVaisseau)
             {
                 case "drone":
@@ -111,6 +114,17 @@ namespace Xspace
             this._existe = false;
         }
 
+        public double timingAttack
+        {
+            get { return _timingAttack; }
+        }
+
+        public double lastTir
+        {
+            get { return _lastTir; }
+            set {this._lastTir = value;}
+        }
+
         public Vector2 position
         {
             get { return _emplacement; }
@@ -132,7 +146,7 @@ namespace Xspace
             return (this._vie <= 0);
         }
 
-        public void Update(float fps_fix)
+        public void Update()
         {
 
         }

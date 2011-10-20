@@ -26,7 +26,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\missile1.xnb</Output>
-      <Time>2011-09-27T18:06:27.7217022+02:00</Time>
+      <Time>2011-10-20T22:17:01.3211369+02:00</Time>
     </Item>
     <Item>
       <Source>space_bg.jpg</Source>
@@ -83,6 +83,34 @@
       <Output>C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\against_the_waves.xnb</Output>
       <Extra>C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\against_the_waves.wma</Extra>
       <Time>2011-09-27T18:30:18.1245166+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Vaisseau_ennemi1.png</Source>
+      <Name>Vaisseau_ennemi1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Vaisseau_ennemi1.xnb</Output>
+      <Time>2011-10-20T22:17:07.6094965+02:00</Time>
+    </Item>
+    <Item>
+      <Source>missile1_e.png</Source>
+      <Name>missile1_e</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\missile1_e.xnb</Output>
+      <Time>2011-10-20T22:16:55.8318229+02:00</Time>
+    </Item>
+    <Item>
+      <Source>wow-music1.mp3</Source>
+      <Name>wow-music1</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\wow-music1.xnb</Output>
+      <Extra>C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\wow-music1.wma</Extra>
+      <Time>2011-10-20T22:24:38.8073036+02:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

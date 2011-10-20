@@ -13,15 +13,12 @@ namespace Xspace
 {
     class Missiles
     {
-        KeyboardState keyboardState;
         protected Vector2 _emplacement, _deplacementDirectionY, _deplacementDirectionX, _start;
         protected Texture2D _textureMissile;
         protected int _vie, _degats;
         protected float _vitesseMissile, _vitesseMissile_Y;
         private bool _estAffiche, _ennemi, _existe;
-        bool missileType1;
-        bool missileType2;
-        int i;
+
         public Missiles(Texture2D texture, bool ennemi, int degats)
         {
             _textureMissile = texture;
@@ -98,7 +95,7 @@ namespace Xspace
 
         public void avancerMissile(float fps_fix)
         {
-            if (_emplacement.X < 850)
+            if (_emplacement.X < 1150)
                  
                 _emplacement += fps_fix * _deplacementDirectionX * _vitesseMissile;
             else
@@ -106,7 +103,7 @@ namespace Xspace
         }
         public void avancerMissile_enemi1(float fps_fix)
         {
-            if ((_emplacement.X < 850)&&(_emplacement.X > 0))
+            if ((_emplacement.X < 1150)&&(_emplacement.X > 0))
             
                
                     _emplacement -= fps_fix * _deplacementDirectionX * _vitesseMissile;

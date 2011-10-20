@@ -15,7 +15,7 @@ namespace Xspace
     {
         GraphicsDeviceManager graphics;
         public SpriteBatch spriteBatch;
-        private Texture2D textureVaisseau_joueur, textureMissile_joueur_base, textureMissile_ennemi1;
+        private Texture2D textureVaisseau_joueur, textureMissile_joueur_base, textureMissile_ennemi1, textureVaisseau_ennemi1;
         private Song musique;
         private KeyboardState keyboardState;
         private gestionLevels thisLevel;
@@ -23,14 +23,11 @@ namespace Xspace
         // TODO : Déclaration de tous les objets Vaisseau en dessous
         private Vaisseau_joueur joueur1;
         private Vaisseau_ennemi[] vaisseauDrone;
-        private Vaisseau_ennemi drone;
         List<Vaisseau_ennemi> listeVaisseauEnnemi, listeVaisseauEnnemiToRemove;
         List<Missiles[]> listeMissile, listeMissileToRemove;
         // TODO : Déclaration de tous les objets missiles en dessous
         Missiles[] missileJoueur;
         Missiles[] missileEnnemi;
-        string position_missile_ennemi;
-        string type_drone;
         Missiles missiles;
         int nbreMaxMissiles, i = 0, j = 0, actualDrone = 0;
         int nbreMaxMissiles_e;
@@ -39,9 +36,6 @@ namespace Xspace
         char[] delimitationFilesInfo = new char[] { ' ' };
         char[] delimitationFilesInfo2 = new char[] { ';' };
         char[] delimitationFilesInfo3 = new char[] { ':' };
-        bool missileType1;
-        bool missileType2;
-        double lastTir;
 
 
         public Xspace()
@@ -57,7 +51,6 @@ namespace Xspace
             nbreMaxMissiles = 15;
             lastTime = 0;
             nbreMaxMissiles_e = 20;
-            lastTir = 0;
         }
 
 
@@ -72,7 +65,7 @@ namespace Xspace
         {
             Texture2D _textureVie, _textureContourVie;
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            musique = Content.Load<Song>("against_the_waves");
+            musique = Content.Load<Song>("wow-music1");
             MediaPlayer.Play(musique);
             fond_ecran = new ScrollingBackground();
             Texture2D fond_image = Content.Load<Texture2D>("space_bg");
@@ -84,11 +77,12 @@ namespace Xspace
             Definition.texturevie =_textureVie;
             Definition.texturecontourvie = _textureContourVie;
             // TODO : Chargement de toutes les textures des vaisseau en dessous
-            textureVaisseau_joueur = Content.Load<Texture2D>("Vaisseau_joueur"); 
+            textureVaisseau_joueur = Content.Load<Texture2D>("Vaisseau_joueur");
+            textureVaisseau_ennemi1 = Content.Load<Texture2D>("Vaisseau_ennemi1");
 
             // TODO : Chargement de toutes les textures des missiles en dessous
-            textureMissile_joueur_base = Content.Load<Texture2D>("MissileJoueur_Base");
-            textureMissile_ennemi1 = Content.Load<Texture2D>("missile1");
+            textureMissile_joueur_base = Content.Load<Texture2D>("missile1");
+            textureMissile_ennemi1 = Content.Load<Texture2D>("missile1_e");
 
             // TODO : Chargement de tous les objets vaisseau en dessous
             listeVaisseauEnnemi = new List<Vaisseau_ennemi>();
@@ -169,7 +163,7 @@ namespace Xspace
                     switch (type)
                     {
                         case "drone":
-                            vaisseau = vaisseauDrone[actualDrone] = new Vaisseau_ennemi(textureVaisseau_joueur, "drone", position);
+                            vaisseau = vaisseauDrone[actualDrone] = new Vaisseau_ennemi(textureVaisseau_ennemi1, "drone", position);
                             break;
                         default:
                             break;
@@ -188,7 +182,7 @@ namespace Xspace
         }
 
 
-
+        // gestion des collisions
         bool collisions(List<Vaisseau_ennemi> listeVaisseau, List<Missiles[]> listeMissiles)
         {
 
@@ -269,6 +263,7 @@ namespace Xspace
             fond_ecran.Update(fps_fix);
             joueur1.Update(fps_fix); // Update du joueur
             keyboardState = Keyboard.GetState();
+            // affichage des missiles des joueurs
             if (keyboardState.IsKeyDown(Keys.Space))
             {
                 for (int i = 0; i < nbreMaxMissiles; i++)
@@ -282,7 +277,7 @@ namespace Xspace
                     }
                 }
             }
-
+            // affichage des missiles des ennemis
             foreach (Vaisseau_ennemi vaisseau in listeVaisseauEnnemi)
             {
                 
@@ -290,24 +285,20 @@ namespace Xspace
                 {
                     for (int i = 0; i < nbreMaxMissiles_e; i++)
                     {
-                        if (missileEnnemi[i] != null && missileEnnemi[i].estAffiche == false && (time - lastTir > 500 || lastTir == 0))
+
+                        if (missileEnnemi[i] != null && missileEnnemi[i].estAffiche == false && (time - vaisseau.lastTir > vaisseau.timingAttack) || (vaisseau.lastTir == 0))
                         {
                             Vector2 spawnPosition = new Vector2(vaisseau.position.X -100, vaisseau.position.Y);
                             missileEnnemi[i].afficherMissile(spawnPosition);
-                            lastTir = time;
-                            break;
+                            vaisseau.lastTir = time;
+                            
                         }
-                      
-                        
-
                     }  
-                }
-               
-                
-                
+                }           
             }
-            
 
+            
+            // deplacement missile joueur
             for (int i = 0; i < nbreMaxMissiles; i++)
             {
                 if ((missileJoueur[i] != null && missileJoueur[i].estAffiche))
@@ -322,6 +313,7 @@ namespace Xspace
 
             }
 
+            // deplacement missiles ennemis
             for (int i = 0; i < nbreMaxMissiles_e; i++)
             {
                 if ((missileEnnemi[i] != null) && missileEnnemi[i].estAffiche)

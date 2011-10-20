@@ -80,3 +80,7 @@ C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\parti
 C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\vie.xnb
 C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\contourvie.xnb
 C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\particle2.xnb
+C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Vaisseau_ennemi1.xnb
+C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\missile1_e.xnb
+C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\wow-music1.xnb
+C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\wow-music1.wma
