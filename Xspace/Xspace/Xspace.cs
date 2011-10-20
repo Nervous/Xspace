@@ -41,7 +41,8 @@ namespace Xspace
         char[] delimitationFilesInfo3 = new char[] { ':' };
         bool missileType1;
         bool missileType2;
-        double tirEnnemiTimer;
+        double lastTir;
+
 
         public Xspace()
         {
@@ -56,13 +57,13 @@ namespace Xspace
             nbreMaxMissiles = 15;
             lastTime = 0;
             nbreMaxMissiles_e = 20;
+            lastTir = 0;
         }
 
 
         protected override void Initialize()
         {
 		    base.Initialize();
-            tirEnnemiTimer = 500;
 
          }
 
@@ -217,10 +218,12 @@ namespace Xspace
 
                                     if (missiles.ennemi == true)
                                     {
+                                        listeMissiles[missileActuel][k].kill();
+
                                         if (listeVaisseau[vaisseauActuel].hurt(listeMissiles[missileActuel][k].degats) == true)
                                         {
                                             // Vaisseau dead
-                                            listeMissiles[missileActuel][k].kill();
+                                            
                                             listeVaisseau[vaisseauActuel].kill();
                                             
                                         }
@@ -282,18 +285,19 @@ namespace Xspace
 
             foreach (Vaisseau_ennemi vaisseau in listeVaisseauEnnemi)
             {
-                tirEnnemiTimer = 10;
+                
                 if (vaisseau.existe)
                 {
                     for (int i = 0; i < nbreMaxMissiles_e; i++)
                     {
-                        if (missileEnnemi[i] != null && missileEnnemi[i].estAffiche == false && (tirEnnemiTimer <= time))
+                        if (missileEnnemi[i] != null && missileEnnemi[i].estAffiche == false && (time - lastTir > 500 || lastTir == 0))
                         {
                             Vector2 spawnPosition = new Vector2(vaisseau.position.X -100, vaisseau.position.Y);
                             missileEnnemi[i].afficherMissile(spawnPosition);
-                            tirEnnemiTimer = 500;
+                            lastTir = time;
+                            break;
                         }
-                        else tirEnnemiTimer -= time;
+                      
                         
 
                     }  
@@ -324,6 +328,7 @@ namespace Xspace
                 {
                     missileEnnemi[i].avancerMissile_enemi1(fps_fix);
                 }
+
             }
 
             collisions(listeVaisseauEnnemi, listeMissile);
