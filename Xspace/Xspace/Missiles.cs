@@ -81,6 +81,7 @@ namespace Xspace
         public bool ennemi
         {
             get { return _ennemi; }
+            set { this._ennemi = value; }
         }
 
         public bool afficherMissile(Vector2 startPosition)

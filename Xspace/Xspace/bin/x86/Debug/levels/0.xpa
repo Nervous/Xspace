@@ -1,2 +1,3 @@
-vaisseau;drone:haut 2500
-vaisseau;drone:bas 3500
+vaisseau;drone:milieu 2500
+vaisseau;drone:milieu 3000
+vaisseau;drone:milieu 3500

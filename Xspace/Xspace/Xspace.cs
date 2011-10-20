@@ -215,16 +215,17 @@ namespace Xspace
                                     
                                         // Collision missile => Vaisseau trouvée
 
-                                    if (((missiles.ennemi) && (!vaisseau.ennemi)) || ((!missiles.ennemi) && (vaisseau.ennemi)))
+                                    if (missiles.ennemi == true)
                                     {
                                         if (listeVaisseau[vaisseauActuel].hurt(listeMissiles[missileActuel][k].degats) == true)
                                         {
                                             // Vaisseau dead
-                                                listeVaisseau[vaisseauActuel].kill();
-                                                listeMissiles[missileActuel][k].kill();
+                                            listeMissiles[missileActuel][k].kill();
+                                            listeVaisseau[vaisseauActuel].kill();
+                                            
                                         }
                                     }
-                                    else { }
+                                    
                                     
                                     
                                 }
@@ -288,7 +289,8 @@ namespace Xspace
                     {
                         if (missileEnnemi[i] != null && missileEnnemi[i].estAffiche == false && (tirEnnemiTimer <= time))
                         {
-                            missileEnnemi[i].afficherMissile(vaisseau.position);
+                            Vector2 spawnPosition = new Vector2(vaisseau.position.X -100, vaisseau.position.Y);
+                            missileEnnemi[i].afficherMissile(spawnPosition);
                             tirEnnemiTimer = 500;
                         }
                         else tirEnnemiTimer -= time;
