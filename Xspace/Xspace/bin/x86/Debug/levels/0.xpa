@@ -1,3 +1,5 @@
 vaisseau;drone:haut 2500
 vaisseau;drone:bas 3500
 vaisseau;drone:milieu 4500
+vaisseau;drone:milieu 5000
+vaisseau;drone:milieu 5800

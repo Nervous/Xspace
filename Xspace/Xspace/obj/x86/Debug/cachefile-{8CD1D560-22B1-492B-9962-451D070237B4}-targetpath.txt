@@ -13,3 +13,4 @@ Content\Vaisseau_ennemi1.xnb
 Content\missile1_e.xnb
 Content\wow-music1.xnb
 Content\wow-music1.wma
+Content\musique_tir.xnb

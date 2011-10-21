@@ -112,6 +112,15 @@
       <Extra>C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\wow-music1.wma</Extra>
       <Time>2011-10-20T22:24:38.8073036+02:00</Time>
     </Item>
+    <Item>
+      <Source>musique_tir.mp3</Source>
+      <Name>musique_tir</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\musique_tir.xnb</Output>
+      <Time>2011-10-21T20:06:30.5430429+02:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>

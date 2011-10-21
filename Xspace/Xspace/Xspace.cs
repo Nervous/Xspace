@@ -17,6 +17,7 @@ namespace Xspace
         public SpriteBatch spriteBatch;
         private Texture2D textureVaisseau_joueur, textureMissile_joueur_base, textureMissile_ennemi1, textureVaisseau_ennemi1;
         private Song musique;
+        private SoundEffect musique_tir, _musique_tir;
         private KeyboardState keyboardState;
         private gestionLevels thisLevel;
         private List<gestionLevels> infLevel;
@@ -66,6 +67,7 @@ namespace Xspace
             Texture2D _textureVie, _textureContourVie;
             spriteBatch = new SpriteBatch(GraphicsDevice);
             musique = Content.Load<Song>("wow-music1");
+            musique_tir = Content.Load<SoundEffect>("musique_tir");
             MediaPlayer.Play(musique);
             fond_ecran = new ScrollingBackground();
             Texture2D fond_image = Content.Load<Texture2D>("space_bg");
@@ -89,6 +91,9 @@ namespace Xspace
             listeVaisseauEnnemiToRemove = new List<Vaisseau_ennemi>();
             vaisseauDrone = new Vaisseau_ennemi[100];
             joueur1 = new Vaisseau_joueur(textureVaisseau_joueur);
+
+            // effets sonores
+           // SoundEffectInstance _musique_tir = musique_tir.CreateInstance();
 
             // TODO : Chargement de tous les objets missiles en dessous
             listeMissile = new List<Missiles[]>();
@@ -210,7 +215,7 @@ namespace Xspace
                                     
                                         // Collision missile => Vaisseau trouvée
 
-                                    if (missiles.ennemi == true)
+                                    if (listeMissile[missileActuel][k].ennemi == false)
                                     {
                                         listeMissiles[missileActuel][k].kill();
 
@@ -270,13 +275,14 @@ namespace Xspace
                 {
                     if (missileJoueur[i] != null && missileJoueur[i].estAffiche == false && (time - lastTime > 150 || lastTime == 0))
                     {
-                        
+                        musique_tir.Play();
                             missileJoueur[i].afficherMissile(joueur1.position);
                             lastTime = time;
                             break;
                     }
                 }
             }
+            
             // affichage des missiles des ennemis
             foreach (Vaisseau_ennemi vaisseau in listeVaisseauEnnemi)
             {

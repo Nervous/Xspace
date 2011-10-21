@@ -27,14 +27,14 @@ namespace Xspace
             switch (_typeVaisseau)
             {
                 case "drone":
-                    if (_emplacement.X + _textureVaisseau.Width >= 0)
+                    if (_emplacement.X  >= 0)
                         _emplacement -= _deplacementDirectionX * _vitesseVaisseau * fps_fix;
                     else
                         this.kill();
                     break;
 
                 default:
-                    if (_emplacement.X + _textureVaisseau.Width >= 0)
+                    if (_emplacement.X  >= 0)
                         _emplacement -= _deplacementDirectionX * _vitesseVaisseau * fps_fix;
                     else
                         this.kill();
