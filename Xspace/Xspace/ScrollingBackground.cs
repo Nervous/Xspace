@@ -22,9 +22,10 @@ namespace Xspace
         private int screenHeight;
         private float vitesseBackground;
 
+
         public ScrollingBackground() 
         {
-            vitesseBackground = 0.7f; 
+            vitesseBackground = 0.6f; 
         }
 
         public void Load(GraphicsDevice device, Texture2D backgroundTexture)
@@ -41,8 +42,13 @@ namespace Xspace
         }
         public void Update(float dX)
         {
+
             screenposition.X -= dX * vitesseBackground;
             screenposition.X = screenposition.X % ma_texture.Width;
+
+
+
+
         }
 
         public void Draw(SpriteBatch batch)
