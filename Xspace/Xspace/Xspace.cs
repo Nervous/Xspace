@@ -9,11 +9,18 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
+using ProjectMercury;
+using ProjectMercury.Emitters;
+using ProjectMercury.Modifiers;
+using ProjectMercury.Renderers;
+
 namespace Xspace
 {
     public class Xspace : Microsoft.Xna.Framework.Game
     {
         GraphicsDeviceManager graphics;
+        ParticleEffect testParticule;
+        Renderer particuleRenderer;
         public SpriteBatch spriteBatch;
         private Texture2D textureVaisseau_joueur, textureMissile_joueur_base, textureMissile_ennemi1, textureVaisseau_ennemi1;
         private Song musique;
@@ -52,6 +59,13 @@ namespace Xspace
             nbreMaxMissiles = 15;
             lastTime = 0;
             nbreMaxMissiles_e = 20;
+
+            particuleRenderer = new SpriteBatchRenderer
+            {
+                GraphicsDeviceService = graphics
+            };
+
+            testParticule = new ParticleEffect();
         }
 
 
@@ -122,6 +136,13 @@ namespace Xspace
             }
             listeMissile.Add(missileEnnemi);
 
+            // TODO : Chargement des particules en dessous
+
+            particuleRenderer.LoadContent(Content);
+            testParticule = Content.Load<ParticleEffect>("BasicExplosion");
+            testParticule.LoadContent(this.Content);
+            testParticule.Initialise();
+
 
             // TODO : Chargement du level en dessous
 
@@ -188,7 +209,7 @@ namespace Xspace
 
 
         // gestion des collisions
-        bool collisions(List<Vaisseau_ennemi> listeVaisseau, List<Missiles[]> listeMissiles)
+        bool collisions(List<Vaisseau_ennemi> listeVaisseau, List<Missiles[]> listeMissiles, ParticleEffect particule)
         {
 
             int vaisseauActuel = 0, missileActuel = 0;
@@ -224,6 +245,7 @@ namespace Xspace
                                             // Vaisseau dead
                                             
                                             listeVaisseau[vaisseauActuel].kill();
+                                            //particule.Trigger(listeVaisseau[vaisseauActuel].position);
                                             
                                         }
                                     }
@@ -329,7 +351,7 @@ namespace Xspace
 
             }
 
-            collisions(listeVaisseauEnnemi, listeMissile);
+            collisions(listeVaisseauEnnemi, listeMissile, testParticule);
 
             foreach (Vaisseau_ennemi vaisseau in listeVaisseauEnnemi)
             {
@@ -349,13 +371,27 @@ namespace Xspace
 
             listeVaisseauEnnemiToRemove.Clear();
             i = 0;
+
+            MouseState ms = Mouse.GetState();
+            // Check if mouse left button was presed
+            if (ms.LeftButton == ButtonState.Pressed)
+            {
+                // Add new particle effect to mouse coordinates
+                testParticule.Trigger(new Vector2(ms.X, ms.Y));
+            }
+            // "Deltatime" ie, time since last update call
+            float SecondsPassed = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            testParticule.Update(SecondsPassed);
+            testParticule.Update(fps_fix); 
             
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
+
             GraphicsDevice.Clear(Color.Black);
+            
            // spriteBatch.Begin();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive);
             fond_ecran.Draw(spriteBatch);
@@ -370,12 +406,15 @@ namespace Xspace
                 if (missileJoueur[i] != null && missileJoueur[i].existe)
                     missileJoueur[i].Draw(spriteBatch);
             }
-
+            particuleRenderer.RenderEffect(testParticule); 
             for (int i = 0; i < nbreMaxMissiles_e - 1; i++)
             {
                 if (missileEnnemi[i] != null && missileEnnemi[i].existe)
                     missileEnnemi[i].Draw(spriteBatch);
             }
+
+            
+
             base.Draw(gameTime);
             spriteBatch.End();
             

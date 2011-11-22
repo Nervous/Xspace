@@ -85,3 +85,13 @@ C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\missi
 C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\wow-music1.xnb
 C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\wow-music1.wma
 C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\musique_tir.xnb
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Vaisseau_ennemi1.xnb
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\missile1_e.xnb
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\wow-music1.xnb
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\musique_tir.xnb
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\wow-music1.wma
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\ProjectMercury.dll
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Cloud001.xnb
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Particle004.xnb
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Particle005.xnb
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\BasicExplosion.xnb

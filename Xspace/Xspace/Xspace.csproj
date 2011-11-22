@@ -90,6 +90,9 @@
     <Reference Include="mscorlib">
       <Private>False</Private>
     </Reference>
+    <Reference Include="ProjectMercury">
+      <HintPath>Particle\References\X86\ProjectMercury.dll</HintPath>
+    </Reference>
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
@@ -124,8 +127,9 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\XspaceContent\XspaceContent.contentproj">
-      <Name>XspaceContent</Name>
+      <Name>XspaceContent %28Content%29</Name>
       <XnaReferenceType>Content</XnaReferenceType>
+      <Project>{8CD1D560-22B1-492B-9962-451D070237B4}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
