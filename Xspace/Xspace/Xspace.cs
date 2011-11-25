@@ -20,17 +20,16 @@ namespace Xspace
 
         public Xspace()
         {
-
-            new GraphicsDeviceManager(this) 
+            GraphicsDeviceManager graphics = new GraphicsDeviceManager(this) 
             { 
                 PreferredBackBufferWidth = 1180, 
-                PreferredBackBufferHeight = 620 
+                PreferredBackBufferHeight = 620, 
             };
             var sceneMgr = new SceneManager(this);
             Components.Add(new InputState(this));
             Components.Add(sceneMgr);
             new BackgroundScene(sceneMgr).Add();
-            new MainMenuScene(sceneMgr).Add();
+            new MainMenuScene(sceneMgr, graphics).Add();
             Content.RootDirectory = "Content";
             IsFixedTimeStep = false;
 

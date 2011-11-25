@@ -12,7 +12,11 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-using Microsoft.Xna.Framework.GamerServices;
+
+using ProjectMercury;
+using ProjectMercury.Emitters;
+using ProjectMercury.Modifiers;
+using ProjectMercury.Renderers;
 
 
 namespace MenuSample.Scenes
@@ -25,17 +29,38 @@ namespace MenuSample.Scenes
 
         private ContentManager _content;
         private SpriteFont _gameFont;
+
         private Vector2 _playerPosition = new Vector2(100, 100);
         private Vector2 _enemyPosition = new Vector2(100, 100);
+
         private readonly Random _random = new Random();
         private float _pauseAlpha;
+
+        struct doneParticles
+        {
+            public bool _done;
+            public Vector2 startingParticle;
+
+            public doneParticles(bool done, Vector2 pos)
+            {
+                _done = done;
+                startingParticle = pos;
+            }
+        };
+        private doneParticles partManage;
+
         public SpriteBatch spriteBatch;
-        private Texture2D textureVaisseau_joueur, textureMissile_joueur_base, textureMissile_ennemi1, textureVaisseau_ennemi1;
+        private Texture2D textureVaisseau_joueur, textureMissile_joueur_base, textureMissile_ennemi1, textureVaisseau_ennemi1, _textureVie, _textureContourVie;
         private Song musique;
         private SoundEffect musique_tir, _musique_tir;
         private KeyboardState keyboardState;
         private Xspace.gestionLevels thisLevel;
         private List<Xspace.gestionLevels> infLevel;
+
+        Renderer particleRenderer;
+        ParticleEffect particleEffect;
+
+
         // TODO : Déclaration de tous les objets Vaisseau en dessous
         private Xspace.Vaisseau_joueur joueur1;
         private Xspace.Vaisseau_ennemi[] vaisseauDrone;
@@ -55,9 +80,15 @@ namespace MenuSample.Scenes
 
 
 
-        public GameplayScene(SceneManager sceneMgr)
+        public GameplayScene(SceneManager sceneMgr, GraphicsDeviceManager graphics)
             : base(sceneMgr)
         {
+
+            particleRenderer = new SpriteBatchRenderer
+            {
+                GraphicsDeviceService = graphics
+            };
+            particleEffect = new ParticleEffect();
 
             nbreMaxMissiles = 15;
             lastTime = 0;
@@ -78,20 +109,26 @@ namespace MenuSample.Scenes
         {
             if (_content == null)
                 _content = new ContentManager(SceneManager.Game.Services, "Content");
-            Texture2D _textureVie, _textureContourVie;
+            
+
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
             musique =  _content.Load<Song>("wow-music1");
             MediaPlayer.Play(musique);
             musique_tir = _content.Load<SoundEffect>("musique_tir");
+
             fond_ecran = new Xspace.ScrollingBackground();
             Texture2D fond_image = _content.Load<Texture2D>("space_bg");
             fond_ecran.Load(GraphicsDevice, fond_image);
+
             thisLevel = new Xspace.gestionLevels(0);
             infLevel = new List<Xspace.gestionLevels>();
+
             _textureContourVie = _content.Load<Texture2D>("contourvie");
             _textureVie = _content.Load<Texture2D>("vie");
             Xspace.Definition.texturevie =_textureVie;
             Xspace.Definition.texturecontourvie = _textureContourVie;
+
             // TODO : Chargement de toutes les textures des vaisseau en dessous
             textureVaisseau_joueur = _content.Load<Texture2D>("Vaisseau_joueur");
             textureVaisseau_ennemi1 = _content.Load<Texture2D>("Vaisseau_ennemi1");
@@ -99,10 +136,15 @@ namespace MenuSample.Scenes
 
             _gameFont = _content.Load<SpriteFont>("gamefont");
 
+            particleRenderer.LoadContent(_content);
+            particleEffect = _content.Load<ParticleEffect>(("BasicExplosion"));
+            particleEffect.LoadContent(_content);
+            particleEffect.Initialise();
+
             // Un vrai jeu possède évidemment plus de contenu que ça, et donc cela prend
             // plus de temps à charger. On simule ici un chargement long pour que vous
             // puissiez admirer la magnifique scène de chargement. :p
-            Thread.Sleep(1000);
+            Thread.Sleep(500);
 
             // En cas de longs période de traitement, appelez cette méthode *tintintin*.
             // Elle indique au mécanisme de synchronisation du jeu que vous avez fini un
@@ -216,7 +258,7 @@ namespace MenuSample.Scenes
 
 
         // gestion des collisions
-        bool collisions(List<Xspace.Vaisseau_ennemi> listeVaisseau, List<Xspace.Missiles[]> listeMissiles)
+        doneParticles collisions(List<Xspace.Vaisseau_ennemi> listeVaisseau, List<Xspace.Missiles[]> listeMissiles, float spentTime, ParticleEffect particleEffect)
         {
 
             int vaisseauActuel = 0, missileActuel = 0;
@@ -252,6 +294,10 @@ namespace MenuSample.Scenes
                                             // Vaisseau dead
                                             
                                             listeVaisseau[vaisseauActuel].kill();
+
+                                            particleEffect.Trigger(new Vector2(0,0));
+                                            particleEffect.Update(spentTime);
+                                            return new doneParticles(false, listeVaisseau[vaisseauActuel].position);
                                             
                                         }
                                     }
@@ -265,7 +311,7 @@ namespace MenuSample.Scenes
                 }
             }
 
-            return true;
+            return new doneParticles(true, new Vector2(0, 0));
         }
                 public override void HandleInput()
         {
@@ -406,7 +452,22 @@ namespace MenuSample.Scenes
 
             }
 
-            collisions(listeVaisseauEnnemi, listeMissile);
+
+            MouseState ms = Mouse.GetState();
+            if (ms.LeftButton == ButtonState.Pressed)
+                particleEffect.Trigger(new Vector2(ms.X, ms.Y));
+
+
+            
+            do
+            {
+                if(!(partManage.startingParticle == Vector2.Zero))
+                    particleEffect.Trigger(partManage.startingParticle);
+                partManage = collisions(listeVaisseauEnnemi, listeMissile, fps_fix, particleEffect);
+
+            } while (!partManage._done);
+
+            particleEffect.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
 
             foreach (Xspace.Vaisseau_ennemi vaisseau in listeVaisseauEnnemi)
             {
@@ -437,6 +498,7 @@ namespace MenuSample.Scenes
            // spriteBatch.Begin();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive);
             fond_ecran.Draw(spriteBatch);
+            particleRenderer.RenderEffect(particleEffect);
             joueur1.Draw(spriteBatch); // Draw du joueur
             
             foreach (Xspace.Vaisseau_ennemi vaisseau in listeVaisseauEnnemi)

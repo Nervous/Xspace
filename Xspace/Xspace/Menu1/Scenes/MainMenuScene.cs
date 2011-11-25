@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Xna.Framework.Graphics;
 using MenuSample.Scenes.Core;
 
 namespace MenuSample.Scenes
@@ -12,7 +13,9 @@ namespace MenuSample.Scenes
         /// <summary>
         /// Le constructeur remplit le menu
         /// </summary>
-        public MainMenuScene(SceneManager sceneMgr)
+        /// 
+        Microsoft.Xna.Framework.GraphicsDeviceManager graphics;
+        public MainMenuScene(SceneManager sceneMgr, Microsoft.Xna.Framework.GraphicsDeviceManager graphicsReceive)
             : base(sceneMgr, "")
         {
             // Création des options
@@ -29,12 +32,14 @@ namespace MenuSample.Scenes
             MenuItems.Add(playGameMenuItem);
             MenuItems.Add(optionsMenuItem);
             MenuItems.Add(exitMenuItem);
+
+            graphics = graphicsReceive;
         }
 
 
         private void PlayGameMenuItemSelected(object sender, EventArgs e)
         {
-            LoadingScene.Load(SceneManager, true, new GameplayScene(SceneManager));
+            LoadingScene.Load(SceneManager, true, new GameplayScene(SceneManager, graphics));
         }
 
         private void OptionsMenuItemSelected(object sender, EventArgs e)
