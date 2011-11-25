@@ -3,43 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xspace", "Xspace\Xspace\Xspace.csproj", "{80C23B33-F173-4F9B-A78D-889C46F2FFA1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XspaceContent", "Xspace\XspaceContent\XspaceContent.contentproj", "{8CD1D560-22B1-492B-9962-451D070237B4}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7158D795-1862-40D0-8F81-D4D2584C7E46}"
-	ProjectSection(SolutionItems) = preProject
-		Local.testsettings = Local.testsettings
-		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
-		Xspace.vsmdi = Xspace.vsmdi
-	EndProjectSection
+Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "XspaceContent", "Xspace\XspaceContent\XspaceContent.contentproj", "{8CD1D560-22B1-492B-9962-451D070237B4}"
 EndProject
 Global
-	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = Xspace.vsmdi
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Debug|Mixed Platforms = Debug|Mixed Platforms
 		Debug|x86 = Debug|x86
-		Release|Any CPU = Release|Any CPU
-		Release|Mixed Platforms = Release|Mixed Platforms
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{80C23B33-F173-4F9B-A78D-889C46F2FFA1}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{80C23B33-F173-4F9B-A78D-889C46F2FFA1}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{80C23B33-F173-4F9B-A78D-889C46F2FFA1}.Debug|Mixed Platforms.Build.0 = Debug|x86
 		{80C23B33-F173-4F9B-A78D-889C46F2FFA1}.Debug|x86.ActiveCfg = Debug|x86
 		{80C23B33-F173-4F9B-A78D-889C46F2FFA1}.Debug|x86.Build.0 = Debug|x86
-		{80C23B33-F173-4F9B-A78D-889C46F2FFA1}.Release|Any CPU.ActiveCfg = Release|x86
-		{80C23B33-F173-4F9B-A78D-889C46F2FFA1}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{80C23B33-F173-4F9B-A78D-889C46F2FFA1}.Release|Mixed Platforms.Build.0 = Release|x86
 		{80C23B33-F173-4F9B-A78D-889C46F2FFA1}.Release|x86.ActiveCfg = Release|x86
 		{80C23B33-F173-4F9B-A78D-889C46F2FFA1}.Release|x86.Build.0 = Release|x86
-		{8CD1D560-22B1-492B-9962-451D070237B4}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{8CD1D560-22B1-492B-9962-451D070237B4}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{8CD1D560-22B1-492B-9962-451D070237B4}.Debug|x86.ActiveCfg = Debug|x86
-		{8CD1D560-22B1-492B-9962-451D070237B4}.Release|Any CPU.ActiveCfg = Release|x86
-		{8CD1D560-22B1-492B-9962-451D070237B4}.Release|Mixed Platforms.ActiveCfg = Release|x86
 		{8CD1D560-22B1-492B-9962-451D070237B4}.Release|x86.ActiveCfg = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution

@@ -7,9 +7,13 @@ Content\contourvie.xnb
 Content\particle2.xnb
 Content\Vaisseau_ennemi1.xnb
 Content\missile1_e.xnb
-Content\Cloud001.xnb
-Content\Particle004.xnb
-Content\Particle005.xnb
+Content\Menu.xnb
+Content\Modele1.xnb
+Content\Modele2.xnb
+Content\Pile1.xnb
+Content\blank.xnb
+Content\gradient.xnb
+Content\background.xnb
 Content\musique.xnb
 Content\musique.wma
 Content\against_the_waves.xnb
@@ -17,4 +21,5 @@ Content\against_the_waves.wma
 Content\wow-music1.xnb
 Content\wow-music1.wma
 Content\musique_tir.xnb
-Content\BasicExplosion.xnb
+Content\gamefont.xnb
+Content\menufont.xnb

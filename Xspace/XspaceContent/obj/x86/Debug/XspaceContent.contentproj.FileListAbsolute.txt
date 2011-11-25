@@ -4,3 +4,6 @@ C:\Users\Nervous\Desktop\Xspace\Xspace\Xspace\XspaceContent\obj\x86\Debug\Resolv
 C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\XspaceContent\obj\x86\Debug\ResolveAssemblyReference.cache
 C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\XspaceContent\obj\x86\Debug\ResolveAssemblyReference.cache
 C:\Users\User\Desktop\Nouveau dossier\Xspace\XspaceContent\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\Documents\Xspace\Xspace\Xspace\XspaceContent\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\Documents\Xspace\Xspace menu test\Xspace\XspaceContent\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\Documents\Xspace\Xspace\Xspace\Xspace avec menu\Xspace\XspaceContent\obj\x86\Debug\ResolveAssemblyReference.cache

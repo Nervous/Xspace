@@ -13,9 +13,9 @@ namespace Xspace
 {
     class Vaisseau
     {
-        protected Vector2 _emplacement, _deplacementDirectionY, _deplacementDirectionX;
-        protected Texture2D _textureVaisseau;
-        protected float _vitesseVaisseau;
+        public Vector2 _emplacement, _deplacementDirectionY, _deplacementDirectionX;
+        public Texture2D _textureVaisseau;
+        public float _vitesseVaisseau;
         protected int _vie, _armure;
         protected double _timingAttack;
         protected bool _existe;

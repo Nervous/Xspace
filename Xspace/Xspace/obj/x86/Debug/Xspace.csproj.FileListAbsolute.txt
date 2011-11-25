@@ -85,13 +85,96 @@ C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\missi
 C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\wow-music1.xnb
 C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\wow-music1.wma
 C:\Users\Antoine\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\musique_tir.xnb
-C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Vaisseau_ennemi1.xnb
-C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\missile1_e.xnb
-C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\wow-music1.xnb
-C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\musique_tir.xnb
-C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\wow-music1.wma
-C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\ProjectMercury.dll
-C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Cloud001.xnb
-C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Particle004.xnb
-C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Particle005.xnb
-C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\BasicExplosion.xnb
+D:\Documents\Xspace\Xspace\Xspace\Xspace\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\Documents\Xspace\Xspace\Xspace\Xspace\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+D:\Documents\Xspace\Xspace\Xspace\Xspace\obj\x86\Debug\Xspace.exe
+D:\Documents\Xspace\Xspace\Xspace\Xspace\obj\x86\Debug\Xspace.pdb
+D:\Documents\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Vaisseau_joueur.xnb
+D:\Documents\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\MissileJoueur_Base.xnb
+D:\Documents\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\missile1.xnb
+D:\Documents\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\space_bg.xnb
+D:\Documents\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\vie.xnb
+D:\Documents\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\contourvie.xnb
+D:\Documents\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\particle2.xnb
+D:\Documents\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Vaisseau_ennemi1.xnb
+D:\Documents\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\missile1_e.xnb
+D:\Documents\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\musique.xnb
+D:\Documents\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\against_the_waves.xnb
+D:\Documents\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\wow-music1.xnb
+D:\Documents\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\musique_tir.xnb
+D:\Documents\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\musique.wma
+D:\Documents\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\against_the_waves.wma
+D:\Documents\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\wow-music1.wma
+D:\Documents\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Xspace.exe
+D:\Documents\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Xspace.pdb
+D:\Documents\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Menu.xnb
+D:\Documents\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Modele1.xnb
+D:\Documents\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Modele2.xnb
+D:\Documents\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Pile1.xnb
+D:\Documents\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\background.xnb
+D:\Documents\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\blank.xnb
+D:\Documents\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\gradient.xnb
+D:\Documents\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\gamefont.xnb
+D:\Documents\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\menufont.xnb
+D:\Documents\Xspace\Xspace menu test\Xspace\Xspace\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\Documents\Xspace\Xspace menu test\Xspace\Xspace\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+D:\Documents\Xspace\Xspace menu test\Xspace\Xspace\obj\x86\Debug\Xspace.exe
+D:\Documents\Xspace\Xspace menu test\Xspace\Xspace\obj\x86\Debug\Xspace.pdb
+D:\Documents\Xspace\Xspace menu test\Xspace\Xspace\bin\x86\Debug\Content\Vaisseau_joueur.xnb
+D:\Documents\Xspace\Xspace menu test\Xspace\Xspace\bin\x86\Debug\Content\MissileJoueur_Base.xnb
+D:\Documents\Xspace\Xspace menu test\Xspace\Xspace\bin\x86\Debug\Content\missile1.xnb
+D:\Documents\Xspace\Xspace menu test\Xspace\Xspace\bin\x86\Debug\Content\space_bg.xnb
+D:\Documents\Xspace\Xspace menu test\Xspace\Xspace\bin\x86\Debug\Content\vie.xnb
+D:\Documents\Xspace\Xspace menu test\Xspace\Xspace\bin\x86\Debug\Content\contourvie.xnb
+D:\Documents\Xspace\Xspace menu test\Xspace\Xspace\bin\x86\Debug\Content\particle2.xnb
+D:\Documents\Xspace\Xspace menu test\Xspace\Xspace\bin\x86\Debug\Content\Vaisseau_ennemi1.xnb
+D:\Documents\Xspace\Xspace menu test\Xspace\Xspace\bin\x86\Debug\Content\missile1_e.xnb
+D:\Documents\Xspace\Xspace menu test\Xspace\Xspace\bin\x86\Debug\Content\Menu.xnb
+D:\Documents\Xspace\Xspace menu test\Xspace\Xspace\bin\x86\Debug\Content\Modele1.xnb
+D:\Documents\Xspace\Xspace menu test\Xspace\Xspace\bin\x86\Debug\Content\Modele2.xnb
+D:\Documents\Xspace\Xspace menu test\Xspace\Xspace\bin\x86\Debug\Content\Pile1.xnb
+D:\Documents\Xspace\Xspace menu test\Xspace\Xspace\bin\x86\Debug\Content\background.xnb
+D:\Documents\Xspace\Xspace menu test\Xspace\Xspace\bin\x86\Debug\Content\blank.xnb
+D:\Documents\Xspace\Xspace menu test\Xspace\Xspace\bin\x86\Debug\Content\gradient.xnb
+D:\Documents\Xspace\Xspace menu test\Xspace\Xspace\bin\x86\Debug\Content\musique.xnb
+D:\Documents\Xspace\Xspace menu test\Xspace\Xspace\bin\x86\Debug\Content\against_the_waves.xnb
+D:\Documents\Xspace\Xspace menu test\Xspace\Xspace\bin\x86\Debug\Content\wow-music1.xnb
+D:\Documents\Xspace\Xspace menu test\Xspace\Xspace\bin\x86\Debug\Content\musique_tir.xnb
+D:\Documents\Xspace\Xspace menu test\Xspace\Xspace\bin\x86\Debug\Content\gamefont.xnb
+D:\Documents\Xspace\Xspace menu test\Xspace\Xspace\bin\x86\Debug\Content\menufont.xnb
+D:\Documents\Xspace\Xspace menu test\Xspace\Xspace\bin\x86\Debug\Content\musique.wma
+D:\Documents\Xspace\Xspace menu test\Xspace\Xspace\bin\x86\Debug\Content\against_the_waves.wma
+D:\Documents\Xspace\Xspace menu test\Xspace\Xspace\bin\x86\Debug\Content\wow-music1.wma
+D:\Documents\Xspace\Xspace menu test\Xspace\Xspace\bin\x86\Debug\Xspace.exe
+D:\Documents\Xspace\Xspace menu test\Xspace\Xspace\bin\x86\Debug\Xspace.pdb
+D:\Documents\Xspace\Xspace\Xspace\Xspace avec menu\Xspace\Xspace\bin\x86\Debug\Content\Vaisseau_joueur.xnb
+D:\Documents\Xspace\Xspace\Xspace\Xspace avec menu\Xspace\Xspace\bin\x86\Debug\Content\MissileJoueur_Base.xnb
+D:\Documents\Xspace\Xspace\Xspace\Xspace avec menu\Xspace\Xspace\bin\x86\Debug\Content\missile1.xnb
+D:\Documents\Xspace\Xspace\Xspace\Xspace avec menu\Xspace\Xspace\bin\x86\Debug\Content\space_bg.xnb
+D:\Documents\Xspace\Xspace\Xspace\Xspace avec menu\Xspace\Xspace\bin\x86\Debug\Content\vie.xnb
+D:\Documents\Xspace\Xspace\Xspace\Xspace avec menu\Xspace\Xspace\bin\x86\Debug\Content\contourvie.xnb
+D:\Documents\Xspace\Xspace\Xspace\Xspace avec menu\Xspace\Xspace\bin\x86\Debug\Content\particle2.xnb
+D:\Documents\Xspace\Xspace\Xspace\Xspace avec menu\Xspace\Xspace\bin\x86\Debug\Content\Vaisseau_ennemi1.xnb
+D:\Documents\Xspace\Xspace\Xspace\Xspace avec menu\Xspace\Xspace\bin\x86\Debug\Content\missile1_e.xnb
+D:\Documents\Xspace\Xspace\Xspace\Xspace avec menu\Xspace\Xspace\bin\x86\Debug\Content\Menu.xnb
+D:\Documents\Xspace\Xspace\Xspace\Xspace avec menu\Xspace\Xspace\bin\x86\Debug\Content\Modele1.xnb
+D:\Documents\Xspace\Xspace\Xspace\Xspace avec menu\Xspace\Xspace\bin\x86\Debug\Content\Modele2.xnb
+D:\Documents\Xspace\Xspace\Xspace\Xspace avec menu\Xspace\Xspace\bin\x86\Debug\Content\Pile1.xnb
+D:\Documents\Xspace\Xspace\Xspace\Xspace avec menu\Xspace\Xspace\bin\x86\Debug\Content\blank.xnb
+D:\Documents\Xspace\Xspace\Xspace\Xspace avec menu\Xspace\Xspace\bin\x86\Debug\Content\gradient.xnb
+D:\Documents\Xspace\Xspace\Xspace\Xspace avec menu\Xspace\Xspace\bin\x86\Debug\Content\background.xnb
+D:\Documents\Xspace\Xspace\Xspace\Xspace avec menu\Xspace\Xspace\bin\x86\Debug\Content\musique.xnb
+D:\Documents\Xspace\Xspace\Xspace\Xspace avec menu\Xspace\Xspace\bin\x86\Debug\Content\against_the_waves.xnb
+D:\Documents\Xspace\Xspace\Xspace\Xspace avec menu\Xspace\Xspace\bin\x86\Debug\Content\wow-music1.xnb
+D:\Documents\Xspace\Xspace\Xspace\Xspace avec menu\Xspace\Xspace\bin\x86\Debug\Content\musique_tir.xnb
+D:\Documents\Xspace\Xspace\Xspace\Xspace avec menu\Xspace\Xspace\bin\x86\Debug\Content\gamefont.xnb
+D:\Documents\Xspace\Xspace\Xspace\Xspace avec menu\Xspace\Xspace\bin\x86\Debug\Content\menufont.xnb
+D:\Documents\Xspace\Xspace\Xspace\Xspace avec menu\Xspace\Xspace\bin\x86\Debug\Content\musique.wma
+D:\Documents\Xspace\Xspace\Xspace\Xspace avec menu\Xspace\Xspace\bin\x86\Debug\Content\against_the_waves.wma
+D:\Documents\Xspace\Xspace\Xspace\Xspace avec menu\Xspace\Xspace\bin\x86\Debug\Content\wow-music1.wma
+D:\Documents\Xspace\Xspace\Xspace\Xspace avec menu\Xspace\Xspace\bin\x86\Debug\Xspace.exe
+D:\Documents\Xspace\Xspace\Xspace\Xspace avec menu\Xspace\Xspace\bin\x86\Debug\Xspace.pdb
+D:\Documents\Xspace\Xspace\Xspace\Xspace avec menu\Xspace\Xspace\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\Documents\Xspace\Xspace\Xspace\Xspace avec menu\Xspace\Xspace\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+D:\Documents\Xspace\Xspace\Xspace\Xspace avec menu\Xspace\Xspace\obj\x86\Debug\Xspace.exe
+D:\Documents\Xspace\Xspace\Xspace\Xspace avec menu\Xspace\Xspace\obj\x86\Debug\Xspace.pdb

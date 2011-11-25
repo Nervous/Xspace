@@ -90,9 +90,6 @@
     <Reference Include="mscorlib">
       <Private>False</Private>
     </Reference>
-    <Reference Include="ProjectMercury">
-      <HintPath>Particle\References\X86\ProjectMercury.dll</HintPath>
-    </Reference>
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
@@ -112,10 +109,21 @@
   <ItemGroup>
     <Compile Include="Definition.cs" />
     <Compile Include="gestionLevels.cs" />
+    <Compile Include="Menu1\InputState.cs" />
+    <Compile Include="Menu1\Scenes\BackgroundScene.cs" />
+    <Compile Include="Menu1\Scenes\Core\AbstractGameScene.cs" />
+    <Compile Include="Menu1\Scenes\Core\AbstractMenuScene.cs" />
+    <Compile Include="Menu1\Scenes\Core\MenuItem.cs" />
+    <Compile Include="Menu1\Scenes\Core\SceneManager.cs" />
+    <Compile Include="Menu1\Scenes\GameplayScene.cs" />
+    <Compile Include="Menu1\Scenes\LoadingScene.cs" />
+    <Compile Include="Menu1\Scenes\MainMenuScene.cs" />
+    <Compile Include="Menu1\Scenes\MessageBoxScene.cs" />
+    <Compile Include="Menu1\Scenes\OptionsMenuScene.cs" />
+    <Compile Include="Menu1\Scenes\PauseMenuScene.cs" />
     <Compile Include="Missiles.cs" />
     <Compile Include="ScrollingBackground.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Program.cs" />
     <Compile Include="Vaisseaux\Vaisseau.cs" />
     <Compile Include="Vaisseaux\Vaisseau_ennemi.cs" />
     <Compile Include="Vaisseaux\Vaisseau_joueur.cs" />
@@ -127,9 +135,8 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\XspaceContent\XspaceContent.contentproj">
-      <Name>XspaceContent %28Content%29</Name>
+      <Name>XspaceContent</Name>
       <XnaReferenceType>Content</XnaReferenceType>
-      <Project>{8CD1D560-22B1-492B-9962-451D070237B4}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
