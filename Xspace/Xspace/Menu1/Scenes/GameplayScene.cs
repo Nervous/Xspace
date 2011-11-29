@@ -450,12 +450,6 @@ namespace MenuSample.Scenes
             }
 
 
-            MouseState ms = Mouse.GetState();
-            if (ms.LeftButton == ButtonState.Pressed)
-                particleEffect.Trigger(new Vector2(ms.X, ms.Y));
-
-
-
                 if(!(partManage.startingParticle == Vector2.Zero))
                     particleEffect.Trigger(partManage.startingParticle);
                 partManage = collisions(listeVaisseauEnnemi, listeMissile, fps_fix, particleEffect);
