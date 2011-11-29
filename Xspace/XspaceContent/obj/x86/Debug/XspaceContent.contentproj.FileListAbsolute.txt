@@ -7,3 +7,4 @@ C:\Users\User\Desktop\Nouveau dossier\Xspace\XspaceContent\obj\x86\Debug\Resolve
 D:\Documents\Xspace\Xspace\Xspace\XspaceContent\obj\x86\Debug\ResolveAssemblyReference.cache
 D:\Documents\Xspace\Xspace menu test\Xspace\XspaceContent\obj\x86\Debug\ResolveAssemblyReference.cache
 D:\Documents\Xspace\Xspace\Xspace\Xspace avec menu\Xspace\XspaceContent\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\XspaceContent\obj\x86\Debug\ResolveAssemblyReference.cache

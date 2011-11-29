@@ -294,9 +294,6 @@ namespace MenuSample.Scenes
                                             // Vaisseau dead
                                             
                                             listeVaisseau[vaisseauActuel].kill();
-
-                                            particleEffect.Trigger(new Vector2(0,0));
-                                            particleEffect.Update(spentTime);
                                             return new doneParticles(false, listeVaisseau[vaisseauActuel].position);
                                             
                                         }
@@ -458,16 +455,12 @@ namespace MenuSample.Scenes
                 particleEffect.Trigger(new Vector2(ms.X, ms.Y));
 
 
-            
-            do
-            {
+
                 if(!(partManage.startingParticle == Vector2.Zero))
                     particleEffect.Trigger(partManage.startingParticle);
                 partManage = collisions(listeVaisseauEnnemi, listeMissile, fps_fix, particleEffect);
 
-            } while (!partManage._done);
-
-            particleEffect.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+           particleEffect.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
 
             foreach (Xspace.Vaisseau_ennemi vaisseau in listeVaisseauEnnemi)
             {
