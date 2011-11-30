@@ -12,18 +12,17 @@ namespace MenuSample.Scenes
         private readonly MenuItem _resolutionMenuItem;
         private readonly MenuItem _fullscreenMenuItem;
         private readonly MenuItem _volumeMenuItem;
+        private readonly MenuItem _scoreMenuItem;
 
-        private enum Language
+        private enum Mode
         {
-            English,
-            Francais,
-            Espanol,
-            Italiano,
-            Nihongo,
+            Arcade,
+            Extreme,
+            Cooperatif,
         }
 
-        private static Language _currentLanguage = Language.Francais;
-        private static readonly string[] Resolutions = { "480x800", "800x600", "1024x768", "1280x1024", "1680x1050" };
+        //private static Mode _currentmod = Language.Francais;
+        //private static readonly string[] Resolutions = { "480x800", "800x600", "1024x768", "1280x1024", "1680x1050" };
         private static int _currentResolution;
         private static bool _fullscreen;
         private static int _volume = 42;
@@ -33,21 +32,18 @@ namespace MenuSample.Scenes
         /// Constructor.
         /// </summary>
         public OptionsMenuScene(SceneManager sceneMgr)
-            : base(sceneMgr, "Options")
+            : base(sceneMgr, "A delete")
         {
             // Création des options du menu
             _languageMenuItem = new MenuItem(string.Empty);
             _resolutionMenuItem = new MenuItem(string.Empty);
             _fullscreenMenuItem = new MenuItem(string.Empty);
             _volumeMenuItem = new MenuItem(string.Empty);
-            SetMenuItemText();
+            //SetMenuItemText();
             var back = new MenuItem("Retour");
 
-            // Gestion des évènements
-            _languageMenuItem.Selected += LanguageMenuItemSelected;
-            _resolutionMenuItem.Selected += ResolutionMenuItemSelected;
-            _fullscreenMenuItem.Selected += FullscreenMenuItemSelected;
-            _volumeMenuItem.Selected += VolumeMenuItemSelected;
+           // Gestion des évènements
+
             back.Selected += OnCancel;
 
             // Ajout des options au menu
@@ -61,7 +57,7 @@ namespace MenuSample.Scenes
         /// <summary>
         /// Mise à jour des valeurs du menu
         /// </summary>
-        private void SetMenuItemText()
+     /*   private void SetMenuItemText()
         {
             _languageMenuItem.Text = "Langue: " + _currentLanguage;
             _resolutionMenuItem.Text = "Resolution: " + Resolutions[_currentResolution];
@@ -78,7 +74,7 @@ namespace MenuSample.Scenes
                 _currentLanguage = 0;
 
             SetMenuItemText();
-        }
+        } 
 
         private void ResolutionMenuItemSelected(object sender, EventArgs e)
         {
@@ -96,7 +92,7 @@ namespace MenuSample.Scenes
         {
             _volume++;
             SetMenuItemText();
-        }
+        } */
 
     }
 }

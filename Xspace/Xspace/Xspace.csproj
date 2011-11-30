@@ -119,7 +119,9 @@
     <Compile Include="Menu1\Scenes\Core\AbstractMenuScene.cs" />
     <Compile Include="Menu1\Scenes\Core\MenuItem.cs" />
     <Compile Include="Menu1\Scenes\Core\SceneManager.cs" />
-    <Compile Include="Menu1\Scenes\GameplayScene.cs" />
+    <Compile Include="Menu1\Scenes\ScoreArcadeMenuScene.cs" />
+    <Compile Include="Menu1\Scenes\ScoreMenuScene.cs" />
+    <Compile Include="GameplayScene.cs" />
     <Compile Include="Menu1\Scenes\LoadingScene.cs" />
     <Compile Include="Menu1\Scenes\MainMenuScene.cs" />
     <Compile Include="Menu1\Scenes\MessageBoxScene.cs" />

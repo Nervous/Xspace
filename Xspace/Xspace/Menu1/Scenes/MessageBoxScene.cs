@@ -57,12 +57,12 @@ namespace MenuSample.Scenes
                     Accepted(this, new EventArgs());
                 Remove();
             }
-            else if (InputState.IsMenuCancel())
+       /*     else if (InputState.IsMenuCancel()) // UNUSED
             {
                 if (Cancelled != null)
                     Cancelled(this, new EventArgs());
                 Remove();
-            }
+            } */ 
         }
 
 

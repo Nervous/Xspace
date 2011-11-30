@@ -20,18 +20,22 @@ namespace MenuSample.Scenes
         {
             // Création des options
             var playGameMenuItem = new MenuItem("Lancer le jeu");
-            var optionsMenuItem = new MenuItem("Options");
+            var ScoreMenuItem = new MenuItem("Scores");
+            var optionsMenuItem = new MenuItem("A delete");
             var exitMenuItem = new MenuItem("Quitter");
 
             // Gestion des évènements
             playGameMenuItem.Selected += PlayGameMenuItemSelected;
             optionsMenuItem.Selected += OptionsMenuItemSelected;
-            exitMenuItem.Selected += OnCancel;
+            exitMenuItem.Selected += ConfirmExitMessageBoxAccepted;
+            ScoreMenuItem.Selected += ScoreMenuItemSelected;
 
             // Ajout des options du menu
             MenuItems.Add(playGameMenuItem);
-            MenuItems.Add(optionsMenuItem);
+            MenuItems.Add(ScoreMenuItem);
+            //MenuItems.Add(optionsMenuItem);
             MenuItems.Add(exitMenuItem);
+            
 
             graphics = graphicsReceive;
         }
@@ -47,7 +51,12 @@ namespace MenuSample.Scenes
             new OptionsMenuScene(SceneManager).Add();
         }
 
-        protected override void OnCancel()
+        private void ScoreMenuItemSelected(object sender, EventArgs e)
+        {
+            new ScoreMenuScene(SceneManager).Add();
+        }
+
+        protected override void OnCancel() // unused
         {
             const string message = "Etes vous sur de vouloir quitter le sample?\n";
             var confirmExitMessageBox = new MessageBoxScene(SceneManager, message);

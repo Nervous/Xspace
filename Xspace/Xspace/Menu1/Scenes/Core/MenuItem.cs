@@ -52,7 +52,7 @@ namespace MenuSample.Scenes.Core
 
         public void Draw(AbstractMenuScene scene, bool isSelected, GameTime gameTime)
         {
-            Color color = isSelected ? Color.Black : Color.White;
+            Color color = isSelected ? Color.LightGreen : Color.White;
             double time = gameTime.TotalGameTime.TotalSeconds;
             float pulsate = (float)Math.Sin(time * 6) + Scale;
             float scale = Scale + pulsate * 0.05f * _selectionFade;

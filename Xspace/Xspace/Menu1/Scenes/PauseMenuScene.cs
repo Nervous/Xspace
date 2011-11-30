@@ -22,7 +22,7 @@ namespace MenuSample.Scenes
 
             // Gestion des évènements
             resumeGameMenuItem.Selected += OnCancel;
-            quitGameMenuItem.Selected += QuitGameMenuItemSelected;
+            quitGameMenuItem.Selected += ConfirmQuitMessageBoxAccepted;
 
             // Ajout des options du menu
             MenuItems.Add(resumeGameMenuItem);
@@ -30,7 +30,7 @@ namespace MenuSample.Scenes
         }
 
 
-        private void QuitGameMenuItemSelected(object sender, EventArgs e)
+        private void QuitGameMenuItemSelected(object sender, EventArgs e) // no more used
         {
             const string message = "Etes vous sur de vouloir quitter ce jeu?\n";
             var confirmQuitMessageBox = new MessageBoxScene(SceneManager, message);

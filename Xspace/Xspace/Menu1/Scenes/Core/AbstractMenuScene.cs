@@ -53,8 +53,8 @@ namespace MenuSample.Scenes.Core
 
             if (InputState.IsMenuSelect())
                 OnSelectitem(_selecteditem);
-            else if (InputState.IsMenuCancel())
-                OnCancel();
+            /*else if (InputState.IsMenuCancel())
+                OnCancel();*/
         }
 
         /// <summary>
