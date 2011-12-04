@@ -51,7 +51,7 @@ namespace MenuSample.Scenes
 
         public SpriteBatch spriteBatch;
         private Texture2D textureVaisseau_joueur, textureMissile_joueur_base, textureMissile_ennemi1, textureVaisseau_ennemi1, _textureVie, _textureContourVie;
-        private Song musique;
+        private Song musique, musique_menu;
         private SoundEffect musique_tir, _musique_tir;
         private KeyboardState keyboardState;
         private Xspace.gestionLevels thisLevel;
@@ -132,7 +132,7 @@ namespace MenuSample.Scenes
             // TODO : Chargement de toutes les textures des vaisseau en dessous
             textureVaisseau_joueur = _content.Load<Texture2D>("Vaisseau_joueur");
             textureVaisseau_ennemi1 = _content.Load<Texture2D>("Vaisseau_ennemi1");
-
+            musique_menu = _content.Load<Song>("TOR_01_the_mandalorian_blockade");
 
             _gameFont = _content.Load<SpriteFont>("gamefont");
 
@@ -145,6 +145,7 @@ namespace MenuSample.Scenes
             // plus de temps à charger. On simule ici un chargement long pour que vous
             // puissiez admirer la magnifique scène de chargement. :p
             Thread.Sleep(500);
+
 
             // En cas de longs période de traitement, appelez cette méthode *tintintin*.
             // Elle indique au mécanisme de synchronisation du jeu que vous avez fini un
@@ -363,9 +364,11 @@ namespace MenuSample.Scenes
 
             if (InputState.IsPauseGame())
             {
-                MediaPlayer.Pause();
-            }
+                MediaPlayer.Stop();
+            } else if (MediaPlayer.State == MediaState.Stopped)
+                MediaPlayer.Play(musique_menu);
 
+            
 
             foreach (Xspace.gestionLevels spawn in infLevel)
             {

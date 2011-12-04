@@ -27,3 +27,5 @@ Content\musique_tir.xnb
 Content\gamefont.xnb
 Content\menufont.xnb
 Content\Collisions\BasicExplosion\BasicExplosion.xnb
+Content\TOR_01_the_mandalorian_blockade.xnb
+Content\TOR_01_the_mandalorian_blockade.wma

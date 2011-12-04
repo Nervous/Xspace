@@ -119,13 +119,14 @@
     <Compile Include="Menu1\Scenes\Core\AbstractMenuScene.cs" />
     <Compile Include="Menu1\Scenes\Core\MenuItem.cs" />
     <Compile Include="Menu1\Scenes\Core\SceneManager.cs" />
+    <Compile Include="Menu1\Scenes\OptionMenuScene.cs" />
     <Compile Include="Menu1\Scenes\ScoreArcadeMenuScene.cs" />
     <Compile Include="Menu1\Scenes\ScoreMenuScene.cs" />
     <Compile Include="GameplayScene.cs" />
     <Compile Include="Menu1\Scenes\LoadingScene.cs" />
     <Compile Include="Menu1\Scenes\MainMenuScene.cs" />
     <Compile Include="Menu1\Scenes\MessageBoxScene.cs" />
-    <Compile Include="Menu1\Scenes\OptionsMenuScene.cs" />
+    <Compile Include="Menu1\Scenes\%28UNUSED%29OptionsMenuScene.cs" />
     <Compile Include="Menu1\Scenes\PauseMenuScene.cs" />
     <Compile Include="Missiles.cs" />
     <Compile Include="ScrollingBackground.cs" />

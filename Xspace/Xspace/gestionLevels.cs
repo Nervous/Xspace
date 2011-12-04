@@ -41,7 +41,7 @@ namespace Xspace
 
         public string[] lireFichier(string path)
         {
-            string[] lines = System.IO.File.ReadAllLines(@path);
+             string[] lines = System.IO.File.ReadAllLines(@path);
             return lines;
         }
 

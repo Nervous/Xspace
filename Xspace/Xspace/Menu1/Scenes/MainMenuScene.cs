@@ -1,6 +1,15 @@
 ﻿using System;
 using Microsoft.Xna.Framework.Graphics;
 using MenuSample.Scenes.Core;
+using MenuSample.Scenes.Core;
+using System.IO;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.GamerServices;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 namespace MenuSample.Scenes
 {
@@ -14,30 +23,42 @@ namespace MenuSample.Scenes
         /// Le constructeur remplit le menu
         /// </summary>
         /// 
+
+
+        private Song _musique_menu;
+        private ContentManager _content;
+
         Microsoft.Xna.Framework.GraphicsDeviceManager graphics;
         public MainMenuScene(SceneManager sceneMgr, Microsoft.Xna.Framework.GraphicsDeviceManager graphicsReceive)
             : base(sceneMgr, "")
         {
+            
             // Création des options
             var playGameMenuItem = new MenuItem("Lancer le jeu");
             var ScoreMenuItem = new MenuItem("Scores");
-            var optionsMenuItem = new MenuItem("A delete");
+            var OptionMenuItem = new MenuItem("Options");
             var exitMenuItem = new MenuItem("Quitter");
 
             // Gestion des évènements
             playGameMenuItem.Selected += PlayGameMenuItemSelected;
-            optionsMenuItem.Selected += OptionsMenuItemSelected;
+            OptionMenuItem.Selected += OptionMenuItemSelected;
             exitMenuItem.Selected += ConfirmExitMessageBoxAccepted;
             ScoreMenuItem.Selected += ScoreMenuItemSelected;
 
             // Ajout des options du menu
             MenuItems.Add(playGameMenuItem);
             MenuItems.Add(ScoreMenuItem);
-            //MenuItems.Add(optionsMenuItem);
+            MenuItems.Add(OptionMenuItem);
             MenuItems.Add(exitMenuItem);
             
 
             graphics = graphicsReceive;
+            if (_content == null)
+                _content = new ContentManager(SceneManager.Game.Services, "Content");
+            _musique_menu = _content.Load<Song>("TOR_01_the_mandalorian_blockade");
+
+
+            MediaPlayer.Play(_musique_menu);
         }
 
 
@@ -46,9 +67,9 @@ namespace MenuSample.Scenes
             LoadingScene.Load(SceneManager, true, new GameplayScene(SceneManager, graphics));
         }
 
-        private void OptionsMenuItemSelected(object sender, EventArgs e)
+        private void OptionMenuItemSelected(object sender, EventArgs e)
         {
-            new OptionsMenuScene(SceneManager).Add();
+            new OptionMenuScene(SceneManager, graphics).Add();
         }
 
         private void ScoreMenuItemSelected(object sender, EventArgs e)

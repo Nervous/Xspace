@@ -19,7 +19,7 @@ namespace MenuSample.Scenes
         private StreamReader sr;
         private string path;
         private Vector2 position_score1;
-        public string score;
+        public string[] score;
         private string stock;
 
         public ScoreArcadeMenuScene(SceneManager sceneMgr)
@@ -28,8 +28,8 @@ namespace MenuSample.Scenes
             path = "Arcade.txt";
             var back = new MenuItem("Retour");
             sr = new StreamReader(path);
-
-
+            
+            
 
             back.Selected += OnCancel;
             
@@ -45,7 +45,7 @@ namespace MenuSample.Scenes
         {
 
             stock = sr.ReadToEnd();
-            score = stock;
+            score = System.IO.File.ReadAllLines(@path);
             position_score1.X = 0;
             position_score1.Y = 0;
 
@@ -58,7 +58,7 @@ namespace MenuSample.Scenes
             SpriteBatch spriteBatch = SceneManager.SpriteBatch;
             spriteBatch.Begin();
 
-                spriteBatch.DrawString(_gamefont, score, position_score1, Color.Red);
+                spriteBatch.DrawString(_gamefont, score[0], position_score1, Color.Red);
 
             spriteBatch.End();
         }

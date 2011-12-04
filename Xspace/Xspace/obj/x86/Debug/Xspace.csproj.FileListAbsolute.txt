@@ -231,3 +231,5 @@ C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\obj\x86\Debug\Reso
 C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
 C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\obj\x86\Debug\Xspace.exe
 C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\obj\x86\Debug\Xspace.pdb
+C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\TOR_01_the_mandalorian_blockade.xnb
+C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\TOR_01_the_mandalorian_blockade.wma

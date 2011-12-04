@@ -5,8 +5,8 @@ namespace MenuSample.Scenes
 {
     public class ScoreMenuScene : AbstractMenuScene
     {
-        private readonly MenuItem _scoreMenuItem;
-
+        
+        
         public ScoreMenuScene(SceneManager sceneMgr)
             : base(sceneMgr, "Scores")
         {
@@ -22,6 +22,8 @@ namespace MenuSample.Scenes
             MenuItems.Add(scoreExtreme);
             MenuItems.Add(scoreCoop);
             MenuItems.Add(back);
+
+            
 
         }
 
