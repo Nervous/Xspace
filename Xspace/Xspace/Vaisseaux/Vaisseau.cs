@@ -173,7 +173,6 @@ namespace Xspace
                 else */
                 // Le draw en commentaire est le contour de la barre de vie (uniquement un interet visuel)
                 //batch.Draw(_texturecontourvie, _emplacementcontourvie, null, Color.White, MathHelper.Pi, origin, 1f, SpriteEffects.None, 0f);
-                batch.Draw(_texturevie, _emplacementvie, null, Color.White, MathHelper.Pi, origin, _echellevie, SpriteEffects.None, 0f);
                     batch.Draw(_textureVaisseau, _emplacement, Color.White);
 
             }

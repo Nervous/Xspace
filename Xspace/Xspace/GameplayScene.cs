@@ -113,7 +113,7 @@ namespace MenuSample.Scenes
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            musique =  _content.Load<Song>("wow-music1");
+            musique =  _content.Load<Song>("Musiques\\Jeu\\Musique");
             MediaPlayer.Play(musique);
             musique_tir = _content.Load<SoundEffect>("Sons\\Tir\\Tir");
 
