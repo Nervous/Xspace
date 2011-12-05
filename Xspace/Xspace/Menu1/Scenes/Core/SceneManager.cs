@@ -46,8 +46,8 @@ namespace MenuSample.Scenes.Core
         {
             ContentManager content = Game.Content;
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            _font = content.Load<SpriteFont>("menufont");
-            _blankTexture = content.Load<Texture2D>("blank");
+            _font = content.Load<SpriteFont>("Fonts\\Menu\\Menu");
+            _blankTexture = content.Load<Texture2D>("Sprites\\Menu\\Blank");
         }
 
 

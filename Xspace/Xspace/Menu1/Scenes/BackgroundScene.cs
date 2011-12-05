@@ -28,7 +28,7 @@ namespace MenuSample.Scenes
             if (_content == null)
                 _content = new ContentManager(SceneManager.Game.Services, "Content");
 
-            _backgroundTexture = _content.Load<Texture2D>("background");
+            _backgroundTexture = _content.Load<Texture2D>("Sprites\\Menu\\Background\\Background");
         }
 
         protected override void UnloadContent()

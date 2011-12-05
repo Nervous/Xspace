@@ -115,29 +115,24 @@ namespace MenuSample.Scenes
 
             musique =  _content.Load<Song>("wow-music1");
             MediaPlayer.Play(musique);
-            musique_tir = _content.Load<SoundEffect>("musique_tir");
+            musique_tir = _content.Load<SoundEffect>("Sons\\Tir\\Tir");
 
             fond_ecran = new Xspace.ScrollingBackground();
-            Texture2D fond_image = _content.Load<Texture2D>("space_bg");
+            Texture2D fond_image = _content.Load<Texture2D>("Sprites\\Background\\Background");
             fond_ecran.Load(GraphicsDevice, fond_image);
 
             thisLevel = new Xspace.gestionLevels(0);
             infLevel = new List<Xspace.gestionLevels>();
 
-            _textureContourVie = _content.Load<Texture2D>("contourvie");
-            _textureVie = _content.Load<Texture2D>("vie");
-            Xspace.Definition.texturevie =_textureVie;
-            Xspace.Definition.texturecontourvie = _textureContourVie;
-
             // TODO : Chargement de toutes les textures des vaisseau en dessous
-            textureVaisseau_joueur = _content.Load<Texture2D>("Vaisseau_joueur");
-            textureVaisseau_ennemi1 = _content.Load<Texture2D>("Vaisseau_ennemi1");
-            musique_menu = _content.Load<Song>("TOR_01_the_mandalorian_blockade");
+            textureVaisseau_joueur = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Joueur\\Vaisseau1");
+            textureVaisseau_ennemi1 = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Ennemi\\Vaisseau1");
+            musique_menu = _content.Load<Song>("Musiques\\Menu\\Musique");
 
-            _gameFont = _content.Load<SpriteFont>("gamefont");
+            _gameFont = _content.Load<SpriteFont>("Fonts\\Menu\\Menu");
 
             particleRenderer.LoadContent(_content);
-            particleEffect = _content.Load<ParticleEffect>(("BasicExplosion"));
+            particleEffect = _content.Load<ParticleEffect>(("Collisions\\BasicExplosion\\BasicExplosion"));
             particleEffect.LoadContent(_content);
             particleEffect.Initialise();
 
@@ -154,8 +149,8 @@ namespace MenuSample.Scenes
             SceneManager.Game.ResetElapsedTime();
 
             // TODO : Chargement de toutes les textures des missiles en dessous
-            textureMissile_joueur_base = _content.Load<Texture2D>("missile1");
-            textureMissile_ennemi1 = _content.Load<Texture2D>("missile1_e");
+            textureMissile_joueur_base = _content.Load<Texture2D>("Sprites\\Missiles\\Joueur\\Missile1");
+            textureMissile_ennemi1 = _content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\Missile1");
 
             // TODO : Chargement de tous les objets vaisseau en dessous
             listeVaisseauEnnemi = new List<Xspace.Vaisseau_ennemi>();
@@ -362,10 +357,11 @@ namespace MenuSample.Scenes
                 ? Math.Min(_pauseAlpha + 1f / 32, 1)
                 : Math.Max(_pauseAlpha - 1f / 32, 0);
 
+            // play musique du jeu et menu
             if (InputState.IsPauseGame())
             {
                 MediaPlayer.Stop();
-            } else if (MediaPlayer.State == MediaState.Stopped)
+            } else if ((MediaPlayer.State == MediaState.Stopped)&&(!InputState.IsPauseGame()))
                 MediaPlayer.Play(musique_menu);
 
             

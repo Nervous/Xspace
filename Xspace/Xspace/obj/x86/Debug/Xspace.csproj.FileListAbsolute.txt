@@ -233,3 +233,53 @@ C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\obj\x86\Debug\Xspa
 C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\obj\x86\Debug\Xspace.pdb
 C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\TOR_01_the_mandalorian_blockade.xnb
 C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\TOR_01_the_mandalorian_blockade.wma
+C:\Users\Nervous\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Sprites\Vaisseaux\Joueur\Vaisseau1.xnb
+C:\Users\Nervous\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Sprites\Missiles\Joueur\Missile1.xnb
+C:\Users\Nervous\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Sprites\Background\Background.xnb
+C:\Users\Nervous\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Sprites\Vaisseaux\Ennemi\Vaisseau1.xnb
+C:\Users\Nervous\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Sprites\Missiles\Ennemi\Missile1.xnb
+C:\Users\Nervous\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Sprites\Menu\Blank.xnb
+C:\Users\Nervous\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Sprites\Menu\Gradient.xnb
+C:\Users\Nervous\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Sprites\Menu\Background\Background.xnb
+C:\Users\Nervous\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Collisions\BasicExplosion\Cloud001.xnb
+C:\Users\Nervous\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Collisions\BasicExplosion\Particle004.xnb
+C:\Users\Nervous\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Collisions\BasicExplosion\Particle005.xnb
+C:\Users\Nervous\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Musiques\Jeu\Musique.xnb
+C:\Users\Nervous\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Sons\Tir\Tir.xnb
+C:\Users\Nervous\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Fonts\Jeu\Jeu.xnb
+C:\Users\Nervous\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Fonts\Menu\Menu.xnb
+C:\Users\Nervous\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Collisions\BasicExplosion\BasicExplosion.xnb
+C:\Users\Nervous\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Musiques\Jeu\Musique.wma
+C:\Users\Nervous\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Xspace.exe
+C:\Users\Nervous\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Xspace.pdb
+C:\Users\Nervous\Desktop\Space Symphonia\Xspace\Xspace\Xspace\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Nervous\Desktop\Space Symphonia\Xspace\Xspace\Xspace\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\Nervous\Desktop\Space Symphonia\Xspace\Xspace\Xspace\obj\x86\Debug\Xspace.exe
+C:\Users\Nervous\Desktop\Space Symphonia\Xspace\Xspace\Xspace\obj\x86\Debug\Xspace.pdb
+C:\Users\Nervous\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Musiques\Menu\Musique.xnb
+C:\Users\Nervous\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Musiques\Menu\Musique.wma
+E:\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Sprites\Vaisseaux\Joueur\Vaisseau1.xnb
+E:\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Sprites\Missiles\Joueur\Missile1.xnb
+E:\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Sprites\Background\Background.xnb
+E:\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Sprites\Vaisseaux\Ennemi\Vaisseau1.xnb
+E:\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Sprites\Missiles\Ennemi\Missile1.xnb
+E:\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Sprites\Menu\Blank.xnb
+E:\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Sprites\Menu\Gradient.xnb
+E:\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Sprites\Menu\Background\Background.xnb
+E:\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Collisions\BasicExplosion\Cloud001.xnb
+E:\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Collisions\BasicExplosion\Particle004.xnb
+E:\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Collisions\BasicExplosion\Particle005.xnb
+E:\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Musiques\Jeu\Musique.xnb
+E:\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Sons\Tir\Tir.xnb
+E:\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Musiques\Menu\Musique.xnb
+E:\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Fonts\Jeu\Jeu.xnb
+E:\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Fonts\Menu\Menu.xnb
+E:\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Collisions\BasicExplosion\BasicExplosion.xnb
+E:\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Musiques\Jeu\Musique.wma
+E:\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Musiques\Menu\Musique.wma
+E:\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Xspace.exe
+E:\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Xspace.pdb
+E:\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\obj\x86\Debug\ResolveAssemblyReference.cache
+E:\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+E:\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\obj\x86\Debug\Xspace.exe
+E:\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\obj\x86\Debug\Xspace.pdb

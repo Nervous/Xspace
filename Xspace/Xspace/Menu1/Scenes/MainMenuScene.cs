@@ -55,10 +55,10 @@ namespace MenuSample.Scenes
             graphics = graphicsReceive;
             if (_content == null)
                 _content = new ContentManager(SceneManager.Game.Services, "Content");
-            _musique_menu = _content.Load<Song>("TOR_01_the_mandalorian_blockade");
+            //_musique_menu = _content.Load<Song>("Musiques\\Menu\\Musique");
 
 
-            MediaPlayer.Play(_musique_menu);
+           // MediaPlayer.Play(_musique_menu);
         }
 
 

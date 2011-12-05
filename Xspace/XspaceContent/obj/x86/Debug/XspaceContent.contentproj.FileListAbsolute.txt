@@ -8,3 +8,5 @@ D:\Documents\Xspace\Xspace\Xspace\XspaceContent\obj\x86\Debug\ResolveAssemblyRef
 D:\Documents\Xspace\Xspace menu test\Xspace\XspaceContent\obj\x86\Debug\ResolveAssemblyReference.cache
 D:\Documents\Xspace\Xspace\Xspace\Xspace avec menu\Xspace\XspaceContent\obj\x86\Debug\ResolveAssemblyReference.cache
 C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\XspaceContent\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Nervous\Desktop\Space Symphonia\Xspace\Xspace\XspaceContent\obj\x86\Debug\ResolveAssemblyReference.cache
+E:\Space Symphonia\Space Symphonia\Xspace\Xspace\XspaceContent\obj\x86\Debug\ResolveAssemblyReference.cache
