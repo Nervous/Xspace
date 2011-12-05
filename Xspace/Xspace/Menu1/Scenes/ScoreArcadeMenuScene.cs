@@ -52,7 +52,7 @@ namespace MenuSample.Scenes
 
           if(_content == null)
           _content = new ContentManager(SceneManager.Game.Services, "Content");
-          _gamefont = _content.Load<SpriteFont>("gamefont");
+          _gamefont = _content.Load<SpriteFont>("Fonts\\Jeu\\Jeu");
           
 
             SpriteBatch spriteBatch = SceneManager.SpriteBatch;

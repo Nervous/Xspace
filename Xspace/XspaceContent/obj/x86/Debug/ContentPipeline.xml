@@ -7,8 +7,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Sprites\Vaisseaux\Joueur\Vaisseau1.xnb</Output>
-      <Time>2011-12-05T19:36:31.4434751+01:00</Time>
+      <Output>C:\Users\Antoine\Desktop\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Sprites\Vaisseaux\Joueur\Vaisseau1.xnb</Output>
+      <Time>2011-11-29T21:09:50+01:00</Time>
     </Item>
     <Item>
       <Source>Sprites\Missiles\Joueur\Missile1.png</Source>
@@ -16,8 +16,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Sprites\Missiles\Joueur\Missile1.xnb</Output>
-      <Time>2011-12-05T19:36:31.441475+01:00</Time>
+      <Output>C:\Users\Antoine\Desktop\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Sprites\Missiles\Joueur\Missile1.xnb</Output>
+      <Time>2011-11-29T21:09:50+01:00</Time>
     </Item>
     <Item>
       <Source>Sprites\Background\Background.jpg</Source>
@@ -25,8 +25,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Sprites\Background\Background.xnb</Output>
-      <Time>2011-12-05T19:36:31.4194737+01:00</Time>
+      <Output>C:\Users\Antoine\Desktop\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Sprites\Background\Background.xnb</Output>
+      <Time>2011-12-05T13:48:18+01:00</Time>
     </Item>
     <Item>
       <Source>Sprites\Vaisseaux\Ennemi\Vaisseau1.png</Source>
@@ -34,8 +34,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Sprites\Vaisseaux\Ennemi\Vaisseau1.xnb</Output>
-      <Time>2011-12-05T19:36:31.442475+01:00</Time>
+      <Output>C:\Users\Antoine\Desktop\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Sprites\Vaisseaux\Ennemi\Vaisseau1.xnb</Output>
+      <Time>2011-11-29T21:09:50+01:00</Time>
     </Item>
     <Item>
       <Source>Sprites\Missiles\Ennemi\Missile1.png</Source>
@@ -43,8 +43,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Sprites\Missiles\Ennemi\Missile1.xnb</Output>
-      <Time>2011-12-05T19:36:31.4364747+01:00</Time>
+      <Output>C:\Users\Antoine\Desktop\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Sprites\Missiles\Ennemi\Missile1.xnb</Output>
+      <Time>2011-11-29T21:09:50+01:00</Time>
     </Item>
     <Item>
       <Source>Sprites\Menu\Blank.png</Source>
@@ -52,8 +52,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Sprites\Menu\Blank.xnb</Output>
-      <Time>2011-12-05T19:36:31.4324745+01:00</Time>
+      <Output>C:\Users\Antoine\Desktop\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Sprites\Menu\Blank.xnb</Output>
+      <Time>2011-11-29T21:09:50+01:00</Time>
     </Item>
     <Item>
       <Source>Sprites\Menu\Gradient.png</Source>
@@ -61,8 +61,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Sprites\Menu\Gradient.xnb</Output>
-      <Time>2011-12-05T19:36:31.4334745+01:00</Time>
+      <Output>C:\Users\Antoine\Desktop\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Sprites\Menu\Gradient.xnb</Output>
+      <Time>2011-11-29T21:09:50+01:00</Time>
     </Item>
     <Item>
       <Source>Sprites\Menu\Background\Background.jpg</Source>
@@ -70,8 +70,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Sprites\Menu\Background\Background.xnb</Output>
-      <Time>2011-12-05T19:36:31.4314744+01:00</Time>
+      <Output>C:\Users\Antoine\Desktop\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Sprites\Menu\Background\Background.xnb</Output>
+      <Time>2011-11-29T21:09:50+01:00</Time>
     </Item>
     <Item>
       <Source>Collisions\BasicExplosion\Cloud001.png</Source>
@@ -79,8 +79,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Collisions\BasicExplosion\Cloud001.xnb</Output>
-      <Time>2011-12-05T19:36:31.1544586+01:00</Time>
+      <Output>C:\Users\Antoine\Desktop\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Collisions\BasicExplosion\Cloud001.xnb</Output>
+      <Time>2011-11-29T21:09:50+01:00</Time>
     </Item>
     <Item>
       <Source>Collisions\BasicExplosion\Particle004.png</Source>
@@ -88,8 +88,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Collisions\BasicExplosion\Particle004.xnb</Output>
-      <Time>2011-12-05T19:36:31.1704595+01:00</Time>
+      <Output>C:\Users\Antoine\Desktop\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Collisions\BasicExplosion\Particle004.xnb</Output>
+      <Time>2011-11-29T21:09:50+01:00</Time>
     </Item>
     <Item>
       <Source>Collisions\BasicExplosion\Particle005.png</Source>
@@ -97,8 +97,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Collisions\BasicExplosion\Particle005.xnb</Output>
-      <Time>2011-12-05T19:36:31.1714595+01:00</Time>
+      <Output>C:\Users\Antoine\Desktop\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Collisions\BasicExplosion\Particle005.xnb</Output>
+      <Time>2011-11-29T21:09:50+01:00</Time>
     </Item>
     <Item>
       <Source>Musiques\Jeu\Musique.mp3</Source>
@@ -106,9 +106,9 @@
       <Importer>Mp3Importer</Importer>
       <Processor>SongProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Musiques\Jeu\Musique.xnb</Output>
-      <Extra>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Musiques\Jeu\Musique.wma</Extra>
-      <Time>2011-12-05T19:36:31.2304629+01:00</Time>
+      <Output>C:\Users\Antoine\Desktop\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Musiques\Jeu\Musique.xnb</Output>
+      <Extra>C:\Users\Antoine\Desktop\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Musiques\Jeu\Musique.wma</Extra>
+      <Time>2011-11-29T21:09:50+01:00</Time>
     </Item>
     <Item>
       <Source>Sons\Tir\Tir.mp3</Source>
@@ -116,8 +116,8 @@
       <Importer>Mp3Importer</Importer>
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Sons\Tir\Tir.xnb</Output>
-      <Time>2011-12-05T19:36:31.4104732+01:00</Time>
+      <Output>C:\Users\Antoine\Desktop\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Sons\Tir\Tir.xnb</Output>
+      <Time>2011-11-29T21:09:50+01:00</Time>
     </Item>
     <Item>
       <Source>Musiques\Menu\Musique.mp3</Source>
@@ -125,9 +125,9 @@
       <Importer>Mp3Importer</Importer>
       <Processor>SongProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Musiques\Menu\Musique.xnb</Output>
-      <Extra>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Musiques\Menu\Musique.wma</Extra>
-      <Time>2011-12-05T19:36:31.3224682+01:00</Time>
+      <Output>C:\Users\Antoine\Desktop\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Musiques\Menu\Musique.xnb</Output>
+      <Extra>C:\Users\Antoine\Desktop\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Musiques\Menu\Musique.wma</Extra>
+      <Time>2011-12-04T01:59:30+01:00</Time>
     </Item>
     <Item>
       <Source>Fonts\Jeu\Jeu.spritefont</Source>
@@ -135,8 +135,8 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Fonts\Jeu\Jeu.xnb</Output>
-      <Time>2011-12-05T19:36:31.1714595+01:00</Time>
+      <Output>C:\Users\Antoine\Desktop\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Fonts\Jeu\Jeu.xnb</Output>
+      <Time>2011-11-29T21:09:50+01:00</Time>
     </Item>
     <Item>
       <Source>Fonts\Menu\Menu.spritefont</Source>
@@ -144,8 +144,8 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Fonts\Menu\Menu.xnb</Output>
-      <Time>2011-12-05T19:36:31.1734597+01:00</Time>
+      <Output>C:\Users\Antoine\Desktop\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Fonts\Menu\Menu.xnb</Output>
+      <Time>2011-11-29T21:09:50+01:00</Time>
     </Item>
     <Item>
       <Source>Collisions\BasicExplosion\BasicExplosion.xml</Source>
@@ -153,8 +153,8 @@
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Collisions\BasicExplosion\BasicExplosion.xnb</Output>
-      <Time>2011-12-05T19:36:31.1544586+01:00</Time>
+      <Output>C:\Users\Antoine\Desktop\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Collisions\BasicExplosion\BasicExplosion.xnb</Output>
+      <Time>2011-11-29T21:09:50+01:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
@@ -162,15 +162,15 @@
       <TargetProfile>HiDef</TargetProfile>
       <BuildConfiguration>Debug</BuildConfiguration>
       <CompressContent>false</CompressContent>
-      <RootDirectory>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\XspaceContent\</RootDirectory>
-      <LoggerRootDirectory>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\</LoggerRootDirectory>
-      <IntermediateDirectory>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\XspaceContent\obj\x86\Debug\</IntermediateDirectory>
-      <OutputDirectory>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\</OutputDirectory>
+      <RootDirectory>C:\Users\Antoine\Desktop\Space Symphonia\Space Symphonia\Xspace\Xspace\XspaceContent\</RootDirectory>
+      <LoggerRootDirectory>C:\Users\Antoine\Desktop\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\Users\Antoine\Desktop\Space Symphonia\Space Symphonia\Xspace\Xspace\XspaceContent\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>C:\Users\Antoine\Desktop\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>
-        <Key>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\ProjectMercury.dll</Key>
-        <Value>2011-12-05T19:36:30.8574416+01:00</Value>
+        <Key>C:\Users\Antoine\Desktop\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\ProjectMercury.dll</Key>
+        <Value>2011-11-29T21:09:50+01:00</Value>
       </Assembly>
       <Assembly>
         <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.XImporter.dll</Key>
@@ -197,8 +197,8 @@
         <Value>2010-08-23T12:41:18+02:00</Value>
       </Assembly>
       <Assembly>
-        <Key>C:\Windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
-        <Value>2011-06-05T17:55:10.5385568+02:00</Value>
+        <Key>C:\windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
+        <Value>2011-07-01T16:44:03.7559627+02:00</Value>
       </Assembly>
     </Assemblies>
   </Asset>
