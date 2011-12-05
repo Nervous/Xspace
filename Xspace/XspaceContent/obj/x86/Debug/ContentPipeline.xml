@@ -156,6 +156,15 @@
       <Output>C:\Users\Antoine\Desktop\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Collisions\BasicExplosion\BasicExplosion.xnb</Output>
       <Time>2011-11-29T21:09:50+01:00</Time>
     </Item>
+    <Item>
+      <Source>Sprites\Menu\Score\score-proto.png</Source>
+      <Name>Sprites\Menu\Score\score-proto</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Antoine\Desktop\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Sprites\Menu\Score\score-proto.xnb</Output>
+      <Time>2011-12-06T00:29:12.9017145+01:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>

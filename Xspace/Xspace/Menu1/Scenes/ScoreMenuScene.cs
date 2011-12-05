@@ -5,8 +5,8 @@ namespace MenuSample.Scenes
 {
     public class ScoreMenuScene : AbstractMenuScene
     {
-        
-        
+
+
         public ScoreMenuScene(SceneManager sceneMgr)
             : base(sceneMgr, "Scores")
         {

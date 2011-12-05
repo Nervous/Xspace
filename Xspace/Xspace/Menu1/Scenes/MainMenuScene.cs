@@ -50,7 +50,7 @@ namespace MenuSample.Scenes
             MenuItems.Add(ScoreMenuItem);
             MenuItems.Add(OptionMenuItem);
             MenuItems.Add(exitMenuItem);
-            
+
 
             graphics = graphicsReceive;
             if (_content == null)

@@ -298,3 +298,4 @@ C:\Users\Antoine\Desktop\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\ob
 C:\Users\Antoine\Desktop\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
 C:\Users\Antoine\Desktop\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\obj\x86\Debug\Xspace.exe
 C:\Users\Antoine\Desktop\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\obj\x86\Debug\Xspace.pdb
+C:\Users\Antoine\Desktop\Space Symphonia\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Sprites\Menu\Score\score-proto.xnb

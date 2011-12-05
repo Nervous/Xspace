@@ -487,6 +487,7 @@ namespace MenuSample.Scenes
             particleRenderer.RenderEffect(particleEffect);
             joueur1.Draw(spriteBatch); // Draw du joueur
             
+            
             foreach (Xspace.Vaisseau_ennemi vaisseau in listeVaisseauEnnemi)
             {
                 vaisseau.Draw(spriteBatch);
