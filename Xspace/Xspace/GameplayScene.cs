@@ -50,9 +50,12 @@ namespace MenuSample.Scenes
         private doneParticles partManage;
 
         public SpriteBatch spriteBatch;
-        private Texture2D textureVaisseau_joueur, textureMissile_joueur_base, textureMissile_ennemi1, textureVaisseau_ennemi1, _textureVie, _textureContourVie;
+
+        private Texture2D textureVaisseau_joueur, textureMissile_joueur_base, textureMissile_ennemi1, textureVaisseau_ennemi1;
+
         private Song musique, musique_menu;
-        private SoundEffect musique_tir, _musique_tir;
+        private SoundEffect musique_tir;
+
         private KeyboardState keyboardState;
         private Xspace.gestionLevels thisLevel;
         private List<Xspace.gestionLevels> infLevel;
@@ -158,8 +161,6 @@ namespace MenuSample.Scenes
             vaisseauDrone = new Xspace.Vaisseau_ennemi[100];
             joueur1 = new Xspace.Vaisseau_joueur(textureVaisseau_joueur);
 
-            // effets sonores
-           // SoundEffectInstance _musique_tir = musique_tir.CreateInstance();
 
             // TODO : Chargement de tous les objets missiles en dessous
             listeMissile = new List<Xspace.Missiles[]>();
@@ -395,9 +396,9 @@ namespace MenuSample.Scenes
                     if (missileJoueur[i] != null && missileJoueur[i].estAffiche == false && (time - lastTime > 150 || lastTime == 0))
                     {
                         musique_tir.Play();
-                            missileJoueur[i].afficherMissile(joueur1.position);
-                            lastTime = time;
-                            break;
+                        missileJoueur[i].afficherMissile(joueur1.position);
+                        lastTime = time;
+                        break;
                     }
                 }
             }

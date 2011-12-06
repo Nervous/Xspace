@@ -18,7 +18,6 @@ namespace MenuSample.Scenes
         private Texture2D _gradientTexture;
 
         public event EventHandler Accepted;
-        public event EventHandler Cancelled;
 
         /// <summary>
         /// Le constructeur permet à l'appeler de spécifier s'il veut utiliser

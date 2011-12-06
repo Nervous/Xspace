@@ -23,9 +23,6 @@ namespace MenuSample.Scenes
 
         //private static Mode _currentmod = Language.Francais;
         //private static readonly string[] Resolutions = { "480x800", "800x600", "1024x768", "1280x1024", "1680x1050" };
-        private static int _currentResolution;
-        private static bool _fullscreen;
-        private static int _volume = 42;
 
 
         /// <summary>
