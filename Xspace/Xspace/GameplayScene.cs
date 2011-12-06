@@ -18,6 +18,8 @@ using ProjectMercury.Emitters;
 using ProjectMercury.Modifiers;
 using ProjectMercury.Renderers;
 
+using Xspace;
+
 
 namespace MenuSample.Scenes
 {
@@ -52,34 +54,32 @@ namespace MenuSample.Scenes
         public SpriteBatch spriteBatch;
 
         private Texture2D textureVaisseau_joueur, textureMissile_joueur_base, textureMissile_ennemi1, textureVaisseau_ennemi1;
+        private List<Texture2D> listeTextureVaisseauxEnnemis;
 
         private Song musique, musique_menu;
         private SoundEffect musique_tir;
 
         private KeyboardState keyboardState;
-        private Xspace.gestionLevels thisLevel;
-        private List<Xspace.gestionLevels> infLevel;
+        private gestionLevels thisLevel;
+        private List<gestionLevels> infLevel;
 
         Renderer particleRenderer;
         ParticleEffect particleEffect;
 
 
         // TODO : Déclaration de tous les objets Vaisseau en dessous
-        private Xspace.Vaisseau_joueur joueur1;
-        private Xspace.Vaisseau_ennemi[] vaisseauDrone;
-        List<Xspace.Vaisseau_ennemi> listeVaisseauEnnemi, listeVaisseauEnnemiToRemove;
-        List<Xspace.Missiles[]> listeMissile, listeMissileToRemove;
+        private Vaisseau_joueur joueur1;
+        List<Vaisseau_ennemi> listeVaisseauEnnemi, listeVaisseauEnnemiToRemove;
+        List<Missiles[]> listeMissile, listeMissileToRemove;
         // TODO : Déclaration de tous les objets missiles en dessous
-        Xspace.Missiles[] missileJoueur;
-        Xspace.Missiles[] missileEnnemi;
-        Xspace.Missiles missiles;
+        Missiles[] missileJoueur;
+        Missiles[] missileEnnemi;
+        Missiles missiles;
         int nbreMaxMissiles, i = 0, j = 0, actualDrone = 0;
         int nbreMaxMissiles_e;
         float fps_fix;
         double time, lastTime;
-        char[] delimitationFilesInfo = new char[] { ' ' };
-        char[] delimitationFilesInfo2 = new char[] { ';' };
-        char[] delimitationFilesInfo3 = new char[] { ':' };
+        char[] delimitationFilesInfo = new char[] { ' ' }, delimitationFilesInfo2 = new char[] { ';' }, delimitationFilesInfo3 = new char[] { ':' };
 
 
 
@@ -107,25 +107,22 @@ namespace MenuSample.Scenes
 
          }
 
-        private Xspace.ScrollingBackground fond_ecran;
+        private ScrollingBackground fond_ecran;
         protected override void LoadContent()
         {
             if (_content == null)
                 _content = new ContentManager(SceneManager.Game.Services, "Content");
-            
+
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            musique =  _content.Load<Song>("Musiques\\Jeu\\Musique");
+            musique = _content.Load<Song>("Musiques\\Jeu\\Musique");
             MediaPlayer.Play(musique);
             musique_tir = _content.Load<SoundEffect>("Sons\\Tir\\Tir");
 
-            fond_ecran = new Xspace.ScrollingBackground();
+            fond_ecran = new ScrollingBackground();
             Texture2D fond_image = _content.Load<Texture2D>("Sprites\\Background\\Background");
             fond_ecran.Load(GraphicsDevice, fond_image);
-
-            thisLevel = new Xspace.gestionLevels(0);
-            infLevel = new List<Xspace.gestionLevels>();
 
             // TODO : Chargement de toutes les textures des vaisseau en dessous
             textureVaisseau_joueur = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Joueur\\Vaisseau1");
@@ -139,16 +136,7 @@ namespace MenuSample.Scenes
             particleEffect.LoadContent(_content);
             particleEffect.Initialise();
 
-            // Un vrai jeu possède évidemment plus de contenu que ça, et donc cela prend
-            // plus de temps à charger. On simule ici un chargement long pour que vous
-            // puissiez admirer la magnifique scène de chargement. :p
             Thread.Sleep(500);
-
-
-            // En cas de longs période de traitement, appelez cette méthode *tintintin*.
-            // Elle indique au mécanisme de synchronisation du jeu que vous avez fini un
-            // long traitement, et qu'il ne devrait pas essayer de rattraper le retard.
-            // Cela évite un lag au début du jeu.
             SceneManager.Game.ResetElapsedTime();
 
             // TODO : Chargement de toutes les textures des missiles en dessous
@@ -156,20 +144,19 @@ namespace MenuSample.Scenes
             textureMissile_ennemi1 = _content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\Missile1");
 
             // TODO : Chargement de tous les objets vaisseau en dessous
-            listeVaisseauEnnemi = new List<Xspace.Vaisseau_ennemi>();
-            listeVaisseauEnnemiToRemove = new List<Xspace.Vaisseau_ennemi>();
-            vaisseauDrone = new Xspace.Vaisseau_ennemi[100];
-            joueur1 = new Xspace.Vaisseau_joueur(textureVaisseau_joueur);
+            listeVaisseauEnnemi = new List<Vaisseau_ennemi>();
+            listeVaisseauEnnemiToRemove = new List<Vaisseau_ennemi>();
+            joueur1 = new Vaisseau_joueur(textureVaisseau_joueur);
 
 
             // TODO : Chargement de tous les objets missiles en dessous
-            listeMissile = new List<Xspace.Missiles[]>();
-            listeMissileToRemove = new List<Xspace.Missiles[]>();
-            missileJoueur = new Xspace.Missiles[nbreMaxMissiles];
-            missileEnnemi = new Xspace.Missiles[nbreMaxMissiles_e];
-            missiles = new Xspace.Missiles(textureMissile_ennemi1, true, 50);
+            listeMissile = new List<Missiles[]>();
+            listeMissileToRemove = new List<Missiles[]>();
+            missileJoueur = new Missiles[nbreMaxMissiles];
+            missileEnnemi = new Missiles[nbreMaxMissiles_e];
+            missiles = new Missiles(textureMissile_ennemi1, true, 50);
             for (int i = 0; i < nbreMaxMissiles; i++)
-                missileJoueur[i] = new Xspace.Missiles(textureMissile_joueur_base, false, 50);
+                missileJoueur[i] = new Missiles(textureMissile_joueur_base, false, 50);
 
             for (int i = 0; i < nbreMaxMissiles - 1; i++)
             {
@@ -180,7 +167,7 @@ namespace MenuSample.Scenes
             listeMissile.Add(missileJoueur);
 
             for (int i = 0; i < nbreMaxMissiles_e; i++)
-                missileEnnemi[i] = new Xspace.Missiles(textureMissile_ennemi1, true, 50);
+                missileEnnemi[i] = new Missiles(textureMissile_ennemi1, true, 50);
 
             for (int i = 0; i < nbreMaxMissiles_e - 1; i++)
             {
@@ -191,78 +178,23 @@ namespace MenuSample.Scenes
 
 
             // TODO : Chargement du level en dessous
-
-            foreach (string info in thisLevel.getInfosLevel) // Pour chacune des lignes du level ...
-            {
-                int timing = 0;
-                string categorie = "", type = "", position = "";
-                Xspace.Vaisseau_ennemi vaisseau = null;
-                foreach (string info2 in info.Split(delimitationFilesInfo)) // ... On récupère 2 infos : le type de l'objet et à quelle date il doit spawn
-                {
-                    i = 0;
-                    if (!int.TryParse(info2, out timing)) // SI l'info n'est pas un nombre, alors c'est la catégorie de l'objet (vaisseau, bonus, obstacle, etc.)
-                    {
-                        foreach (string info3 in info2.Split(delimitationFilesInfo3))
-                        {
-                            if(info3.Contains(";")) // Si on trouve le caratère ";", alors c'est les infos level (ex : vaisseau;drone)
-                            {
-                                foreach (string info4 in info3.Split(delimitationFilesInfo2))
-                                {
-                                    if (i == 0) // Premiere info : catégorie de l'objet
-                                    {
-                                        categorie = info4;
-                                    }
-                                    else // Deuxième info : type de l'objet
-                                    {
-                                        type = info4;
-                                    }
-                                    i++;
-                                }
-                            }
-                            else
-                            {
-                                position = info3;
-                            }
-                        }
-                    }
-                    else
-                        timing = int.Parse(info2);
-                    
-                }
-                //Fin de lecture de la ligne : on ajoute un élement dans la liste des infos du level
-                if (categorie == "vaisseau")
-                {
-                    switch (type)
-                    {
-                        case "drone":
-                            vaisseau = vaisseauDrone[actualDrone] = new Xspace.Vaisseau_ennemi(textureVaisseau_ennemi1, "drone", position);
-                            break;
-                        default:
-                            break;
-                    }
-                }
-                else
-                {
-                    if (categorie == "drone")
-                        Game.Exit();
-                }
-
-                infLevel.Add(new Xspace.gestionLevels(categorie, vaisseau, timing, position));
-                
-
-            }
+            listeTextureVaisseauxEnnemis = new List<Texture2D>();
+            listeTextureVaisseauxEnnemis.Add(textureVaisseau_ennemi1);
+            thisLevel = new gestionLevels(0, listeTextureVaisseauxEnnemis);
+            infLevel = new List<gestionLevels>();
+            thisLevel.readInfos(delimitationFilesInfo, delimitationFilesInfo2, delimitationFilesInfo3, infLevel);
         }
 
 
         // gestion des collisions
-        doneParticles collisions(List<Xspace.Vaisseau_ennemi> listeVaisseau, List<Xspace.Missiles[]> listeMissiles, float spentTime, ParticleEffect particleEffect)
+        doneParticles collisions(List<Vaisseau_ennemi> listeVaisseau, List<Missiles[]> listeMissiles, float spentTime, ParticleEffect particleEffect)
         {
 
             int vaisseauActuel = 0, missileActuel = 0;
-            foreach(Xspace.Vaisseau_ennemi vaisseau in listeVaisseau)
+            foreach(Vaisseau_ennemi vaisseau in listeVaisseau)
             {
                 vaisseauActuel = listeVaisseau.IndexOf(vaisseau);
-                foreach (Xspace.Missiles[] missile in listeMissiles)
+                foreach (Missiles[] missile in listeMissiles)
                 {
                     missileActuel = listeMissiles.IndexOf(missile);
                     for (int k = 0; k < 15; k++)
@@ -367,7 +299,7 @@ namespace MenuSample.Scenes
 
             
 
-            foreach (Xspace.gestionLevels spawn in infLevel)
+            foreach (gestionLevels spawn in infLevel)
             {
                 if (spawn.isTime(time))
                 {
@@ -404,7 +336,7 @@ namespace MenuSample.Scenes
             }
             
             // affichage des missiles des ennemis
-            foreach (Xspace.Vaisseau_ennemi vaisseau in listeVaisseauEnnemi)
+            foreach (Vaisseau_ennemi vaisseau in listeVaisseauEnnemi)
             {
                 
                 if (vaisseau.existe)
@@ -456,7 +388,7 @@ namespace MenuSample.Scenes
 
            particleEffect.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
 
-            foreach (Xspace.Vaisseau_ennemi vaisseau in listeVaisseauEnnemi)
+            foreach (Vaisseau_ennemi vaisseau in listeVaisseauEnnemi)
             {
                 if (vaisseau.existe == false)
                 {
@@ -489,7 +421,7 @@ namespace MenuSample.Scenes
             joueur1.Draw(spriteBatch); // Draw du joueur
             
             
-            foreach (Xspace.Vaisseau_ennemi vaisseau in listeVaisseauEnnemi)
+            foreach (Vaisseau_ennemi vaisseau in listeVaisseauEnnemi)
             {
                 vaisseau.Draw(spriteBatch);
             }
