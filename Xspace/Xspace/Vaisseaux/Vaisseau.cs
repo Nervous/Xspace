@@ -159,6 +159,39 @@ namespace Xspace
                 this.kill();
         }
 
+        public void Update(float fps_fix, KeyboardState keyboard)
+        {
+            UpdateJoueur(fps_fix, keyboard);
+        }
+
+        public void UpdateJoueur(float fps_fix, KeyboardState keyboard)
+        {
+
+            if (keyboard.IsKeyDown(Keys.Z))
+            {
+                if (_emplacement.Y - _textureVaisseau.Height / 2 + 20 >= 0)
+                    _emplacement -= _deplacementDirectionY * _vitesseVaisseau * fps_fix;
+            }
+
+            if (keyboard.IsKeyDown(Keys.S))
+            {
+                if (_emplacement.Y - _textureVaisseau.Height / 2 - 10 <= 540)
+                    _emplacement += _deplacementDirectionY * _vitesseVaisseau * fps_fix;
+            }
+
+            if (keyboard.IsKeyDown(Keys.Q))
+            {
+                if (_emplacement.X - _textureVaisseau.Width / 2 + 20 >= 0)
+                    _emplacement -= _deplacementDirectionX * _vitesseVaisseau * fps_fix;
+            }
+
+            if (keyboard.IsKeyDown(Keys.D))
+            {
+                if (_emplacement.X - _textureVaisseau.Width / 2 - 10 <= 1085)
+                    _emplacement += _deplacementDirectionX * _vitesseVaisseau * fps_fix;
+            }
+        }
+
 
         public void Draw(SpriteBatch batch)
         {

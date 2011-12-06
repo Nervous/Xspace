@@ -29,14 +29,14 @@ namespace MenuSample.Scenes
     public class GameplayScene : AbstractGameScene
     {
 
+        private float fps_fix, _pauseAlpha;
+        private double time, lastTime;
+        private char[] delimitationFilesInfo = new char[] { ' ' }, delimitationFilesInfo2 = new char[] { ';' }, delimitationFilesInfo3 = new char[] { ':' };
+
         private ContentManager _content;
         private SpriteFont _gameFont;
 
-        private Vector2 _playerPosition = new Vector2(100, 100);
-        private Vector2 _enemyPosition = new Vector2(100, 100);
-
         private readonly Random _random = new Random();
-        private float _pauseAlpha;
 
         struct doneParticles
         {
@@ -60,26 +60,15 @@ namespace MenuSample.Scenes
         private SoundEffect musique_tir;
 
         private KeyboardState keyboardState;
+
         private gestionLevels thisLevel;
         private List<gestionLevels> infLevel;
 
         Renderer particleRenderer;
         ParticleEffect particleEffect;
 
-
-        // TODO : Déclaration de tous les objets Vaisseau en dessous
-        private Vaisseau_joueur joueur1;
-        List<Vaisseau> listeVaisseauEnnemi, listeVaisseauEnnemiToRemove;
+        List<Vaisseau> listeVaisseau, listeVaisseauToRemove;
         List<Missiles> listeMissileJoueur, listeMissileEnnemi, listeMissileToRemove;
-        // TODO : Déclaration de tous les objets missiles en dessous
-
-        int nbreMaxMissiles, i = 0, j = 0;
-        int nbreMaxMissiles_e;
-        float fps_fix;
-        double time, lastTime;
-        char[] delimitationFilesInfo = new char[] { ' ' }, delimitationFilesInfo2 = new char[] { ';' }, delimitationFilesInfo3 = new char[] { ':' };
-
-
 
         public GameplayScene(SceneManager sceneMgr, GraphicsDeviceManager graphics)
             : base(sceneMgr)
@@ -91,10 +80,7 @@ namespace MenuSample.Scenes
             };
             particleEffect = new ParticleEffect();
 
-            nbreMaxMissiles = 15;
             lastTime = 0;
-            nbreMaxMissiles_e = 20;
-
         }
 
 
@@ -142,26 +128,15 @@ namespace MenuSample.Scenes
             textureMissile_ennemi1 = _content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\Missile1");
 
             // TODO : Chargement de tous les objets vaisseau en dessous
-            listeVaisseauEnnemi = new List<Vaisseau>();
-            listeVaisseauEnnemiToRemove = new List<Vaisseau>();
-            joueur1 = new Vaisseau_joueur(textureVaisseau_joueur);
+            listeVaisseau = new List<Vaisseau>();
+            listeVaisseauToRemove = new List<Vaisseau>();
+            listeVaisseau.Add(new Vaisseau_joueur(textureVaisseau_joueur));
 
 
             // TODO : Chargement de tous les objets missiles en dessous
             listeMissileJoueur = new List<Missiles>();
             listeMissileEnnemi = new List<Missiles>();
             listeMissileToRemove = new List<Missiles>();
-
-
-            /*for (int i = 0; i < nbreMaxMissiles_e; i++)
-                listeMissileEnnemi[i] = new Missiles(textureMissile_ennemi1, true, 50);
-
-            for (int i = 0; i < nbreMaxMissiles_e - 1; i++)
-            {
-                if (listeMissileEnnemi[i] != null)
-                    listeMissileEnnemi[i].initialiserTexture(textureMissile_ennemi1);
-            }
-            listeMissile.Add(listeMissileEnnemi);*/
 
 
             // TODO : Chargement du level en dessous
@@ -215,9 +190,9 @@ namespace MenuSample.Scenes
 
             return new doneParticles(true, new Vector2(0, 0));
         }
-                public override void HandleInput()
+        public override void HandleInput()
         {
-            
+
             KeyboardState keyboardState = InputState.CurrentKeyboardState;
 
             // Le menu de pause s'enclenche si un joueur appuie sur la touche assignée
@@ -225,55 +200,25 @@ namespace MenuSample.Scenes
 
             if (InputState.IsPauseGame())
                 new PauseMenuScene(SceneManager, this).Add();
-            else
-            {
-                if (keyboardState.IsKeyDown(Keys.Z))
-                {
-                    if (joueur1._emplacement.Y - joueur1._textureVaisseau.Height / 2 + 20 >= 0)
-                        joueur1._emplacement -= joueur1._deplacementDirectionY * joueur1._vitesseVaisseau * fps_fix;
-                }
-
-                if (keyboardState.IsKeyDown(Keys.S))
-                {
-                    if (joueur1._emplacement.Y - joueur1._textureVaisseau.Height / 2 - 10 <= 540)
-                        joueur1._emplacement += joueur1._deplacementDirectionY * joueur1._vitesseVaisseau * fps_fix;
-                }
-
-                if (keyboardState.IsKeyDown(Keys.Q))
-                {
-                    if (joueur1._emplacement.X - joueur1._textureVaisseau.Width / 2 + 20 >= 0)
-                        joueur1._emplacement -= joueur1._deplacementDirectionX * joueur1._vitesseVaisseau * fps_fix;
-                }
-
-                if (keyboardState.IsKeyDown(Keys.D))
-                {
-                    if (joueur1._emplacement.X - joueur1._textureVaisseau.Width / 2 - 10 <= 1085)
-                        joueur1._emplacement += joueur1._deplacementDirectionX * joueur1._vitesseVaisseau * fps_fix;
-                }
-               
-            }
         }
 
         public override void Update(GameTime gameTime, bool othersceneHasFocus, bool coveredByOtherscene)
         {
-
-            fps_fix = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            time += gameTime.ElapsedGameTime.TotalMilliseconds;
-
-            base.Update(gameTime, othersceneHasFocus, false);
-
-            _pauseAlpha = coveredByOtherscene
-                ? Math.Min(_pauseAlpha + 1f / 32, 1)
-                : Math.Max(_pauseAlpha - 1f / 32, 0);
+            //TODO : Gestion du menu 
+            _pauseAlpha = coveredByOtherscene ? Math.Min(_pauseAlpha + 1f / 32, 1) : Math.Max(_pauseAlpha - 1f / 32, 0);
 
             // play musique du jeu et menu
             if (InputState.IsPauseGame())
             {
-                MediaPlayer.Stop();
-            } else if ((MediaPlayer.State == MediaState.Stopped)&&(!InputState.IsPauseGame()))
-                MediaPlayer.Play(musique_menu);
+                MediaPlayer.Volume = 0.2f;
+            }
+            else if (InputState.IsMenuSelect())
+                MediaPlayer.Volume = 1f;
 
-            
+            base.Update(gameTime, othersceneHasFocus, false);
+
+            fps_fix = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            time += gameTime.ElapsedGameTime.TotalMilliseconds;
 
             foreach (gestionLevels spawn in infLevel)
             {
@@ -284,7 +229,7 @@ namespace MenuSample.Scenes
                     {
                         case "vaisseau":
                             if(spawn.Adresse != null)
-                                listeVaisseauEnnemi.Add(spawn.Adresse);
+                                listeVaisseau.Add(spawn.Adresse);
                             else
                                 Game.Exit();
                             break;
@@ -302,15 +247,14 @@ namespace MenuSample.Scenes
                 if (time - lastTime > 150 || lastTime == 0)
                 {
                     musique_tir.Play();
-                    listeMissileJoueur.Add(new Missile1_Joueur(textureMissile_joueur_base, joueur1.position));
+                    listeMissileJoueur.Add(new Missile1_Joueur(textureMissile_joueur_base, listeVaisseau[0].position));
                     lastTime = time;
                 }
             }
             
-            // affichage des missiles des ennemis
-            foreach (Vaisseau vaisseau in listeVaisseauEnnemi)
+            foreach (Vaisseau vaisseau in listeVaisseau)
             {
-                if (vaisseau.existe)
+                if (vaisseau.existe && vaisseau.ennemi)
                 {
                     if (time - vaisseau.lastTir > vaisseau.timingAttack || vaisseau.lastTir == 0)
                     {
@@ -323,7 +267,8 @@ namespace MenuSample.Scenes
                 }           
             }
 
-            
+            // TODO : Update des missiles
+
             foreach(Missiles missile in listeMissileJoueur)
             {
                 if (missile.position.X < 1150)
@@ -350,30 +295,31 @@ namespace MenuSample.Scenes
 
             listeMissileToRemove.Clear();
 
-                if(!(partManage.startingParticle == Vector2.Zero))
-                    particleEffect.Trigger(partManage.startingParticle);
-                partManage = collisions(listeVaisseauEnnemi, listeMissileJoueur, fps_fix, particleEffect);
+            //TODO : Update des vaisseaux
 
-           particleEffect.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
-
-            foreach (Vaisseau vaisseau in listeVaisseauEnnemi)
+            foreach (Vaisseau vaisseau in listeVaisseau)
             {
                 if (vaisseau.existe == false)
-                {
-                    listeVaisseauEnnemiToRemove.Add(vaisseau);
-                    i++;
-                }
-                else
+                    listeVaisseauToRemove.Add(vaisseau);
+                else if (vaisseau.ennemi)
                     vaisseau.Update(fps_fix);
+                else
+                    vaisseau.Update(fps_fix, keyboardState);
             }
 
-            for (j = 0; j < i; j++)
+            foreach (Vaisseau vaisseau in listeVaisseauToRemove)
             {
-                    listeVaisseauEnnemi.Remove(listeVaisseauEnnemiToRemove[j]);
+                listeVaisseau.Remove(vaisseau);
             }
+            
+            listeVaisseauToRemove.Clear();
 
-            listeVaisseauEnnemiToRemove.Clear();
-            i = 0;
+            // TODO : Update des particules
+            if (!(partManage.startingParticle == Vector2.Zero))
+                particleEffect.Trigger(partManage.startingParticle);
+            partManage = collisions(listeVaisseau, listeMissileJoueur, fps_fix, particleEffect);
+
+            particleEffect.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
             
             base.Update(gameTime);
         }
@@ -386,10 +332,9 @@ namespace MenuSample.Scenes
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive);
             fond_ecran.Draw(spriteBatch);
             particleRenderer.RenderEffect(particleEffect);
-            joueur1.Draw(spriteBatch); // Draw du joueur
             
             
-            foreach (Vaisseau vaisseau in listeVaisseauEnnemi)
+            foreach (Vaisseau vaisseau in listeVaisseau)
             {
                 vaisseau.Draw(spriteBatch);
             }
