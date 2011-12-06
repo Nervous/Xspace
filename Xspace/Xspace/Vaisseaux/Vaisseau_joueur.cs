@@ -22,7 +22,7 @@ namespace Xspace
 
 
 
-        public void Update(float fps_fix)
+        public new void Update(float fps_fix)
         {
             keyboardState = Keyboard.GetState();
             if (keyboardState.IsKeyDown(Keys.LeftShift))

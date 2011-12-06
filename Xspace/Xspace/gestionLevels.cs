@@ -21,7 +21,7 @@ namespace Xspace
 
 
         string categorie, position;
-        Vaisseau_ennemi adresse;
+        Vaisseau adresse;
         double time;
         bool hasSpawned;
         List<Texture2D> listeTextureVaisseauxEnnemis;
@@ -35,7 +35,7 @@ namespace Xspace
             listeTextureVaisseauxEnnemis = texturesVaisseaux;
         }
 
-        public gestionLevels(string setCategorie, Vaisseau_ennemi setAdresse, int setTime, string setPosition)
+        public gestionLevels(string setCategorie, Vaisseau setAdresse, int setTime, string setPosition)
         {
             categorie = setCategorie;
             adresse = setAdresse;
@@ -62,7 +62,7 @@ namespace Xspace
             {
                 int timing = 0, i = 0;
                 string categorie = "", type = "", position = "";
-                Vaisseau_ennemi vaisseau = null;
+                Vaisseau vaisseau = null;
                 foreach (string info2 in info.Split(delimitationFilesInfo)) // ... On récupère 2 infos : le type de l'objet et à quelle date il doit spawn
                 {
                     i = 0;
@@ -101,7 +101,7 @@ namespace Xspace
                     switch (type)
                     {
                         case "drone":
-                            vaisseau = new Vaisseau_ennemi(listeTextureVaisseauxEnnemis[0], "drone", position);
+                            vaisseau = new Drone(listeTextureVaisseauxEnnemis[0], "drone", position);
                             break;
                         default:
                             break;
@@ -114,7 +114,7 @@ namespace Xspace
             }
         }
 
-        public Vaisseau_ennemi Adresse
+        public Vaisseau Adresse
         {
             get { return adresse; }
         }

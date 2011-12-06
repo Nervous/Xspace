@@ -131,8 +131,8 @@
     <Compile Include="Missiles.cs" />
     <Compile Include="ScrollingBackground.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Vaisseaux\Drone.cs" />
     <Compile Include="Vaisseaux\Vaisseau.cs" />
-    <Compile Include="Vaisseaux\Vaisseau_ennemi.cs" />
     <Compile Include="Vaisseaux\Vaisseau_joueur.cs" />
     <Compile Include="Xspace.cs" />
   </ItemGroup>

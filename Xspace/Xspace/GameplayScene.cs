@@ -69,13 +69,13 @@ namespace MenuSample.Scenes
 
         // TODO : Déclaration de tous les objets Vaisseau en dessous
         private Vaisseau_joueur joueur1;
-        List<Vaisseau_ennemi> listeVaisseauEnnemi, listeVaisseauEnnemiToRemove;
+        List<Vaisseau> listeVaisseauEnnemi, listeVaisseauEnnemiToRemove;
         List<Missiles[]> listeMissile, listeMissileToRemove;
         // TODO : Déclaration de tous les objets missiles en dessous
         Missiles[] missileJoueur;
         Missiles[] missileEnnemi;
         Missiles missiles;
-        int nbreMaxMissiles, i = 0, j = 0, actualDrone = 0;
+        int nbreMaxMissiles, i = 0, j = 0;
         int nbreMaxMissiles_e;
         float fps_fix;
         double time, lastTime;
@@ -144,8 +144,8 @@ namespace MenuSample.Scenes
             textureMissile_ennemi1 = _content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\Missile1");
 
             // TODO : Chargement de tous les objets vaisseau en dessous
-            listeVaisseauEnnemi = new List<Vaisseau_ennemi>();
-            listeVaisseauEnnemiToRemove = new List<Vaisseau_ennemi>();
+            listeVaisseauEnnemi = new List<Vaisseau>();
+            listeVaisseauEnnemiToRemove = new List<Vaisseau>();
             joueur1 = new Vaisseau_joueur(textureVaisseau_joueur);
 
 
@@ -187,11 +187,11 @@ namespace MenuSample.Scenes
 
 
         // gestion des collisions
-        doneParticles collisions(List<Vaisseau_ennemi> listeVaisseau, List<Missiles[]> listeMissiles, float spentTime, ParticleEffect particleEffect)
+        doneParticles collisions(List<Vaisseau> listeVaisseau, List<Missiles[]> listeMissiles, float spentTime, ParticleEffect particleEffect)
         {
 
             int vaisseauActuel = 0, missileActuel = 0;
-            foreach(Vaisseau_ennemi vaisseau in listeVaisseau)
+            foreach(Vaisseau vaisseau in listeVaisseau)
             {
                 vaisseauActuel = listeVaisseau.IndexOf(vaisseau);
                 foreach (Missiles[] missile in listeMissiles)
@@ -336,7 +336,7 @@ namespace MenuSample.Scenes
             }
             
             // affichage des missiles des ennemis
-            foreach (Vaisseau_ennemi vaisseau in listeVaisseauEnnemi)
+            foreach (Vaisseau vaisseau in listeVaisseauEnnemi)
             {
                 
                 if (vaisseau.existe)
@@ -388,7 +388,7 @@ namespace MenuSample.Scenes
 
            particleEffect.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
 
-            foreach (Vaisseau_ennemi vaisseau in listeVaisseauEnnemi)
+            foreach (Vaisseau vaisseau in listeVaisseauEnnemi)
             {
                 if (vaisseau.existe == false)
                 {
@@ -421,7 +421,7 @@ namespace MenuSample.Scenes
             joueur1.Draw(spriteBatch); // Draw du joueur
             
             
-            foreach (Vaisseau_ennemi vaisseau in listeVaisseauEnnemi)
+            foreach (Vaisseau vaisseau in listeVaisseauEnnemi)
             {
                 vaisseau.Draw(spriteBatch);
             }
