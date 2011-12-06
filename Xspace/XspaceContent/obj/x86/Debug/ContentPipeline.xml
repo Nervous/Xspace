@@ -8,7 +8,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Sprites\Vaisseaux\Joueur\Vaisseau1.xnb</Output>
-      <Time>2011-12-06T09:26:14.5019032+01:00</Time>
+      <Time>0001-01-01T00:00:00</Time>
     </Item>
     <Item>
       <Source>Sprites\Missiles\Joueur\Missile1.png</Source>
@@ -17,7 +17,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Sprites\Missiles\Joueur\Missile1.xnb</Output>
-      <Time>2011-12-06T09:26:14.5009031+01:00</Time>
+      <Time>0001-01-01T00:00:00</Time>
     </Item>
     <Item>
       <Source>Sprites\Background\Background.jpg</Source>
@@ -26,7 +26,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Sprites\Background\Background.xnb</Output>
-      <Time>2011-12-06T09:26:13.8258645+01:00</Time>
+      <Time>0001-01-01T00:00:00</Time>
     </Item>
     <Item>
       <Source>Sprites\Vaisseaux\Ennemi\Vaisseau1.png</Source>
@@ -35,7 +35,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Sprites\Vaisseaux\Ennemi\Vaisseau1.xnb</Output>
-      <Time>2011-12-06T09:26:14.5019032+01:00</Time>
+      <Time>0001-01-01T00:00:00</Time>
     </Item>
     <Item>
       <Source>Sprites\Missiles\Ennemi\Missile1.png</Source>
@@ -44,7 +44,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Sprites\Missiles\Ennemi\Missile1.xnb</Output>
-      <Time>2011-12-06T09:26:14.4999031+01:00</Time>
+      <Time>0001-01-01T00:00:00</Time>
     </Item>
     <Item>
       <Source>Sprites\Menu\Blank.png</Source>
@@ -53,7 +53,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Sprites\Menu\Blank.xnb</Output>
-      <Time>2011-12-06T09:26:13.8828678+01:00</Time>
+      <Time>0001-01-01T00:00:00</Time>
     </Item>
     <Item>
       <Source>Sprites\Menu\Gradient.png</Source>
@@ -62,7 +62,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Sprites\Menu\Gradient.xnb</Output>
-      <Time>2011-12-06T09:26:13.8828678+01:00</Time>
+      <Time>0001-01-01T00:00:00</Time>
     </Item>
     <Item>
       <Source>Sprites\Menu\Background\Background.jpg</Source>
@@ -71,7 +71,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Sprites\Menu\Background\Background.xnb</Output>
-      <Time>2011-12-06T09:26:13.8818677+01:00</Time>
+      <Time>0001-01-01T00:00:00</Time>
     </Item>
     <Item>
       <Source>Collisions\BasicExplosion\Cloud001.png</Source>
@@ -80,7 +80,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Collisions\BasicExplosion\Cloud001.xnb</Output>
-      <Time>2011-12-06T09:26:06.7094575+01:00</Time>
+      <Time>0001-01-01T00:00:00</Time>
     </Item>
     <Item>
       <Source>Collisions\BasicExplosion\Particle004.png</Source>
@@ -89,7 +89,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Collisions\BasicExplosion\Particle004.xnb</Output>
-      <Time>2011-12-06T09:26:06.736459+01:00</Time>
+      <Time>0001-01-01T00:00:00</Time>
     </Item>
     <Item>
       <Source>Collisions\BasicExplosion\Particle005.png</Source>
@@ -98,7 +98,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Collisions\BasicExplosion\Particle005.xnb</Output>
-      <Time>2011-12-06T09:26:06.736459+01:00</Time>
+      <Time>0001-01-01T00:00:00</Time>
     </Item>
     <Item>
       <Source>Sprites\Menu\Score\score-proto.png</Source>
@@ -107,7 +107,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Sprites\Menu\Score\score-proto.xnb</Output>
-      <Time>2011-12-06T09:26:14.1568834+01:00</Time>
+      <Time>0001-01-01T00:00:00</Time>
     </Item>
     <Item>
       <Source>Musiques\Jeu\Musique.mp3</Source>
@@ -116,8 +116,7 @@
       <Processor>SongProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Musiques\Jeu\Musique.xnb</Output>
-      <Extra>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Musiques\Jeu\Musique.wma</Extra>
-      <Time>2011-12-06T09:26:08.7745756+01:00</Time>
+      <Time>0001-01-01T00:00:00</Time>
     </Item>
     <Item>
       <Source>Musiques\Menu\Musique.mp3</Source>
@@ -126,8 +125,7 @@
       <Processor>SongProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Musiques\Menu\Musique.xnb</Output>
-      <Extra>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Musiques\Menu\Musique.wma</Extra>
-      <Time>2011-12-06T09:26:13.8188641+01:00</Time>
+      <Time>0001-01-01T00:00:00</Time>
     </Item>
     <Item>
       <Source>Fonts\Jeu\Jeu.spritefont</Source>
@@ -136,7 +134,7 @@
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Fonts\Jeu\Jeu.xnb</Output>
-      <Time>2011-12-06T09:26:06.7374591+01:00</Time>
+      <Time>0001-01-01T00:00:00</Time>
     </Item>
     <Item>
       <Source>Fonts\Menu\Menu.spritefont</Source>
@@ -145,7 +143,7 @@
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Fonts\Menu\Menu.xnb</Output>
-      <Time>2011-12-06T09:26:06.7374591+01:00</Time>
+      <Time>0001-01-01T00:00:00</Time>
     </Item>
     <Item>
       <Source>Collisions\BasicExplosion\BasicExplosion.xml</Source>
@@ -154,18 +152,9 @@
       <Processor>PassThroughProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Collisions\BasicExplosion\BasicExplosion.xnb</Output>
-      <Time>2011-12-06T09:26:06.7094575+01:00</Time>
+      <Time>0001-01-01T00:00:00</Time>
     </Item>
-    <Item>
-      <Source>Sons\Tir\Tir.wav</Source>
-      <Name>Sons\Tir\Tir</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Sons\Tir\Tir.xnb</Output>
-      <Time>2011-12-06T10:52:35.600245+01:00</Time>
-    </Item>
-    <BuildSuccessful>true</BuildSuccessful>
+    <BuildSuccessful>false</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>
       <TargetProfile>HiDef</TargetProfile>
@@ -179,7 +168,7 @@
     <Assemblies>
       <Assembly>
         <Key>C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\ProjectMercury.dll</Key>
-        <Value>2011-12-06T09:26:06.3474368+01:00</Value>
+        <Value>2011-12-06T20:33:07.3805089+01:00</Value>
       </Assembly>
       <Assembly>
         <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.XImporter.dll</Key>
