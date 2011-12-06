@@ -14,7 +14,7 @@ Content\Musiques\Jeu\Musique.xnb
 Content\Musiques\Jeu\Musique.wma
 Content\Musiques\Menu\Musique.xnb
 Content\Musiques\Menu\Musique.wma
+Content\Sons\Tir\Tir.xnb
 Content\Fonts\Jeu\Jeu.xnb
 Content\Fonts\Menu\Menu.xnb
 Content\Collisions\BasicExplosion\BasicExplosion.xnb
-Content\Sons\Tir\Tir.xnb
