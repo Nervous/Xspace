@@ -98,10 +98,27 @@ namespace Xspace
                 //Fin de lecture de la ligne : on ajoute un élement dans la liste des infos du level
                 if (categorie == "vaisseau")
                 {
+                    Vector2 start;
+                    switch (position)
+                    {
+                        case "milieu":
+                            start = new Vector2(1180, 620 / 2);
+                            break;
+                        case "haut":
+                            start = new Vector2(1180, 620 / 3);
+                            break;
+                        case "bas":
+                            start = new Vector2(1180, (2 * 620) / 3);
+                            break;
+                        default:
+                            start = new Vector2(1180, 620 / 3);
+                            break;
+                    }
+
                     switch (type)
                     {
                         case "drone":
-                            vaisseau = new Drone(listeTextureVaisseauxEnnemis[0], "drone", position);
+                            vaisseau = new Drone(listeTextureVaisseauxEnnemis[0], start);
                             break;
                         default:
                             break;
@@ -139,19 +156,6 @@ namespace Xspace
             if(toReturn == true)
             this.hasSpawned = true;
             return toReturn;
-        }
-
-        public void makeItSpawn()
-        {
-            switch (categorie)
-            {
-                case "vaisseau":
-                    if(adresse != null)
-                        this.adresse.creer();
-                    break;
-                default:
-                    break;
-            }
         }
     }
 }

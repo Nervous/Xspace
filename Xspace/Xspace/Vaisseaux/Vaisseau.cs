@@ -18,11 +18,10 @@ namespace Xspace
         public float _vitesseVaisseau;
         protected int _vie, _armure;
         protected double _timingAttack;
-        protected string _typeVaisseau, _position;
-        protected bool _ennemi;
-        protected double _lastTir;
+        protected bool _ennemi, _existe;
+        protected double _lastTir;         
 
-        protected bool constr(Texture2D texture, int vie, int armure, float vitesseVaisseau, Vector2 startPosition, bool ennemi, double timingAttack)
+        public Vaisseau(Texture2D texture, int vie, int armure, float vitesseVaisseau, Vector2 startPosition, bool ennemi, double timingAttack)
         {
             _textureVaisseau = texture;
             _vie = vie;
@@ -32,27 +31,19 @@ namespace Xspace
             _deplacementDirectionX = Vector2.Normalize(new Vector2(5, 0));
             _deplacementDirectionY = Vector2.Normalize(new Vector2(0, 5));
             _ennemi = ennemi;
+            _existe = true;
+            lastTir = 0;
             _timingAttack = timingAttack;
-            return true;
-        }
-
-         
-
-        public Vaisseau(Texture2D texture, int vie, int armure, float vitesseVaisseau, Vector2 startPosition, bool ennemi)
-        {
-            _textureVaisseau = texture;
-            _vie = vie;
-            _armure = armure;
-            _vitesseVaisseau = vitesseVaisseau;
-            _emplacement = startPosition;
-            _deplacementDirectionX = Vector2.Normalize(new Vector2(5, 0));
-            _deplacementDirectionY = Vector2.Normalize(new Vector2(0, 5));
-            _ennemi = ennemi;
         }
 
         public int vie
         {
             get { return _vie; }
+        }
+
+        public bool existe
+        {
+            get { return _existe; }
         }
 
         public double timingAttack
@@ -85,6 +76,11 @@ namespace Xspace
         public bool ennemi
         {
             get { return _ennemi; }
+        }
+
+        public void kill()
+        {
+            this._existe = false;
         }
 
         public void Update(float fps_fix)

@@ -156,9 +156,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Sons\Tir\Tir.wav">
+    <Compile Include="Sons\Tir\Tir.mp3">
       <Name>Tir</Name>
-      <Importer>WavImporter</Importer>
+      <Importer>Mp3Importer</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>

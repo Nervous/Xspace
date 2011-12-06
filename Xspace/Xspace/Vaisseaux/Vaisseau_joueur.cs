@@ -15,7 +15,7 @@ namespace Xspace
     {
 
         public Vaisseau_joueur(Texture2D sprite)
-            : base(sprite, 100, 100, 0.55f, new Vector2(15, 225), true)
+            : base(sprite, 100, 100, 0.55f, new Vector2(15, 225), false, 0)
         { }
     }
 

@@ -224,7 +224,6 @@ namespace MenuSample.Scenes
             {
                 if (spawn.isTime(time))
                 {
-                    spawn.makeItSpawn();
                     switch (spawn.Categorie)
                     {
                         case "vaisseau":
@@ -247,22 +246,22 @@ namespace MenuSample.Scenes
                 if (time - lastTime > 150 || lastTime == 0)
                 {
                     musique_tir.Play();
-                    listeMissileJoueur.Add(new Missile1_Joueur(textureMissile_joueur_base, listeVaisseau[0].position));
+                    Vector2 spawn = new Vector2(listeVaisseau[0].position.X + 35, listeVaisseau[0].position.Y + listeVaisseau[0]._textureVaisseau.Height / 3 - 6);
+                    listeMissileJoueur.Add(new Xspace.Missile1_joueur(textureMissile_joueur_base, spawn));
                     lastTime = time;
                 }
             }
             
             foreach (Vaisseau vaisseau in listeVaisseau)
             {
-                if (vaisseau.existe && vaisseau.ennemi)
+                if (vaisseau.ennemi)
                 {
-                    if (time - vaisseau.lastTir > vaisseau.timingAttack || vaisseau.lastTir == 0)
+                    if (time - vaisseau.lastTir > vaisseau.timingAttack)
                     {
-                        Vector2 spawnPosition = new Vector2(vaisseau.position.X -100, vaisseau.position.Y);
+                        Vector2 spawn = new Vector2(vaisseau.position.X - 35, vaisseau.position.Y + vaisseau._textureVaisseau.Height / 3 - 6);
                         // FAIRE EN FONCTION DU TYPE DE MISSILE
-                        listeMissileEnnemi.Add(new Missile_Drone(textureMissile_ennemi1, spawnPosition));
+                        listeMissileEnnemi.Add(new Missile_drone(textureMissile_ennemi1, spawn));
                         vaisseau.lastTir = time;
-                            
                     }
                 }           
             }
