@@ -68,7 +68,7 @@ namespace MenuSample.Scenes
         ParticleEffect particleEffect;
 
         List<Vaisseau> listeVaisseau, listeVaisseauToRemove;
-        List<Missiles> listeMissileJoueur, listeMissileEnnemi, listeMissileToRemove;
+        List<Missiles> listeMissile, listeMissileToRemove;
 
         public GameplayScene(SceneManager sceneMgr, GraphicsDeviceManager graphics)
             : base(sceneMgr)
@@ -133,9 +133,9 @@ namespace MenuSample.Scenes
             listeVaisseau.Add(new Vaisseau_joueur(textureVaisseau_joueur));
 
 
+
             // TODO : Chargement de tous les objets missiles en dessous
-            listeMissileJoueur = new List<Missiles>();
-            listeMissileEnnemi = new List<Missiles>();
+            listeMissile = new List<Missiles>();
             listeMissileToRemove = new List<Missiles>();
 
 
@@ -149,45 +149,36 @@ namespace MenuSample.Scenes
 
 
         // gestion des collisions
-        doneParticles collisions(List<Vaisseau> listeVaisseau, List<Missiles> listeMissiles, float spentTime, ParticleEffect particleEffect)
+        doneParticles collisions(List<Vaisseau> listeVaisseau, List<Missiles> listeMissile, float spentTime, ParticleEffect particleEffect)
         {
-
-            int vaisseauActuel = 0;
-            foreach(Vaisseau vaisseau in listeVaisseau)
+            foreach (Missiles missile in listeMissile)
             {
-                vaisseauActuel = listeVaisseau.IndexOf(vaisseau);
-                foreach(Missiles missile in listeMissileJoueur)
+                foreach(Vaisseau vaisseau in listeVaisseau)
                 {
-
-                    if (((missile.position.X + missile.sprite.Width > listeVaisseau[vaisseauActuel].position.X)
-                        && (missile.position.X + missile.sprite.Width < listeVaisseau[vaisseauActuel].position.X + listeVaisseau[vaisseauActuel].sprite.Width))
-                        && ((missile.position.Y + missile.sprite.Height / 2 > listeVaisseau[vaisseauActuel].position.Y)
-                        && (missile.position.Y + missile.sprite.Height / 2 < listeVaisseau[vaisseauActuel].position.Y + listeVaisseau[vaisseauActuel].sprite.Height))
+                    if (((missile.position.X + missile.sprite.Width > vaisseau.position.X)
+                        && (missile.position.X + missile.sprite.Width < vaisseau.position.X + vaisseau.sprite.Width))
+                        && ((missile.position.Y + missile.sprite.Height / 2 > vaisseau.position.Y)
+                        && (missile.position.Y + missile.sprite.Height / 2 < vaisseau.position.Y + vaisseau.sprite.Height))
                         )
-                        {  
-                                // Collision missile => Vaisseau trouvée
-                            if (missile.ennemi == false)
-                            {
-                                listeMissileToRemove.Add(missile);
+                    {  // Collision missile => Vaisseau trouvée
+                                
+                        if ((vaisseau.ennemi && !missile.ennemi) || (!vaisseau.ennemi && missile.ennemi))
+                        {
+                            listeMissileToRemove.Add(missile);
 
-                                if (listeVaisseau[vaisseauActuel].hurt(missile.degats) == true)
-                                {
-                                    // Vaisseau dead
+                            if (vaisseau.hurt(missile.degats) == true)
+                            {
+                                // Vaisseau dead
                                             
-                                    listeVaisseau[vaisseauActuel].kill();
-                                    return new doneParticles(false, listeVaisseau[vaisseauActuel].position);
-                                            
-                                }
+                                vaisseau.kill();
+                                return new doneParticles(false, vaisseau.position);        
                             }
-                                    
-                                    
-                                    
                         }
+                    }
                     
                         
-                    }
                 }
-
+            }
             return new doneParticles(true, new Vector2(0, 0));
         }
         public override void HandleInput()
@@ -247,7 +238,7 @@ namespace MenuSample.Scenes
                 {
                     musique_tir.Play();
                     Vector2 spawn = new Vector2(listeVaisseau[0].position.X + 35, listeVaisseau[0].position.Y + listeVaisseau[0]._textureVaisseau.Height / 3 - 6);
-                    listeMissileJoueur.Add(new Xspace.Missile1_joueur(textureMissile_joueur_base, spawn));
+                    listeMissile.Add(new Xspace.Missile1_joueur(textureMissile_joueur_base, spawn));
                     lastTime = time;
                 }
             }
@@ -260,7 +251,7 @@ namespace MenuSample.Scenes
                     {
                         Vector2 spawn = new Vector2(vaisseau.position.X - 35, vaisseau.position.Y + vaisseau._textureVaisseau.Height / 3 - 6);
                         // FAIRE EN FONCTION DU TYPE DE MISSILE
-                        listeMissileEnnemi.Add(new Missile_drone(textureMissile_ennemi1, spawn));
+                        listeMissile.Add(new Missile_drone(textureMissile_ennemi1, spawn));
                         vaisseau.lastTir = time;
                     }
                 }           
@@ -268,28 +259,19 @@ namespace MenuSample.Scenes
 
             // TODO : Update des missiles
 
-            foreach(Missiles missile in listeMissileJoueur)
+            foreach(Missiles missile in listeMissile)
             {
-                if (missile.position.X < 1150)
+                if (missile.position.X < 1150 && !missile.ennemi)
                     missile.avancerMissile(fps_fix);
-                else 
-                    listeMissileToRemove.Add(missile);
-            }
-
-            foreach (Missiles missile in listeMissileEnnemi)
-            {
-                if (missile.position.X > 0)
+                else if (missile.position.X > 0 && missile.ennemi)
                     missile.avancerMissile(fps_fix);
-                else 
+                else
                     listeMissileToRemove.Add(missile);
             }
 
             foreach (Missiles missile in listeMissileToRemove)
             {
-                if (missile.ennemi == false)
-                    listeMissileJoueur.Remove(missile);
-                else
-                    listeMissileEnnemi.Remove(missile);
+                listeMissile.Remove(missile);
             }
 
             listeMissileToRemove.Clear();
@@ -316,7 +298,7 @@ namespace MenuSample.Scenes
             // TODO : Update des particules
             if (!(partManage.startingParticle == Vector2.Zero))
                 particleEffect.Trigger(partManage.startingParticle);
-            partManage = collisions(listeVaisseau, listeMissileJoueur, fps_fix, particleEffect);
+            partManage = collisions(listeVaisseau, listeMissile, fps_fix, particleEffect);
 
             particleEffect.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
             
@@ -337,15 +319,11 @@ namespace MenuSample.Scenes
             {
                 vaisseau.Draw(spriteBatch);
             }
-            foreach (Missiles sMissile in listeMissileJoueur)
+            foreach (Missiles sMissile in listeMissile)
             {
                 sMissile.Draw(spriteBatch);
             }
 
-            foreach (Missiles sMissile in listeMissileEnnemi)
-            {
-                sMissile.Draw(spriteBatch);
-            }
             base.Draw(gameTime);
 
             spriteBatch.End();
@@ -362,10 +340,5 @@ namespace MenuSample.Scenes
         {
             _content.Unload();
         }
-
-
     }
 }
-
-    
-
