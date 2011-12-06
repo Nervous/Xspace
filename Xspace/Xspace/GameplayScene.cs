@@ -70,11 +70,9 @@ namespace MenuSample.Scenes
         // TODO : Déclaration de tous les objets Vaisseau en dessous
         private Vaisseau_joueur joueur1;
         List<Vaisseau> listeVaisseauEnnemi, listeVaisseauEnnemiToRemove;
-        List<Missiles[]> listeMissile, listeMissileToRemove;
+        List<Missiles> listeMissileJoueur, listeMissileEnnemi, listeMissileToRemove;
         // TODO : Déclaration de tous les objets missiles en dessous
-        Missiles[] missileJoueur;
-        Missiles[] missileEnnemi;
-        Missiles missiles;
+
         int nbreMaxMissiles, i = 0, j = 0;
         int nbreMaxMissiles_e;
         float fps_fix;
@@ -150,31 +148,20 @@ namespace MenuSample.Scenes
 
 
             // TODO : Chargement de tous les objets missiles en dessous
-            listeMissile = new List<Missiles[]>();
-            listeMissileToRemove = new List<Missiles[]>();
-            missileJoueur = new Missiles[nbreMaxMissiles];
-            missileEnnemi = new Missiles[nbreMaxMissiles_e];
-            missiles = new Missiles(textureMissile_ennemi1, true, 50);
-            for (int i = 0; i < nbreMaxMissiles; i++)
-                missileJoueur[i] = new Missiles(textureMissile_joueur_base, false, 50);
+            listeMissileJoueur = new List<Missiles>();
+            listeMissileEnnemi = new List<Missiles>();
+            listeMissileToRemove = new List<Missiles>();
 
-            for (int i = 0; i < nbreMaxMissiles - 1; i++)
-            {
-                if (missileJoueur[i] != null)
-                    missileJoueur[i].initialiserTexture(textureMissile_joueur_base);
-            }
 
-            listeMissile.Add(missileJoueur);
-
-            for (int i = 0; i < nbreMaxMissiles_e; i++)
-                missileEnnemi[i] = new Missiles(textureMissile_ennemi1, true, 50);
+            /*for (int i = 0; i < nbreMaxMissiles_e; i++)
+                listeMissileEnnemi[i] = new Missiles(textureMissile_ennemi1, true, 50);
 
             for (int i = 0; i < nbreMaxMissiles_e - 1; i++)
             {
-                if (missileEnnemi[i] != null)
-                    missileEnnemi[i].initialiserTexture(textureMissile_ennemi1);
+                if (listeMissileEnnemi[i] != null)
+                    listeMissileEnnemi[i].initialiserTexture(textureMissile_ennemi1);
             }
-            listeMissile.Add(missileEnnemi);
+            listeMissile.Add(listeMissileEnnemi);*/
 
 
             // TODO : Chargement du level en dessous
@@ -187,55 +174,44 @@ namespace MenuSample.Scenes
 
 
         // gestion des collisions
-        doneParticles collisions(List<Vaisseau> listeVaisseau, List<Missiles[]> listeMissiles, float spentTime, ParticleEffect particleEffect)
+        doneParticles collisions(List<Vaisseau> listeVaisseau, List<Missiles> listeMissiles, float spentTime, ParticleEffect particleEffect)
         {
 
-            int vaisseauActuel = 0, missileActuel = 0;
+            int vaisseauActuel = 0;
             foreach(Vaisseau vaisseau in listeVaisseau)
             {
                 vaisseauActuel = listeVaisseau.IndexOf(vaisseau);
-                foreach (Missiles[] missile in listeMissiles)
+                foreach(Missiles missile in listeMissileJoueur)
                 {
-                    missileActuel = listeMissiles.IndexOf(missile);
-                    for (int k = 0; k < 15; k++)
-                    {
-                        
-                        
-                            if (listeMissile[missileActuel][k].existe)                           
+
+                    if (((missile.position.X + missile.sprite.Width > listeVaisseau[vaisseauActuel].position.X)
+                        && (missile.position.X + missile.sprite.Width < listeVaisseau[vaisseauActuel].position.X + listeVaisseau[vaisseauActuel].sprite.Width))
+                        && ((missile.position.Y + missile.sprite.Height / 2 > listeVaisseau[vaisseauActuel].position.Y)
+                        && (missile.position.Y + missile.sprite.Height / 2 < listeVaisseau[vaisseauActuel].position.Y + listeVaisseau[vaisseauActuel].sprite.Height))
+                        )
+                        {  
+                                // Collision missile => Vaisseau trouvée
+                            if (missile.ennemi == false)
                             {
+                                listeMissileToRemove.Add(missile);
 
-                                if (((listeMissiles[missileActuel][k].position.X + listeMissiles[missileActuel][k].sprite.Width > listeVaisseau[vaisseauActuel].position.X)
-                                    && (listeMissiles[missileActuel][k].position.X + listeMissiles[missileActuel][k].sprite.Width < listeVaisseau[vaisseauActuel].position.X + listeVaisseau[vaisseauActuel].sprite.Width))
-                                    && ((listeMissiles[missileActuel][k].position.Y + listeMissiles[missileActuel][k].sprite.Height / 2 > listeVaisseau[vaisseauActuel].position.Y)
-                                    && (listeMissiles[missileActuel][k].position.Y + listeMissiles[missileActuel][k].sprite.Height / 2 < listeVaisseau[vaisseauActuel].position.Y + listeVaisseau[vaisseauActuel].sprite.Height))
-                                    )
+                                if (listeVaisseau[vaisseauActuel].hurt(missile.degats) == true)
                                 {
-                                    
-                                    
-                                        // Collision missile => Vaisseau trouvée
-
-                                    if (listeMissile[missileActuel][k].ennemi == false)
-                                    {
-                                        listeMissiles[missileActuel][k].kill();
-
-                                        if (listeVaisseau[vaisseauActuel].hurt(listeMissiles[missileActuel][k].degats) == true)
-                                        {
-                                            // Vaisseau dead
+                                    // Vaisseau dead
                                             
-                                            listeVaisseau[vaisseauActuel].kill();
-                                            return new doneParticles(false, listeVaisseau[vaisseauActuel].position);
+                                    listeVaisseau[vaisseauActuel].kill();
+                                    return new doneParticles(false, listeVaisseau[vaisseauActuel].position);
                                             
-                                        }
-                                    }
-                                    
-                                    
-                                    
                                 }
                             }
+                                    
+                                    
+                                    
+                        }
+                    
                         
                     }
                 }
-            }
 
             return new doneParticles(true, new Vector2(0, 0));
         }
@@ -323,68 +299,60 @@ namespace MenuSample.Scenes
             // affichage des missiles des joueurs
             if (keyboardState.IsKeyDown(Keys.Space))
             {
-                for (int i = 0; i < nbreMaxMissiles; i++)
+                if (time - lastTime > 150 || lastTime == 0)
                 {
-                    if (missileJoueur[i] != null && missileJoueur[i].estAffiche == false && (time - lastTime > 150 || lastTime == 0))
-                    {
-                        musique_tir.Play();
-                        missileJoueur[i].afficherMissile(joueur1.position);
-                        lastTime = time;
-                        break;
-                    }
+                    musique_tir.Play();
+                    listeMissileJoueur.Add(new Missile1_Joueur(textureMissile_joueur_base, joueur1.position));
+                    lastTime = time;
                 }
             }
             
             // affichage des missiles des ennemis
             foreach (Vaisseau vaisseau in listeVaisseauEnnemi)
             {
-                
                 if (vaisseau.existe)
                 {
-                    for (int i = 0; i < nbreMaxMissiles_e; i++)
+                    if (time - vaisseau.lastTir > vaisseau.timingAttack || vaisseau.lastTir == 0)
                     {
-
-                        if (missileEnnemi[i] != null && missileEnnemi[i].estAffiche == false && (time - vaisseau.lastTir > vaisseau.timingAttack) || (vaisseau.lastTir == 0))
-                        {
-                            Vector2 spawnPosition = new Vector2(vaisseau.position.X -100, vaisseau.position.Y);
-                            missileEnnemi[i].afficherMissile(spawnPosition);
-                            vaisseau.lastTir = time;
+                        Vector2 spawnPosition = new Vector2(vaisseau.position.X -100, vaisseau.position.Y);
+                        // FAIRE EN FONCTION DU TYPE DE MISSILE
+                        listeMissileEnnemi.Add(new Missile_Drone(textureMissile_ennemi1, spawnPosition));
+                        vaisseau.lastTir = time;
                             
-                        }
-                    }  
+                    }
                 }           
             }
 
             
-            // deplacement missile joueur
-            for (int i = 0; i < nbreMaxMissiles; i++)
+            foreach(Missiles missile in listeMissileJoueur)
             {
-                if ((missileJoueur[i] != null && missileJoueur[i].estAffiche))
-                {
-                    missileJoueur[i].avancerMissile(fps_fix);
-                }
+                if (missile.position.X < 1150)
+                    missile.avancerMissile(fps_fix);
+                else 
+                    listeMissileToRemove.Add(missile);
+            }
 
+            foreach (Missiles missile in listeMissileEnnemi)
+            {
+                if (missile.position.X > 0)
+                    missile.avancerMissile(fps_fix);
+                else 
+                    listeMissileToRemove.Add(missile);
+            }
+
+            foreach (Missiles missile in listeMissileToRemove)
+            {
+                if (missile.ennemi == false)
+                    listeMissileJoueur.Remove(missile);
                 else
-                {
-                    missileJoueur[i].avancerMissile(fps_fix);
-                }
-
+                    listeMissileEnnemi.Remove(missile);
             }
 
-            // deplacement missiles ennemis
-            for (int i = 0; i < nbreMaxMissiles_e; i++)
-            {
-                if ((missileEnnemi[i] != null) && missileEnnemi[i].estAffiche)
-                {
-                    missileEnnemi[i].avancerMissile_enemi1(fps_fix);
-                }
-
-            }
-
+            listeMissileToRemove.Clear();
 
                 if(!(partManage.startingParticle == Vector2.Zero))
                     particleEffect.Trigger(partManage.startingParticle);
-                partManage = collisions(listeVaisseauEnnemi, listeMissile, fps_fix, particleEffect);
+                partManage = collisions(listeVaisseauEnnemi, listeMissileJoueur, fps_fix, particleEffect);
 
            particleEffect.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
 
@@ -425,16 +393,14 @@ namespace MenuSample.Scenes
             {
                 vaisseau.Draw(spriteBatch);
             }
-            for (int i = 0; i < nbreMaxMissiles - 1; i++)
+            foreach (Missiles sMissile in listeMissileJoueur)
             {
-                if (missileJoueur[i] != null && missileJoueur[i].existe)
-                    missileJoueur[i].Draw(spriteBatch);
+                sMissile.Draw(spriteBatch);
             }
 
-            for (int i = 0; i < nbreMaxMissiles_e - 1; i++)
+            foreach (Missiles sMissile in listeMissileEnnemi)
             {
-                if (missileEnnemi[i] != null && missileEnnemi[i].existe)
-                    missileEnnemi[i].Draw(spriteBatch);
+                sMissile.Draw(spriteBatch);
             }
             base.Draw(gameTime);
 

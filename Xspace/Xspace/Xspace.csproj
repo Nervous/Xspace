@@ -128,7 +128,9 @@
     <Compile Include="Menu1\Scenes\MessageBoxScene.cs" />
     <Compile Include="Menu1\Scenes\%28UNUSED%29OptionsMenuScene.cs" />
     <Compile Include="Menu1\Scenes\PauseMenuScene.cs" />
+    <Compile Include="Missiles\Missile1_Joueur.cs" />
     <Compile Include="Missiles\Missiles.cs" />
+    <Compile Include="Missiles\Missile_Drone.cs" />
     <Compile Include="ScrollingBackground.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Vaisseaux\Drone.cs" />
