@@ -163,9 +163,6 @@ D:\Documents\Xspace\Xspace\Xspace\Xspace avec menu\Xspace\Xspace\obj\x86\Debug\M
 D:\Documents\Xspace\Xspace\Xspace\Xspace avec menu\Xspace\Xspace\obj\x86\Debug\Xspace.exe
 D:\Documents\Xspace\Xspace\Xspace\Xspace avec menu\Xspace\Xspace\obj\x86\Debug\Xspace.pdb
 C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Collisions\BasicExplosion\BasicExplosion.xnb
-C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Collisions\BasicExplosion\Cloud001.xnb
-C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Collisions\BasicExplosion\Particle004.xnb
-C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Collisions\BasicExplosion\Particle005.xnb
 C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Collisions\BasicExplosion\BasicExplosion.xnb
 C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Xspace.exe
 C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Xspace.pdb
@@ -304,3 +301,7 @@ C:\Users\Nervous\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Musiq
 C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Cloud001.xnb
 C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Particle004.xnb
 C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Particle005.xnb
+C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Cloud001.xnb
+C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Particle004.xnb
+C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Particle005.xnb
+C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\Content\Sprites\Menu\Score\score-selected.xnb

@@ -6,6 +6,9 @@ Content\Sprites\Missiles\Ennemi\Missile1.xnb
 Content\Sprites\Menu\Blank.xnb
 Content\Sprites\Menu\Gradient.xnb
 Content\Sprites\Menu\Background\Background.xnb
+Content\Cloud001.xnb
+Content\Particle004.xnb
+Content\Particle005.xnb
 Content\Sprites\Menu\Score\score-proto.xnb
 Content\Musiques\Jeu\Musique.xnb
 Content\Musiques\Menu\Musique.xnb
@@ -13,8 +16,6 @@ Content\Sons\Tir\Tir.xnb
 Content\Fonts\Jeu\Jeu.xnb
 Content\Fonts\Menu\Menu.xnb
 Content\Collisions\BasicExplosion\BasicExplosion.xnb
-Content\Cloud001.xnb
-Content\Particle004.xnb
-Content\Particle005.xnb
+Content\Sprites\Menu\Score\score-selected.xnb
 Content\Musiques\Jeu\Musique.wma
 Content\Musiques\Menu\Musique.wma
