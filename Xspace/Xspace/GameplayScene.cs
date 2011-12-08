@@ -116,7 +116,7 @@ namespace MenuSample.Scenes
             _gameFont = _content.Load<SpriteFont>("Fonts\\Menu\\Menu");
 
             particleRenderer.LoadContent(_content);
-            particleEffect = _content.Load<ParticleEffect>(("Collisions\\BasicExplosion\\BasicExplosion"));
+            particleEffect = _content.Load<ParticleEffect>("Collisions\\BasicExplosion\\BasicExplosion");
             particleEffect.LoadContent(_content);
             particleEffect.Initialise();
 
