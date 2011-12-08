@@ -18,7 +18,7 @@ namespace MenuSample.Scenes
     {
         private ContentManager _content;
         private SpriteFont _gamefont;
-        private Texture2D _score_board, _score_surbrillance;
+        private Texture2D _score_board, _score_surbrillance, _score_lvl;
         private StreamReader sr;
         private string path;
         private Vector2 position_score1, position_Nv1, position_Nv2, position_Nv3,position_surbrillance_Nv1, position_surbrillance_Nv2, position_surbrillance_Nv3;
@@ -28,6 +28,7 @@ namespace MenuSample.Scenes
         private List<Vector2> position_list = new List<Vector2>();
         private static KeyboardState _keyboardState;
         private static KeyboardState _lastKeyboardState;
+        private bool lvl1 = false, lvl2 = false, lvl3 =false;
         private int i;
 
 
@@ -35,7 +36,7 @@ namespace MenuSample.Scenes
         public ScoreArcadeMenuScene(SceneManager sceneMgr)
             : base(sceneMgr, "Score Arcade")
         {
-            path = "Arcade.txt";
+            path = "Arcade.score";
             _keyboardState = new KeyboardState();
             _lastKeyboardState = new KeyboardState();
             i = 0;       
@@ -84,7 +85,7 @@ namespace MenuSample.Scenes
           _gamefont = _content.Load<SpriteFont>("Fonts\\Jeu\\Jeu");
           _score_board = _content.Load<Texture2D>("Sprites\\Menu\\Score\\score-proto");
           _score_surbrillance = _content.Load<Texture2D>("Sprites\\Menu\\Score\\score-selected");
-          
+          _score_lvl = _content.Load<Texture2D>("Sprites\\Menu\\Score\\score-arcade-lvl");
 
             SpriteBatch spriteBatch = SceneManager.SpriteBatch;
             spriteBatch.Begin();
@@ -93,6 +94,20 @@ namespace MenuSample.Scenes
                 spriteBatch.DrawString(_gamefont, score[0], position_score1, Color.Green, 0, position_board, 0.7f, SpriteEffects.None, 0);
                 spriteBatch.DrawString(_gamefont, "Nv1", position_Nv1, Color.Green, 0, position_board, 0.7f, SpriteEffects.None, 0);
                 spriteBatch.Draw(_score_surbrillance, position_list[i], Color.White);
+            
+            if (lvl1)
+            {
+              spriteBatch.Draw(_score_lvl, position_board, Color.White);
+            }
+            else if (lvl2)
+            {
+              spriteBatch.Draw(_score_lvl, position_board, Color.White);
+            }
+            else if (lvl3)
+            {
+              spriteBatch.Draw(_score_lvl, position_board, Color.White);
+            }
+
             spriteBatch.End();
         }
 
@@ -121,6 +136,34 @@ namespace MenuSample.Scenes
                 
             }
             _lastKeyboardState = _keyboardState;
+
+            if (_keyboardState.IsKeyDown(Keys.Space))
+            {
+                switch (i)
+                {
+                    case 0:
+
+                        lvl1 = true;
+                        lvl2 = false;
+                        lvl3 = false;
+                        break;
+
+                    case 1:
+
+                        lvl1 = false;
+                        lvl2 = true;
+                        lvl3 = false;
+                        break;
+
+                    default:
+
+                        lvl1 = false;
+                        lvl2 = false;
+                        lvl3 = false;
+                        break;
+                }
+            }
+                
             base.Update(gameTime);
 
         }
