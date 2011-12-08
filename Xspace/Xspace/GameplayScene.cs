@@ -25,7 +25,6 @@ namespace MenuSample.Scenes
 {
     /// <summary>
     /// Le jeu!
-    /// Pute.
     /// </summary>
     public class GameplayScene : AbstractGameScene
     {
