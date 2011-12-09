@@ -37,6 +37,18 @@ namespace Xspace
             _timingAttack = timingAttack;
         }
 
+        public void applyBonus(string effect, int ammount, int time)
+        {
+            switch (effect)
+            {
+                case "vie":
+                    this.heal(ammount);
+                    break;
+                default:
+                    break;
+            }
+        }
+
         public int vie
         {
             get { return _vie; }
@@ -77,6 +89,11 @@ namespace Xspace
         {
             this._vie -= ammount;
             return (this._vie <= 0);
+        }
+
+        public void heal(int ammount)
+        {
+            this._vie += ammount;
         }
 
         public bool ennemi

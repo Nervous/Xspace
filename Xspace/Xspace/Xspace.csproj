@@ -16,7 +16,8 @@
     <XnaProfile>Reach</XnaProfile>
     <XnaCrossPlatformGroupID>7257c852-5775-4eb6-a4ae-226841c05bd1</XnaCrossPlatformGroupID>
     <XnaOutputType>Game</XnaOutputType>
-    <ApplicationIcon>Game.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
     <Thumbnail>GameThumbnail.png</Thumbnail>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
@@ -111,7 +112,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Definition.cs" />
+    <Compile Include="AffichageInformations.cs" />
+    <Compile Include="Bonus\Bonus.cs" />
+    <Compile Include="Bonus\Bonus_Vie.cs" />
     <Compile Include="gestionLevels.cs" />
     <Compile Include="Menu1\InputState.cs" />
     <Compile Include="Menu1\Scenes\BackgroundScene.cs" />
@@ -139,8 +142,8 @@
     <Compile Include="Xspace.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Game.ico" />
     <Content Include="GameThumbnail.png" />
+    <Compile Include="Game.ico" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\XspaceContent\XspaceContent.contentproj">
