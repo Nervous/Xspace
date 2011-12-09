@@ -34,8 +34,6 @@ namespace MenuSample.Scenes
          * TODO:
          * Complete the lvlx positions, back button, lvl name on leaderboard, more rectangles, and so much more... */
 
-        /* Known bugs: Hitting space button from the menu will switch very fast to the lvl1 leaderboard*/
-
         public ScoreArcadeMenuScene(SceneManager sceneMgr)
             : base(sceneMgr, "Score Arcade")
         {
@@ -46,11 +44,7 @@ namespace MenuSample.Scenes
             var back = new MenuItem("Retour");
             var Nv1 = new MenuItem("Nv.1");
             sr_arcade = new StreamReader(path_arcade);
-
-            MenuItems.Add(back);
-
-
-        
+     
         }
 
         public override void Initialize()
@@ -149,7 +143,7 @@ namespace MenuSample.Scenes
 
 
 
-                if ((_keyboardState.IsKeyDown(Keys.Space)) && (_lastKeyboardState.IsKeyUp(Keys.Space)))
+                if (((_keyboardState.IsKeyDown(Keys.Space)) && (_lastKeyboardState.IsKeyUp(Keys.Space))) || (((_keyboardState.IsKeyDown(Keys.Enter))  && (_lastKeyboardState.IsKeyUp(Keys.Enter)))))
                     level_selected = true;
 
                 
@@ -157,7 +151,7 @@ namespace MenuSample.Scenes
             }
             else
             {
-                if ((_keyboardState.IsKeyDown(Keys.Space))  && (_lastKeyboardState.IsKeyUp(Keys.Space)))
+                if (((_keyboardState.IsKeyDown(Keys.Space))  && (_lastKeyboardState.IsKeyUp(Keys.Space)))||(((_keyboardState.IsKeyDown(Keys.Enter))  && (_lastKeyboardState.IsKeyUp(Keys.Enter)))))
                     level_selected = false;
             }
 
