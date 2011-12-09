@@ -157,8 +157,8 @@ namespace MenuSample.Scenes
                 {
                     if (((missile.position.X + missile.sprite.Width > vaisseau.position.X)
                         && (missile.position.X + missile.sprite.Width < vaisseau.position.X + vaisseau.sprite.Width))
-                        && ((missile.position.Y + missile.sprite.Height / 2 > vaisseau.position.Y)
-                        && (missile.position.Y + missile.sprite.Height / 2 < vaisseau.position.Y + vaisseau.sprite.Height))
+                        && ((missile.position.Y + missile.sprite.Height / 2 > vaisseau.position.Y - vaisseau.sprite.Height*0.10)
+                        && (missile.position.Y + missile.sprite.Height / 2 < vaisseau.position.Y + vaisseau.sprite.Height + vaisseau.sprite.Height*0.10))
                         )
                     {  // Collision missile => Vaisseau trouvée
                                 
