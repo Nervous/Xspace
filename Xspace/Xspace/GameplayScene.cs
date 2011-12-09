@@ -312,7 +312,9 @@ namespace MenuSample.Scenes
             partManage = collisions(listeVaisseau, listeMissile, fps_fix, particleEffect);
 
             particleEffect.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
-            if (listeVaisseau[0].ennemi) // Game terminée
+            if (listeVaisseau[0].ennemi)
+                Remove();
+            // Game terminée
             
             base.Update(gameTime);
         }
@@ -325,8 +327,11 @@ namespace MenuSample.Scenes
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive);
             fond_ecran.Draw(spriteBatch);
             particleRenderer.RenderEffect(particleEffect);
+
+            if(listeVaisseau[0].vie > 0)
+            spriteBatch.DrawString(_gameFont, Convert.ToString(listeVaisseau[0].vie), new Vector2(500,500), Color.Red);
             
-            
+
             foreach (Vaisseau vaisseau in listeVaisseau)
             {
                 vaisseau.Draw(spriteBatch);

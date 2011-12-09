@@ -19,56 +19,33 @@ namespace MenuSample.Scenes
         private ContentManager _content;
         private SpriteFont _gamefont;
         private Texture2D _score_board, _score_surbrillance, _score_lvl;
-        private StreamReader sr;
-        private string path;
-        private Vector2 position_score1,position_Nv, position_Nv1, position_Nv2, position_Nv3,position_surbrillance_Nv1, position_surbrillance_Nv2, position_surbrillance_Nv3;
-        private Vector2 position_board;
-        public string[] score;
-        private string stock;
-        private List<Vector2> position_list = new List<Vector2>();
+        private StreamReader sr_arcade, sr_level;
+        private string path_arcade, path_level;
+        private Vector2 position_Nv;
+        private Vector2 position_board; // default pos
+        public string[] score_arcade, score_level;
         private static KeyboardState _keyboardState;
         private static KeyboardState _lastKeyboardState;
-        private bool lvl1 = false, lvl2 = false, lvl3 =false;
         private int i;
+        private bool level_selected;
 
+        /* Be careful, level ID begins at 0. (level 1 has ID 0, for score / i / lvl) */
+        /*
+         * TODO:
+         * Complete the lvlx positions, back button, lvl name on leaderboard, more rectangles, and so much more... */
 
+        /* Known bugs: Hitting space button from the menu will switch very fast to the lvl1 leaderboard*/
 
         public ScoreArcadeMenuScene(SceneManager sceneMgr)
             : base(sceneMgr, "Score Arcade")
         {
-            path = "Arcade.score";
+            path_arcade = "Scores\\Arcade\\Arcade.score";
             _keyboardState = new KeyboardState();
             _lastKeyboardState = new KeyboardState();
             i = 0;       
             var back = new MenuItem("Retour");
             var Nv1 = new MenuItem("Nv.1");
-            sr = new StreamReader(path);
-            position_Nv1.X = 130;
-            position_Nv1.Y = 195;
-            position_Nv2.X = 130;
-            position_Nv2.Y = 230;
-            position_Nv3.X = 130;
-            position_Nv3.Y = 330;
-            position_score1.X = 210;
-            position_score1.Y = 195;
-            position_board.X = 0;
-            position_board.Y = 0;
-
-            position_surbrillance_Nv1.X = 112;
-            position_surbrillance_Nv2.X = 112;
-            position_surbrillance_Nv3.X = 112;
-            position_surbrillance_Nv1.Y = 187;
-            position_surbrillance_Nv2.Y = 232;
-            position_surbrillance_Nv3.Y = 277;
-
-            position_list.Add(position_surbrillance_Nv1);
-            position_list.Add(position_surbrillance_Nv2);
-            position_list.Add(position_surbrillance_Nv3);
-
-            position_Nv.X = 300 * (i / 5) + 112;
-            position_Nv.Y = 187 + i * 45;
-
-            back.Selected += OnCancel;
+            sr_arcade = new StreamReader(path_arcade);
 
             MenuItems.Add(back);
 
@@ -76,11 +53,15 @@ namespace MenuSample.Scenes
         
         }
 
-
+        public override void Initialize()
+        {
+            base.Initialize();
+            level_selected = false;
+        }
         public override void Draw(GameTime gameTime)
         {
-            stock = sr.ReadToEnd();
-            score = System.IO.File.ReadAllLines(@path);
+            score_arcade = System.IO.File.ReadAllLines(@path_arcade);
+
 
 
           if(_content == null)
@@ -94,67 +75,93 @@ namespace MenuSample.Scenes
             spriteBatch.Begin();
             
                 spriteBatch.Draw(_score_board, position_board, Color.White);
-                spriteBatch.DrawString(_gamefont, score[0], position_score1, Color.Green, 0, position_board, 0.7f, SpriteEffects.None, 0);
-                spriteBatch.DrawString(_gamefont, "Nv1", position_Nv1, Color.Green, 0, position_board, 0.7f, SpriteEffects.None, 0);
-                spriteBatch.Draw(_score_surbrillance, position_list[i], Color.White);
-            
+                spriteBatch.Draw(_score_surbrillance, position_Nv, Color.White);
 
+
+                for (int lvl = 0; lvl < 2; lvl++)
+                {
+                    spriteBatch.DrawString(_gamefont, "Nv." + (lvl + 1), new Vector2(130 + 195 * (lvl / 5), (190 + (lvl % 5) * 47)), Color.Red, 0, new Vector2(0, 0), 0.8f, SpriteEffects.None, 0);
+                    spriteBatch.DrawString(_gamefont, score_arcade[lvl], new Vector2(220 + 200 * (lvl / 5), (190 + (lvl % 5) * 47)), Color.Red, 0, new Vector2(0, 0), 0.8f, SpriteEffects.None, 0);
+                }
+               
+
+                if (level_selected)
+                {
+                    sr_level = new StreamReader(path_level);
+                    score_level = System.IO.File.ReadAllLines(@path_level);
+
+                    for (int pos = 0; pos < 1; pos++)
+                    {
+                        spriteBatch.Draw(_score_lvl, position_board, Color.White);
+                        spriteBatch.DrawString(_gamefont, score_level[pos], new Vector2(452,187), Color.Red, 0, new Vector2(0,0), 0.8f, SpriteEffects.None, 0);
+                        spriteBatch.DrawString(_gamefont, score_level[pos + 1], new Vector2(605, 190), Color.Red, 0, new Vector2(0, 0), 0.8f, SpriteEffects.None, 0);
+
+                    }
+
+                }
+                
             spriteBatch.End();
         }
 
         
         public override void Update(GameTime gameTime)
         {
+            path_level = "Scores\\Arcade\\lvl" + (i + 1) + ".score";
 
+            position_Nv.X = 300 * (i / 5) + 112;
+            position_Nv.Y = 187 + i * 45;
 
             _keyboardState = Keyboard.GetState();
+            
+
+            if (!level_selected)
+            {
+                if ((_keyboardState.IsKeyDown(Keys.Up)) && (_lastKeyboardState.IsKeyUp(Keys.Up)))
+                {
+                    if (i > 0)
+                    {
+                        i--;
+                    }
+
+                }
+                else if ((_keyboardState.IsKeyDown(Keys.Down)) && (_lastKeyboardState.IsKeyUp(Keys.Down)))
+                {
+                    if (i < 2)
+                    {
+                        i++;
+                    }
+
+                }
+                else if ((_keyboardState.IsKeyDown(Keys.Right)) && (_lastKeyboardState.IsKeyUp(Keys.Right)))
+                {
+                    if (i < 5)
+                    {
+                       // i += 5;  Unused until level 6
+                    }
+                }
+                else if ((_keyboardState.IsKeyDown(Keys.Left)) && (_lastKeyboardState.IsKeyUp(Keys.Left)))
+                {
+                    if (i > 5)
+                    {
+                       // i -= 5; Unused until level 6
+                    }
+                }
 
 
-            if ((_keyboardState.IsKeyDown(Keys.Up))&& (_lastKeyboardState.IsKeyUp(Keys.Up)))
-            {
-                if (i > 0)
-                {
-                    i--;
-                }
+
+                if ((_keyboardState.IsKeyDown(Keys.Space)) && (_lastKeyboardState.IsKeyUp(Keys.Space)))
+                    level_selected = true;
+
                 
+
             }
-            else if ((_keyboardState.IsKeyDown(Keys.Down)) && (_lastKeyboardState.IsKeyUp(Keys.Down)))
+            else
             {
-                if (i < 2)
-                {
-                    i++;
-                }
-                
+                if ((_keyboardState.IsKeyDown(Keys.Space))  && (_lastKeyboardState.IsKeyUp(Keys.Space)))
+                    level_selected = false;
             }
+
             _lastKeyboardState = _keyboardState;
-
-            if (_keyboardState.IsKeyDown(Keys.Space))
-            {
-                switch (i)
-                {
-                    case 0:
-
-                        lvl1 = true;
-                        lvl2 = false;
-                        lvl3 = false;
-                        break;
-
-                    case 1:
-
-                        lvl1 = false;
-                        lvl2 = true;
-                        lvl3 = false;
-                        break;
-
-                    default:
-
-                        lvl1 = false;
-                        lvl2 = false;
-                        lvl3 = false;
-                        break;
-                }
-            }
-                
             base.Update(gameTime);
 
         }
