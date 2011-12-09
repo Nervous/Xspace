@@ -342,8 +342,8 @@ namespace MenuSample.Scenes
             SceneManager.GraphicsDevice.Clear(ClearOptions.Target, Color.Transparent, 0, 0);
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive);
             
-            /*if(listeVaisseau[0].vie > 0)
-                spriteBatch.DrawString(_gameFont, Convert.ToString(listeVaisseau[0].vie), new Vector2(500,500), Color.Red);*/
+            if(listeVaisseau[0].vie > 0)
+                spriteBatch.DrawString(_gameFont, Convert.ToString(listeVaisseau[0].vie), new Vector2(500,500), Color.Red);
             #region Draw du fond
             fond_ecran.Draw(spriteBatch);
             #endregion
@@ -369,7 +369,7 @@ namespace MenuSample.Scenes
             if (TransitionPosition > 0 || _pauseAlpha > 0)
             {
                 float alpha = MathHelper.Lerp(1f - TransitionAlpha, 1f, _pauseAlpha / 2);
-                SceneManager.FadeBackBufferToBlack(alpha);
+                //SceneManager.FadeBackBufferToBlack(alpha);
             }
             base.Draw(gameTime);
             #endregion
