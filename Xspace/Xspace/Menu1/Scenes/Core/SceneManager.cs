@@ -44,6 +44,7 @@ namespace MenuSample.Scenes.Core
 
         protected override void LoadContent()
         {
+
             ContentManager content = Game.Content;
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             _font = content.Load<SpriteFont>("Fonts\\Menu\\Menu");
@@ -56,7 +57,6 @@ namespace MenuSample.Scenes.Core
             // Fait un copie de la liste principale pour éviter la confusion des
             // processus mettant à jour une scène ou en retirant une.
             _scenesToUpdate.Clear();
-
             foreach (AbstractGameScene scene in _scenes)
                 _scenesToUpdate.Add(scene);
 
@@ -117,12 +117,12 @@ namespace MenuSample.Scenes.Core
         public void FadeBackBufferToBlack(float alpha)
         {
             Viewport viewport = GraphicsDevice.Viewport;
-
-            _spriteBatch.Begin();
+         /*   _spriteBatch.Begin();   A DEBUG
             _spriteBatch.Draw(_blankTexture,
                              new Rectangle(0, 0, viewport.Width, viewport.Height),
                              Color.Black * alpha);
-            _spriteBatch.End();
+            _spriteBatch.End(); */ 
+            
         }
 
     }

@@ -71,7 +71,9 @@ namespace Xspace
 
         public void Draw(SpriteBatch batch)
         {
+            batch.Begin();
             batch.Draw(_textureBonus, _emplacement, Color.White);
+            batch.End();
         }
 
     }

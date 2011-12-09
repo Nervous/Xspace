@@ -17,7 +17,7 @@ namespace MenuSample.Scenes.Core
         private bool _isPopup;
         private TimeSpan _transitionOnTime = TimeSpan.Zero;
         private TimeSpan _transitionOffTime = TimeSpan.Zero;
-        private float _transitionPosition = 1;
+        private float _transitionPosition = 1; /* bug */
         private SceneState _sceneState = SceneState.TransitionOn;
         private bool _othersceneHasFocus;
         private readonly SceneManager _sceneManager;
