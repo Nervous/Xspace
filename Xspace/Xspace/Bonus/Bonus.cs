@@ -35,7 +35,7 @@ namespace Xspace
             _textureBonus = texture;
             _vitesseBonus = vitesseVaisseau;
             _emplacement = startPosition;
-            _deplacement = new Vector2(5, 0);
+            _deplacement = new Vector2(2, 0);
             bonus = new getBonus(effect, ammount, time);
         }
 

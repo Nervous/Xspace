@@ -45,6 +45,8 @@ namespace MenuSample.Scenes
             var Nv1 = new MenuItem("Nv.1");
             sr_arcade = new StreamReader(path_arcade);
 
+            MenuItems.Add(back);
+
         }
 
         public override void Initialize()

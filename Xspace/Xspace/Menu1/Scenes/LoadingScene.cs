@@ -53,6 +53,7 @@ namespace MenuSample.Scenes
 
         public override void Draw(GameTime gameTime)
         {
+
             if (TransitionPosition > 0)
                 SceneManager.FadeBackBufferToBlack(TransitionAlpha);
             else
@@ -71,7 +72,7 @@ namespace MenuSample.Scenes
                 Vector2 textSize = font.MeasureString(message);
                 Vector2 textPosition = (viewportSize - textSize) / 2;
                 Color color = Color.White * TransitionAlpha;
-                spriteBatch.Begin();
+                spriteBatch.Begin(); /* pas d'ici */
                 spriteBatch.DrawString(font, message, textPosition, color);
                 spriteBatch.End();
             }
