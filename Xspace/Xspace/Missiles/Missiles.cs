@@ -66,7 +66,7 @@ namespace Xspace
 
         public void Draw(SpriteBatch batch)
         {
-            batch.Draw(_textureMissile, _emplacement, Color.DarkViolet);
+            batch.Draw(_textureMissile, _emplacement, Color.White);
         }
     }
 }

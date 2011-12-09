@@ -53,7 +53,7 @@ namespace MenuSample.Scenes
 
         public SpriteBatch spriteBatch;
 
-        private Texture2D textureVaisseau_joueur, textureMissile_joueur_base, textureMissile_ennemi1, textureVaisseau_ennemi1;
+        private Texture2D T_Vaisseau_Joueur, textureMissile_joueur_base, T_Missile_Drone, textureVaisseau_ennemi1;
         private List<Texture2D> listeTextureVaisseauxEnnemis;
 
         private Song musique, musique_menu;
@@ -109,7 +109,7 @@ namespace MenuSample.Scenes
             fond_ecran.Load(GraphicsDevice, fond_image);
 
             // TODO : Chargement de toutes les textures des vaisseau en dessous
-            textureVaisseau_joueur = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Joueur\\Vaisseau1");
+            T_Vaisseau_Joueur = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Joueur\\Vaisseau1");
             textureVaisseau_ennemi1 = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Ennemi\\Vaisseau1");
             musique_menu = _content.Load<Song>("Musiques\\Menu\\Musique");
 
@@ -125,12 +125,12 @@ namespace MenuSample.Scenes
 
             // TODO : Chargement de toutes les textures des missiles en dessous
             textureMissile_joueur_base = _content.Load<Texture2D>("Sprites\\Missiles\\Joueur\\Missile1");
-            textureMissile_ennemi1 = _content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\Missile1");
+            T_Missile_Drone = _content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\Drone");
 
             // TODO : Chargement de tous les objets vaisseau en dessous
             listeVaisseau = new List<Vaisseau>();
             listeVaisseauToRemove = new List<Vaisseau>();
-            listeVaisseau.Add(new Vaisseau_joueur(textureVaisseau_joueur));
+            listeVaisseau.Add(new Vaisseau_joueur(T_Vaisseau_Joueur));
 
 
 
@@ -262,7 +262,7 @@ namespace MenuSample.Scenes
                     {
                         Vector2 spawn = new Vector2(vaisseau.position.X - 35, vaisseau.position.Y + vaisseau._textureVaisseau.Height / 3 - 6);
                         // FAIRE EN FONCTION DU TYPE DE MISSILE
-                        listeMissile.Add(new Missile_drone(textureMissile_ennemi1, spawn));
+                        listeMissile.Add(new Missile_drone(T_Missile_Drone, spawn));
                         vaisseau.lastTir = time;
                     }
                 }           
