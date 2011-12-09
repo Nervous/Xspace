@@ -19,7 +19,7 @@ namespace Xspace
         protected int _vie, _armure, _damageCollision;
         protected double _timingAttack;
         protected bool _ennemi, _existe;
-        protected double _lastTir;         
+        protected double _lastTir, _lastBonus;
 
         public Vaisseau(Texture2D texture, int vie, int armure, int damageCollision, float vitesseVaisseau, Vector2 startPosition, bool ennemi, double timingAttack)
         {
@@ -35,17 +35,22 @@ namespace Xspace
             _existe = true;
             lastTir = 0;
             _timingAttack = timingAttack;
+            _lastBonus = 0;
         }
 
-        public void applyBonus(string effect, int ammount, int time)
+        public void applyBonus(string effect, int ammount, int time, double actualTime)
         {
-            switch (effect)
+            if (actualTime - _lastBonus > 100 ||_lastBonus == 0)
             {
-                case "vie":
-                    this.heal(ammount);
-                    break;
-                default:
-                    break;
+                _lastBonus = time;
+                switch (effect)
+                {
+                    case "vie":
+                        this.heal(ammount);
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 

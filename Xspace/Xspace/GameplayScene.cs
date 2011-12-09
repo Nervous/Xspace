@@ -147,7 +147,7 @@ namespace MenuSample.Scenes
             #endregion
         }
 
-        doneParticles collisions(List<Vaisseau> listeVaisseau, List<Missiles> listeMissile, List<Bonus> listeBonus, float spentTime, ParticleEffect particleEffect)
+        doneParticles collisions(List<Vaisseau> listeVaisseau, List<Missiles> listeMissile, List<Bonus> listeBonus, float spentTime, ParticleEffect particleEffect, GameTime gametime)
         {
             foreach(Vaisseau vaisseau in listeVaisseau)
             {
@@ -162,7 +162,7 @@ namespace MenuSample.Scenes
                                      (listeVaisseau[0].position.Y < bonus.position.Y + bonus.sprite.Height && listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height > bonus.position.Y + bonus.sprite.Height)))
                         {
                             listeBonusToRemove.Add(bonus);
-                            listeVaisseau[0].applyBonus(bonus.effect, bonus.ammount, bonus.time);
+                            listeVaisseau[0].applyBonus(bonus.effect, bonus.ammount, bonus.time, gametime.ElapsedGameTime.TotalMilliseconds);
                         }
                     }
                     #endregion
@@ -326,7 +326,7 @@ namespace MenuSample.Scenes
             #region Collisions & Update des particules
             if (!(partManage.startingParticle == Vector2.Zero))
                 particleEffect.Trigger(partManage.startingParticle);
-            partManage = collisions(listeVaisseau, listeMissile, listeBonus, fps_fix, particleEffect);
+            partManage = collisions(listeVaisseau, listeMissile, listeBonus, fps_fix, particleEffect, gameTime);
 
             particleEffect.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
             #endregion
