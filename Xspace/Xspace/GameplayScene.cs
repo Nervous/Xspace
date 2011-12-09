@@ -175,15 +175,12 @@ namespace MenuSample.Scenes
                             }
                         }
                     }
-                    else if ( ( (listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > vaisseau.position.X && listeVaisseau[0].position.X < vaisseau.position.X) 
-                        ||      (listeVaisseau[0].position.X < vaisseau.position.X + vaisseau.sprite.Width && listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > vaisseau.position.X + vaisseau.sprite.Width)
-                              )
-                        &&
-                              (  (listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height > vaisseau.position.Y && listeVaisseau[0].position.Y < vaisseau.position.Y)
-                        ||
-                                 (listeVaisseau[0].position.Y < vaisseau.position.Y + vaisseau.sprite.Height && listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height > vaisseau.position.Y + vaisseau.sprite.Height)
-                              ) )
+                    else if ( ( (listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > vaisseau.position.X && listeVaisseau[0].position.X < vaisseau.position.X) ||
+                                (listeVaisseau[0].position.X < vaisseau.position.X + vaisseau.sprite.Width && listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > vaisseau.position.X + vaisseau.sprite.Width))
+                           && (  (listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height > vaisseau.position.Y && listeVaisseau[0].position.Y < vaisseau.position.Y) ||
+                                 (listeVaisseau[0].position.Y < vaisseau.position.Y + vaisseau.sprite.Height && listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height > vaisseau.position.Y + vaisseau.sprite.Height)))
                     {
+                        // Collision entre vaisseau joueur & ennemi trouvée
                         vaisseau.kill();
                         listeVaisseauToRemove.Add(vaisseau);
                         listeVaisseau[0].hurt(vaisseau.damageCollision);
@@ -315,6 +312,7 @@ namespace MenuSample.Scenes
             partManage = collisions(listeVaisseau, listeMissile, fps_fix, particleEffect);
 
             particleEffect.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+            if (listeVaisseau[0].ennemi) // Game terminée
             
             base.Update(gameTime);
         }
