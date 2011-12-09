@@ -53,7 +53,7 @@ namespace MenuSample.Scenes
 
         public SpriteBatch spriteBatch;
 
-        private Texture2D textureVaisseau_joueur, textureMissile_joueur_base, textureMissile_ennemi1, textureVaisseau_ennemi1;
+        private Texture2D T_Vaisseau_Joueur, textureMissile_joueur_base, T_Missile_Drone, textureVaisseau_ennemi1;
         private List<Texture2D> listeTextureVaisseauxEnnemis;
 
         private Song musique, musique_menu;
@@ -109,7 +109,7 @@ namespace MenuSample.Scenes
             fond_ecran.Load(GraphicsDevice, fond_image);
 
             // TODO : Chargement de toutes les textures des vaisseau en dessous
-            textureVaisseau_joueur = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Joueur\\Vaisseau1");
+            T_Vaisseau_Joueur = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Joueur\\Vaisseau1");
             textureVaisseau_ennemi1 = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Ennemi\\Vaisseau1");
             musique_menu = _content.Load<Song>("Musiques\\Menu\\Musique");
 
@@ -125,12 +125,12 @@ namespace MenuSample.Scenes
 
             // TODO : Chargement de toutes les textures des missiles en dessous
             textureMissile_joueur_base = _content.Load<Texture2D>("Sprites\\Missiles\\Joueur\\Missile1");
-            textureMissile_ennemi1 = _content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\Missile1");
+            T_Missile_Drone = _content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\Drone");
 
             // TODO : Chargement de tous les objets vaisseau en dessous
             listeVaisseau = new List<Vaisseau>();
             listeVaisseauToRemove = new List<Vaisseau>();
-            listeVaisseau.Add(new Vaisseau_joueur(textureVaisseau_joueur));
+            listeVaisseau.Add(new Vaisseau_joueur(T_Vaisseau_Joueur));
 
 
 
@@ -157,8 +157,8 @@ namespace MenuSample.Scenes
                 {
                     if (((missile.position.X + missile.sprite.Width > vaisseau.position.X)
                         && (missile.position.X + missile.sprite.Width < vaisseau.position.X + vaisseau.sprite.Width))
-                        && ((missile.position.Y + missile.sprite.Height / 2 > vaisseau.position.Y)
-                        && (missile.position.Y + missile.sprite.Height / 2 < vaisseau.position.Y + vaisseau.sprite.Height))
+                        && ((missile.position.Y + missile.sprite.Height / 2 > vaisseau.position.Y - vaisseau.sprite.Height*0.10)
+                        && (missile.position.Y + missile.sprite.Height / 2 < vaisseau.position.Y + vaisseau.sprite.Height + vaisseau.sprite.Height*0.10))
                         )
                     {  // Collision missile => Vaisseau trouvée
                                 
@@ -166,17 +166,28 @@ namespace MenuSample.Scenes
                         {
                             listeMissileToRemove.Add(missile);
 
-                            if (vaisseau.hurt(missile.degats) == true)
+                            if (vaisseau.hurt(missile.degats))
                             {
                                 // Vaisseau dead
                                             
                                 vaisseau.kill();
-                                return new doneParticles(false, vaisseau.position);        
+                                return new doneParticles(false, new Vector2(vaisseau.position.X + vaisseau.sprite.Width / 2, vaisseau.position.Y + vaisseau.sprite.Height / 2));        
                             }
                         }
                     }
-                    
-                        
+                    else if ( ( (listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > vaisseau.position.X && listeVaisseau[0].position.X < vaisseau.position.X) ||
+                                (listeVaisseau[0].position.X < vaisseau.position.X + vaisseau.sprite.Width && listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > vaisseau.position.X + vaisseau.sprite.Width))
+                           && (  (listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height > vaisseau.position.Y && listeVaisseau[0].position.Y < vaisseau.position.Y) ||
+                                 (listeVaisseau[0].position.Y < vaisseau.position.Y + vaisseau.sprite.Height && listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height > vaisseau.position.Y + vaisseau.sprite.Height)))
+                    {
+                        // Collision entre vaisseau joueur & ennemi trouvée
+                        vaisseau.kill();
+                        listeVaisseauToRemove.Add(vaisseau);
+                        listeVaisseau[0].hurt(vaisseau.damageCollision);
+                        return new doneParticles(false, new Vector2(vaisseau.position.X + vaisseau.sprite.Width/2, vaisseau.position.Y + vaisseau.sprite.Height / 2));
+                    }
+                        // Collision vaisseau joueur => ennemi
+
                 }
             }
             return new doneParticles(true, new Vector2(0, 0));
@@ -251,7 +262,7 @@ namespace MenuSample.Scenes
                     {
                         Vector2 spawn = new Vector2(vaisseau.position.X - 35, vaisseau.position.Y + vaisseau._textureVaisseau.Height / 3 - 6);
                         // FAIRE EN FONCTION DU TYPE DE MISSILE
-                        listeMissile.Add(new Missile_drone(textureMissile_ennemi1, spawn));
+                        listeMissile.Add(new Missile_drone(T_Missile_Drone, spawn));
                         vaisseau.lastTir = time;
                     }
                 }           
@@ -301,6 +312,9 @@ namespace MenuSample.Scenes
             partManage = collisions(listeVaisseau, listeMissile, fps_fix, particleEffect);
 
             particleEffect.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+            if (listeVaisseau[0].ennemi)
+                Remove();
+            // Game terminée
             
             base.Update(gameTime);
         }
@@ -313,8 +327,11 @@ namespace MenuSample.Scenes
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive);
             fond_ecran.Draw(spriteBatch);
             particleRenderer.RenderEffect(particleEffect);
+
+            if(listeVaisseau[0].vie > 0)
+            spriteBatch.DrawString(_gameFont, Convert.ToString(listeVaisseau[0].vie), new Vector2(500,500), Color.Red);
             
-            
+
             foreach (Vaisseau vaisseau in listeVaisseau)
             {
                 vaisseau.Draw(spriteBatch);
