@@ -175,8 +175,22 @@ namespace MenuSample.Scenes
                             }
                         }
                     }
-                    
-                        
+                    else if ( ( (listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > vaisseau.position.X && listeVaisseau[0].position.X < vaisseau.position.X) 
+                        ||      (listeVaisseau[0].position.X < vaisseau.position.X + vaisseau.sprite.Width && listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > vaisseau.position.X + vaisseau.sprite.Width)
+                              )
+                        &&
+                              (  (listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height > vaisseau.position.Y && listeVaisseau[0].position.Y < vaisseau.position.Y)
+                        ||
+                                 (listeVaisseau[0].position.Y < vaisseau.position.Y + vaisseau.sprite.Height && listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height > vaisseau.position.Y + vaisseau.sprite.Height)
+                              ) )
+                    {
+                        vaisseau.kill();
+                        listeVaisseauToRemove.Add(vaisseau);
+                        listeVaisseau[0].hurt(vaisseau.damageCollision);
+                        return new doneParticles(false, vaisseau.position);
+                    }
+                        // Collision vaisseau joueur => ennemi
+
                 }
             }
             return new doneParticles(true, new Vector2(0, 0));
