@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Linq;
+using System.Net;
+using System.IO;
+
 using MenuSample.Inputs;
 using MenuSample.Scenes;
 using MenuSample.Scenes.Core;
@@ -113,8 +116,19 @@ namespace MenuSample.Scenes
             #endregion
             #region Chargement textures vaisseaux
             T_Vaisseau_Joueur = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Joueur\\Vaisseau1");
-            T_Vaisseau_Drone = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Ennemi\\Vaisseau1");
+            if (true)
+            {
+                T_Vaisseau_Drone = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Ennemi\\Vaisseau1");
+            }
+            else
+            {
+                WebClient wc = new WebClient();
+
+                wc.DownloadFile("http://nathalie.bouquet.free.fr/epita/trombi2011-12/sup/login_x.jpg", "Content\\Sprites\\Vaisseaux\\logintmp.jpg");
+                T_Vaisseau_Drone = Texture2D.FromStream(GraphicsDevice, new FileStream("Content\\Sprites\\Vaisseaux\\logintmp.jpg", FileMode.Open));
+            }
             #endregion
+
             #region Chargement textures missiles
             T_Missile_Joueur_1 = _content.Load<Texture2D>("Sprites\\Missiles\\Joueur\\Missile1");
             T_Missile_Drone = _content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\Drone");
