@@ -171,7 +171,7 @@ namespace MenuSample.Scenes
                                 // Vaisseau dead
                                             
                                 vaisseau.kill();
-                                return new doneParticles(false, vaisseau.position);        
+                                return new doneParticles(false, new Vector2(vaisseau.position.X + vaisseau.sprite.Width / 2, vaisseau.position.Y + vaisseau.sprite.Height / 2));        
                             }
                         }
                     }
@@ -184,7 +184,7 @@ namespace MenuSample.Scenes
                         vaisseau.kill();
                         listeVaisseauToRemove.Add(vaisseau);
                         listeVaisseau[0].hurt(vaisseau.damageCollision);
-                        return new doneParticles(false, vaisseau.position);
+                        return new doneParticles(false, new Vector2(vaisseau.position.X + vaisseau.sprite.Width/2, vaisseau.position.Y + vaisseau.sprite.Height / 2));
                     }
                         // Collision vaisseau joueur => ennemi
 
