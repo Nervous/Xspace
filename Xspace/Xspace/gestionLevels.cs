@@ -101,15 +101,36 @@ namespace Xspace
                     Vector2 start;
                     switch (position)
                     {
-                        case "milieu":
-                            start = new Vector2(1180, 620 / 2);
+                        case "0":
+                            start = new Vector2(1180, 5);
                             break;
-                        case "haut":
-                            start = new Vector2(1180, 620 / 3);
+                        case "1":
+                            start = new Vector2(1180, 67);
                             break;
-                        case "bas":
-                            start = new Vector2(1180, (2 * 620) / 3);
+                        case "2":
+                            start = new Vector2(1180, 129);
                             break;
+                        case "3":
+                            start = new Vector2(1180, 191);
+                            break;
+                        case "4":
+                            start = new Vector2(1180, 253);
+                                break;
+                        case "5":
+                            start = new Vector2(1180, 315);
+                                break;
+                        case "6":
+                            start = new Vector2(1180, 377); 
+                                break;
+                            case "7":
+                            start = new Vector2(1180, 439); 
+                                break;
+                        case "8":
+                            start = new Vector2(1180, 501); 
+                                break;
+                        case "9":
+                            start = new Vector2(1180, 563);
+                                break;
                         default:
                             start = new Vector2(1180, 620 / 3);
                             break;

@@ -21,7 +21,7 @@ namespace MenuSample.Scenes
         private Texture2D _score_board, _score_surbrillance, _score_lvl;
         private StreamReader sr;
         private string path;
-        private Vector2 position_score1, position_Nv1, position_Nv2, position_Nv3,position_surbrillance_Nv1, position_surbrillance_Nv2, position_surbrillance_Nv3;
+        private Vector2 position_score1,position_Nv, position_Nv1, position_Nv2, position_Nv3,position_surbrillance_Nv1, position_surbrillance_Nv2, position_surbrillance_Nv3;
         private Vector2 position_board;
         public string[] score;
         private string stock;
@@ -65,6 +65,9 @@ namespace MenuSample.Scenes
             position_list.Add(position_surbrillance_Nv2);
             position_list.Add(position_surbrillance_Nv3);
 
+            position_Nv.X = 300 * (i / 5) + 112;
+            position_Nv.Y = 187 + i * 45;
+
             back.Selected += OnCancel;
 
             MenuItems.Add(back);
@@ -95,18 +98,6 @@ namespace MenuSample.Scenes
                 spriteBatch.DrawString(_gamefont, "Nv1", position_Nv1, Color.Green, 0, position_board, 0.7f, SpriteEffects.None, 0);
                 spriteBatch.Draw(_score_surbrillance, position_list[i], Color.White);
             
-            if (lvl1)
-            {
-              spriteBatch.Draw(_score_lvl, position_board, Color.White);
-            }
-            else if (lvl2)
-            {
-              spriteBatch.Draw(_score_lvl, position_board, Color.White);
-            }
-            else if (lvl3)
-            {
-              spriteBatch.Draw(_score_lvl, position_board, Color.White);
-            }
 
             spriteBatch.End();
         }

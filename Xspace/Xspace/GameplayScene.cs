@@ -166,7 +166,7 @@ namespace MenuSample.Scenes
                         {
                             listeMissileToRemove.Add(missile);
 
-                            if (vaisseau.hurt(missile.degats) == true)
+                            if (vaisseau.hurt(missile.degats))
                             {
                                 // Vaisseau dead
                                             
