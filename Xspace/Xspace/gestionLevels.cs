@@ -22,28 +22,30 @@ namespace Xspace
 
         string categorie, position;
         Vaisseau adresse;
+        Bonus bonusAdresse;
         double time;
         bool hasSpawned;
-        List<Texture2D> listeTextureVaisseauxEnnemis;
+        List<Texture2D> listeTextureVaisseauxEnnemis, listeTextureBonus;
 
 
-        public gestionLevels(int numero, List<Texture2D> texturesVaisseaux)
+        public gestionLevels(int numero, List<Texture2D> texturesVaisseaux, List<Texture2D> texturesBonus)
         {
             nbLevel = numero;
             pathLevel = "levels/" + nbLevel + ".xpa"; ;
             infosLevel = lireFichier(pathLevel);
             listeTextureVaisseauxEnnemis = texturesVaisseaux;
+            listeTextureBonus = texturesBonus;
         }
 
-        public gestionLevels(string setCategorie, Vaisseau setAdresse, int setTime, string setPosition)
+        public gestionLevels(string setCategorie, Vaisseau setAdresse, Bonus adresseBonus, int setTime, string setPosition)
         {
             categorie = setCategorie;
             adresse = setAdresse;
+            bonusAdresse = adresseBonus;
             time = setTime;
             hasSpawned = false;
             position = setPosition;
         }
-
 
         public string[] lireFichier(string path)
         {
@@ -62,7 +64,8 @@ namespace Xspace
             {
                 int timing = 0, i = 0;
                 string categorie = "", type = "", position = "";
-                Vaisseau vaisseau = null;
+                Vector2 start;
+
                 foreach (string info2 in info.Split(delimitationFilesInfo)) // ... On récupère 2 infos : le type de l'objet et à quelle date il doit spawn
                 {
                     i = 0;
@@ -95,46 +98,49 @@ namespace Xspace
                         timing = int.Parse(info2);
                     
                 }
+
+                switch (position)
+                {
+                    case "0":
+                        start = new Vector2(1180, 5);
+                        break;
+                    case "1":
+                        start = new Vector2(1180, 67);
+                        break;
+                    case "2":
+                        start = new Vector2(1180, 129);
+                        break;
+                    case "3":
+                        start = new Vector2(1180, 191);
+                        break;
+                    case "4":
+                        start = new Vector2(1180, 253);
+                            break;
+                    case "5":
+                        start = new Vector2(1180, 315);
+                            break;
+                    case "6":
+                        start = new Vector2(1180, 377); 
+                            break;
+                        case "7":
+                        start = new Vector2(1180, 439); 
+                            break;
+                    case "8":
+                        start = new Vector2(1180, 501); 
+                            break;
+                    case "9":
+                        start = new Vector2(1180, 563);
+                            break;
+                    default:
+                        start = new Vector2(1180, 620 / 3);
+                        break;
+                }
+
                 //Fin de lecture de la ligne : on ajoute un élement dans la liste des infos du level
                 if (categorie == "vaisseau")
                 {
-                    Vector2 start;
-                    switch (position)
-                    {
-                        case "0":
-                            start = new Vector2(1180, 5);
-                            break;
-                        case "1":
-                            start = new Vector2(1180, 67);
-                            break;
-                        case "2":
-                            start = new Vector2(1180, 129);
-                            break;
-                        case "3":
-                            start = new Vector2(1180, 191);
-                            break;
-                        case "4":
-                            start = new Vector2(1180, 253);
-                                break;
-                        case "5":
-                            start = new Vector2(1180, 315);
-                                break;
-                        case "6":
-                            start = new Vector2(1180, 377); 
-                                break;
-                            case "7":
-                            start = new Vector2(1180, 439); 
-                                break;
-                        case "8":
-                            start = new Vector2(1180, 501); 
-                                break;
-                        case "9":
-                            start = new Vector2(1180, 563);
-                                break;
-                        default:
-                            start = new Vector2(1180, 620 / 3);
-                            break;
-                    }
+                    Vaisseau vaisseau = null;
+                    
 
                     switch (type)
                     {
@@ -144,9 +150,23 @@ namespace Xspace
                         default:
                             break;
                     }
+                    infLevel.Add(new gestionLevels(categorie, vaisseau, null, timing, position));
+                }
+                else if(categorie == "bonus")
+                {
+                    Bonus bonus = null;
+                    switch(type)
+                    {
+                        case "vie":
+                            bonus = new Bonus_Vie(listeTextureBonus[0], start);
+                            break;
+                        default:
+                            break;
+                    }
+                    infLevel.Add(new gestionLevels(categorie, null, bonus, timing, position));
                 }
 
-                infLevel.Add(new gestionLevels(categorie, vaisseau, timing, position));
+                
                 
 
             }
@@ -155,6 +175,10 @@ namespace Xspace
         public Vaisseau Adresse
         {
             get { return adresse; }
+        }
+        public Bonus bonus
+        {
+            get { return bonusAdresse; }
         }
 
         public string Categorie
