@@ -117,12 +117,12 @@ namespace MenuSample.Scenes.Core
         public void FadeBackBufferToBlack(float alpha)
         {
             Viewport viewport = GraphicsDevice.Viewport;
-         /*   _spriteBatch.Begin();   A DEBUG
-            _spriteBatch.Draw(_blankTexture,
-                             new Rectangle(0, 0, viewport.Width, viewport.Height),
-                             Color.Black * alpha);
-            _spriteBatch.End(); */ 
-            
+            /*   _spriteBatch.Begin();   A DEBUG
+               _spriteBatch.Draw(_blankTexture,
+                                new Rectangle(0, 0, viewport.Width, viewport.Height),
+                                Color.Black * alpha);
+               _spriteBatch.End(); */
+
         }
 
     }

@@ -149,10 +149,23 @@ namespace MenuSample.Scenes
 
         doneParticles collisions(List<Vaisseau> listeVaisseau, List<Missiles> listeMissile, List<Bonus> listeBonus, float spentTime, ParticleEffect particleEffect)
         {
-            foreach (Missiles missile in listeMissile)
+            foreach(Vaisseau vaisseau in listeVaisseau)
             {
-                foreach(Vaisseau vaisseau in listeVaisseau)
+                foreach (Missiles missile in listeMissile)
                 {
+                    #region Collision joueur => bonus
+                    foreach (Bonus bonus in listeBonus)
+                    {
+                        if (((listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > bonus.position.X && listeVaisseau[0].position.X < bonus.position.X) ||
+                                    (listeVaisseau[0].position.X < bonus.position.X + bonus.sprite.Width && listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > bonus.position.X + bonus.sprite.Width))
+                               && ((listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height > bonus.position.Y && listeVaisseau[0].position.Y < bonus.position.Y) ||
+                                     (listeVaisseau[0].position.Y < bonus.position.Y + bonus.sprite.Height && listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height > bonus.position.Y + bonus.sprite.Height)))
+                        {
+                            listeBonusToRemove.Add(bonus);
+                            listeVaisseau[0].applyBonus(bonus.effect, bonus.ammount, bonus.time);
+                        }
+                    }
+                    #endregion
                     #region Collision missile => vaisseau
                     if (((missile.position.X + missile.sprite.Width > vaisseau.position.X)
                         && (missile.position.X + missile.sprite.Width < vaisseau.position.X + vaisseau.sprite.Width))
@@ -188,18 +201,7 @@ namespace MenuSample.Scenes
                         return new doneParticles(false, new Vector2(vaisseau.position.X + vaisseau.sprite.Width/2, vaisseau.position.Y + vaisseau.sprite.Height / 2));
                     }
                     #endregion
-                    #region Collision joueur => bonus
-                    foreach (Bonus bonus in listeBonus)
-                    {
-                        if (((listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > bonus.position.X && listeVaisseau[0].position.X < bonus.position.X) ||
-                                    (listeVaisseau[0].position.X < bonus.position.X + bonus.sprite.Width && listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > bonus.position.X + bonus.sprite.Width))
-                               && ((listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height > bonus.position.Y && listeVaisseau[0].position.Y < bonus.position.Y) ||
-                                     (listeVaisseau[0].position.Y < bonus.position.Y + bonus.sprite.Height && listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height > bonus.position.Y + bonus.sprite.Height)))
-                        {
-                            listeVaisseau[0].applyBonus(bonus.effect, bonus.ammount, bonus.time);
-                        }
-                    }
-                    #endregion
+                   
 
                 }
             }
