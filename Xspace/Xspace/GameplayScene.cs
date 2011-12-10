@@ -153,23 +153,27 @@ namespace MenuSample.Scenes
         {
             foreach(Vaisseau vaisseau in listeVaisseau)
             {
+                #region Collision joueur => bonus
+                foreach (Bonus bonus in listeBonus)
+                {
+                    if (((listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width >= bonus.position.X && listeVaisseau[0].position.X <= bonus.position.X) ||
+                                (listeVaisseau[0].position.X <= bonus.position.X + bonus.sprite.Width && listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width >= bonus.position.X + bonus.sprite.Width) ||
+                                (listeVaisseau[0].position.X <= bonus.position.X && listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > bonus.position.X + bonus.sprite.Width))
+                           && ((listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height >= bonus.position.Y && listeVaisseau[0].position.Y <= bonus.position.Y) ||
+                                (listeVaisseau[0].position.Y <= bonus.position.Y + bonus.sprite.Height && listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height >= bonus.position.Y + bonus.sprite.Height) ||
+                                (listeVaisseau[0].position.Y <= bonus.position.Y && listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height > bonus.position.Y + bonus.sprite.Height)))
+                    {
+                        if (!bonus.disabled)
+                        {
+                            listeVaisseau[0].applyBonus(bonus.effect, bonus.ammount, bonus.time);
+                            bonus.disabled = true;
+                        }
+                        listeBonusToRemove.Add(bonus);
+                    }
+                }
+                #endregion
                 foreach (Missiles missile in listeMissile)
                 {
-                    #region Collision joueur => bonus
-                    foreach (Bonus bonus in listeBonus)
-                    {
-                        if ((       (listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width >= bonus.position.X && listeVaisseau[0].position.X <= bonus.position.X) ||
-                                    (listeVaisseau[0].position.X <= bonus.position.X + bonus.sprite.Width && listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width >= bonus.position.X + bonus.sprite.Width) ||
-                                    (listeVaisseau[0].position.X <= bonus.position.X && listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > bonus.position.X + bonus.sprite.Width))
-                               && ( (listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height >= bonus.position.Y && listeVaisseau[0].position.Y <= bonus.position.Y) ||
-                                    (listeVaisseau[0].position.Y <= bonus.position.Y + bonus.sprite.Height && listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height >= bonus.position.Y + bonus.sprite.Height) ||
-                                    (listeVaisseau[0].position.Y <= bonus.position.Y && listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height > bonus.position.Y + bonus.sprite.Height)) )
-                        {
-                            listeVaisseau[0].applyBonus(bonus.effect, bonus.ammount, bonus.time, gametime.ElapsedGameTime.TotalMilliseconds);
-                            listeBonusToRemove.Add(bonus);
-                        }
-                    }
-                    #endregion
                     #region Collision missile => vaisseau
                     if (((missile.position.X + missile.sprite.Width > vaisseau.position.X)
                         && (missile.position.X + missile.sprite.Width < vaisseau.position.X + vaisseau.sprite.Width))
