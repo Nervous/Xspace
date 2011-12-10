@@ -16,7 +16,7 @@ namespace Xspace
         public Vector2 _emplacement, _deplacementDirectionY, _deplacementDirectionX;
         public Texture2D _textureVaisseau;
         public float _vitesseVaisseau;
-        protected int _vie, _armure, _damageCollision;
+        protected int _vie, _armure, _damageCollision, _armeActuelle;
         protected double _timingAttack;
         protected bool _ennemi, _existe;
         protected double _lastTir, _lastBonus;
@@ -35,6 +35,7 @@ namespace Xspace
             _existe = true;
             lastTir = 0;
             _timingAttack = timingAttack;
+            _armeActuelle = 0;
             _lastBonus = 0;
         }
 
@@ -47,6 +48,9 @@ namespace Xspace
                 {
                     case "vie":
                         this.heal(ammount);
+                        break;
+                    case "weapon":
+                        this.changeWeapon(ammount);
                         break;
                     default:
                         break;
@@ -72,6 +76,11 @@ namespace Xspace
         public double timingAttack
         {
             get { return _timingAttack; }
+        }
+
+        public int armeActuelle
+        {
+            get { return _armeActuelle; }
         }
 
         public double lastTir
@@ -109,6 +118,11 @@ namespace Xspace
         public void kill()
         {
             this._existe = false;
+        }
+
+        public void changeWeapon(int nouveau)
+        {
+            this._armeActuelle = nouveau;
         }
 
         public void Update(float fps_fix)

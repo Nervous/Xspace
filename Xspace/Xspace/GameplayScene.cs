@@ -37,7 +37,7 @@ namespace MenuSample.Scenes
         private doneParticles partManage;
         private ScrollingBackground fond_ecran;
         public SpriteBatch spriteBatch;
-        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Missile_Joueur_1, T_Missile_Drone, T_Bonus_Vie;
+        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Missile_Joueur_1, T_Missile_Drone, T_Bonus_Vie, T_Bonus_Weapon1;
         private List<Texture2D> listeTextureVaisseauxEnnemis, listeTextureBonus;
         private Song musique, musique_menu;
         private SoundEffect musique_tir;
@@ -122,6 +122,7 @@ namespace MenuSample.Scenes
             #region Chargement textures bonus
             // TODO : Chargement de toutes les textures des bonus en dessous
             T_Bonus_Vie = _content.Load<Texture2D>("Sprites\\Bonus\\Life");
+            T_Bonus_Weapon1 = _content.Load<Texture2D>("Sprites\\Bonus\\DoubleBaseWeapon");
             #endregion
             #region Chargement vaisseaux
             listeVaisseau = new List<Vaisseau>();
@@ -141,6 +142,7 @@ namespace MenuSample.Scenes
             listeTextureVaisseauxEnnemis.Add(T_Vaisseau_Drone);
             listeTextureBonus = new List<Texture2D>();
             listeTextureBonus.Add(T_Bonus_Vie);
+            listeTextureBonus.Add(T_Bonus_Weapon1);
             thisLevel = new gestionLevels(0, listeTextureVaisseauxEnnemis, listeTextureBonus);
             infLevel = new List<gestionLevels>();
             thisLevel.readInfos(delimitationFilesInfo, delimitationFilesInfo2, delimitationFilesInfo3, infLevel);
@@ -257,12 +259,30 @@ namespace MenuSample.Scenes
             #region Gestion des tirs du joueur
             if (keyboardState.IsKeyDown(Keys.Space))
             {
-                if (time - lastTime > 150 || lastTime == 0)
+                switch (listeVaisseau[0].armeActuelle)
                 {
-                    musique_tir.Play();
-                    Vector2 spawn = new Vector2(listeVaisseau[0].position.X + 35, listeVaisseau[0].position.Y + listeVaisseau[0]._textureVaisseau.Height / 3 - 6);
-                    listeMissile.Add(new Xspace.Missile1_joueur(T_Missile_Joueur_1, spawn));
-                    lastTime = time;
+                    case 0:
+                        if (time - lastTime > 150 || lastTime == 0)
+                        {
+                            musique_tir.Play();
+                            Vector2 spawn = new Vector2(listeVaisseau[0].position.X + 35, listeVaisseau[0].position.Y + listeVaisseau[0]._textureVaisseau.Height / 3 - 6);
+                            listeMissile.Add(new Xspace.Missile1_joueur(T_Missile_Joueur_1, spawn));
+                            lastTime = time;
+                        }
+                        break;
+                    case 1:
+                        if (time - lastTime > 150 || lastTime == 0)
+                        {
+                            musique_tir.Play();
+                            Vector2 spawn1 = new Vector2(listeVaisseau[0].position.X + 35, listeVaisseau[0].position.Y + listeVaisseau[0]._textureVaisseau.Height / 3 - 6 - 15);
+                            Vector2 spawn2 = new Vector2(listeVaisseau[0].position.X + 35, listeVaisseau[0].position.Y + listeVaisseau[0]._textureVaisseau.Height / 3 - 6 + 15);
+                            listeMissile.Add(new Xspace.Missile1_joueur(T_Missile_Joueur_1, spawn1));
+                            listeMissile.Add(new Xspace.Missile1_joueur(T_Missile_Joueur_1, spawn2));
+                            lastTime = time;
+                        }
+                        break;
+                    default:
+                        break;
                 }
             }
             #endregion

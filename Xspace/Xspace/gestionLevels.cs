@@ -160,6 +160,9 @@ namespace Xspace
                         case "vie":
                             bonus = new Bonus_Vie(listeTextureBonus[0], start);
                             break;
+                        case "baseWeaponX2":
+                            bonus = new Bonus_NouvelleArme1(listeTextureBonus[1], start);
+                            break;
                         default:
                             break;
                     }
