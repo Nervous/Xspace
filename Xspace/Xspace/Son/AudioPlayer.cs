@@ -75,12 +75,7 @@ namespace Xspace.Son
             PlayMusic(currentMusicPath);
         }
 
-        public static void PlayMusic(string path)
-        {
-            PlayMusic(path, false);
-        }
-
-        public static void PlayMusic(string path, bool paused)
+        public static void PlayMusic(string path, bool paused = false)
         {
             bool isPlaying = false;
             RESULT result;
