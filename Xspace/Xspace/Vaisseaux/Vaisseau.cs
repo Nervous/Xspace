@@ -16,15 +16,16 @@ namespace Xspace
         public Vector2 _emplacement, _deplacementDirectionY, _deplacementDirectionX;
         public Texture2D _textureVaisseau;
         public float _vitesseVaisseau;
-        protected int _vie, _armure, _damageCollision, _armeActuelle;
+        protected int _vie, _armure, _damageCollision, _armeActuelle, _vieMax;
         protected double _timingAttack;
         protected bool _ennemi, _existe;
         protected double _lastTir;
 
-        public Vaisseau(Texture2D texture, int vie, int armure, int damageCollision, float vitesseVaisseau, Vector2 startPosition, bool ennemi, double timingAttack)
+        public Vaisseau(Texture2D texture, int vie, int vieMax, int armure, int damageCollision, float vitesseVaisseau, Vector2 startPosition, bool ennemi, double timingAttack)
         {
             _textureVaisseau = texture;
             _vie = vie;
+            _vieMax = vieMax;
             _armure = armure;
             _damageCollision = damageCollision;
             _vitesseVaisseau = vitesseVaisseau;
@@ -56,6 +57,11 @@ namespace Xspace
         public int vie
         {
             get { return _vie; }
+        }
+
+        public int vieMax
+        {
+            get { return _vieMax; }
         }
 
         public int damageCollision

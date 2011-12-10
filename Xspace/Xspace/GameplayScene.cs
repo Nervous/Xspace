@@ -40,7 +40,7 @@ namespace MenuSample.Scenes
         private doneParticles partManage;
         private ScrollingBackground fond_ecran;
         public SpriteBatch spriteBatch;
-        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Missile_Joueur_1, T_Missile_Drone, T_Bonus_Vie, T_Bonus_Weapon1;
+        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Missile_Joueur_1, T_Missile_Drone, T_Bonus_Vie, T_Bonus_Weapon1, barre_vie;
         private List<Texture2D> listeTextureVaisseauxEnnemis, listeTextureBonus;
         private Song musique, musique_menu;
         private SoundEffect musique_tir;
@@ -70,6 +70,7 @@ namespace MenuSample.Scenes
         #endregion
 
         private readonly Random _random = new Random();
+        private AffichageInformations HUD = new AffichageInformations();
         public GameplayScene(SceneManager sceneMgr, GraphicsDeviceManager graphics)
             : base(sceneMgr)
         {
@@ -161,6 +162,9 @@ namespace MenuSample.Scenes
             infLevel = new List<gestionLevels>();
             thisLevel.readInfos(delimitationFilesInfo, delimitationFilesInfo2, delimitationFilesInfo3, infLevel);
             #endregion
+            #region Chargement barre de vie
+            barre_vie = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Joueur\\barre-vie-test");
+            #endregion
         }
 
         doneParticles collisions(List<Vaisseau> listeVaisseau, List<Missiles> listeMissile, List<Bonus> listeBonus, float spentTime, ParticleEffect particleEffect, GameTime gametime)
@@ -246,7 +250,6 @@ namespace MenuSample.Scenes
             time += gameTime.ElapsedGameTime.TotalMilliseconds;
             base.Update(gameTime, othersceneHasFocus, false);
             fond_ecran.Update(fps_fix);
-
             #region Gestion de la musique en cas de pause
             if (InputState.IsPauseGame())
             {
@@ -371,6 +374,8 @@ namespace MenuSample.Scenes
             particleEffect.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
             #endregion
 
+
+
             if (listeVaisseau[0].ennemi)
                 Remove();
             // Game terminée
@@ -380,12 +385,16 @@ namespace MenuSample.Scenes
 
         public override void Draw(GameTime gameTime)
         {
+
             SpriteBatch spriteBatch = SceneManager.SpriteBatch;
+
             SceneManager.GraphicsDevice.Clear(ClearOptions.Target, Color.Transparent, 0, 0);
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive);
+
+            HUD.Drawbar(spriteBatch, barre_vie, listeVaisseau[0].vie, listeVaisseau[0].vieMax);
             
             if(listeVaisseau[0].vie > 0)
-                spriteBatch.DrawString(_gameFont, Convert.ToString(listeVaisseau[0].vie), new Vector2(500,500), Color.Red);
+                spriteBatch.DrawString(_gameFont, Convert.ToString(listeVaisseau[0].vie) + "/" + Convert.ToString(listeVaisseau[0].vieMax), new Vector2(500,450), Color.Red);
             #region Draw du fond
             fond_ecran.Draw(spriteBatch);
             #endregion

@@ -8,14 +8,25 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using Xspace;
 
 namespace Xspace
 {
     class AffichageInformations
     {
-        public void DrawBar(SpriteBatch spriteBatch, int vieActuelle, int vieMax)
+
+        private Vector2 _position_bar;
+        
+        public void Drawbar(SpriteBatch spriteBatch, Texture2D texture, int vieActuelle, int vieMax)
         {
-              
+            _position_bar.Y = 500;
+            for (int i=0; i <= vieActuelle;i++)
+            {
+                _position_bar.X = 400 + i;
+
+                spriteBatch.Draw(texture, _position_bar, Color.White);
+
+            }
         }
     }
 }
