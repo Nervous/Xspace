@@ -41,9 +41,9 @@ namespace Xspace
 
         public void applyBonus(string effect, int ammount, int time, double actualTime)
         {
-            if (actualTime - _lastBonus > 100 ||_lastBonus == 0)
+            if (actualTime - _lastBonus > 0.1 || _lastBonus == 0)
             {
-                _lastBonus = time;
+                _lastBonus = actualTime;
                 switch (effect)
                 {
                     case "vie":

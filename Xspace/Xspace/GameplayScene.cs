@@ -165,8 +165,8 @@ namespace MenuSample.Scenes
                                     (listeVaisseau[0].position.Y <= bonus.position.Y + bonus.sprite.Height && listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height >= bonus.position.Y + bonus.sprite.Height) ||
                                     (listeVaisseau[0].position.Y <= bonus.position.Y && listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height > bonus.position.Y + bonus.sprite.Height)) )
                         {
-                            listeBonusToRemove.Add(bonus);
                             listeVaisseau[0].applyBonus(bonus.effect, bonus.ammount, bonus.time, gametime.ElapsedGameTime.TotalMilliseconds);
+                            listeBonusToRemove.Add(bonus);
                         }
                     }
                     #endregion
