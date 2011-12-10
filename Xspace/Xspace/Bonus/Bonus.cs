@@ -17,6 +17,7 @@ namespace Xspace
         public Texture2D _textureBonus;
         public float _vitesseBonus;
         getBonus bonus;
+        bool _disabled;
         struct getBonus
         {
             public string _effect;
@@ -36,6 +37,7 @@ namespace Xspace
             _vitesseBonus = vitesseVaisseau;
             _emplacement = startPosition;
             _deplacement = new Vector2(2, 0);
+            _disabled = false;
             bonus = new getBonus(effect, ammount, time);
         }
 
@@ -57,6 +59,12 @@ namespace Xspace
         public int time
         {
             get { return bonus._time; }
+        }
+
+        public bool disabled
+        {
+            get { return _disabled; }
+            set { _disabled = value; }
         }
 
         public Texture2D sprite
