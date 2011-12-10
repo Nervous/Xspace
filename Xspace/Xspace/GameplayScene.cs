@@ -157,10 +157,11 @@ namespace MenuSample.Scenes
                     foreach (Bonus bonus in listeBonus)
                     {
                         if ((       (listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width >= bonus.position.X && listeVaisseau[0].position.X <= bonus.position.X) ||
-                                    (listeVaisseau[0].position.X <= bonus.position.X + bonus.sprite.Width && listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width >= bonus.position.X + bonus.sprite.Width))
+                                    (listeVaisseau[0].position.X <= bonus.position.X + bonus.sprite.Width && listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width >= bonus.position.X + bonus.sprite.Width) ||
+                                    (listeVaisseau[0].position.X <= bonus.position.X && listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > bonus.position.X + bonus.sprite.Width))
                                && ( (listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height >= bonus.position.Y && listeVaisseau[0].position.Y <= bonus.position.Y) ||
                                     (listeVaisseau[0].position.Y <= bonus.position.Y + bonus.sprite.Height && listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height >= bonus.position.Y + bonus.sprite.Height) ||
-                                    listeVaisseau[0].position.Y <= bonus.position.Y && listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height > bonus.position.Y + bonus.sprite.Height))
+                                    (listeVaisseau[0].position.Y <= bonus.position.Y && listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height > bonus.position.Y + bonus.sprite.Height)) )
                         {
                             listeBonusToRemove.Add(bonus);
                             listeVaisseau[0].applyBonus(bonus.effect, bonus.ammount, bonus.time, gametime.ElapsedGameTime.TotalMilliseconds);
