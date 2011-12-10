@@ -1,6 +1,11 @@
-vaisseau;drone:haut 2500
-vaisseau;drone:bas 3500
-vaisseau;drone:milieu 4500
-vaisseau;drone:bas 6000
-vaisseau;drone:haut 8000
-vaisseau;drone:milieu 9000
+bonus;baseWeaponX2:3 250
+vaisseau;drone:0 1200
+vaisseau;drone:1 1700
+vaisseau;drone:2 2200
+vaisseau;drone:3 2700
+vaisseau;drone:4 3200
+vaisseau;drone:5 3700
+vaisseau;drone:6 4200
+vaisseau;drone:7 4700
+vaisseau;drone:8 5200
+vaisseau;drone:9 5700
