@@ -40,8 +40,7 @@ namespace MenuSample.Inputs
 
         public static bool IsMenuSelect()
         {
-            return IsNewKeyPress(Keys.Space) ||
-                   IsNewKeyPress(Keys.Enter);
+            return IsNewKeyPress(Keys.Enter);
         }
 
         public static bool IsMenuCancel()
