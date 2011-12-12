@@ -14,7 +14,7 @@ namespace Xspace
     class Bonus_Vie : Bonus
     {
         public Bonus_Vie(Texture2D texture, Vector2 position)
-            : base(texture, 0.10f, position, "vie", 30, -1)
+            : base(texture, 0.30f, position, "vie", 30, -1)
         { }
     }
 }

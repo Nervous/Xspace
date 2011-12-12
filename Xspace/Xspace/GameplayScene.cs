@@ -295,8 +295,8 @@ namespace MenuSample.Scenes
                         if (time - lastTime > 150 || lastTime == 0)
                         {
                             musique_tir.Play();
-                            Vector2 spawn1 = new Vector2(listeVaisseau[0].position.X + 35, listeVaisseau[0].position.Y + listeVaisseau[0]._textureVaisseau.Height / 3 - 6 - 15);
-                            Vector2 spawn2 = new Vector2(listeVaisseau[0].position.X + 35, listeVaisseau[0].position.Y + listeVaisseau[0]._textureVaisseau.Height / 3 - 6 + 15);
+                            Vector2 spawn1 = new Vector2(listeVaisseau[0].position.X + 35, listeVaisseau[0].position.Y + listeVaisseau[0]._textureVaisseau.Height / 3 - 6 - 12);
+                            Vector2 spawn2 = new Vector2(listeVaisseau[0].position.X + 35, listeVaisseau[0].position.Y + listeVaisseau[0]._textureVaisseau.Height / 3 - 6 + 28);
                             listeMissile.Add(new Xspace.Missile1_joueur(T_Missile_Joueur_1, spawn1));
                             listeMissile.Add(new Xspace.Missile1_joueur(T_Missile_Joueur_1, spawn2));
                             lastTime = time;
