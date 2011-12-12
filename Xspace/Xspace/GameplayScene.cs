@@ -125,7 +125,7 @@ namespace MenuSample.Scenes
             {
                 WebClient wc = new WebClient();
 
-                wc.DownloadFile("http://nathalie.bouquet.free.fr/epita/trombi2011-12/sup/login_x.jpg", "Content\\Sprites\\Vaisseaux\\logintmp.jpg");
+                wc.DownloadFile("http://nathalie.bouquet.free.fr/epita/trombi2011-12/sup/pruvot_a.jpg", "Content\\Sprites\\Vaisseaux\\logintmp.jpg");
                 T_Vaisseau_Drone = Texture2D.FromStream(GraphicsDevice, new FileStream("Content\\Sprites\\Vaisseaux\\logintmp.jpg", FileMode.Open));
             }
             #endregion

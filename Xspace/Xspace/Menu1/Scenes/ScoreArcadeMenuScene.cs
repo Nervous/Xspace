@@ -27,7 +27,7 @@ namespace MenuSample.Scenes
         private static KeyboardState _keyboardState;
         private static KeyboardState _lastKeyboardState;
         private int i;
-        private bool level_selected, backSelected;
+        private bool level_selected, backSelected, firstTime;
 
         /* Be careful, level ID begins at 0. (level 1 has ID 0, for score / i / lvl) */
         /*
@@ -53,6 +53,7 @@ namespace MenuSample.Scenes
             base.Initialize();
             level_selected = false;
             backSelected = false;
+            firstTime = true;
         }
         public override void Draw(GameTime gameTime)
         {
@@ -148,10 +149,17 @@ namespace MenuSample.Scenes
                     backSelected = true;
                 }
                 else backSelected = false;
-                
 
-                if ((_keyboardState.IsKeyDown(Keys.Enter)) && (_lastKeyboardState.IsKeyUp(Keys.Enter)))
-                    level_selected = true;
+
+                if (_keyboardState.IsKeyDown(Keys.Enter) && _lastKeyboardState.IsKeyUp(Keys.Enter))
+                {
+                    if (firstTime)
+                    {
+                        level_selected = false;
+                        firstTime = false;
+                    }
+                    else level_selected = true;
+                }
                 
 
             }
