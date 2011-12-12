@@ -14,7 +14,7 @@ namespace Xspace
     class Bonus_NouvelleArme1 : Bonus
     {
         public Bonus_NouvelleArme1(Texture2D texture, Vector2 position)
-            : base(texture, 0.10f, position, "weapon", 1, -1)
+            : base(texture, 0.30f, position, "weapon", 1, -1)
         { }
     }
 }
