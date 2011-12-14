@@ -15,6 +15,7 @@ namespace MenuSample.Scenes.Core
         private float _selectionFade;
         private Vector2 _position;
 
+
         public string Text
         {
             set { _text = value; }
@@ -44,18 +45,19 @@ namespace MenuSample.Scenes.Core
         public void Update(bool isSelected, GameTime gameTime)
         {
             float fadeSpeed = (float)gameTime.ElapsedGameTime.TotalSeconds * 4;
-
+            
             _selectionFade = isSelected
                 ? Math.Min(_selectionFade + fadeSpeed, 1)
                 : Math.Max(_selectionFade - fadeSpeed, 0);
+
         }
 
         public void Draw(AbstractMenuScene scene, bool isSelected, GameTime gameTime)
         {
-            Color color = isSelected ? Color.LightGreen : Color.White;
+            Color color = isSelected ? Color.Red : Color.White;
             double time = gameTime.TotalGameTime.TotalSeconds;
             float pulsate = (float)Math.Sin(time * 6) + Scale;
-            float scale = Scale + pulsate * 0.05f * _selectionFade;
+            float scale = Scale + 0.10f * _selectionFade;
             color *= scene.TransitionAlpha;
             SceneManager sceneManager = scene.SceneManager;
             SpriteBatch spriteBatch = sceneManager.SpriteBatch;

@@ -129,8 +129,8 @@ namespace MenuSample.Scenes.Core
             Vector2 titleOrigin = font.MeasureString(_menuTitle) / 2;
             Color titleColor = new Color(192, 192, 192) * TransitionAlpha;
             titlePosition.Y -= transitionOffset * 100;
-            spriteBatch.DrawString(font, _menuTitle, titlePosition, titleColor, 0,
-                                   titleOrigin, 1, SpriteEffects.None, 0);
+            /*spriteBatch.DrawString(font, _menuTitle, titlePosition, titleColor, 0,
+                       titleOrigin, 1, SpriteEffects.None, 0); UNUSED (titre des sections dans le menu)*/
             spriteBatch.End();
         }
 
