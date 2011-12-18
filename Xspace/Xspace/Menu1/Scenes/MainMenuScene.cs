@@ -56,9 +56,9 @@ namespace MenuSample.Scenes
                 _content = new ContentManager(SceneManager.Game.Services, "Content");
 
             AudioPlayer.Initialize();
-            AudioPlayer.SetVolume(1f);
+            System.Threading.Thread.Sleep(50); // Sert à éviter un bug dû à la Race Condition du thread lancé par Initialize().
 
-            System.Threading.Thread.Sleep(50);
+            AudioPlayer.SetVolume(1f);
             AudioPlayer.PlayMusic("Content\\Musiques\\Menu\\Musique.mp3");
         }
 

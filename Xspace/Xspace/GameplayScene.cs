@@ -43,7 +43,6 @@ namespace MenuSample.Scenes
         public SpriteBatch spriteBatch;
         private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Missile_Joueur_1, T_Missile_Drone, T_Bonus_Vie, T_Bonus_Weapon1, barre_vie;
         private List<Texture2D> listeTextureVaisseauxEnnemis, listeTextureBonus;
-        private Song musique_menu; //musique, 
         private SoundEffect musique_tir;
         private KeyboardState keyboardState;
         private gestionLevels thisLevel;
@@ -98,10 +97,7 @@ namespace MenuSample.Scenes
             SceneManager.Game.ResetElapsedTime();
 
             #region Chargement musiques & sons
-            //musique = _content.Load<Song>("Musiques\\Jeu\\Musique");
-            musique_menu = _content.Load<Song>("Musiques\\Menu\\Musique");
             musique_tir = _content.Load<SoundEffect>("Sons\\Tir\\Tir");
-
             
             AudioPlayer.PlayMusic("Content\\Musiques\\Jeu\\Musique.mp3");
             AudioPlayer.SetVolume(1f);
