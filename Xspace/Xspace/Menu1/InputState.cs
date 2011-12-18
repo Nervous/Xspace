@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
+using Xspace.Son;
+
 namespace MenuSample.Inputs
 {
 
@@ -29,6 +31,7 @@ namespace MenuSample.Inputs
             base.Update(gameTime);
             _lastKeyboardState = _currentKeyboardState;
             _currentKeyboardState = Keyboard.GetState();
+            AudioPlayer.Update();
         }
 
         private static bool IsNewKeyPress(Keys key)

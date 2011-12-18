@@ -9,6 +9,8 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
+using Xspace.Son;
+
 namespace MenuSample.Scenes
 {
     /// <summary>
@@ -23,7 +25,6 @@ namespace MenuSample.Scenes
         /// 
 
 
-        private Song _musique_menu;
         private ContentManager _content;
 
         Microsoft.Xna.Framework.GraphicsDeviceManager graphics;
@@ -53,10 +54,12 @@ namespace MenuSample.Scenes
             graphics = graphicsReceive;
             if (_content == null)
                 _content = new ContentManager(SceneManager.Game.Services, "Content");
-            _musique_menu = _content.Load<Song>("Musiques\\Menu\\Musique");
 
+            AudioPlayer.Initialize();
+            AudioPlayer.SetVolume(1f);
 
-            MediaPlayer.Play(_musique_menu);
+            System.Threading.Thread.Sleep(50);
+            AudioPlayer.PlayMusic("Content\\Musiques\\Menu\\Musique.mp3");
         }
 
 

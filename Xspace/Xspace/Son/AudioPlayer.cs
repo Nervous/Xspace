@@ -6,10 +6,7 @@ using System.Text;
 using FMOD;
 
 
-/* Player Son utilisant FMOD */
-/* Toutes les méthodes de récupération de propriétés du son sont ici.*/
-
-/* Ne touchez pas à l'API de FMOD, c'est cette classe la notre. */
+/* Interface entre le jeu et l'API Fmod */
 
 namespace Xspace.Son
 {
@@ -18,7 +15,6 @@ namespace Xspace.Son
     public static class AudioPlayer
     {
         private static FMOD.System system = null;
-        //private static Channel channel = null; //inutile pour l'instant
 
         private static Sound music = null;
         private static string currentMusicPath;
@@ -47,7 +43,7 @@ namespace Xspace.Son
             result = system.getVersion(ref version);
             ErrCheck(result);
 
-            if (version < VERSION.number) // Trop classe, ça vérifie même ça.
+            if (version < VERSION.number)
             {
                 throw new ApplicationException("Error! You are using an old version of FMOD " + version.ToString("X") + ". This program requires " + VERSION.number.ToString("X") + ".");
             }
@@ -111,13 +107,10 @@ namespace Xspace.Son
 
                 result = system.playSound(CHANNELINDEX.FREE, music, paused, ref musicChannel);
                 ErrCheck(result);
-                musicChannel.setCallback(channelCallback);
-                
-                //musicChannel.setCallback(FMOD.CHANNEL_CALLBACKTYPE.END, channelCallback, 0);
-                //Ce truc marche plus dans cette version de FMOD, si ça marche pas faudrait voir comment appliquer
-                //ça avec d'autres méthodes de l'API
+                musicChannel.setCallback(channelCallback); //musicChannel.setCallback(FMOD.CHANNEL_CALLBACKTYPE.END, channelCallback, 0);
 
                 currentMusicPath = path;
+                
             }
         }
 
@@ -129,12 +122,41 @@ namespace Xspace.Son
             return RESULT.OK;
         }
 
+        public static void StopMusic()
+        {
+            if (musicChannel != null)
+            {
+                RESULT result = musicChannel.stop();
+                musicChannel = null;
+                ErrCheck(result);
+            }
+        }
+
+        public static void PauseMusic()
+        {
+            bool paused = false;
+            if (musicChannel != null)
+            {
+                RESULT result = musicChannel.getPaused(ref paused);
+                ErrCheck(result);
+                result = musicChannel.setPaused(!paused);
+                ErrCheck(result);
+            }
+        }
+
+        public static void SetVolume(float volume)
+        {
+            if (musicChannel != null)
+            {
+                RESULT result = musicChannel.setVolume(volume);
+                ErrCheck(result);
+            }
+        }
+
         public static void Update()
         {
             system.update();
         }
     }
 }
-
-//Voilà, j'ai bien travaillé aujourd'hui.
 

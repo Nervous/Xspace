@@ -22,6 +22,7 @@ using ProjectMercury.Modifiers;
 using ProjectMercury.Renderers;
 
 using Xspace;
+using Xspace.Son;
 
 
 namespace MenuSample.Scenes
@@ -42,7 +43,7 @@ namespace MenuSample.Scenes
         public SpriteBatch spriteBatch;
         private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Missile_Joueur_1, T_Missile_Drone, T_Bonus_Vie, T_Bonus_Weapon1, barre_vie;
         private List<Texture2D> listeTextureVaisseauxEnnemis, listeTextureBonus;
-        private Song musique, musique_menu;
+        private Song musique_menu; //musique, 
         private SoundEffect musique_tir;
         private KeyboardState keyboardState;
         private gestionLevels thisLevel;
@@ -97,10 +98,14 @@ namespace MenuSample.Scenes
             SceneManager.Game.ResetElapsedTime();
 
             #region Chargement musiques & sons
-            musique = _content.Load<Song>("Musiques\\Jeu\\Musique");
+            //musique = _content.Load<Song>("Musiques\\Jeu\\Musique");
             musique_menu = _content.Load<Song>("Musiques\\Menu\\Musique");
             musique_tir = _content.Load<SoundEffect>("Sons\\Tir\\Tir");
-            MediaPlayer.Play(musique);
+
+            
+            AudioPlayer.PlayMusic("Content\\Musiques\\Jeu\\Musique.mp3");
+            AudioPlayer.SetVolume(1f);
+
             #endregion
             #region Chargement des polices d'écritures
             _gameFont = _content.Load<SpriteFont>("Fonts\\Menu\\Menu");
@@ -117,17 +122,12 @@ namespace MenuSample.Scenes
             #endregion
             #region Chargement textures vaisseaux
             T_Vaisseau_Joueur = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Joueur\\Vaisseau1");
-            if (true)
-            {
-                T_Vaisseau_Drone = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Ennemi\\drone");
-            }
-            else
-            {
-                WebClient wc = new WebClient();
+            T_Vaisseau_Drone = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Ennemi\\drone");
 
-                wc.DownloadFile("http://nathalie.bouquet.free.fr/epita/trombi2011-12/sup/pruvot_a.jpg", "Content\\Sprites\\Vaisseaux\\logintmp.jpg");
-                T_Vaisseau_Drone = Texture2D.FromStream(GraphicsDevice, new FileStream("Content\\Sprites\\Vaisseaux\\logintmp.jpg", FileMode.Open));
-            }
+            /* WebClient wc = new WebClient();
+            wc.DownloadFile("http://nathalie.bouquet.free.fr/epita/trombi2011-12/sup/login_x.jpg", "Content\\Sprites\\Vaisseaux\\logintmp.jpg");
+            T_Vaisseau_Drone = Texture2D.FromStream(GraphicsDevice, new FileStream("Content\\Sprites\\Vaisseaux\\logintmp.jpg", FileMode.Open)); */
+
             #endregion
 
             #region Chargement textures missiles
@@ -250,13 +250,15 @@ namespace MenuSample.Scenes
             time += gameTime.ElapsedGameTime.TotalMilliseconds;
             base.Update(gameTime, othersceneHasFocus, false);
             fond_ecran.Update(fps_fix);
+            AudioPlayer.Update();
+
             #region Gestion de la musique en cas de pause
             if (InputState.IsPauseGame())
             {
-                MediaPlayer.Volume = 0.2f;
+                AudioPlayer.SetVolume(0.2f);
             }
             else if (InputState.IsMenuSelect())
-                MediaPlayer.Volume = 1f;
+                AudioPlayer.SetVolume(1f);
             #endregion
             #region Gestion des évenements du level
             foreach (gestionLevels spawn in infLevel)
