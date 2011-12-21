@@ -157,6 +157,35 @@ namespace Xspace.Son
         {
             system.update();
         }
+
+        public static float[] GetSpectrum(int nb_values)
+        {
+            float[] spectre = new float[nb_values];
+            if (musicChannel != null)
+            {
+                RESULT result = musicChannel.getSpectrum(spectre, nb_values, 0, DSP_FFT_WINDOW.RECT);
+                ErrCheck(result);
+            }
+            return spectre;
+        }
+
+        public static float GetMoySpectrum()
+        {
+            float[] a = GetSpectrum(1);
+            return a[0];
+        }
+
+        public static float GetFreq()
+        {
+            float freq = 0;
+            if (musicChannel != null)
+            {
+                RESULT result = musicChannel.getFrequency(ref freq);
+                ErrCheck(result);
+            }
+
+            return freq;
+        }
     }
 }
 

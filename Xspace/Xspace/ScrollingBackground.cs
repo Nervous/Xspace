@@ -9,6 +9,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
+using Xspace.Son;
+
 namespace Xspace
 {
     class ScrollingBackground
@@ -44,6 +46,8 @@ namespace Xspace
         {
 
             screenposition.X -= dX * vitesseBackground;
+            //screenposition.X -= dX * AudioPlayer.GetFreq() / 100000;
+
             screenposition.X = screenposition.X % ma_texture.Width;
 
 
