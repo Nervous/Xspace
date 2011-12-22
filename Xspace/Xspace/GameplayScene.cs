@@ -84,7 +84,8 @@ namespace MenuSample.Scenes
             particleEffect = new ParticleEffect();
 
             lastTime = 0;
-            lastTimeSpectre = 0;
+            lastTimeSpectre = 150;
+            spectre = new float[128];
         }
 
         public override void Initialize()
@@ -226,8 +227,6 @@ namespace MenuSample.Scenes
                         return new doneParticles(false, new Vector2(vaisseau.position.X + vaisseau.sprite.Width/2, vaisseau.position.Y + vaisseau.sprite.Height / 2));
                     }
                     #endregion
-                   
-
                 }
             }
             return new doneParticles(true, new Vector2(0, 0));
@@ -377,12 +376,12 @@ namespace MenuSample.Scenes
             #region Update du spectre
             if (lastTimeSpectre < time + 25)
             {
-                int tailleFenetre = Xspace.Xspace.window_height;
-                //spectre = AudioPlayer.GetSpectrum(tailleFenetre);  //GetSpectrum, Y U NO WORK ?
-                if (spectre.Length == tailleFenetre)
+                float[] spectre_tmp = AudioPlayer.GetSpectrum(128);
+                if (spectre_tmp.Length == 128)
                 {
                     drawSpectre = true;
                     lastTimeSpectre = time;
+                    spectre = spectre_tmp;
                 }
                 else
                 {
@@ -436,6 +435,24 @@ namespace MenuSample.Scenes
                 bonus.Draw(spriteBatch);
             }
             #endregion
+            #region Draw du spectre
+            if (spectre.Length == 128)
+            {
+                int pxBegin = (Xspace.Xspace.window_height - 512) / 2;
+                Texture2D empty_texture = new Texture2D(SceneManager.GraphicsDevice, 1, 1, true, SurfaceFormat.Color);
+                empty_texture.SetData(new[] { Color.White });
+
+                for (int i = 0; i <= 127; i++)
+                {
+                    int lenght = (int) (spectre[i] * 1000);
+                    for (int j = 0; j <= lenght / 4; j++)
+                    {
+                        Rectangle r = new Rectangle(Xspace.Xspace.window_width - lenght + j * 4, pxBegin + i * 4, j * 4, 4);
+                        spriteBatch.Draw(empty_texture, r, new Color(j, 128 - j * 4, 0));
+                    }
+                }
+            }
+            #endregion
             #region Draw du menu de pause
             if (TransitionPosition > 0 || _pauseAlpha > 0)
             {
@@ -444,16 +461,10 @@ namespace MenuSample.Scenes
             }
             base.Draw(gameTime);
             #endregion
-            #region Draw du spectre
-            if (false)
-            {
-
-            }
-            #endregion
 
             particleRenderer.RenderEffect(particleEffect);
 
-            spriteBatch.End();    
+            spriteBatch.End();
         }
 
         protected override void UnloadContent()
