@@ -17,13 +17,15 @@ namespace Xspace
     public class Xspace : Microsoft.Xna.Framework.Game
     {
 
+        public static int window_width = 1180;
+        public static int window_height = 620;
 
         public Xspace()
         {
             GraphicsDeviceManager graphics = new GraphicsDeviceManager(this) 
-            { 
-                PreferredBackBufferWidth = 1180, 
-                PreferredBackBufferHeight = 620, 
+            {
+                PreferredBackBufferWidth = window_width,
+                PreferredBackBufferHeight = window_height, 
             };
             var sceneMgr = new SceneManager(this);
             Components.Add(new InputState(this));

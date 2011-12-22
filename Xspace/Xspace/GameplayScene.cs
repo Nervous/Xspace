@@ -34,8 +34,10 @@ namespace MenuSample.Scenes
     {
         #region Déclaration variables usuelles
         private float fps_fix, _pauseAlpha;
-        private double time, lastTime;
+        private double time, lastTime, lastTimeSpectre;
         private char[] delimitationFilesInfo = new char[] { ' ' }, delimitationFilesInfo2 = new char[] { ';' }, delimitationFilesInfo3 = new char[] { ':' };
+        private float[] spectre;
+        private bool drawSpectre;
         #endregion
         #region Déclaration variables relatives au jeu
         private doneParticles partManage;
@@ -82,6 +84,7 @@ namespace MenuSample.Scenes
             particleEffect = new ParticleEffect();
 
             lastTime = 0;
+            lastTimeSpectre = 0;
         }
 
         public override void Initialize()
@@ -371,8 +374,26 @@ namespace MenuSample.Scenes
 
             particleEffect.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
             #endregion
-
-
+            #region Update du spectre
+            if (lastTimeSpectre < time + 25)
+            {
+                int tailleFenetre = Xspace.Xspace.window_height;
+                //spectre = AudioPlayer.GetSpectrum(tailleFenetre);  //GetSpectrum, Y U NO WORK ?
+                if (spectre.Length == tailleFenetre)
+                {
+                    drawSpectre = true;
+                    lastTimeSpectre = time;
+                }
+                else
+                {
+                    drawSpectre = false;
+                }
+            }
+            else
+            {
+                drawSpectre = false;
+            }
+            #endregion
 
             if (listeVaisseau[0].ennemi)
                 Remove();
@@ -393,6 +414,7 @@ namespace MenuSample.Scenes
             
             if(listeVaisseau[0].vie > 0)
                 spriteBatch.DrawString(_gameFont, Convert.ToString(listeVaisseau[0].vie) + "/" + Convert.ToString(listeVaisseau[0].vieMax), new Vector2(500,450), Color.Red);
+            
             #region Draw du fond
             fond_ecran.Draw(spriteBatch);
             #endregion
@@ -422,6 +444,13 @@ namespace MenuSample.Scenes
             }
             base.Draw(gameTime);
             #endregion
+            #region Draw du spectre
+            if (false)
+            {
+
+            }
+            #endregion
+
             particleRenderer.RenderEffect(particleEffect);
 
             spriteBatch.End();    
