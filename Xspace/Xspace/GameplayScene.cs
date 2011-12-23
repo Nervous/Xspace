@@ -379,6 +379,10 @@ namespace MenuSample.Scenes
                 float[] spectre_tmp = AudioPlayer.GetSpectrum(128);
                 if (spectre_tmp.Length == 128)
                 {
+                    for (int i = 0; i <= 127; i++)
+                    {
+                        spectre_tmp[i] = Math.Min(1, spectre_tmp[i] * 20);
+                    }
                     drawSpectre = true;
                     lastTimeSpectre = time;
                     spectre = spectre_tmp;
@@ -444,7 +448,7 @@ namespace MenuSample.Scenes
 
                 for (int i = 0; i <= 127; i++)
                 {
-                    int lenght = (int) (spectre[i] * 1000);
+                    int lenght = (int) (spectre[i] * 250);
                     for (int j = 0; j <= lenght / 4; j++)
                     {
                         Rectangle r = new Rectangle(Xspace.Xspace.window_width - lenght + j * 4, pxBegin + i * 4, j * 4, 4);
