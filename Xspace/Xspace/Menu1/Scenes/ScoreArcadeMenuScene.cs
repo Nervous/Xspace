@@ -46,6 +46,7 @@ namespace MenuSample.Scenes
             sr_arcade = new StreamReader(path_arcade);
 
             MenuItems.Add(back);
+
         }
 
         public override void Initialize()
@@ -83,7 +84,7 @@ namespace MenuSample.Scenes
                 spriteBatch.DrawString(_gamefont, score_arcade[lvl], new Vector2(220 + 200 * (lvl / 5), (190 + (lvl % 5) * 47)), Color.Red, 0, new Vector2(0, 0), 0.8f, SpriteEffects.None, 0);
             }
 
-            if (level_selected)
+            if ((level_selected)&&(!backSelected))
             {
                 sr_level = new StreamReader(path_level);
                 score_level = System.IO.File.ReadAllLines(@path_level);
@@ -102,16 +103,9 @@ namespace MenuSample.Scenes
         {
             path_level = "Scores\\Arcade\\lvl" + (i + 1) + ".score";
 
-            if (i == 16)
-            {
-                position_Nv.Y = 450;
-                position_Nv.X = 400;
-            }
-            else
-            {
                 position_Nv.X = 358 * (i / 5) + 112;
                 position_Nv.Y = 187 + (i % 5) * 46;
-            }
+            
             _keyboardState = Keyboard.GetState();
 
             if (!level_selected)
@@ -138,7 +132,7 @@ namespace MenuSample.Scenes
                 }
                 else if ((_keyboardState.IsKeyDown(Keys.Left)) && (_lastKeyboardState.IsKeyUp(Keys.Left)))
                 {
-                    if (i > 5 && i != 15)
+                    if (i >= 5 && i != 15)
                         i -= 5; 
                 }
 
@@ -169,6 +163,9 @@ namespace MenuSample.Scenes
                     level_selected = false;
             }
 
+            if ((backSelected) && (_keyboardState.IsKeyDown(Keys.Enter))) // removing the scene
+                Remove();
+            
             _lastKeyboardState = _keyboardState;
             base.Update(gameTime);
         }
