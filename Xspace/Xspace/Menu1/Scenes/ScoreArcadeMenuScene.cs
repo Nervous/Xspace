@@ -152,7 +152,7 @@ namespace MenuSample.Scenes
                         level_selected = false;
                         firstTime = false;
                     }
-                    else level_selected = true;
+                    else level_selected = false; // A METTRE EN TRUE APRES LA PREMIERE SOUTENANCE
                 }
                 
 
