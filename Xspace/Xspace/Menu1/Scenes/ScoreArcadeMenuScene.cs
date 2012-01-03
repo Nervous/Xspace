@@ -83,7 +83,7 @@ namespace MenuSample.Scenes
                 spriteBatch.DrawString(_gamefont, "Nv." + (lvl + 1), new Vector2(130 + 195 * (lvl / 5), (190 + (lvl % 5) * 47)), Color.Red, 0, new Vector2(0, 0), 0.8f, SpriteEffects.None, 0);
                 spriteBatch.DrawString(_gamefont, score_arcade[lvl], new Vector2(220 + 200 * (lvl / 5), (190 + (lvl % 5) * 47)), Color.Red, 0, new Vector2(0, 0), 0.8f, SpriteEffects.None, 0);
             }
-
+            /*
             if ((level_selected)&&(!backSelected))
             {
                 sr_level = new StreamReader(path_level);
@@ -95,7 +95,7 @@ namespace MenuSample.Scenes
                     spriteBatch.DrawString(_gamefont, score_level[pos], new Vector2(452, 187), Color.Red, 0, new Vector2(0, 0), 0.8f, SpriteEffects.None, 0);
                     spriteBatch.DrawString(_gamefont, score_level[pos + 1], new Vector2(605, 190), Color.Red, 0, new Vector2(0, 0), 0.8f, SpriteEffects.None, 0);
                 }
-            }
+            } */
             spriteBatch.End();
         }
 
