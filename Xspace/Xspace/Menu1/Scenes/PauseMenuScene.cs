@@ -11,6 +11,7 @@ namespace MenuSample.Scenes
         private readonly AbstractGameScene _parent;
 
 
+
         public PauseMenuScene(SceneManager sceneMgr, AbstractGameScene parent)
             : base(sceneMgr, "Pause")
         {
@@ -41,9 +42,11 @@ namespace MenuSample.Scenes
 
         private void ConfirmQuitMessageBoxAccepted(object sender, EventArgs e)
         {
+
             Remove();
             _parent.Remove();
             LoadingScene.Load(SceneManager, false);
+            
         }
 
     }

@@ -250,14 +250,15 @@ namespace MenuSample.Scenes
             fond_ecran.Update(fps_fix);
             AudioPlayer.Update();
 
-            #region Gestion de la musique en cas de pause
+           /* #region Gestion de la musique en cas de pause   A REACTIVER APRES PREMIERE SOUTENANCE 
             if (InputState.IsPauseGame())
             {
                 AudioPlayer.SetVolume(0.2f);
             }
             else if (InputState.IsMenuSelect())
                 AudioPlayer.SetVolume(1f);
-            #endregion
+
+            #endregion */ 
             #region Gestion des évenements du level
             foreach (gestionLevels spawn in infLevel)
             {
@@ -401,7 +402,10 @@ namespace MenuSample.Scenes
             #endregion
 
             if (listeVaisseau[0].ennemi)
+            {
+                AudioPlayer.PlayMusic("Content\\Musiques\\Menu\\Musique.mp3");
                 Remove();
+            }
             // Game terminée
             
             base.Update(gameTime);
