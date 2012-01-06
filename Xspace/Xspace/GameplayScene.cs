@@ -117,7 +117,6 @@ namespace MenuSample.Scenes
             #region Chargement particules
             particleRenderer.LoadContent(_content);
             particleEffect = _content.Load<ParticleEffect>("Collisions\\BasicExplosion\\BasicExplosion");
-            particleEffect = _content.Load<ParticleEffect>("Collisions\\BasicExplosion\\BasicExplosion");
             particleEffect.LoadContent(_content);
             particleEffect.Initialise();
             #endregion
