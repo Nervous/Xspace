@@ -47,6 +47,7 @@ namespace MenuSample.Scenes
         private List<Texture2D> listeTextureVaisseauxEnnemis, listeTextureBonus;
         private SoundEffect musique_tir;
         private KeyboardState keyboardState;
+        bool lastKeyDown = true;
         private gestionLevels thisLevel;
         private List<gestionLevels> infLevel;
         Renderer particleRenderer;
@@ -281,14 +282,17 @@ namespace MenuSample.Scenes
             }
             #endregion
             #region Gestion des tirs du joueur
-			
-			if (keyboardState.IsKeyDown(Keys.F1))
-			{
-				if (drawSpectre)
-					drawSpectre = false;
-				else
-					drawSpectre = true;
-			}
+
+            if (keyboardState.IsKeyDown(Keys.F1) && lastKeyDown)
+            {
+                lastKeyDown = false;
+                if (drawSpectre)
+                    drawSpectre = false;
+                else
+                    drawSpectre = true;
+            }
+            else if(keyboardState.IsKeyUp(Keys.F1))
+                lastKeyDown = true;
 			
             if (keyboardState.IsKeyDown(Keys.Space))
             {
