@@ -117,12 +117,15 @@ namespace MenuSample.Scenes
             #region Chargement particules
             particleRenderer.LoadContent(_content);
             particleEffect = _content.Load<ParticleEffect>("Collisions\\BasicExplosion\\BasicExplosion");
+            particleEffect = _content.Load<ParticleEffect>("Collisions\\BasicExplosion\\BasicExplosion");
             particleEffect.LoadContent(_content);
             particleEffect.Initialise();
             #endregion
             #region Chargement textures vaisseaux
             T_Vaisseau_Joueur = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Joueur\\Vaisseau1");
             T_Vaisseau_Drone = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Ennemi\\drone");
+			
+			drawSpectre = false;
 
             /* WebClient wc = new WebClient();
             wc.DownloadFile("http://nathalie.bouquet.free.fr/epita/trombi2011-12/sup/login_x.jpg", "Content\\Sprites\\Vaisseaux\\logintmp.jpg");
@@ -279,6 +282,15 @@ namespace MenuSample.Scenes
             }
             #endregion
             #region Gestion des tirs du joueur
+			
+			if (keyboardState.IsKeyDown(Keys.F1))
+			{
+				if (drawSpectre)
+					drawSpectre = false;
+				else
+					drawSpectre = true;
+			}
+			
             if (keyboardState.IsKeyDown(Keys.Space))
             {
                 switch (listeVaisseau[0].armeActuelle)
@@ -386,18 +398,18 @@ namespace MenuSample.Scenes
                         //spectre_tmp[i] = spectre_tmp[i] * 20;
                     }
 
-                    drawSpectre = true;
+                    //drawSpectre = true;
                     lastTimeSpectre = time;
                     spectre = spectre_tmp;
                 }
                 else
                 {
-                    drawSpectre = false;
+                    //drawSpectre = false;
                 }
             }
             else
             {
-                drawSpectre = false;
+                //drawSpectre = false;
             }
             #endregion
 
@@ -446,7 +458,7 @@ namespace MenuSample.Scenes
             }
             #endregion
             #region Draw du spectre
-            if (spectre.Length == 128)
+            if (spectre.Length == 128 && drawSpectre)
             {
                 int pxBegin = (Xspace.Xspace.window_height - 512) / 2;
                 Texture2D empty_texture = new Texture2D(SceneManager.GraphicsDevice, 1, 1, true, SurfaceFormat.Color);
@@ -458,7 +470,7 @@ namespace MenuSample.Scenes
                     for (int j = 0; j <= lenght / 4; j++)
                     {
                         Rectangle r = new Rectangle(Xspace.Xspace.window_width - lenght + j * 4, pxBegin + i * 4, j * 4, 4);
-                        //spriteBatch.Draw(empty_texture, r, new Color(j, 128 - j * 4, 0));
+                        spriteBatch.Draw(empty_texture, r, new Color(j, 128 - j * 4, 0));
                     }
                 }
             }
