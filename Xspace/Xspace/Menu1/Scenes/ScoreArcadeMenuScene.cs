@@ -32,7 +32,7 @@ namespace MenuSample.Scenes
         /* Be careful, level ID begins at 0. (level 1 has ID 0, for score / i / lvl) */
         /*
          * TODO:
-         * Complete the lvlx positions, back button, lvl name on leaderboard, more rectangles, and so much more... */
+         * Score reading */
 
         public ScoreArcadeMenuScene(SceneManager sceneMgr)
             : base(sceneMgr, "Score Arcade")
@@ -78,12 +78,12 @@ namespace MenuSample.Scenes
             else
                 spriteBatch.Draw(_score_surbrillance, position_Nv, Color.White);
 
-            for (int lvl = 0; lvl < 2; lvl++)
+            for (int lvl = 0; lvl < 15; lvl++)
             {
-                spriteBatch.DrawString(_gamefont, "Nv." + (lvl + 1), new Vector2(130 + 195 * (lvl / 5), (190 + (lvl % 5) * 47)), Color.Red, 0, new Vector2(0, 0), 0.8f, SpriteEffects.None, 0);
-                spriteBatch.DrawString(_gamefont, score_arcade[lvl], new Vector2(220 + 200 * (lvl / 5), (190 + (lvl % 5) * 47)), Color.Red, 0, new Vector2(0, 0), 0.8f, SpriteEffects.None, 0);
+                spriteBatch.DrawString(_gamefont, "Nv." + (lvl + 1), new Vector2(130 + 355 * (lvl / 5), (190 + (lvl % 5) * 47)), Color.LightGreen, 0, new Vector2(0, 0), 0.7f, SpriteEffects.None, 0);
+                spriteBatch.DrawString(_gamefont, score_arcade[lvl], new Vector2(220 + 373 * (lvl / 5), (190 + (lvl % 5) * 47)), Color.LightGreen, 0, new Vector2(0, 0), 0.7f, SpriteEffects.None, 0);
             }
-            /*
+            
             if ((level_selected)&&(!backSelected))
             {
                 sr_level = new StreamReader(path_level);
@@ -91,11 +91,13 @@ namespace MenuSample.Scenes
 
                 for (int pos = 0; pos < 1; pos++)
                 {
+                    position_Nv.X = 250;
+                    position_Nv.Y = 250;
                     spriteBatch.Draw(_score_lvl, position_board, Color.White);
-                    spriteBatch.DrawString(_gamefont, score_level[pos], new Vector2(452, 187), Color.Red, 0, new Vector2(0, 0), 0.8f, SpriteEffects.None, 0);
-                    spriteBatch.DrawString(_gamefont, score_level[pos + 1], new Vector2(605, 190), Color.Red, 0, new Vector2(0, 0), 0.8f, SpriteEffects.None, 0);
+                    spriteBatch.DrawString(_gamefont, score_level[pos], new Vector2(452, 187), Color.Red, 0, new Vector2(0, 0), 0.7f, SpriteEffects.None, 0);
+                    spriteBatch.DrawString(_gamefont, score_level[pos + 1], new Vector2(605, 190), Color.Red, 0, new Vector2(0, 0), 0.7f, SpriteEffects.None, 0);
                 }
-            } */
+            } 
             spriteBatch.End();
         }
 
@@ -152,7 +154,7 @@ namespace MenuSample.Scenes
                         level_selected = false;
                         firstTime = false;
                     }
-                    else level_selected = false; // A METTRE EN TRUE APRES LA PREMIERE SOUTENANCE
+                    else level_selected = true; 
                 }
                 
 
@@ -169,5 +171,6 @@ namespace MenuSample.Scenes
             _lastKeyboardState = _keyboardState;
             base.Update(gameTime);
         }
+
     }
 }

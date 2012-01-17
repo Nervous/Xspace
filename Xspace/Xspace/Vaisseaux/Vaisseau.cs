@@ -16,12 +16,12 @@ namespace Xspace
         public Vector2 _emplacement, _deplacementDirectionY, _deplacementDirectionX;
         public Texture2D _textureVaisseau;
         public float _vitesseVaisseau;
-        protected int _vie, _armure, _damageCollision, _armeActuelle, _vieMax;
+        protected int _vie, _armure, _damageCollision, _armeActuelle, _vieMax, _score;
         protected double _timingAttack;
         protected bool _ennemi, _existe;
         protected double _lastTir;
 
-        public Vaisseau(Texture2D texture, int vie, int vieMax, int armure, int damageCollision, float vitesseVaisseau, Vector2 startPosition, bool ennemi, double timingAttack)
+        public Vaisseau(Texture2D texture, int vie, int vieMax, int armure, int damageCollision, float vitesseVaisseau, Vector2 startPosition, bool ennemi, double timingAttack, int score)
         {
             _textureVaisseau = texture;
             _vie = vie;
@@ -37,6 +37,7 @@ namespace Xspace
             lastTir = 0;
             _timingAttack = timingAttack;
             _armeActuelle = 0;
+            _score = score;
         }
 
         public void applyBonus(string effect, int ammount, int time)
@@ -119,6 +120,11 @@ namespace Xspace
         public void kill()
         {
             this._existe = false;
+        }
+
+        public int score
+        {
+            get { return _score; }
         }
 
         public void changeWeapon(int nouveau)

@@ -33,6 +33,7 @@ namespace MenuSample.Scenes
     public class GameplayScene : AbstractGameScene
     {
         #region Déclaration variables usuelles
+        private int score;
         private float fps_fix, _pauseAlpha;
         private double time, lastTime, lastTimeSpectre;
         private char[] delimitationFilesInfo = new char[] { ' ' }, delimitationFilesInfo2 = new char[] { ';' }, delimitationFilesInfo3 = new char[] { ':' };
@@ -84,6 +85,7 @@ namespace MenuSample.Scenes
             };
             particleEffect = new ParticleEffect();
 
+            score = 0;
             lastTime = 0;
             lastTimeSpectre = 150;
             spectre = new float[128];
@@ -212,6 +214,7 @@ namespace MenuSample.Scenes
                                 // Vaisseau dead
                                             
                                 vaisseau.kill();
+                                score = score + vaisseau.score;
                                 return new doneParticles(false, new Vector2(vaisseau.position.X + vaisseau.sprite.Width / 2, vaisseau.position.Y + vaisseau.sprite.Height / 2));        
                             }
                         }
@@ -225,6 +228,7 @@ namespace MenuSample.Scenes
                     {
                         // Collision entre vaisseau joueur & ennemi trouvée
                         vaisseau.kill();
+                        score = score + vaisseau.score;
                         listeVaisseauToRemove.Add(vaisseau);
                         listeVaisseau[0].hurt(vaisseau.damageCollision);
                         return new doneParticles(false, new Vector2(vaisseau.position.X + vaisseau.sprite.Width/2, vaisseau.position.Y + vaisseau.sprite.Height / 2));
@@ -433,7 +437,7 @@ namespace MenuSample.Scenes
 
             SceneManager.GraphicsDevice.Clear(ClearOptions.Target, Color.Transparent, 0, 0);
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive);
-
+            spriteBatch.DrawString(_gameFont, Convert.ToString(score), new Vector2(150, 500), Color.Red);
             HUD.Drawbar(spriteBatch, barre_vie, listeVaisseau[0].vie, listeVaisseau[0].vieMax);
             
             if(listeVaisseau[0].vie > 0)
