@@ -19,11 +19,11 @@ namespace MenuSample.Scenes
         private ContentManager _content;
         private SpriteFont _gamefont;
         private Texture2D _score_board, _score_surbrillance, _score_lvl, _score_surbrillance2;
-        private StreamReader sr_arcade, sr_level;
-        private string path_arcade, path_level;
+        private StreamReader sr_arcade, sr_level, sr_arcade_level;
+        private string path_arcade, path_level, path_arcade_level, path_arcade_level_best;
         private Vector2 position_Nv;
         private Vector2 position_board; // default pos
-        public string[] score_arcade, score_level;
+        public string[] score_arcade, score_level, score_arcade_level, score_arcade_level_best;
         private static KeyboardState _keyboardState;
         private static KeyboardState _lastKeyboardState;
         private int i;
@@ -38,12 +38,14 @@ namespace MenuSample.Scenes
             : base(sceneMgr, "Score Arcade")
         {
             path_arcade = "Scores\\Arcade\\Arcade.score";
+            path_arcade_level = "Scores\\Arcade\\lvl" + (i+1) + ".score";
             _keyboardState = new KeyboardState();
             _lastKeyboardState = new KeyboardState();
             i = 0;
             var back = new MenuItem("Retour");
             var Nv1 = new MenuItem("Nv.1");
             sr_arcade = new StreamReader(path_arcade);
+            sr_arcade_level = new StreamReader(path_arcade_level);
 
             MenuItems.Add(back);
 
@@ -59,6 +61,7 @@ namespace MenuSample.Scenes
         public override void Draw(GameTime gameTime)
         {
             score_arcade = System.IO.File.ReadAllLines(@path_arcade);
+            score_arcade_level = System.IO.File.ReadAllLines(@path_arcade_level);
 
             if (_content == null)
                 _content = new ContentManager(SceneManager.Game.Services, "Content");
@@ -78,14 +81,18 @@ namespace MenuSample.Scenes
             else
                 spriteBatch.Draw(_score_surbrillance, position_Nv, Color.White);
 
-            for (int lvl = 0; lvl < 15; lvl++)
+            for (int lvl = 0; lvl < 15; lvl++) // TODO HERE
             {
+                path_arcade_level_best = "Scores\\Arcade\\lvl" + (lvl+1) + ".score";
+                sr_arcade_level = new StreamReader(path_arcade_level_best);
+                score_arcade_level_best = System.IO.File.ReadAllLines(@path_arcade_level_best);
                 spriteBatch.DrawString(_gamefont, "Nv." + (lvl + 1), new Vector2(130 + 355 * (lvl / 5), (190 + (lvl % 5) * 47)), Color.LightGreen, 0, new Vector2(0, 0), 0.7f, SpriteEffects.None, 0);
-                spriteBatch.DrawString(_gamefont, score_arcade[lvl], new Vector2(220 + 373 * (lvl / 5), (190 + (lvl % 5) * 47)), Color.LightGreen, 0, new Vector2(0, 0), 0.7f, SpriteEffects.None, 0);
+                spriteBatch.DrawString(_gamefont, score_arcade_level_best[0], new Vector2(220 + 373 * (lvl / 5), (190 + (lvl % 5) * 47)), Color.LightGreen, 0, new Vector2(0, 0), 0.7f, SpriteEffects.None, 0); // TODO
             }
             
             if ((level_selected)&&(!backSelected))
             {
+                spriteBatch.DrawString(_gamefont, score_arcade_level[0], new Vector2(220 + 373 * ((i) / 5), (190 + ((i) % 5) * 47)), Color.LightGreen, 0, new Vector2(0, 0), 0.7f, SpriteEffects.None, 0);
                 sr_level = new StreamReader(path_level);
                 score_level = System.IO.File.ReadAllLines(@path_level);
 
