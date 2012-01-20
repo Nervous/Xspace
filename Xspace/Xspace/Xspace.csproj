@@ -144,6 +144,7 @@
     <Compile Include="Son\fmod_errors.cs" />
     <Compile Include="Son\fmod_memoryinfo.cs" />
     <Compile Include="Vaisseaux\Drone.cs" />
+    <Compile Include="Vaisseaux\kamikaze.cs" />
     <Compile Include="Vaisseaux\Vaisseau.cs" />
     <Compile Include="Vaisseaux\Vaisseau_joueur.cs" />
     <Compile Include="Xspace.cs" />

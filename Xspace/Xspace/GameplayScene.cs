@@ -231,6 +231,8 @@ namespace MenuSample.Scenes
                         score = score + vaisseau.score;
                         listeVaisseauToRemove.Add(vaisseau);
                         listeVaisseau[0].hurt(vaisseau.damageCollision);
+                        if(listeVaisseau[0].vie < 0)
+                            listeVaisseauToRemove.Add(listeVaisseau[0]);
                         return new doneParticles(false, new Vector2(vaisseau.position.X + vaisseau.sprite.Width/2, vaisseau.position.Y + vaisseau.sprite.Height / 2));
                     }
                     #endregion

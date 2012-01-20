@@ -147,6 +147,9 @@ namespace Xspace
                         case "drone":
                             vaisseau = new Drone(listeTextureVaisseauxEnnemis[0], start);
                             break;
+                        case "kamikaze":
+                            vaisseau = new kamikaze(listeTextureVaisseauxEnnemis[0], start);
+                            break;
                         default:
                             break;
                     }

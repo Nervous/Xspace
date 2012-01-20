@@ -32,7 +32,7 @@ namespace MenuSample.Scenes
         /* Be careful, level ID begins at 0. (level 1 has ID 0, for score / i / lvl) */
         /*
          * TODO:
-         * Score reading */
+         * Nothin???!!!*/
 
         public ScoreArcadeMenuScene(SceneManager sceneMgr)
             : base(sceneMgr, "Score Arcade")
@@ -81,13 +81,13 @@ namespace MenuSample.Scenes
             else
                 spriteBatch.Draw(_score_surbrillance, position_Nv, Color.White);
 
-            for (int lvl = 0; lvl < 15; lvl++) // TODO HERE
+            for (int lvl = 0; lvl < 15; lvl++) 
             {
                 path_arcade_level_best = "Scores\\Arcade\\lvl" + (lvl+1) + ".score";
                 sr_arcade_level = new StreamReader(path_arcade_level_best);
                 score_arcade_level_best = System.IO.File.ReadAllLines(@path_arcade_level_best);
                 spriteBatch.DrawString(_gamefont, "Nv." + (lvl + 1), new Vector2(130 + 355 * (lvl / 5), (190 + (lvl % 5) * 47)), Color.LightGreen, 0, new Vector2(0, 0), 0.7f, SpriteEffects.None, 0);
-                spriteBatch.DrawString(_gamefont, score_arcade_level_best[0], new Vector2(220 + 373 * (lvl / 5), (190 + (lvl % 5) * 47)), Color.LightGreen, 0, new Vector2(0, 0), 0.7f, SpriteEffects.None, 0); // TODO
+                spriteBatch.DrawString(_gamefont, score_arcade_level_best[1], new Vector2(220 + 373 * (lvl / 5), (190 + (lvl % 5) * 47)), Color.LightGreen, 0, new Vector2(0, 0), 0.7f, SpriteEffects.None, 0); // TODO
             }
             
             if ((level_selected)&&(!backSelected))
@@ -95,15 +95,11 @@ namespace MenuSample.Scenes
                 spriteBatch.DrawString(_gamefont, score_arcade_level[0], new Vector2(220 + 373 * ((i) / 5), (190 + ((i) % 5) * 47)), Color.LightGreen, 0, new Vector2(0, 0), 0.7f, SpriteEffects.None, 0);
                 sr_level = new StreamReader(path_level);
                 score_level = System.IO.File.ReadAllLines(@path_level);
-
-                for (int pos = 0; pos < 1; pos++)
-                {
-                    position_Nv.X = 250;
-                    position_Nv.Y = 250;
-                    spriteBatch.Draw(_score_lvl, position_board, Color.White);
-                    spriteBatch.DrawString(_gamefont, score_level[pos], new Vector2(452, 187), Color.Red, 0, new Vector2(0, 0), 0.7f, SpriteEffects.None, 0);
-                    spriteBatch.DrawString(_gamefont, score_level[pos + 1], new Vector2(605, 190), Color.Red, 0, new Vector2(0, 0), 0.7f, SpriteEffects.None, 0);
-                }
+                spriteBatch.Draw(_score_lvl, position_board, Color.White);
+                position_Nv.X = 250;
+                position_Nv.Y = 250;
+                for (int pos = 0; pos < 10; pos++) // score for each levels (5)
+                    spriteBatch.DrawString(_gamefont, score_level[pos], new Vector2(452 + 151*((pos) % 2), 190 + (pos / 2)*(48)), Color.LightGreen, 0, new Vector2(0, 0), 0.7f, SpriteEffects.None, 0);
             } 
             spriteBatch.End();
         }
