@@ -87,7 +87,7 @@ namespace MenuSample.Scenes
                 sr_arcade_level = new StreamReader(path_arcade_level_best);
                 score_arcade_level_best = System.IO.File.ReadAllLines(@path_arcade_level_best);
                 spriteBatch.DrawString(_gamefont, "Nv." + (lvl + 1), new Vector2(130 + 355 * (lvl / 5), (190 + (lvl % 5) * 47)), Color.LightGreen, 0, new Vector2(0, 0), 0.7f, SpriteEffects.None, 0);
-                spriteBatch.DrawString(_gamefont, score_arcade_level_best[1], new Vector2(220 + 373 * (lvl / 5), (190 + (lvl % 5) * 47)), Color.LightGreen, 0, new Vector2(0, 0), 0.7f, SpriteEffects.None, 0); // TODO
+                spriteBatch.DrawString(_gamefont, score_arcade_level_best[1], new Vector2(220 + 355 * (lvl / 5), (190 + (lvl % 5) * 47)), Color.LightGreen, 0, new Vector2(0, 0), 0.7f, SpriteEffects.None, 0); // TODO
             }
             
             if ((level_selected)&&(!backSelected))

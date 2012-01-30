@@ -36,6 +36,10 @@ namespace MenuSample.Scenes
         private int score;
         private float fps_fix, _pauseAlpha;
         private double time, lastTime, lastTimeSpectre;
+        private string path_level;
+        private string[] score_level;
+        private StreamWriter sw_level;
+        private StreamReader sr_level;
         private char[] delimitationFilesInfo = new char[] { ' ' }, delimitationFilesInfo2 = new char[] { ';' }, delimitationFilesInfo3 = new char[] { ':' };
         private float[] spectre;
         private bool drawSpectre;
@@ -136,7 +140,7 @@ namespace MenuSample.Scenes
             #endregion
 
             #region Chargement textures missiles
-            T_Missile_Joueur_1 = _content.Load<Texture2D>("Sprites\\Missiles\\Joueur\\Missile1");
+            T_Missile_Joueur_1 = _content.Load<Texture2D>("Sprites\\Missiles\\Joueur\\missilenew1");
             T_Missile_Drone = _content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\Drone");
             #endregion
             #region Chargement textures bonus
@@ -421,14 +425,21 @@ namespace MenuSample.Scenes
                 //drawSpectre = false;
             }
             #endregion
-
+            #region Fin du level (fuck u)
             if (listeVaisseau[0].ennemi)
             {
                 AudioPlayer.PlayMusic("Content\\Musiques\\Menu\\Musique.mp3");
+                path_level = "Scores\\Arcade\\lvl1" + ".score";
+                sr_level = new StreamReader(path_level);
+
+               score_level = System.IO.File.ReadAllLines(@path_level);
+
+               score_level[1] = Convert.ToString(score);
+        
+
                 Remove();
             }
-            // Game terminée
-            
+            #endregion
             base.Update(gameTime);
         }
 
