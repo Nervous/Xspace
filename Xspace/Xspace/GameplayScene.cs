@@ -36,7 +36,7 @@ namespace MenuSample.Scenes
         private int score;
         private float fps_fix, _pauseAlpha;
         private double time, lastTime, lastTimeSpectre;
-        private string path_level;
+        private string path_level, stock_score_inferieur, stock_score_superieur;
         private string[] score_level;
         private StreamWriter sw_level;
         private StreamReader sr_level;
@@ -430,14 +430,26 @@ namespace MenuSample.Scenes
             {
                 AudioPlayer.PlayMusic("Content\\Musiques\\Menu\\Musique.mp3");
                 path_level = "Scores\\Arcade\\lvl1" + ".score";
-                //sr_level = new StreamReader(path_level);
-                sw_level = new StreamWriter(path_level);
-               //score_level = System.IO.File.ReadAllLines(@path_level);
+                sr_level = new StreamReader(path_level);
+                score_level = System.IO.File.ReadAllLines(@path_level);
+                stock_score_inferieur = "";
+                stock_score_superieur = "";
 
-                sw_level.WriteLine(Convert.ToString(score));
+                for (int i = 0; i < 10; i+=2) 
+                {
+                        
+                    if (score < Convert.ToInt32(score_level[i + 1]))
+                        stock_score_inferieur += score_level[i] + '\n' + score_level[i+1] +'\n';
+                    else
+                        stock_score_superieur += score_level[i] + '\n' + score_level[i+1] +'\n';
+                }
+
+                
+                sr_level.Close();
+                sw_level = new StreamWriter(path_level);
+
+                sw_level.WriteLine(stock_score_inferieur + "Nervous" + '\n' + Convert.ToString(score) + '\n' + stock_score_superieur);
                 sw_level.Close();
-               //score_level[1] = Convert.ToString(score);
-        
 
                 Remove();
             }
