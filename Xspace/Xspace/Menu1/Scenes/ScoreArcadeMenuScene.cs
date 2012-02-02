@@ -93,7 +93,7 @@ namespace MenuSample.Scenes
             if ((level_selected)&&(!backSelected))
             {
                 spriteBatch.DrawString(_gamefont, score_arcade_level[0], new Vector2(220 + 373 * ((i) / 5), (190 + ((i) % 5) * 47)), Color.LightGreen, 0, new Vector2(0, 0), 0.7f, SpriteEffects.None, 0);
-                sr_level = new StreamReader(path_level);
+
                 score_level = System.IO.File.ReadAllLines(@path_level);
                 spriteBatch.Draw(_score_lvl, position_board, Color.White);
                 position_Nv.X = 250;
@@ -102,6 +102,8 @@ namespace MenuSample.Scenes
                     spriteBatch.DrawString(_gamefont, score_level[pos], new Vector2(452 + 151*((pos) % 2), 190 + (pos / 2)*(48)), Color.LightGreen, 0, new Vector2(0, 0), 0.7f, SpriteEffects.None, 0);
             } 
             spriteBatch.End();
+            sr_arcade.Close();
+            sr_arcade_level.Close();
         }
 
         public override void Update(GameTime gameTime)

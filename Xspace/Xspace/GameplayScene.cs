@@ -128,8 +128,8 @@ namespace MenuSample.Scenes
             particleEffect.Initialise();
             #endregion
             #region Chargement textures vaisseaux
-            T_Vaisseau_Joueur = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Joueur\\Vaisseau1");
-            T_Vaisseau_Drone = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Ennemi\\drone");
+            T_Vaisseau_Joueur = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Joueur\\drone_joueur1");
+            T_Vaisseau_Drone = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Ennemi\\ennemi_gris1");
 			
 			drawSpectre = false;
 
@@ -140,8 +140,8 @@ namespace MenuSample.Scenes
             #endregion
 
             #region Chargement textures missiles
-            T_Missile_Joueur_1 = _content.Load<Texture2D>("Sprites\\Missiles\\Joueur\\missilenew1");
-            T_Missile_Drone = _content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\Drone");
+            T_Missile_Joueur_1 = _content.Load<Texture2D>("Sprites\\Missiles\\Joueur\\missile_rocket1");
+            T_Missile_Drone = _content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\missile_boule1");
             #endregion
             #region Chargement textures bonus
             // TODO : Chargement de toutes les textures des bonus en dessous
@@ -447,7 +447,6 @@ namespace MenuSample.Scenes
                 
                 sr_level.Close();
                 sw_level = new StreamWriter(path_level);
-
                 sw_level.WriteLine(stock_score_inferieur + "Nervous" + '\n' + Convert.ToString(score) + '\n' + stock_score_superieur);
                 sw_level.Close();
 
