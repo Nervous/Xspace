@@ -48,7 +48,7 @@ namespace MenuSample.Scenes
         private doneParticles partManage;
         private ScrollingBackground fond_ecran;
         public SpriteBatch spriteBatch;
-        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Missile_Joueur_1, T_Missile_Drone, T_Bonus_Vie, T_Bonus_Weapon1, barre_vie;
+        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Missile_Joueur_1, T_Missile_Drone, T_Bonus_Vie, T_Bonus_Weapon1, barre_vie, T_HUD;
         private List<Texture2D> listeTextureVaisseauxEnnemis, listeTextureBonus;
         private SoundEffect musique_tir;
         private KeyboardState keyboardState;
@@ -138,9 +138,11 @@ namespace MenuSample.Scenes
             T_Vaisseau_Drone = Texture2D.FromStream(GraphicsDevice, new FileStream("Content\\Sprites\\Vaisseaux\\logintmp.jpg", FileMode.Open)); */
 
             #endregion
-
+            #region Chargement textures HUD
+            T_HUD = _content.Load<Texture2D>("Sprites\\HUD\\interface");
+            #endregion
             #region Chargement textures missiles
-            T_Missile_Joueur_1 = _content.Load<Texture2D>("Sprites\\Missiles\\Joueur\\missile_rocket1");
+            T_Missile_Joueur_1 = _content.Load<Texture2D>("Sprites\\Missiles\\Joueur\\missilenew1");
             T_Missile_Drone = _content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\missile_boule1");
             #endregion
             #region Chargement textures bonus
@@ -465,6 +467,7 @@ namespace MenuSample.Scenes
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive);
             spriteBatch.DrawString(_gameFont, Convert.ToString(score), new Vector2(150, 500), Color.Red);
             HUD.Drawbar(spriteBatch, barre_vie, listeVaisseau[0].vie, listeVaisseau[0].vieMax);
+            spriteBatch.Draw(T_HUD, new Vector2(150, -100), Color.White);
             
             if(listeVaisseau[0].vie > 0)
                 spriteBatch.DrawString(_gameFont, Convert.ToString(listeVaisseau[0].vie) + "/" + Convert.ToString(listeVaisseau[0].vieMax), new Vector2(500,450), Color.Red);
