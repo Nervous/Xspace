@@ -464,17 +464,17 @@ namespace MenuSample.Scenes
             SpriteBatch spriteBatch = SceneManager.SpriteBatch;
 
             SceneManager.GraphicsDevice.Clear(ClearOptions.Target, Color.Transparent, 0, 0);
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
+
+            fond_ecran.Draw(spriteBatch);
             spriteBatch.DrawString(_gameFont, Convert.ToString(score), new Vector2(150, 500), Color.Red);
             HUD.Drawbar(spriteBatch, barre_vie, listeVaisseau[0].vie, listeVaisseau[0].vieMax);
-            spriteBatch.Draw(T_HUD, new Vector2(150, -100), Color.White);
+            spriteBatch.Draw(T_HUD, new Vector2(0, 380), Color.White);
             
             if(listeVaisseau[0].vie > 0)
                 spriteBatch.DrawString(_gameFont, Convert.ToString(listeVaisseau[0].vie) + "/" + Convert.ToString(listeVaisseau[0].vieMax), new Vector2(500,450), Color.Red);
-            
-            #region Draw du fond
-            fond_ecran.Draw(spriteBatch);
-            #endregion
+
+            //particleRenderer.RenderEffect(particleEffect);
             #region Draw des vaisseaux
             foreach (Vaisseau vaisseau in listeVaisseau)
             {
@@ -520,7 +520,7 @@ namespace MenuSample.Scenes
             base.Draw(gameTime);
             #endregion
 
-            particleRenderer.RenderEffect(particleEffect);
+
 
             spriteBatch.End();
         }

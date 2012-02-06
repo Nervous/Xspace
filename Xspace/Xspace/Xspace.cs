@@ -18,7 +18,7 @@ namespace Xspace
     {
 
         public static int window_width = 1180;
-        public static int window_height = 620;
+        public static int window_height = 750;
 
         public Xspace()
         {
