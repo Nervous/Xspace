@@ -19,10 +19,10 @@ namespace Xspace
         
         public void Drawbar(SpriteBatch spriteBatch, Texture2D texture, int vieActuelle, int vieMax)
         {
-            _position_bar.Y = 500;
+            _position_bar.Y = 662;
             for (int i=0; i <= vieActuelle;i++)
             {
-                _position_bar.X = 400 + i;
+                _position_bar.X = 405 + i;
 
                 spriteBatch.Draw(texture, _position_bar, Color.White);
 

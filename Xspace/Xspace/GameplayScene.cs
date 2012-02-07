@@ -48,7 +48,7 @@ namespace MenuSample.Scenes
         private doneParticles partManage;
         private ScrollingBackground fond_ecran;
         public SpriteBatch spriteBatch;
-        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Missile_Joueur_1, T_Missile_Drone, T_Bonus_Vie, T_Bonus_Weapon1, barre_vie, T_HUD;
+        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Missile_Joueur_1, T_Missile_Drone, T_Bonus_Vie, T_Bonus_Weapon1, barre_vie, T_HUD, T_HUD_bars;
         private List<Texture2D> listeTextureVaisseauxEnnemis, listeTextureBonus;
         private SoundEffect musique_tir;
         private KeyboardState keyboardState;
@@ -61,7 +61,7 @@ namespace MenuSample.Scenes
         List<Missiles> listeMissile, listeMissileToRemove;
         List<Bonus> listeBonus, listeBonusToRemove;
         private ContentManager _content;
-        private SpriteFont _gameFont;
+        private SpriteFont _gameFont, _ingameFont;
         #endregion
         #region Déclaration structures relatives au jeu
         struct doneParticles
@@ -116,6 +116,7 @@ namespace MenuSample.Scenes
             #endregion
             #region Chargement des polices d'écritures
             _gameFont = _content.Load<SpriteFont>("Fonts\\Menu\\Menu");
+            _ingameFont = _content.Load<SpriteFont>("Fonts\\Jeu\\Jeu");
             #endregion
             #region Chargement fond du jeu
             fond_ecran = new ScrollingBackground();
@@ -140,6 +141,7 @@ namespace MenuSample.Scenes
             #endregion
             #region Chargement textures HUD
             T_HUD = _content.Load<Texture2D>("Sprites\\HUD\\interface");
+            T_HUD_bars = _content.Load<Texture2D>("Sprites\\HUD\\energyBars1"); 
             #endregion
             #region Chargement textures missiles
             T_Missile_Joueur_1 = _content.Load<Texture2D>("Sprites\\Missiles\\Joueur\\missilenew1");
@@ -174,7 +176,7 @@ namespace MenuSample.Scenes
             thisLevel.readInfos(delimitationFilesInfo, delimitationFilesInfo2, delimitationFilesInfo3, infLevel);
             #endregion
             #region Chargement barre de vie
-            barre_vie = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Joueur\\barre-vie-test");
+            barre_vie = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Joueur\\barre-vie-test1");
             #endregion
         }
 
@@ -467,13 +469,14 @@ namespace MenuSample.Scenes
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
 
             fond_ecran.Draw(spriteBatch);
-            spriteBatch.DrawString(_gameFont, Convert.ToString(score), new Vector2(150, 500), Color.Red);
-            HUD.Drawbar(spriteBatch, barre_vie, listeVaisseau[0].vie, listeVaisseau[0].vieMax);
-            spriteBatch.Draw(T_HUD, new Vector2(0, 380), Color.White);
             
+            spriteBatch.Draw(T_HUD, new Vector2(0, 380), Color.White);
+            HUD.Drawbar(spriteBatch, barre_vie, listeVaisseau[0].vie, listeVaisseau[0].vieMax);
+            spriteBatch.Draw(T_HUD_bars, new Vector2(380, 630), Color.White);
             if(listeVaisseau[0].vie > 0)
                 spriteBatch.DrawString(_gameFont, Convert.ToString(listeVaisseau[0].vie) + "/" + Convert.ToString(listeVaisseau[0].vieMax), new Vector2(500,450), Color.Red);
 
+            spriteBatch.DrawString(_ingameFont, Convert.ToString(score), new Vector2(147, 680), Color.Black);
             //particleRenderer.RenderEffect(particleEffect);
             #region Draw des vaisseaux
             foreach (Vaisseau vaisseau in listeVaisseau)
