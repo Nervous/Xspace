@@ -86,20 +86,20 @@ namespace MenuSample.Scenes
                 path_arcade_level_best = "Scores\\Arcade\\lvl" + (lvl+1) + ".score";
                 sr_arcade_level = new StreamReader(path_arcade_level_best);
                 score_arcade_level_best = System.IO.File.ReadAllLines(@path_arcade_level_best);
-                spriteBatch.DrawString(_gamefont, "Nv." + (lvl + 1), new Vector2(130 + 355 * (lvl / 5), (190 + (lvl % 5) * 47)), Color.LightGreen, 0, new Vector2(0, 0), 0.7f, SpriteEffects.None, 0);
-                spriteBatch.DrawString(_gamefont, score_arcade_level_best[1], new Vector2(220 + 355 * (lvl / 5), (190 + (lvl % 5) * 47)), Color.LightGreen, 0, new Vector2(0, 0), 0.7f, SpriteEffects.None, 0); // TODO
+                spriteBatch.DrawString(_gamefont, "Nv." + (lvl + 1), new Vector2(130 + 355 * (lvl / 5), (240 + (lvl % 5) * 47)), Color.LightGreen, 0, new Vector2(0, 0), 0.7f, SpriteEffects.None, 0);
+                spriteBatch.DrawString(_gamefont, score_arcade_level_best[1], new Vector2(220 + 355 * (lvl / 5), (240 + (lvl % 5) * 47)), Color.LightGreen, 0, new Vector2(0, 0), 0.7f, SpriteEffects.None, 0); // TODO
             }
             
             if ((level_selected)&&(!backSelected))
             {
-                spriteBatch.DrawString(_gamefont, score_arcade_level[0], new Vector2(220 + 373 * ((i) / 5), (190 + ((i) % 5) * 47)), Color.LightGreen, 0, new Vector2(0, 0), 0.7f, SpriteEffects.None, 0);
+                spriteBatch.DrawString(_gamefont, score_arcade_level[0], new Vector2(220 + 373 * ((i) / 5), (240 + ((i) % 5) * 47)), Color.LightGreen, 0, new Vector2(0, 0), 0.7f, SpriteEffects.None, 0);
 
                 score_level = System.IO.File.ReadAllLines(@path_level);
                 spriteBatch.Draw(_score_lvl, position_board, Color.White);
                 position_Nv.X = 250;
-                position_Nv.Y = 250;
+                position_Nv.Y = 253;
                 for (int pos = 0; pos < 10; pos++) // score for each levels (5)
-                    spriteBatch.DrawString(_gamefont, score_level[pos], new Vector2(452 + 151*((pos) % 2), 190 + (pos / 2)*(48)), Color.LightGreen, 0, new Vector2(0, 0), 0.7f, SpriteEffects.None, 0);
+                    spriteBatch.DrawString(_gamefont, score_level[pos], new Vector2(452 + 151*((pos) % 2), 240 + (pos / 2)*(48)), Color.LightGreen, 0, new Vector2(0, 0), 0.7f, SpriteEffects.None, 0);
             } 
             spriteBatch.End();
             sr_arcade.Close();
@@ -111,7 +111,7 @@ namespace MenuSample.Scenes
             path_level = "Scores\\Arcade\\lvl" + (i + 1) + ".score";
 
                 position_Nv.X = 358 * (i / 5) + 112;
-                position_Nv.Y = 187 + (i % 5) * 46;
+                position_Nv.Y = 230 + (i % 5) * 46;
             
             _keyboardState = Keyboard.GetState();
 
