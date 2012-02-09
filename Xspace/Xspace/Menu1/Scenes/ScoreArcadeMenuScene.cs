@@ -19,10 +19,10 @@ namespace MenuSample.Scenes
         private ContentManager _content;
         private SpriteFont _gamefont;
         private Texture2D _score_board, _score_surbrillance, _score_lvl, _score_surbrillance2;
-        private StreamReader sr_arcade, sr_level, sr_arcade_level;
+        private StreamReader sr_arcade, sr_arcade_level; //sr_level, 
         private string path_arcade, path_level, path_arcade_level, path_arcade_level_best;
         private Vector2 position_Nv;
-        private Vector2 position_board; // default pos
+        private Vector2 position_board;
         public string[] score_arcade, score_level, score_arcade_level, score_arcade_level_best;
         private static KeyboardState _keyboardState;
         private static KeyboardState _lastKeyboardState;

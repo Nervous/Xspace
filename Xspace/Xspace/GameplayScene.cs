@@ -110,7 +110,7 @@ namespace MenuSample.Scenes
             #region Chargement musiques & sons
             musique_tir = _content.Load<SoundEffect>("Sons\\Tir\\Tir");
             
-            AudioPlayer.PlayMusic("Content\\Musiques\\Jeu\\fat1.wav");
+            AudioPlayer.PlayMusic("Musiques\\Jeu\\fat1.wav");
             AudioPlayer.SetVolume(1f);
 
             #endregion

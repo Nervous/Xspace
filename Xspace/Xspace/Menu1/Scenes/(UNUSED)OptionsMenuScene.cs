@@ -12,7 +12,7 @@ namespace MenuSample.Scenes
         private readonly MenuItem _resolutionMenuItem;
         private readonly MenuItem _fullscreenMenuItem;
         private readonly MenuItem _volumeMenuItem;
-        private readonly MenuItem _scoreMenuItem;
+        //private readonly MenuItem _scoreMenuItem;
 
         private enum Mode
         {

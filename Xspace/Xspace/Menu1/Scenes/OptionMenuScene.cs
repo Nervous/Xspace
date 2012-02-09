@@ -14,8 +14,8 @@ namespace MenuSample.Scenes
     public class OptionMenuScene : AbstractMenuScene
     {
 
-        private ContentManager _content;
-        private SpriteFont _gamefont;
+        //private ContentManager _content;
+        //private SpriteFont _gamefont;
         protected Microsoft.Xna.Framework.GraphicsDeviceManager graphics;
 
 
