@@ -23,6 +23,8 @@ namespace Xspace.Son
         private static FMOD.CHANNEL_CALLBACK channelCallback;
         public static event EndMusicEventHandler EndMusic;
 
+        private static List<float> history_frequencies = new List<float>();
+
         private static void ErrCheck(RESULT result)
         {
             if (result != RESULT.OK)
@@ -185,6 +187,12 @@ namespace Xspace.Son
             }
 
             return freq;
+        }
+
+        public static float Beating()
+        {
+            float[] now = GetSpectrum(128);
+            return now.Sum();
         }
     }
 }

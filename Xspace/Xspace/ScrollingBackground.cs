@@ -42,11 +42,11 @@ namespace Xspace
             screenposition = new Vector2(screenWidth / 2, screenHeight / 2 - 50);
             texturesize = new Vector2(ma_texture.Width, 0);
         }
-        public void Update(float dX)
+        public void Update(float dX, float rythm)
         {
 
-            screenposition.X -= dX * vitesseBackground;
-            //screenposition.X -= dX * AudioPlayer.GetFreq() / 100000;
+            //screenposition.X -= dX * vitesseBackground;
+            screenposition.X -= dX * rythm;
 
             screenposition.X = screenposition.X % ma_texture.Width;
 

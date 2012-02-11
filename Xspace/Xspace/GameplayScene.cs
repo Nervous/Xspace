@@ -35,7 +35,7 @@ namespace MenuSample.Scenes
         #region Déclaration variables usuelles
         private int score;
         private float fps_fix, _pauseAlpha;
-        private double time, lastTime, lastTimeSpectre;
+        private double time, lastTime, lastTimeSpectre, lastTimeBeating;
         private string path_level, stock_score_inferieur, stock_score_superieur;
         private string[] score_level;
         private StreamWriter sw_level;
@@ -43,6 +43,7 @@ namespace MenuSample.Scenes
         private char[] delimitationFilesInfo = new char[] { ' ' }, delimitationFilesInfo2 = new char[] { ';' }, delimitationFilesInfo3 = new char[] { ':' };
         private float[] spectre;
         private bool drawSpectre;
+        private float beat;
         #endregion
         #region Déclaration variables relatives au jeu
         private doneParticles partManage;
@@ -91,6 +92,7 @@ namespace MenuSample.Scenes
 
             score = 0;
             lastTime = 0;
+            lastTimeBeating = 0;
             lastTimeSpectre = 150;
             spectre = new float[128];
         }
@@ -264,10 +266,13 @@ namespace MenuSample.Scenes
             fps_fix = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             time += gameTime.ElapsedGameTime.TotalMilliseconds;
             base.Update(gameTime, othersceneHasFocus, false);
-            fond_ecran.Update(fps_fix);
+            
+            float coeff_speed_variation = 1.5f; //coefficient de réduction de la variation de la vitesse du fond.
+            fond_ecran.Update(fps_fix, 1 + (beat - 1) / coeff_speed_variation);
+
             AudioPlayer.Update();
 
-           /* #region Gestion de la musique en cas de pause   A REACTIVER APRES PREMIERE SOUTENANCE 
+           #region Gestion de la musique en cas de pause   A REACTIVER APRES PREMIERE SOUTENANCE 
             if (InputState.IsPauseGame())
             {
                 AudioPlayer.SetVolume(0.2f);
@@ -275,7 +280,7 @@ namespace MenuSample.Scenes
             else if (InputState.IsMenuSelect())
                 AudioPlayer.SetVolume(1f);
 
-            #endregion */ 
+            #endregion
             #region Gestion des évenements du level
             foreach (gestionLevels spawn in infLevel)
             {
@@ -403,7 +408,7 @@ namespace MenuSample.Scenes
 
             particleEffect.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
             #endregion
-            #region Update du spectre
+            #region Update spectre & historique
             if (lastTimeSpectre < time + 25)
             {
                 float[] spectre_tmp = AudioPlayer.GetSpectrum(128);
@@ -412,22 +417,19 @@ namespace MenuSample.Scenes
                     for (int i = 0; i <= 127; i++)
                     {
                         spectre_tmp[i] = Math.Min(1, spectre_tmp[i] * 20);
-                        //spectre_tmp[i] = spectre_tmp[i] * 20;
                     }
 
-                    //drawSpectre = true;
                     lastTimeSpectre = time;
                     spectre = spectre_tmp;
                 }
-                else
-                {
-                    //drawSpectre = false;
-                }
             }
-            else
+
+            if (lastTimeBeating < time + 1000)
             {
-                //drawSpectre = false;
+                lastTimeBeating = time;
+                beat = AudioPlayer.Beating();
             }
+
             #endregion
             #region Fin du level (fuck u)
             if (listeVaisseau[0].ennemi) // NERVOUS WOKIN' ON IT OK ?!
@@ -512,6 +514,8 @@ namespace MenuSample.Scenes
                         spriteBatch.Draw(empty_texture, r, new Color(j, 128 - j * 4, 0));
                     }
                 }
+
+                spriteBatch.DrawString(_gameFont, Convert.ToString(beat), new Vector2(100, 100), Color.LightGreen);
             }
             #endregion
             #region Draw du menu de pause
