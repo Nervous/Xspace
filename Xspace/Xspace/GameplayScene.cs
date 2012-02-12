@@ -122,7 +122,7 @@ namespace MenuSample.Scenes
             #endregion
             #region Chargement fond du jeu
             fond_ecran = new ScrollingBackground();
-            fond_ecran.Load(GraphicsDevice, _content.Load<Texture2D>("Sprites\\Background\\Background"));
+            fond_ecran.Load(GraphicsDevice, _content.Load<Texture2D>("Sprites\\Background\\space"));
             #endregion
             #region Chargement particules
             particleRenderer.LoadContent(_content);
