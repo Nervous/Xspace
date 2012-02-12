@@ -270,12 +270,12 @@ namespace MenuSample.Scenes
             time += gameTime.ElapsedGameTime.TotalMilliseconds;
             base.Update(gameTime, othersceneHasFocus, false);
             
-            float coeff_speed_variation = 1.5f; //coefficient de réduction de la variation de la vitesse du fond.
-            float coeff_speed = 0.2f;
-            float coeff_speed_front = 0.6f;
+            float coeff_speed_variation = 0.6f; //coefficient de la variation de la vitesse des fonds.
+            float coeff_speed = 0.2f; //coefficient de vitesse du fond.
+            float coeff_speed_front = 0.6f; //coefficient de vitesse du fond en avant.
 
-            fond_ecran.Update(fps_fix, (1 + (music_energy - 1) / (coeff_speed_variation)) * coeff_speed);
-            fond_ecran_front.Update(fps_fix, (1 + (music_energy - 1) / coeff_speed_variation) * coeff_speed_front);
+            fond_ecran.Update(fps_fix, (1 + (music_energy - 1) * coeff_speed_variation) * coeff_speed);
+            fond_ecran_front.Update(fps_fix, (1 + (music_energy - 1) * coeff_speed_variation) * coeff_speed_front);
 
             AudioPlayer.Update();
 

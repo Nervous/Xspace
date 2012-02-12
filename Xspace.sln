@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xspace", "Xspace\Xspace\Xspace.csproj", "{80C23B33-F173-4F9B-A78D-889C46F2FFA1}"
 EndProject
-Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "XspaceContent", "Xspace\XspaceContent\XspaceContent.contentproj", "{8CD1D560-22B1-492B-9962-451D070237B4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XspaceContent", "Xspace\XspaceContent\XspaceContent.contentproj", "{8CD1D560-22B1-492B-9962-451D070237B4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
