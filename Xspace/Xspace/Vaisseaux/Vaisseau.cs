@@ -57,7 +57,7 @@ namespace Xspace
 
         public void move(Vector2 ammount, float fps_fix)
         {
-            _emplacement += ammount;
+            _emplacement -= ammount;
         }
 
         public int vie

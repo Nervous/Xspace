@@ -277,10 +277,12 @@ namespace MenuSample.Scenes
                             double centre_joueur_y = listeVaisseau[0].position.Y + (listeVaisseau[0].sprite.Height / 2);
                             double distance_x = centre_hole_x - centre_joueur_x;
                             double distance_y = centre_hole_y - centre_joueur_y;
-                            double distance_x_max = (obstacle.sprite.Width / 2) + 10;
-                            double distance_y_max = (obstacle.sprite.Height / 2) + 10;
-                            int attirer_x = (int)((distance_x_max - distance_x) * 0.05);
-                            int attirer_y = (int)((distance_y_max - distance_y) * 0.05);
+                            double distance_unit_x = centre_hole_x - centre_joueur_x / Math.Abs(centre_hole_x - centre_joueur_x);
+                            double distance_unit_y = centre_hole_y - centre_joueur_y / Math.Abs(centre_hole_y - centre_joueur_y);
+                            double distance_x_max = obstacle.sprite.Width / 2;
+                            double distance_y_max = obstacle.sprite.Height / 2;
+                            int attirer_x = (int)((distance_unit_x * 10) / (Math.Pow(distance_x, 2)));
+                            int attirer_y = (int)((distance_unit_y * 10) / (Math.Pow(distance_y, 2)));
                             Vector2 attirer = new Vector2(attirer_x, attirer_x);
                             listeVaisseau[0].move(attirer, fps_fix);
                             Console.WriteLine("Attirer de : " + attirer_x + " X et " + attirer_y + " Y");
