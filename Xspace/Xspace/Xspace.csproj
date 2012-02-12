@@ -136,6 +136,8 @@
     <Compile Include="Missiles\Missile1_joueur.cs" />
     <Compile Include="Missiles\Missiles.cs" />
     <Compile Include="Missiles\Missile_Drone.cs" />
+    <Compile Include="Obstacles\Obstacles.cs" />
+    <Compile Include="Obstacles\Obstacles_Hole.cs" />
     <Compile Include="ScrollingBackground.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Son\AudioFile.cs" />

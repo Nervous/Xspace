@@ -32,6 +32,7 @@ namespace MenuSample.Scenes
     /// </summary>
     public class GameplayScene : AbstractGameScene
     {
+        bool end = false;
         #region Déclaration variables usuelles
         private int score;
         private float fps_fix, _pauseAlpha;
@@ -49,8 +50,8 @@ namespace MenuSample.Scenes
         private doneParticles partManage;
         private ScrollingBackground fond_ecran, fond_ecran_front;
         public SpriteBatch spriteBatch;
-        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Missile_Joueur_1, T_Missile_Drone, T_Bonus_Vie, T_Bonus_Weapon1, barre_vie, T_HUD, T_HUD_bars;
-        private List<Texture2D> listeTextureVaisseauxEnnemis, listeTextureBonus;
+        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Missile_Joueur_1, T_Missile_Drone, T_Bonus_Vie, T_Bonus_Weapon1, T_Obstacles_Hole, barre_vie, T_HUD, T_HUD_bars;
+        private List<Texture2D> listeTextureVaisseauxEnnemis, listeTextureBonus, listeTextureObstacles;
         private SoundEffect musique_tir;
         private KeyboardState keyboardState;
         bool lastKeyDown = true;
@@ -61,6 +62,7 @@ namespace MenuSample.Scenes
         List<Vaisseau> listeVaisseau, listeVaisseauToRemove;
         List<Missiles> listeMissile, listeMissileToRemove;
         List<Bonus> listeBonus, listeBonusToRemove;
+        List<Obstacles> listeObstacles, listeObstaclesToRemove;
         private ContentManager _content;
         private SpriteFont _gameFont, _ingameFont;
         #endregion
@@ -157,6 +159,9 @@ namespace MenuSample.Scenes
             T_Bonus_Vie = _content.Load<Texture2D>("Sprites\\Bonus\\Life");
             T_Bonus_Weapon1 = _content.Load<Texture2D>("Sprites\\Bonus\\DoubleBaseWeapon");
             #endregion
+            #region Chargement textures obstacles
+            T_Obstacles_Hole = _content.Load<Texture2D>("Sprites\\Obstacles\\Hole");
+            #endregion
             #region Chargement vaisseaux
             listeVaisseau = new List<Vaisseau>();
             listeVaisseauToRemove = new List<Vaisseau>();
@@ -176,7 +181,9 @@ namespace MenuSample.Scenes
             listeTextureBonus = new List<Texture2D>();
             listeTextureBonus.Add(T_Bonus_Vie);
             listeTextureBonus.Add(T_Bonus_Weapon1);
-            thisLevel = new gestionLevels(0, listeTextureVaisseauxEnnemis, listeTextureBonus);
+            listeTextureObstacles = new List<Texture2D>();
+            listeTextureObstacles.Add(T_Obstacles_Hole);
+            thisLevel = new gestionLevels(0, listeTextureVaisseauxEnnemis, listeTextureBonus, listeTextureObstacles);
             infLevel = new List<gestionLevels>();
             thisLevel.readInfos(delimitationFilesInfo, delimitationFilesInfo2, delimitationFilesInfo3, infLevel);
             #endregion
@@ -301,6 +308,12 @@ namespace MenuSample.Scenes
                         case "bonus":
                             listeBonus.Add(spawn.bonus);
                             break;
+                        case "obstacle":
+                            listeObstacles.Add(spawn.Obstacle);
+                            break;
+                        case "EOL":
+                            end = true;
+                            break;
                         default:
                             break;
                     }
@@ -408,6 +421,18 @@ namespace MenuSample.Scenes
             foreach (Bonus bonus in listeBonusToRemove)
                 listeBonus.Remove(bonus);
             #endregion
+            #region Update des obstacles
+            foreach (Obstacles obstacle in listeObstacles)
+            {
+                if (obstacle.position.X > 0)
+                    obstacle.Update(fps_fix);
+                else
+                    listeObstaclesToRemove.Add(obstacle);
+            }
+
+            foreach (Bonus bonus in listeBonusToRemove)
+                listeBonus.Remove(bonus);
+            #endregion
             #region Collisions & Update des particules
             if (!(partManage.startingParticle == Vector2.Zero))
                 particleEffect.Trigger(partManage.startingParticle);
@@ -438,8 +463,8 @@ namespace MenuSample.Scenes
             }
 
             #endregion
-            #region Fin du level (fuck u)
-            if (listeVaisseau[0].ennemi) // NERVOUS WOKIN' ON IT OK ?!
+            #region Fin du level
+            if (end == true || listeVaisseau[0].ennemi)
             {
                 AudioPlayer.StopMusic();
                 AudioPlayer.PlayMusic("Musiques\\Menu\\Musique.mp3");
@@ -505,6 +530,12 @@ namespace MenuSample.Scenes
             foreach (Bonus bonus in listeBonus)
             {
                 bonus.Draw(spriteBatch);
+            }
+            #endregion
+            #region Draw des obstacles
+            foreach (Obstacles obstacle in listeObstacles)
+            {
+                obstacle.Draw(spriteBatch);
             }
             #endregion
             #region Draw du spectre
