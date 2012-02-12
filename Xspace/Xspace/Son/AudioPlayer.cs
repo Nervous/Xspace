@@ -191,7 +191,7 @@ namespace Xspace.Son
 
         public static float Energy()
         {
-            float[] now = GetSpectrum(128);
+            float[] now = GetSpectrum(64);
             return now.Sum();
         }
     }
