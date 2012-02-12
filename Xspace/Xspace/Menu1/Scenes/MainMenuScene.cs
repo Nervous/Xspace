@@ -59,7 +59,7 @@ namespace MenuSample.Scenes
             System.Threading.Thread.Sleep(500); // Sert à éviter un bug dû à la Race Condition du thread lancé par Initialize().
 
             AudioPlayer.SetVolume(1f);
-            AudioPlayer.PlayMusic("Musiques\\Menu\\Musique.mp3");
+            AudioPlayer.PlayMusic("Musiques\\Menu\\Musique.flac");
         }
 
 
