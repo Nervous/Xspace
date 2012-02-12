@@ -277,7 +277,7 @@ namespace MenuSample.Scenes
             time += gameTime.ElapsedGameTime.TotalMilliseconds;
             base.Update(gameTime, othersceneHasFocus, false);
             
-            float coeff_speed_variation = 0.6f; //coefficient de la variation de la vitesse des fonds.
+            float coeff_speed_variation = 0.8f; //coefficient de la variation de la vitesse des fonds.
             float coeff_speed = 0.2f; //coefficient de vitesse du fond.
             float coeff_speed_front = 0.6f; //coefficient de vitesse du fond en avant.
 
@@ -286,7 +286,7 @@ namespace MenuSample.Scenes
 
             AudioPlayer.Update();
 
-           #region Gestion de la musique en cas de pause   A REACTIVER APRES PREMIERE SOUTENANCE 
+            #region Gestion de la musique en cas de pause   A REACTIVER APRES PREMIERE SOUTENANCE 
             if (InputState.IsPauseGame())
             {
                 AudioPlayer.SetVolume(0.2f);
@@ -441,7 +441,7 @@ namespace MenuSample.Scenes
             particleEffect.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
             #endregion
             #region Update spectre & historique
-            if (lastTimeSpectre < time + 25)
+            if (lastTimeSpectre + 25 < time)
             {
                 float[] spectre_tmp = AudioPlayer.GetSpectrum(128);
                 if (spectre_tmp.Length == 128)
@@ -456,7 +456,7 @@ namespace MenuSample.Scenes
                 }
             }
 
-            if (lastTimeEnergy + 50 < time)
+            if (lastTimeEnergy + 25 < time)
             {
                 lastTimeEnergy = time;
                 music_energy = AudioPlayer.Energy();
@@ -467,7 +467,7 @@ namespace MenuSample.Scenes
             if (end == true || listeVaisseau[0].ennemi)
             {
                 AudioPlayer.StopMusic();
-                AudioPlayer.PlayMusic("Musiques\\Menu\\Musique.mp3");
+                AudioPlayer.PlayMusic("Musiques\\Menu\\Musique.flac");
                 path_level = "Scores\\Arcade\\lvl1" + ".score";
                 sr_level = new StreamReader(path_level);
                 score_level = System.IO.File.ReadAllLines(@path_level);
@@ -504,7 +504,7 @@ namespace MenuSample.Scenes
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
 
             fond_ecran.Draw(spriteBatch);
-            //fond_ecran_front.Draw(spriteBatch);
+            fond_ecran_front.Draw(spriteBatch);
             
             spriteBatch.Draw(T_HUD, new Vector2(0, 380), Color.White);
             HUD.Drawbar(spriteBatch, barre_vie, listeVaisseau[0].vie, listeVaisseau[0].vieMax);
