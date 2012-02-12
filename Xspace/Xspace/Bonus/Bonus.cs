@@ -21,24 +21,24 @@ namespace Xspace
         struct getBonus
         {
             public string _effect;
-            public int _ammount, _time;
+            public int _amount, _time;
 
-            public getBonus(string effect, int ammount, int time)
+            public getBonus(string effect, int amount, int time)
             {
                 _effect = effect;
-                _ammount = ammount;
+                _amount = amount;
                 _time = time;
             }
         };
 
-        public Bonus(Texture2D texture, float vitesseVaisseau, Vector2 startPosition, string effect, int ammount, int time)
+        public Bonus(Texture2D texture, float vitesseVaisseau, Vector2 startPosition, string effect, int amount, int time)
         {
             _textureBonus = texture;
             _vitesseBonus = vitesseVaisseau;
             _emplacement = startPosition;
             _deplacement = Vector2.Normalize(new Vector2(5, 0));
             _disabled = false;
-            bonus = new getBonus(effect, ammount, time);
+            bonus = new getBonus(effect, amount, time);
         }
 
         public Vector2 position
@@ -51,9 +51,9 @@ namespace Xspace
             get { return bonus._effect; }
         }
 
-        public int ammount
+        public int amount
         {
-            get { return bonus._ammount; }
+            get { return bonus._amount; }
         }
 
         public int time

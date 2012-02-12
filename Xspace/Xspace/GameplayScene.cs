@@ -198,7 +198,7 @@ namespace MenuSample.Scenes
                     {
                         if (!bonus.disabled)
                         {
-                            listeVaisseau[0].applyBonus(bonus.effect, bonus.ammount, bonus.time);
+                            listeVaisseau[0].applyBonus(bonus.effect, bonus.amount, bonus.time);
                             bonus.disabled = true;
                         }
                         listeBonusToRemove.Add(bonus);
