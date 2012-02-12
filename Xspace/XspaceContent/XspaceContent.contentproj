@@ -305,15 +305,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Sprites\Background\space.jpg">
-      <Name>space</Name>
+    <Compile Include="Sprites\Background\dream.jpg">
+      <Name>dream</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Sprites\Background\dream.jpg">
-      <Name>dream</Name>
+    <Compile Include="Sprites\Background\space.png">
+      <Name>space</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
