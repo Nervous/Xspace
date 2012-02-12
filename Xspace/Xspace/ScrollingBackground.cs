@@ -15,19 +15,15 @@ namespace Xspace
 {
     class ScrollingBackground
     {
-
-
         // scrolling background
 
         private Vector2 screenposition, origine, texturesize;
         private Texture2D ma_texture;
         private int screenHeight;
-        private float vitesseBackground;
-
 
         public ScrollingBackground() 
         {
-            vitesseBackground = 0.6f; 
+            //vitesseBackground = 0.6f; 
         }
 
         public void Load(GraphicsDevice device, Texture2D backgroundTexture)
@@ -42,17 +38,10 @@ namespace Xspace
             screenposition = new Vector2(screenWidth / 2, screenHeight / 2 - 50);
             texturesize = new Vector2(ma_texture.Width, 0);
         }
-        public void Update(float dX, float rythm)
+        public void Update(float dX, float speed)
         {
-
-            //screenposition.X -= dX * vitesseBackground;
-            screenposition.X -= dX * rythm;
-
+            screenposition.X -= dX * speed;
             screenposition.X = screenposition.X % ma_texture.Width;
-
-
-
-
         }
 
         public void Draw(SpriteBatch batch)

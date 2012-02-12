@@ -47,7 +47,7 @@ namespace MenuSample.Scenes
         #endregion
         #region Déclaration variables relatives au jeu
         private doneParticles partManage;
-        private ScrollingBackground fond_ecran;
+        private ScrollingBackground fond_ecran, fond_ecran_front;
         public SpriteBatch spriteBatch;
         private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Missile_Joueur_1, T_Missile_Drone, T_Bonus_Vie, T_Bonus_Weapon1, barre_vie, T_HUD, T_HUD_bars;
         private List<Texture2D> listeTextureVaisseauxEnnemis, listeTextureBonus;
@@ -123,6 +123,9 @@ namespace MenuSample.Scenes
             #region Chargement fond du jeu
             fond_ecran = new ScrollingBackground();
             fond_ecran.Load(GraphicsDevice, _content.Load<Texture2D>("Sprites\\Background\\space"));
+
+            fond_ecran_front = new ScrollingBackground();
+            fond_ecran_front.Load(GraphicsDevice, _content.Load<Texture2D>("Sprites\\Background\\space-front"));
             #endregion
             #region Chargement particules
             particleRenderer.LoadContent(_content);
@@ -268,7 +271,11 @@ namespace MenuSample.Scenes
             base.Update(gameTime, othersceneHasFocus, false);
             
             float coeff_speed_variation = 1.5f; //coefficient de réduction de la variation de la vitesse du fond.
-            fond_ecran.Update(fps_fix, 1 + (music_energy - 1) / coeff_speed_variation);
+            float coeff_speed = 0.2f;
+            float coeff_speed_front = 0.6f;
+
+            fond_ecran.Update(fps_fix, (1 + (music_energy - 1) / (coeff_speed_variation)) * coeff_speed);
+            fond_ecran_front.Update(fps_fix, (1 + (music_energy - 1) / coeff_speed_variation) * coeff_speed_front);
 
             AudioPlayer.Update();
 
@@ -471,6 +478,7 @@ namespace MenuSample.Scenes
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
 
             fond_ecran.Draw(spriteBatch);
+            fond_ecran_front.Draw(spriteBatch);
             
             spriteBatch.Draw(T_HUD, new Vector2(0, 380), Color.White);
             HUD.Drawbar(spriteBatch, barre_vie, listeVaisseau[0].vie, listeVaisseau[0].vieMax);
