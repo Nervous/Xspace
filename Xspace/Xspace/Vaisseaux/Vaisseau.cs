@@ -55,6 +55,11 @@ namespace Xspace
             }
         }
 
+        public void move(Vector2 ammount, float fps_fix)
+        {
+            _emplacement += ammount;
+        }
+
         public int vie
         {
             get { return _vie; }

@@ -23,28 +23,37 @@ namespace Xspace
         string categorie, position;
         Vaisseau adresse;
         Bonus bonusAdresse;
+        Obstacles obstacleAdresse;
         double time;
         bool hasSpawned;
-        List<Texture2D> listeTextureVaisseauxEnnemis, listeTextureBonus;
+        List<Texture2D> listeTextureVaisseauxEnnemis, listeTextureBonus, listeTextureObstacles;
 
 
-        public gestionLevels(int numero, List<Texture2D> texturesVaisseaux, List<Texture2D> texturesBonus)
+        public gestionLevels(int numero, List<Texture2D> texturesVaisseaux, List<Texture2D> texturesBonus, List<Texture2D> textureObstacles)
         {
             nbLevel = numero;
             pathLevel = "levels/" + nbLevel + ".xpa"; ;
             infosLevel = lireFichier(pathLevel);
             listeTextureVaisseauxEnnemis = texturesVaisseaux;
             listeTextureBonus = texturesBonus;
+            listeTextureObstacles = textureObstacles;
         }
 
-        public gestionLevels(string setCategorie, Vaisseau setAdresse, Bonus adresseBonus, int setTime, string setPosition)
+        public gestionLevels(string setCategorie, Vaisseau setAdresse, Bonus adresseBonus, Obstacles adresseObstacle, int setTime, string setPosition)
         {
             categorie = setCategorie;
             adresse = setAdresse;
             bonusAdresse = adresseBonus;
+            obstacleAdresse = adresseObstacle;
             time = setTime;
             hasSpawned = false;
             position = setPosition;
+        }
+
+        public gestionLevels(int setTime)
+        {
+            categorie = "EOL";
+            time = setTime;
         }
 
         public string[] lireFichier(string path)
@@ -153,7 +162,7 @@ namespace Xspace
                         default:
                             break;
                     }
-                    infLevel.Add(new gestionLevels(categorie, vaisseau, null, timing, position));
+                    infLevel.Add(new gestionLevels(categorie, vaisseau, null, null, timing, position));
                 }
                 else if(categorie == "bonus")
                 {
@@ -169,7 +178,24 @@ namespace Xspace
                         default:
                             break;
                     }
-                    infLevel.Add(new gestionLevels(categorie, null, bonus, timing, position));
+                    infLevel.Add(new gestionLevels(categorie, null, bonus, null, timing, position));
+                }
+                else if (categorie == "obstacle")
+                {
+                    Obstacles obstacle = null;
+                    switch (type)
+                    {
+                        case "hole":
+                            obstacle = new Obstacles_Hole(listeTextureObstacles[0], start);
+                            break;
+                        default:
+                            break;
+                    }
+                    infLevel.Add(new gestionLevels(categorie, null, null, obstacle, timing, position));
+                }
+                else if (categorie == "eol")
+                {
+                    infLevel.Add(new gestionLevels(timing));
                 }
 
                 
@@ -185,6 +211,10 @@ namespace Xspace
         public Bonus bonus
         {
             get { return bonusAdresse; }
+        }
+        public Obstacles Obstacle
+        {
+            get { return obstacleAdresse; }
         }
 
         public string Categorie
@@ -205,7 +235,7 @@ namespace Xspace
             else
                 toReturn = false;
             if(toReturn == true)
-            this.hasSpawned = true;
+                this.hasSpawned = true;
             return toReturn;
         }
     }

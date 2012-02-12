@@ -32,6 +32,7 @@ namespace MenuSample.Scenes
     /// </summary>
     public class GameplayScene : AbstractGameScene
     {
+        bool end = false;
         #region Déclaration variables usuelles
         private int score;
         private float fps_fix, _pauseAlpha;
@@ -49,8 +50,8 @@ namespace MenuSample.Scenes
         private doneParticles partManage;
         private ScrollingBackground fond_ecran, fond_ecran_front, fond_ecran_middle;
         public SpriteBatch spriteBatch;
-        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Missile_Joueur_1, T_Missile_Drone, T_Bonus_Vie, T_Bonus_Weapon1, barre_vie, T_HUD, T_HUD_bars;
-        private List<Texture2D> listeTextureVaisseauxEnnemis, listeTextureBonus;
+        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Missile_Joueur_1, T_Missile_Drone, T_Bonus_Vie, T_Bonus_Weapon1, T_Obstacles_Hole, barre_vie, T_HUD, T_HUD_bars;
+        private List<Texture2D> listeTextureVaisseauxEnnemis, listeTextureBonus, listeTextureObstacles;
         private SoundEffect musique_tir;
         private KeyboardState keyboardState;
         bool lastKeyDown = true;
@@ -61,6 +62,7 @@ namespace MenuSample.Scenes
         List<Vaisseau> listeVaisseau, listeVaisseauToRemove;
         List<Missiles> listeMissile, listeMissileToRemove;
         List<Bonus> listeBonus, listeBonusToRemove;
+        List<Obstacles> listeObstacles, listeObstaclesToRemove;
         private ContentManager _content;
         private SpriteFont _gameFont, _ingameFont;
         #endregion
@@ -160,6 +162,9 @@ namespace MenuSample.Scenes
             T_Bonus_Vie = _content.Load<Texture2D>("Sprites\\Bonus\\Life");
             T_Bonus_Weapon1 = _content.Load<Texture2D>("Sprites\\Bonus\\DoubleBaseWeapon");
             #endregion
+            #region Chargement textures obstacles
+            T_Obstacles_Hole = _content.Load<Texture2D>("Sprites\\Obstacles\\Hole");
+            #endregion
             #region Chargement vaisseaux
             listeVaisseau = new List<Vaisseau>();
             listeVaisseauToRemove = new List<Vaisseau>();
@@ -173,13 +178,19 @@ namespace MenuSample.Scenes
             listeBonus = new List<Bonus>();
             listeBonusToRemove = new List<Bonus>();
             #endregion
+            #region Chargement obstacles
+            listeObstacles = new List<Obstacles>();
+            listeObstaclesToRemove = new List<Obstacles>();
+            #endregion
             #region Chargement du level
             listeTextureVaisseauxEnnemis = new List<Texture2D>();
             listeTextureVaisseauxEnnemis.Add(T_Vaisseau_Drone);
             listeTextureBonus = new List<Texture2D>();
             listeTextureBonus.Add(T_Bonus_Vie);
             listeTextureBonus.Add(T_Bonus_Weapon1);
-            thisLevel = new gestionLevels(0, listeTextureVaisseauxEnnemis, listeTextureBonus);
+            listeTextureObstacles = new List<Texture2D>();
+            listeTextureObstacles.Add(T_Obstacles_Hole);
+            thisLevel = new gestionLevels(0, listeTextureVaisseauxEnnemis, listeTextureBonus, listeTextureObstacles);
             infLevel = new List<gestionLevels>();
             thisLevel.readInfos(delimitationFilesInfo, delimitationFilesInfo2, delimitationFilesInfo3, infLevel);
             #endregion
@@ -188,7 +199,7 @@ namespace MenuSample.Scenes
             #endregion
         }
 
-        doneParticles collisions(List<Vaisseau> listeVaisseau, List<Missiles> listeMissile, List<Bonus> listeBonus, float spentTime, ParticleEffect particleEffect, GameTime gametime)
+        doneParticles collisions(List<Vaisseau> listeVaisseau, List<Missiles> listeMissile, List<Bonus> listeBonus, List<Obstacles> listeObstacles, float spentTime, ParticleEffect particleEffect, GameTime gametime)
         {
             foreach(Vaisseau vaisseau in listeVaisseau)
             {
@@ -252,6 +263,33 @@ namespace MenuSample.Scenes
                         return new doneParticles(false, new Vector2(vaisseau.position.X + vaisseau.sprite.Width/2, vaisseau.position.Y + vaisseau.sprite.Height / 2));
                     }
                     #endregion
+                    
+                }
+                foreach (Obstacles obstacle in listeObstacles)
+                {
+                    #region Collision joueur <=> Obstacle
+                    if (((listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > obstacle.position.X && listeVaisseau[0].position.X < obstacle.position.X) || (listeVaisseau[0].position.X < obstacle.position.X + obstacle.sprite.Width && listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > obstacle.position.X + obstacle.sprite.Width) || (listeVaisseau[0].position.X > obstacle.position.X && listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width < obstacle.position.X + obstacle.sprite.Width))
+                        &&
+                        ((listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height > obstacle.position.Y && listeVaisseau[0].position.Y < obstacle.position.Y) || (listeVaisseau[0].position.Y < obstacle.position.Y + obstacle.sprite.Height && listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height > obstacle.position.Y + obstacle.sprite.Height) || (listeVaisseau[0].position.Y > obstacle.position.Y && listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height < obstacle.position.Y + obstacle.sprite.Height)))
+                    {
+                        if (obstacle.Categorie == "hole")
+                        {
+                            double centre_hole_x = obstacle.position.X + (obstacle.sprite.Width / 2);
+                            double centre_hole_y = obstacle.position.Y + (obstacle.sprite.Height / 2);
+                            double centre_joueur_x = listeVaisseau[0].position.X + (listeVaisseau[0].sprite.Width / 2);
+                            double centre_joueur_y = listeVaisseau[0].position.Y + (listeVaisseau[0].sprite.Height / 2);
+                            double distance_x = centre_hole_x - centre_joueur_x;
+                            double distance_y = centre_hole_y - centre_joueur_y;
+                            double distance_x_max = (obstacle.sprite.Width / 2) + 10;
+                            double distance_y_max = (obstacle.sprite.Height / 2) + 10;
+                            int attirer_x = (int)((distance_x_max - distance_x) * 0.05);
+                            int attirer_y = (int)((distance_y_max - distance_y) * 0.05);
+                            Vector2 attirer = new Vector2(attirer_x, attirer_x);
+                            listeVaisseau[0].move(attirer, fps_fix);
+                            Console.WriteLine("Attirer de : " + attirer_x + " X et " + attirer_y + " Y");
+                        }
+                    }
+                    #endregion
                 }
             }
             return new doneParticles(true, new Vector2(0, 0));
@@ -266,6 +304,7 @@ namespace MenuSample.Scenes
 
         public override void Update(GameTime gameTime, bool othersceneHasFocus, bool coveredByOtherscene)
         {
+            Console.SetBufferSize(500, 500);
             keyboardState = Keyboard.GetState();
             _pauseAlpha = coveredByOtherscene ? Math.Min(_pauseAlpha + 1f / 32, 1) : Math.Max(_pauseAlpha - 1f / 32, 0);
 
@@ -306,6 +345,12 @@ namespace MenuSample.Scenes
                             break;
                         case "bonus":
                             listeBonus.Add(spawn.bonus);
+                            break;
+                        case "obstacle":
+                            listeObstacles.Add(spawn.Obstacle);
+                            break;
+                        case "EOL":
+                            end = true;
                             break;
                         default:
                             break;
@@ -414,10 +459,22 @@ namespace MenuSample.Scenes
             foreach (Bonus bonus in listeBonusToRemove)
                 listeBonus.Remove(bonus);
             #endregion
+            #region Update des obstacles
+            foreach (Obstacles obstacle in listeObstacles)
+            {
+                if (obstacle.position.X > 0)
+                    obstacle.Update(fps_fix);
+                else
+                    listeObstaclesToRemove.Add(obstacle);
+            }
+
+            foreach (Bonus bonus in listeBonusToRemove)
+                listeBonus.Remove(bonus);
+            #endregion
             #region Collisions & Update des particules
             if (!(partManage.startingParticle == Vector2.Zero))
                 particleEffect.Trigger(partManage.startingParticle);
-            partManage = collisions(listeVaisseau, listeMissile, listeBonus, fps_fix, particleEffect, gameTime);
+            partManage = collisions(listeVaisseau, listeMissile, listeBonus, listeObstacles, fps_fix, particleEffect, gameTime);
 
             particleEffect.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
             #endregion
@@ -444,8 +501,8 @@ namespace MenuSample.Scenes
             }
 
             #endregion
-            #region Fin du level (fuck u)
-            if (listeVaisseau[0].ennemi) // NERVOUS WOKIN' ON IT OK ?!
+            #region Fin du level
+            if (end == true || listeVaisseau[0].ennemi)
             {
                 AudioPlayer.StopMusic();
                 AudioPlayer.PlayMusic("Musiques\\Menu\\Musique.flac");
@@ -496,6 +553,12 @@ namespace MenuSample.Scenes
 
             spriteBatch.DrawString(_ingameFont, Convert.ToString(score), new Vector2(147, 680), Color.Black);
             //particleRenderer.RenderEffect(particleEffect);
+            #region Draw des obstacles
+            foreach (Obstacles obstacle in listeObstacles)
+            {
+                obstacle.Draw(spriteBatch);
+            }
+            #endregion
             #region Draw des vaisseaux
             foreach (Vaisseau vaisseau in listeVaisseau)
             {

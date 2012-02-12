@@ -13,12 +13,12 @@ namespace Xspace
 {
     class Bonus
     {
-        public Vector2 _emplacement, _deplacement;
-        public Texture2D _textureBonus;
-        public float _vitesseBonus;
-        getBonus bonus;
-        bool _disabled;
-        struct getBonus
+        protected Vector2 _emplacement, _deplacement;
+        protected Texture2D _textureBonus;
+        protected float _vitesseBonus;
+        protected getBonus bonus;
+        protected bool _disabled;
+        protected struct getBonus
         {
             public string _effect;
             public int _amount, _time;
