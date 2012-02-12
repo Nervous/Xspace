@@ -318,7 +318,13 @@
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Compile Include="Sprites\Background\space-middle.png">
+      <Name>space-middle</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+	</Compile>
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="Sprites\Obstacles\Hole.png">
       <Name>Hole</Name>
