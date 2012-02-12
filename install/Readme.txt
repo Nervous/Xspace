@@ -1,1 +1,0 @@
-.dll, Scores, Levels, à placer dans le bin
