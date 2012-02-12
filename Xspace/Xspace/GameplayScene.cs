@@ -275,21 +275,12 @@ namespace MenuSample.Scenes
                             double centre_hole_y = obstacle.position.Y + (obstacle.sprite.Height / 2);
                             double centre_joueur_x = listeVaisseau[0].position.X + (listeVaisseau[0].sprite.Width / 2);
                             double centre_joueur_y = listeVaisseau[0].position.Y + (listeVaisseau[0].sprite.Height / 2);
-                            double distance_x = Math.Abs(centre_hole_x - centre_joueur_x);
-                            double distance_y = Math.Abs(centre_hole_y - centre_joueur_y);
-                            double distance_x_max = obstacle.sprite.Width / 2 + listeVaisseau[0].sprite.Width / 2;
-                            double distance_y_max = obstacle.sprite.Height / 2 + listeVaisseau[0].sprite.Height / 2;
-                            double ratio_distance_x = distance_x_max - distance_x;
-                            double ratio_distance_y = distance_y_max - distance_y;
-                            int attirer_x_ratio = (int)Math.Round(ratio_distance_x / 50);
-                            int attirer_y_ratio = (int)Math.Round(ratio_distance_y / 50);
-                            int ratio = (attirer_x_ratio + attirer_y_ratio) / 2;
-                            int attirer_x = (int)(centre_joueur_x / 10 * ratio * 0.05);
-                            int attirer_y = (int)(centre_joueur_y / 10 * ratio * 0.05);
-                            if (centre_hole_x - centre_joueur_x > 0)
-                                attirer_x = -attirer_x;
-                            if (centre_hole_y - centre_joueur_y > 0)
-                                attirer_y = -attirer_y;
+                            double distance_x = centre_hole_x - centre_joueur_x;
+                            double distance_y = centre_hole_y - centre_joueur_y;
+                            double distance_x_max = (obstacle.sprite.Width / 2) + (listeVaisseau[0].sprite.Width / 2);
+                            double distance_y_max = (obstacle.sprite.Height / 2) + (listeVaisseau[0].sprite.Height / 2);
+                            int attirer_x = (int)((distance_x_max - distance_x) * 0.05);
+                            int attirer_y = (int)((distance_y_max - distance_y) * 0.05);
                             Vector2 attirer = new Vector2(attirer_x, attirer_x);
                             listeVaisseau[0].move(attirer, fps_fix);
                             Console.WriteLine("Attirer de : " + attirer_x + " X et " + attirer_y + " Y");
