@@ -189,7 +189,7 @@ namespace Xspace.Son
             return freq;
         }
 
-        public static float Beating()
+        public static float Energy()
         {
             float[] now = GetSpectrum(128);
             return now.Sum();

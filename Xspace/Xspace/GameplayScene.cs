@@ -35,7 +35,7 @@ namespace MenuSample.Scenes
         #region Déclaration variables usuelles
         private int score;
         private float fps_fix, _pauseAlpha;
-        private double time, lastTime, lastTimeSpectre, lastTimeBeating;
+        private double time, lastTime, lastTimeSpectre, lastTimeEnergy;
         private string path_level, stock_score_inferieur, stock_score_superieur;
         private string[] score_level;
         private StreamWriter sw_level;
@@ -43,7 +43,7 @@ namespace MenuSample.Scenes
         private char[] delimitationFilesInfo = new char[] { ' ' }, delimitationFilesInfo2 = new char[] { ';' }, delimitationFilesInfo3 = new char[] { ':' };
         private float[] spectre;
         private bool drawSpectre;
-        private float beat;
+        private float music_energy;
         #endregion
         #region Déclaration variables relatives au jeu
         private doneParticles partManage;
@@ -92,7 +92,7 @@ namespace MenuSample.Scenes
 
             score = 0;
             lastTime = 0;
-            lastTimeBeating = 0;
+            lastTimeEnergy = 0;
             lastTimeSpectre = 150;
             spectre = new float[128];
         }
@@ -268,7 +268,7 @@ namespace MenuSample.Scenes
             base.Update(gameTime, othersceneHasFocus, false);
             
             float coeff_speed_variation = 1.5f; //coefficient de réduction de la variation de la vitesse du fond.
-            fond_ecran.Update(fps_fix, 1 + (beat - 1) / coeff_speed_variation);
+            fond_ecran.Update(fps_fix, 1 + (music_energy - 1) / coeff_speed_variation);
 
             AudioPlayer.Update();
 
@@ -424,10 +424,10 @@ namespace MenuSample.Scenes
                 }
             }
 
-            if (lastTimeBeating < time + 1000)
+            if (lastTimeEnergy + 50 < time)
             {
-                lastTimeBeating = time;
-                beat = AudioPlayer.Beating();
+                lastTimeEnergy = time;
+                music_energy = AudioPlayer.Energy();
             }
 
             #endregion
@@ -515,7 +515,7 @@ namespace MenuSample.Scenes
                     }
                 }
 
-                spriteBatch.DrawString(_gameFont, Convert.ToString(beat), new Vector2(100, 100), Color.LightGreen);
+                spriteBatch.DrawString(_gameFont, Convert.ToString(music_energy), new Vector2(100, 100), Color.LightGreen);
             }
             #endregion
             #region Draw du menu de pause
