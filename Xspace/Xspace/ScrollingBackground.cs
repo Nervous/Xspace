@@ -35,7 +35,7 @@ namespace Xspace
             // haut, centre ->
             origine = new Vector2(0, ma_texture.Height / 2);
             // Place l'ecran au centre de l'image
-            screenposition = new Vector2(screenWidth / 2, screenHeight / 2 - 50);
+            screenposition = new Vector2(screenWidth / 2 -600, screenHeight / 2 - 50);
             texturesize = new Vector2(ma_texture.Width, 0);
         }
         public void Update(float dX, float speed)
