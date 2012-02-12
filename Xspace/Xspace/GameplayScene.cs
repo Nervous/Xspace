@@ -478,7 +478,7 @@ namespace MenuSample.Scenes
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
 
             fond_ecran.Draw(spriteBatch);
-            fond_ecran_front.Draw(spriteBatch);
+            //fond_ecran_front.Draw(spriteBatch);
             
             spriteBatch.Draw(T_HUD, new Vector2(0, 380), Color.White);
             HUD.Drawbar(spriteBatch, barre_vie, listeVaisseau[0].vie, listeVaisseau[0].vieMax);
