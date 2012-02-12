@@ -441,7 +441,8 @@ namespace MenuSample.Scenes
             #region Fin du level (fuck u)
             if (listeVaisseau[0].ennemi) // NERVOUS WOKIN' ON IT OK ?!
             {
-                AudioPlayer.PlayMusic("Content\\Musiques\\Menu\\Musique.mp3");
+                AudioPlayer.StopMusic();
+                AudioPlayer.PlayMusic("Musiques\\Menu\\Musique.mp3");
                 path_level = "Scores\\Arcade\\lvl1" + ".score";
                 sr_level = new StreamReader(path_level);
                 score_level = System.IO.File.ReadAllLines(@path_level);
