@@ -92,6 +92,7 @@ namespace MenuSample.Scenes.Core
         /// Ajoute une nouvelle scène au gestionnaire. Normalement il faut appeler
         /// la méthode Add de la scène.
         /// </summary>
+
         public void AddScene(AbstractGameScene scene)
         {
             scene.IsExiting = false;

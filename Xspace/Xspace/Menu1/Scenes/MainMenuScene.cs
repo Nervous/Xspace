@@ -37,6 +37,8 @@ namespace MenuSample.Scenes
             var ScoreMenuItem = new MenuItem("Scores");
             var OptionMenuItem = new MenuItem("Options");
             var exitMenuItem = new MenuItem("Quitter");
+            var completeItem = new MenuItem("Complete");
+            GameplayScene gameplayscene = new GameplayScene(sceneMgr, graphicsReceive);
 
             // Gestion des évènements
             playGameMenuItem.Selected += PlayGameMenuItemSelected;
@@ -55,11 +57,13 @@ namespace MenuSample.Scenes
             if (_content == null)
                 _content = new ContentManager(SceneManager.Game.Services, "Content");
 
+
             AudioPlayer.Initialize();
             System.Threading.Thread.Sleep(500); // Sert à éviter un bug dû à la Race Condition du thread lancé par Initialize().
 
             AudioPlayer.SetVolume(1f);
             AudioPlayer.PlayMusic("Musiques\\Menu\\Musique.flac");
+
         }
 
 

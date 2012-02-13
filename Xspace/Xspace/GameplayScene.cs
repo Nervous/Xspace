@@ -43,17 +43,18 @@ namespace MenuSample.Scenes
         private StreamReader sr_level;
         private char[] delimitationFilesInfo = new char[] { ' ' }, delimitationFilesInfo2 = new char[] { ';' }, delimitationFilesInfo3 = new char[] { ':' };
         private float[] spectre;
-        private bool drawSpectre;
+        private bool drawSpectre, loose;
         private float music_energy;
         #endregion
         #region Déclaration variables relatives au jeu
         private doneParticles partManage;
         private ScrollingBackground fond_ecran, fond_ecran_front, fond_ecran_middle;
         public SpriteBatch spriteBatch;
-        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Missile_Joueur_1, T_Missile_Drone, T_Bonus_Vie, T_Bonus_Weapon1, T_Obstacles_Hole, barre_vie, T_HUD, T_HUD_bars, textureObstacle;
+        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Missile_Joueur_1, T_Missile_Drone, T_Bonus_Vie, T_Bonus_Weapon1, T_Obstacles_Hole, barre_vie, T_HUD, T_HUD_bars, T_Divers_Levelcomplete, T_Divers_Levelfail;
         private List<Texture2D> listeTextureVaisseauxEnnemis, listeTextureBonus, listeTextureObstacles;
         private SoundEffect musique_tir;
         private KeyboardState keyboardState;
+        private levelfail levelfail = new levelfail();
         bool lastKeyDown = true;
         private gestionLevels thisLevel;
         private List<gestionLevels> infLevel;
@@ -82,6 +83,9 @@ namespace MenuSample.Scenes
 
         private readonly Random _random = new Random();
         private AffichageInformations HUD = new AffichageInformations();
+        private levelcomplete level_win = new levelcomplete();
+        private levelfail level_fail = new levelfail();
+        
         public GameplayScene(SceneManager sceneMgr, GraphicsDeviceManager graphics)
             : base(sceneMgr)
         {
@@ -92,17 +96,21 @@ namespace MenuSample.Scenes
             };
             particleEffect = new ParticleEffect();
 
+
             score = 0;
             lastTime = 0;
             lastTimeEnergy = 0;
             lastTimeSpectre = 150;
+            loose = false;
             spectre = new float[128];
+            SoundEffect.MasterVolume = 0.75f;
         }
 
         public override void Initialize()
         {
 		    base.Initialize();
         }
+
         protected override void LoadContent()
         {
             if (_content == null)
@@ -110,7 +118,6 @@ namespace MenuSample.Scenes
             spriteBatch = new SpriteBatch(GraphicsDevice);
             Thread.Sleep(500);
             SceneManager.Game.ResetElapsedTime();
-
             #region Chargement musiques & sons
             musique_tir = _content.Load<SoundEffect>("Sons\\Tir\\Tir");
             
@@ -197,7 +204,13 @@ namespace MenuSample.Scenes
             #region Chargement barre de vie
             barre_vie = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Joueur\\barre-vie-test1");
             #endregion
+
+            #region Chargement fin level
+            T_Divers_Levelcomplete = _content.Load<Texture2D>("Sprites\\Divers\\levelcomplete");
+            T_Divers_Levelfail = _content.Load<Texture2D>("Sprites\\Divers\\levelfail");
+            #endregion
         }
+
 
         doneParticles collisions(List<Vaisseau> listeVaisseau, List<Missiles> listeMissile, List<Bonus> listeBonus, List<Obstacles> listeObstacles, float spentTime, ParticleEffect particleEffect, GameTime gametime)
         {
@@ -241,7 +254,9 @@ namespace MenuSample.Scenes
                                 // Vaisseau dead
                                             
                                 vaisseau.kill();
+                                if(!loose)
                                 score = score + vaisseau.score;
+
                                 return new doneParticles(false, new Vector2(vaisseau.position.X + vaisseau.sprite.Width / 2, vaisseau.position.Y + vaisseau.sprite.Height / 2));        
                             }
                         }
@@ -255,7 +270,10 @@ namespace MenuSample.Scenes
                     {
                         // Collision entre vaisseau joueur & ennemi trouvée
                         vaisseau.kill();
+
+                        if(!loose)
                         score = score + vaisseau.score;
+
                         listeVaisseauToRemove.Add(vaisseau);
                         listeVaisseau[0].hurt(vaisseau.damageCollision);
                         if(listeVaisseau[0].vie < 0)
@@ -499,10 +517,8 @@ namespace MenuSample.Scenes
 
             #endregion
             #region Fin du level
-            if (end == true || listeVaisseau[0].ennemi)
+            if (end == true || listeVaisseau[0].vie <= 0)
             {
-                AudioPlayer.StopMusic();
-                AudioPlayer.PlayMusic("Musiques\\Menu\\Musique.flac");
                 path_level = "Scores\\Arcade\\lvl1" + ".score";
                 sr_level = new StreamReader(path_level);
                 score_level = System.IO.File.ReadAllLines(@path_level);
@@ -524,7 +540,15 @@ namespace MenuSample.Scenes
                 sw_level.WriteLine(stock_score_inferieur + "Nervous" + '\n' + Convert.ToString(score) + '\n' + stock_score_superieur);
                 sw_level.Close();
 
-                Remove();
+                    AudioPlayer.StopMusic();
+                    SoundEffect.MasterVolume = 0.00f;
+                    if (keyboardState.IsKeyDown(Keys.Enter))
+                    {
+                        AudioPlayer.PlayMusic("Musiques\\Menu\\Musique.flac");
+                        Remove();
+                    }
+                
+                
             }
             #endregion
             base.Update(gameTime);
@@ -600,7 +624,13 @@ namespace MenuSample.Scenes
             }
             base.Draw(gameTime);
             #endregion
-
+            if ((end)&&(!loose))
+                level_win.Draw_win(spriteBatch, T_Divers_Levelcomplete, _gameFont, score);
+            else if (listeVaisseau[0].ennemi)
+            {
+                loose = true;
+                level_fail.Draw_fail(spriteBatch, T_Divers_Levelfail, _gameFont, score);
+            }
 
 
             spriteBatch.End();

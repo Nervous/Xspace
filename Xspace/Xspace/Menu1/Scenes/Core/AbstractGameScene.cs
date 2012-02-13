@@ -23,7 +23,6 @@ namespace MenuSample.Scenes.Core
         private readonly SceneManager _sceneManager;
         private bool _isExiting;
 
-
         public bool IsPopup
         {
             get { return _isPopup; }
@@ -140,6 +139,8 @@ namespace MenuSample.Scenes.Core
         /// Indique à la scène qu'elle doit disparaître, à l'instar de SceneManager.RemoveScene,
         /// qui quitte instantanément la scène, cette méthode respecte la durée de transition.
         /// </summary>
+
+
         public void Remove()
         {
             // Si la scène a un temps de désactivation nul, retrait immédiat
@@ -154,6 +155,8 @@ namespace MenuSample.Scenes.Core
         {
             _sceneManager.AddScene(this);
         }
+
+
 
     }
 }
