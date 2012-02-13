@@ -114,7 +114,10 @@ namespace Xspace
 
         public void heal(int ammount)
         {
-            this._vie += ammount;
+            if (ammount + vie <= vieMax)
+                this._vie += ammount;
+            else
+                this._vie = vieMax;
         }
 
         public bool ennemi

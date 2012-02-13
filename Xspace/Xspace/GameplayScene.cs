@@ -103,7 +103,7 @@ namespace MenuSample.Scenes
             lastTimeSpectre = 150;
             loose = false;
             spectre = new float[128];
-            SoundEffect.MasterVolume = 0.75f;
+            SoundEffect.MasterVolume = 0.15f;
         }
 
         public override void Initialize()
