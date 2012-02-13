@@ -18,6 +18,7 @@ namespace Xspace
         protected Texture2D _textureObstacle;
         protected float _vitesseObstacle;
         protected string _categorie;
+        int lastDeg;
 
         public Obstacles(Texture2D texture, float vitesse, Vector2 startPosition, string categorie)
         {
@@ -26,6 +27,7 @@ namespace Xspace
             _emplacement = startPosition;
             _deplacement = Vector2.Normalize(new Vector2(5, 0));
             _categorie = categorie;
+            lastDeg = 0;
         }
 
         public Vector2 position
@@ -50,7 +52,16 @@ namespace Xspace
 
         public void Draw(SpriteBatch batch)
         {
-            batch.Draw(_textureObstacle, _emplacement, Color.White);
+            //batch.Draw(_textureObstacle, _emplacement, Color.White);
+            batch.Draw(_textureObstacle,                                  // Texture (Image)
+                     _emplacement,                               // Position de l'image
+                     null,                                       // Zone de l'image à afficher
+                     Color.White,                                // Teinte
+                     MathHelper.ToRadians(lastDeg--),       // Rotation (en rad)
+                     new Vector2(_textureObstacle.Width / 2, _textureObstacle.Height / 2),  // Origine
+                     1.0f,                                       // Echelle
+                     SpriteEffects.None,                         // Effet
+                     0);                                         // Profondeur
         }
     }
 }

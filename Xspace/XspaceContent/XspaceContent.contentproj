@@ -323,11 +323,18 @@
       <Name>space-middle</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-	</Compile>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Sprites\Obstacles\Hole.png">
       <Name>Hole</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Sprites\Missiles\Ennemi\missile_new1.png">
+      <Name>missile_new1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

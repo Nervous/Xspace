@@ -50,7 +50,7 @@ namespace MenuSample.Scenes
         private doneParticles partManage;
         private ScrollingBackground fond_ecran, fond_ecran_front, fond_ecran_middle;
         public SpriteBatch spriteBatch;
-        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Missile_Joueur_1, T_Missile_Drone, T_Bonus_Vie, T_Bonus_Weapon1, T_Obstacles_Hole, barre_vie, T_HUD, T_HUD_bars;
+        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Missile_Joueur_1, T_Missile_Drone, T_Bonus_Vie, T_Bonus_Weapon1, T_Obstacles_Hole, barre_vie, T_HUD, T_HUD_bars, textureObstacle;
         private List<Texture2D> listeTextureVaisseauxEnnemis, listeTextureBonus, listeTextureObstacles;
         private SoundEffect musique_tir;
         private KeyboardState keyboardState;
@@ -155,7 +155,7 @@ namespace MenuSample.Scenes
             #endregion
             #region Chargement textures missiles
             T_Missile_Joueur_1 = _content.Load<Texture2D>("Sprites\\Missiles\\Joueur\\missilenew1");
-            T_Missile_Drone = _content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\missile_boule1");
+            T_Missile_Drone = _content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\missile_new1");
             #endregion
             #region Chargement textures bonus
             // TODO : Chargement de toutes les textures des bonus en dessous
@@ -284,11 +284,6 @@ namespace MenuSample.Scenes
                             double distance_unit_y = centre_hole_y - centre_joueur_y / Math.Abs(centre_hole_y - centre_joueur_y);
                             double distance_x_max = obstacle.sprite.Width / 2;
                             double distance_y_max = obstacle.sprite.Height / 2;
-                            int attirer_x = (int)((distance_unit_x * 10) / (Math.Pow(distance_x, 2)));
-                            int attirer_y = (int)((distance_unit_y * 10) / (Math.Pow(distance_y, 2)));
-                            Vector2 attirer = new Vector2(attirer_x, attirer_x);
-                            listeVaisseau[0].move(attirer, fps_fix);
-                            Console.WriteLine("Attirer de : " + attirer_x + " X et " + attirer_y + " Y");
                         }
                     }
                     #endregion
@@ -464,7 +459,7 @@ namespace MenuSample.Scenes
             #region Update des obstacles
             foreach (Obstacles obstacle in listeObstacles)
             {
-                if (obstacle.position.X > 0)
+                if (obstacle.position.X > -250)
                     obstacle.Update(fps_fix);
                 else
                     listeObstaclesToRemove.Add(obstacle);
@@ -550,9 +545,7 @@ namespace MenuSample.Scenes
             spriteBatch.Draw(T_HUD, new Vector2(0, 380), Color.White);
             HUD.Drawbar(spriteBatch, barre_vie, listeVaisseau[0].vie, listeVaisseau[0].vieMax);
             spriteBatch.Draw(T_HUD_bars, new Vector2(380, 630), Color.White);
-            if(listeVaisseau[0].vie > 0)
-                spriteBatch.DrawString(_gameFont, Convert.ToString(listeVaisseau[0].vie) + "/" + Convert.ToString(listeVaisseau[0].vieMax), new Vector2(500,450), Color.Red);
-
+            
             spriteBatch.DrawString(_ingameFont, Convert.ToString(score), new Vector2(147, 680), Color.Black);
             //particleRenderer.RenderEffect(particleEffect);
             #region Draw des obstacles
