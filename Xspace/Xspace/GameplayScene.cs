@@ -43,7 +43,7 @@ namespace MenuSample.Scenes
         private StreamReader sr_level;
         private char[] delimitationFilesInfo = new char[] { ' ' }, delimitationFilesInfo2 = new char[] { ';' }, delimitationFilesInfo3 = new char[] { ':' };
         private float[] spectre;
-        private bool drawSpectre, loose;
+        private bool drawSpectre, loose, win;
         private float music_energy;
         #endregion
         #region Déclaration variables relatives au jeu
@@ -102,6 +102,7 @@ namespace MenuSample.Scenes
             lastTimeEnergy = 0;
             lastTimeSpectre = 150;
             loose = false;
+            win = false;
             spectre = new float[128];
             SoundEffect.MasterVolume = 0.15f;
         }
@@ -254,7 +255,7 @@ namespace MenuSample.Scenes
                                 // Vaisseau dead
                                             
                                 vaisseau.kill();
-                                if(!loose)
+                                if((!loose)&&(!win))
                                 score = score + vaisseau.score;
 
                                 return new doneParticles(false, new Vector2(vaisseau.position.X + vaisseau.sprite.Width / 2, vaisseau.position.Y + vaisseau.sprite.Height / 2));        
@@ -271,7 +272,7 @@ namespace MenuSample.Scenes
                         // Collision entre vaisseau joueur & ennemi trouvée
                         vaisseau.kill();
 
-                        if(!loose)
+                        if((!loose)&&(!win))
                         score = score + vaisseau.score;
 
                         listeVaisseauToRemove.Add(vaisseau);
@@ -624,8 +625,11 @@ namespace MenuSample.Scenes
             }
             base.Draw(gameTime);
             #endregion
-            if ((end)&&(!loose))
+            if ((end) && (!loose))
+            {
+                win = true;
                 level_win.Draw_win(spriteBatch, T_Divers_Levelcomplete, _gameFont, score);
+            }
             else if (listeVaisseau[0].ennemi)
             {
                 loose = true;
