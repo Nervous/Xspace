@@ -60,8 +60,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Sprites\Vaisseaux\Joueur\Vaisseau1.png">
-      <Name>Vaisseau1</Name>
+    <Compile Include="Sprites\Vaisseaux\Ennemi\drone.png">
+      <Name>drone</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -69,13 +69,6 @@
   <ItemGroup>
     <Compile Include="Sprites\Missiles\Joueur\Missile1.png">
       <Name>Missile1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Sprites\Vaisseaux\Ennemi\Vaisseau1.png">
-      <Name>Vaisseau1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -207,13 +200,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Sprites\Vaisseaux\Ennemi\drone.png">
-      <Name>drone</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Sprites\Menu\Score\score-selected-back.png">
       <Name>score-selected-back</Name>
       <Importer>TextureImporter</Importer>
@@ -237,20 +223,6 @@
   <ItemGroup>
     <Compile Include="Sprites\Missiles\Joueur\missile_rocket1.png">
       <Name>missile_rocket1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Sprites\Vaisseaux\Joueur\drone_joueur1.png">
-      <Name>drone_joueur1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Sprites\Vaisseaux\Ennemi\ennemi_gris1.png">
-      <Name>ennemi_gris1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -349,6 +321,20 @@
   <ItemGroup>
     <Compile Include="Sprites\Divers\levelcomplete.png">
       <Name>levelcomplete</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Sprites\Vaisseaux\Ennemi\Kamikaze.png">
+      <Name>Kamikaze</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Sprites\Vaisseaux\Joueur\Joueur_1.png">
+      <Name>Joueur_1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

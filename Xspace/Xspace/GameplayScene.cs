@@ -32,7 +32,6 @@ namespace MenuSample.Scenes
     /// </summary>
     public class GameplayScene : AbstractGameScene
     {
-        bool end = false;
         #region Déclaration variables usuelles
         private int score;
         private float fps_fix, _pauseAlpha;
@@ -50,12 +49,12 @@ namespace MenuSample.Scenes
         private doneParticles partManage;
         private ScrollingBackground fond_ecran, fond_ecran_front, fond_ecran_middle;
         public SpriteBatch spriteBatch;
-        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Missile_Joueur_1, T_Missile_Drone, T_Bonus_Vie, T_Bonus_Weapon1, T_Obstacles_Hole, barre_vie, T_HUD, T_HUD_bars, T_Divers_Levelcomplete, T_Divers_Levelfail;
+        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Vaisseau_Kamikaze, T_Missile_Joueur_1, T_Missile_Drone, T_Bonus_Vie, T_Bonus_Weapon1, T_Obstacles_Hole, barre_vie, T_HUD, T_HUD_bars, T_Divers_Levelcomplete, T_Divers_Levelfail;
         private List<Texture2D> listeTextureVaisseauxEnnemis, listeTextureBonus, listeTextureObstacles;
         private SoundEffect musique_tir;
         private KeyboardState keyboardState;
         private levelfail levelfail = new levelfail();
-        bool lastKeyDown = true;
+        bool lastKeyDown = true, end = false, endDead = false;
         private gestionLevels thisLevel;
         private List<gestionLevels> infLevel;
         Renderer particleRenderer;
@@ -147,8 +146,9 @@ namespace MenuSample.Scenes
             particleEffect.Initialise();
             #endregion
             #region Chargement textures vaisseaux
-            T_Vaisseau_Joueur = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Joueur\\drone_joueur1");
-            T_Vaisseau_Drone = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Ennemi\\ennemi_gris1");
+            T_Vaisseau_Joueur = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Joueur\\Joueur_1");
+            T_Vaisseau_Drone = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Ennemi\\Drone");
+            T_Vaisseau_Kamikaze = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Ennemi\\Kamikaze");
 			
 			drawSpectre = false;
 
@@ -193,11 +193,15 @@ namespace MenuSample.Scenes
             #region Chargement du level
             listeTextureVaisseauxEnnemis = new List<Texture2D>();
             listeTextureVaisseauxEnnemis.Add(T_Vaisseau_Drone);
+            listeTextureVaisseauxEnnemis.Add(T_Vaisseau_Kamikaze);
+
             listeTextureBonus = new List<Texture2D>();
             listeTextureBonus.Add(T_Bonus_Vie);
             listeTextureBonus.Add(T_Bonus_Weapon1);
+
             listeTextureObstacles = new List<Texture2D>();
             listeTextureObstacles.Add(T_Obstacles_Hole);
+
             thisLevel = new gestionLevels(0, listeTextureVaisseauxEnnemis, listeTextureBonus, listeTextureObstacles);
             infLevel = new List<gestionLevels>();
             thisLevel.readInfos(delimitationFilesInfo, delimitationFilesInfo2, delimitationFilesInfo3, infLevel);
@@ -236,6 +240,25 @@ namespace MenuSample.Scenes
                     }
                 }
                 #endregion
+                #region Collision joueur <=> vaisseau
+                if (((listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > vaisseau.position.X && listeVaisseau[0].position.X < vaisseau.position.X) ||
+                            (listeVaisseau[0].position.X < vaisseau.position.X + vaisseau.sprite.Width && listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > vaisseau.position.X + vaisseau.sprite.Width))
+                       && ((listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height > vaisseau.position.Y && listeVaisseau[0].position.Y < vaisseau.position.Y) ||
+                             (listeVaisseau[0].position.Y < vaisseau.position.Y + vaisseau.sprite.Height && listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height > vaisseau.position.Y + vaisseau.sprite.Height)))
+                {
+                    // Collision entre vaisseau joueur & ennemi trouvée
+                    vaisseau.kill();
+
+                    if ((!end) && (!endDead))
+                        score = score + vaisseau.score;
+
+                    listeVaisseauToRemove.Add(vaisseau);
+                    listeVaisseau[0].hurt(vaisseau.damageCollision);
+                    if (listeVaisseau[0].vie < 0)
+                        listeVaisseauToRemove.Add(listeVaisseau[0]);
+                    return new doneParticles(false, new Vector2(vaisseau.position.X + vaisseau.sprite.Width / 2, vaisseau.position.Y + vaisseau.sprite.Height / 2));
+                }
+                #endregion
                 foreach (Missiles missile in listeMissile)
                 {
                     #region Collision missile => vaisseau
@@ -255,31 +278,12 @@ namespace MenuSample.Scenes
                                 // Vaisseau dead
                                             
                                 vaisseau.kill();
-                                if((!loose)&&(!win))
+                                if((!end)&&(!endDead))
                                 score = score + vaisseau.score;
 
                                 return new doneParticles(false, new Vector2(vaisseau.position.X + vaisseau.sprite.Width / 2, vaisseau.position.Y + vaisseau.sprite.Height / 2));        
                             }
                         }
-                    }
-                    #endregion
-                    #region Collision joueur <=> vaisseau 
-                    if ( ( (listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > vaisseau.position.X && listeVaisseau[0].position.X < vaisseau.position.X) ||
-                                (listeVaisseau[0].position.X < vaisseau.position.X + vaisseau.sprite.Width && listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > vaisseau.position.X + vaisseau.sprite.Width))
-                           && (  (listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height > vaisseau.position.Y && listeVaisseau[0].position.Y < vaisseau.position.Y) ||
-                                 (listeVaisseau[0].position.Y < vaisseau.position.Y + vaisseau.sprite.Height && listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height > vaisseau.position.Y + vaisseau.sprite.Height)))
-                    {
-                        // Collision entre vaisseau joueur & ennemi trouvée
-                        vaisseau.kill();
-
-                        if((!loose)&&(!win))
-                        score = score + vaisseau.score;
-
-                        listeVaisseauToRemove.Add(vaisseau);
-                        listeVaisseau[0].hurt(vaisseau.damageCollision);
-                        if(listeVaisseau[0].vie < 0)
-                            listeVaisseauToRemove.Add(listeVaisseau[0]);
-                        return new doneParticles(false, new Vector2(vaisseau.position.X + vaisseau.sprite.Width/2, vaisseau.position.Y + vaisseau.sprite.Height / 2));
                     }
                     #endregion
                     
@@ -366,7 +370,8 @@ namespace MenuSample.Scenes
                             listeObstacles.Add(spawn.Obstacle);
                             break;
                         case "EOL":
-                            end = true;
+                            if(!endDead)
+                                end = true;
                             break;
                         default:
                             break;
@@ -387,7 +392,7 @@ namespace MenuSample.Scenes
             else if(keyboardState.IsKeyUp(Keys.F1))
                 lastKeyDown = true;
 			
-            if (keyboardState.IsKeyDown(Keys.Space))
+            if ((keyboardState.IsKeyDown(Keys.Space) && (listeVaisseau.Count != 0)))
             {
                 switch (listeVaisseau[0].armeActuelle)
                 {
@@ -518,7 +523,12 @@ namespace MenuSample.Scenes
 
             #endregion
             #region Fin du level
-            if (end == true || listeVaisseau[0].vie <= 0)
+            if (listeVaisseau.Count == 0)
+                endDead = true;
+            else if (listeVaisseau[0].vie <= 0)
+                endDead = true;
+
+            if (end || endDead)
             {
                 path_level = "Scores\\Arcade\\lvl1" + ".score";
                 sr_level = new StreamReader(path_level);
@@ -557,22 +567,22 @@ namespace MenuSample.Scenes
 
         public override void Draw(GameTime gameTime)
         {
-
             SpriteBatch spriteBatch = SceneManager.SpriteBatch;
-
             SceneManager.GraphicsDevice.Clear(ClearOptions.Target, Color.Transparent, 0, 0);
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
 
+            #region Draw du fond
             fond_ecran.Draw(spriteBatch);
             fond_ecran_middle.Draw(spriteBatch);
             fond_ecran_front.Draw(spriteBatch);
-            
+            #endregion
+            #region Draw de l'HUD
             spriteBatch.Draw(T_HUD, new Vector2(0, 380), Color.White);
-            HUD.Drawbar(spriteBatch, barre_vie, listeVaisseau[0].vie, listeVaisseau[0].vieMax);
+            if(listeVaisseau.Count != 0)
+                HUD.Drawbar(spriteBatch, barre_vie, listeVaisseau[0].vie, listeVaisseau[0].vieMax);
             spriteBatch.Draw(T_HUD_bars, new Vector2(380, 630), Color.White);
-            
             spriteBatch.DrawString(_ingameFont, Convert.ToString(score), new Vector2(147, 680), Color.Black);
-            //particleRenderer.RenderEffect(particleEffect);
+            #endregion
             #region Draw des obstacles
             foreach (Obstacles obstacle in listeObstacles)
             {
@@ -625,17 +635,18 @@ namespace MenuSample.Scenes
             }
             base.Draw(gameTime);
             #endregion
-            if ((end) && (!loose))
+            #region Draw fin du jeu
+            if (end)
             {
                 win = true;
                 level_win.Draw_win(spriteBatch, T_Divers_Levelcomplete, _gameFont, score);
             }
-            else if (listeVaisseau[0].ennemi)
+            else if (endDead)
             {
                 loose = true;
                 level_fail.Draw_fail(spriteBatch, T_Divers_Levelfail, _gameFont, score);
             }
-
+            #endregion
 
             spriteBatch.End();
         }
