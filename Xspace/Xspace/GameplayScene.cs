@@ -206,8 +206,8 @@ namespace MenuSample.Scenes
             #endregion
 
             #region Chargement fin level
-            T_Divers_Levelcomplete = _content.Load<Texture2D>("Sprites\\Divers\\levelcomplete");
-            T_Divers_Levelfail = _content.Load<Texture2D>("Sprites\\Divers\\levelfail");
+            T_Divers_Levelcomplete = _content.Load<Texture2D>("Sprites\\Divers\\levelcompleted");
+            T_Divers_Levelfail = _content.Load<Texture2D>("Sprites\\Divers\\gameover");
             #endregion
         }
 
