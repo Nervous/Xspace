@@ -42,7 +42,7 @@ namespace MenuSample.Scenes
         private StreamReader sr_level;
         private char[] delimitationFilesInfo = new char[] { ' ' }, delimitationFilesInfo2 = new char[] { ';' }, delimitationFilesInfo3 = new char[] { ':' };
         private float[] spectre;
-        private bool drawSpectre, loose, win;
+        private bool drawSpectre;
         private float music_energy;
         #endregion
         #region Déclaration variables relatives au jeu
@@ -53,7 +53,6 @@ namespace MenuSample.Scenes
         private List<Texture2D> listeTextureVaisseauxEnnemis, listeTextureBonus, listeTextureObstacles;
         private SoundEffect musique_tir;
         private KeyboardState keyboardState;
-        private levelfail levelfail = new levelfail();
         bool lastKeyDown = true, end = false, endDead = false;
         private gestionLevels thisLevel;
         private List<gestionLevels> infLevel;
@@ -82,8 +81,6 @@ namespace MenuSample.Scenes
 
         private readonly Random _random = new Random();
         private AffichageInformations HUD = new AffichageInformations();
-        private levelcomplete level_win = new levelcomplete();
-        private levelfail level_fail = new levelfail();
         
         public GameplayScene(SceneManager sceneMgr, GraphicsDeviceManager graphics)
             : base(sceneMgr)
@@ -100,8 +97,6 @@ namespace MenuSample.Scenes
             lastTime = 0;
             lastTimeEnergy = 0;
             lastTimeSpectre = 150;
-            loose = false;
-            win = false;
             spectre = new float[128];
             SoundEffect.MasterVolume = 0.15f;
         }
@@ -638,13 +633,13 @@ namespace MenuSample.Scenes
             #region Draw fin du jeu
             if (end)
             {
-                win = true;
-                level_win.Draw_win(spriteBatch, T_Divers_Levelcomplete, _gameFont, score);
+                spriteBatch.Draw(T_Divers_Levelcomplete, new Vector2(0, 0), Color.White);
+                spriteBatch.DrawString(_gameFont, Convert.ToString(score), new Vector2(500, 500), Color.Red);
             }
             else if (endDead)
             {
-                loose = true;
-                level_fail.Draw_fail(spriteBatch, T_Divers_Levelfail, _gameFont, score);
+                spriteBatch.Draw(T_Divers_Levelfail, new Vector2(0, 0), Color.White);
+                spriteBatch.DrawString(_gameFont, Convert.ToString(score), new Vector2(500, 500), Color.Red);
             }
             #endregion
 

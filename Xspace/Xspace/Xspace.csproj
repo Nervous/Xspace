@@ -119,8 +119,6 @@
     <Compile Include="Bonus\Bonus.cs" />
     <Compile Include="Bonus\Bonus_NouvelleArme1.cs" />
     <Compile Include="Bonus\Bonus_Vie.cs" />
-    <Compile Include="Fin Level\levelcomplete.cs" />
-    <Compile Include="Fin Level\levelfail.cs" />
     <Compile Include="gestionLevels.cs" />
     <Compile Include="Menu1\InputState.cs" />
     <Compile Include="Menu1\Scenes\BackgroundScene.cs" />
