@@ -13,8 +13,8 @@ namespace Xspace.Boss
     class Boss
     {
         protected Texture2D _texture;
-        protected int _vie, _vitesse, _NbShootsperPhases, _score, _vieMax, _armeActuelle;
-        protected int[] _phase;
+        protected int _vie, _vitesse, _NbShootsperPhases, _score, _vieMax, _armeActuelle, _phase;
+        protected int[] _phaseList;
         protected double _timingAttack, _lastTir;
         protected Missiles[] _missiles;
         protected Vector2 _position;
@@ -28,14 +28,14 @@ namespace Xspace.Boss
          
          WARNING: Only three phases maximum are supported right now*/
 
-        public Boss(Texture2D texture, int vie, int vieMax, double timingAttack, int[] phase, int vitesse, Missiles[] missiles, int NbShootsperPhases, Vector2 position, int damageCollision, int score)
+        public Boss(Texture2D texture, int vie, int vieMax, double timingAttack, int[] phaseList, int vitesse, Missiles[] missiles, int NbShootsperPhases, Vector2 position, int damageCollision, int score)
         {
             _texture = texture;
             _vie = vie;
             _vieMax = vieMax;
             _score = score;
             _vitesse = vitesse;
-            _phase = phase;
+            _phaseList = phaseList;
             _missiles = missiles;
             _position = position;
             _NbShootsperPhases = NbShootsperPhases;
@@ -43,9 +43,7 @@ namespace Xspace.Boss
             _lastTir = 0;
             _timingAttack = timingAttack;
             _existe = true;
-            _phase1 = true;
-            _phase2 = false;
-            _phase3 = false;
+            _phase = 1;
         }
 
         public Vector2 Position
@@ -105,19 +103,9 @@ namespace Xspace.Boss
             return (_vie <= 0);
         }
 
-        public bool Phase1
+        public int Phase
         {
-            get { return(_phase1);}
-        }
-
-        public bool Phase2
-        {
-            get { return(_phase2);}
-        }
-
-        public bool Phase3
-        {
-            get { return(_phase3);}
+            get { return(_phase);}
         }
 
         public void Heal(int amount)
@@ -140,44 +128,27 @@ namespace Xspace.Boss
 
         public void Update(float fps_fix)
         {
-            if (_phase.Length == 3)
+            if (_phaseList.Length == 3)
             {
-                if ((_vie > _phase[1]) && (_phase[0] >= _vie))
-                {
-                    _phase1 = true;
-                    _phase2 = false;
-                    _phase3 = false;
-                }
+                if ((_vie > _phaseList[1]) && (_phaseList[0] >= _vie))
+                    _phase = 1;
+                
 
-                else if ((_vie > _phase[2]) && (_phase[1] >= _vie))
-                {
-                    _phase1 = false;
-                    _phase2 = true;
-                    _phase3 = false;
-                }
+                else if ((_vie > _phaseList[2]) && (_phaseList[1] >= _vie))
+                    _phase = 2;
+                
 
-                else if ((_vie > 0) && (_phase[2] >= _vie))
-                {
-                    _phase1 = false;
-                    _phase2 = false;
-                    _phase3 = true;
-                }
+                else if ((_vie > 0) && (_phaseList[2] >= _vie))
+                    _phase = 3;
+                
             }
-            else if (_phase.Length == 2)
+            else if (_phaseList.Length == 2)
             {
-                if ((_vie > _phase[1]) && (_phase[0] >= _vie))
-                {
-                    _phase1 = true;
-                    _phase2 = false;
-                    _phase3 = false;
-                }
+                if ((_vie > _phaseList[1]) && (_phaseList[0] >= _vie))
+                    _phase = 1;
 
-                else if ((_vie > 0) && (_phase[1] >= _vie))
-                {
-                    _phase1 = false;
-                    _phase2 = true;
-                    _phase3 = false;
-                }
+                else if ((_vie > 0) && (_phaseList[1] >= _vie))
+                    _phase = 2;
             }
         }
     }
