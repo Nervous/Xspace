@@ -119,6 +119,7 @@
     <Compile Include="Bonus\Bonus.cs" />
     <Compile Include="Bonus\Bonus_NouvelleArme1.cs" />
     <Compile Include="Bonus\Bonus_Vie.cs" />
+    <Compile Include="Boss\Boss.cs" />
     <Compile Include="gestionLevels.cs" />
     <Compile Include="Menu1\InputState.cs" />
     <Compile Include="Menu1\Scenes\BackgroundScene.cs" />

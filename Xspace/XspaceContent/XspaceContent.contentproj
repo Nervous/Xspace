@@ -312,20 +312,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Sprites\Divers\levelfail.png">
-      <Name>levelfail</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Sprites\Divers\levelcomplete.png">
-      <Name>levelcomplete</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Sprites\Vaisseaux\Ennemi\Kamikaze.png">
       <Name>Kamikaze</Name>
       <Importer>TextureImporter</Importer>
