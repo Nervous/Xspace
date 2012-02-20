@@ -576,7 +576,7 @@ namespace MenuSample.Scenes
             if(listeVaisseau.Count != 0)
                 HUD.Drawbar(spriteBatch, barre_vie, listeVaisseau[0].vie, listeVaisseau[0].vieMax);
             spriteBatch.Draw(T_HUD_bars, new Vector2(380, 630), Color.White);
-            spriteBatch.DrawString(_ingameFont, Convert.ToString(score), new Vector2(147, 680), Color.Black);
+            spriteBatch.DrawString(_ingameFont, Convert.ToString(score), new Vector2(90, 647), new Color(30, 225, 30));
             #endregion
             #region Draw des obstacles
             foreach (Obstacles obstacle in listeObstacles)
