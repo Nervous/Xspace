@@ -330,8 +330,8 @@ namespace MenuSample.Scenes
             float coeff_speed_variation = 1f; //coefficient de la variation de la vitesse des fonds.
             float coeff_speed = 0.05f; //coefficient de vitesse du fond.
             float coeff_speed_middle = 0.1f; //coefficient de vitesse du fond au milieu.
-            float coeff_speed_front = 0.8f; //coefficient de vitesse du fond en avant.
-            float default_speed = 2f; //La vitesse doit tendre vers (default_speed * coeff)
+            float coeff_speed_front = 0.5f; //coefficient de vitesse du fond en avant.
+            float default_speed = 1f; //La vitesse doit tendre vers (default_speed * coeff)
 
             fond_ecran.Update(fps_fix, (default_speed + (music_energy - default_speed) * coeff_speed_variation) * coeff_speed);
             fond_ecran_middle.Update(fps_fix, (default_speed + (music_energy - default_speed) * coeff_speed_variation) * coeff_speed_middle);
