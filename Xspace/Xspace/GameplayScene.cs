@@ -49,7 +49,7 @@ namespace MenuSample.Scenes
         private doneParticles partManage;
         private ScrollingBackground fond_ecran, fond_ecran_front, fond_ecran_middle;
         public SpriteBatch spriteBatch;
-        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Vaisseau_Kamikaze, T_Missile_Joueur_1, T_Missile_Drone, T_Bonus_Vie, T_Bonus_Weapon1, T_Obstacles_Hole, barre_vie, T_HUD, T_HUD_bars, T_Divers_Levelcomplete, T_Divers_Levelfail;
+        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Vaisseau_Kamikaze, T_Missile_Joueur_1, T_Missile_Drone, T_Bonus_Vie, T_Bonus_Weapon1, T_Obstacles_Hole, barre_vie, T_HUD, T_HUD_bars, T_Divers_Levelcomplete, T_Divers_Levelfail, T_boss1;
         private List<Texture2D> listeTextureVaisseauxEnnemis, listeTextureBonus, listeTextureObstacles;
         private SoundEffect musique_tir;
         private KeyboardState keyboardState;
@@ -57,6 +57,8 @@ namespace MenuSample.Scenes
         private gestionLevels thisLevel;
         private List<gestionLevels> infLevel;
         Renderer particleRenderer;
+        private Xspace.Boss.Boss1 boss1;
+        int[] phaseArray1 = { 100, 60, 20 };
         ParticleEffect particleEffect;
         List<Vaisseau> listeVaisseau, listeVaisseauToRemove;
         List<Missiles> listeMissile, listeMissileToRemove;
@@ -81,6 +83,7 @@ namespace MenuSample.Scenes
 
         private readonly Random _random = new Random();
         private AffichageInformations HUD = new AffichageInformations();
+        
         
         public GameplayScene(SceneManager sceneMgr, GraphicsDeviceManager graphics)
             : base(sceneMgr)
@@ -204,6 +207,12 @@ namespace MenuSample.Scenes
             #region Chargement barre de vie
             barre_vie = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Joueur\\barre-vie-test1");
             #endregion
+            #region Chargement textures boss
+            T_boss1 = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Joueur\\Joueur_1"); 
+            boss1 = new Xspace.Boss.Boss1(T_boss1, phaseArray1);
+            boss1.LoadContent(_content);
+            #endregion 
+
 
             #region Chargement fin level
             T_Divers_Levelcomplete = _content.Load<Texture2D>("Sprites\\Divers\\levelcompleted");
@@ -339,6 +348,10 @@ namespace MenuSample.Scenes
 
             AudioPlayer.Update();
 
+            #region Boss 1
+            boss1.Update(fps_fix, time, listeMissile);
+
+            #endregion
             #region Gestion de la musique en cas de pause
             if (InputState.IsPauseGame())
             {
@@ -642,7 +655,9 @@ namespace MenuSample.Scenes
                 spriteBatch.DrawString(_gameFont, Convert.ToString(score), new Vector2(500, 500), Color.Red);
             }
             #endregion
-
+            #region Draw des boss
+            boss1.Draw(spriteBatch);
+            #endregion 
             spriteBatch.End();
         }
 

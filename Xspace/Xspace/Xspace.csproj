@@ -120,6 +120,7 @@
     <Compile Include="Bonus\Bonus_NouvelleArme1.cs" />
     <Compile Include="Bonus\Bonus_Vie.cs" />
     <Compile Include="Boss\Boss.cs" />
+    <Compile Include="Boss\Boss1.cs" />
     <Compile Include="gestionLevels.cs" />
     <Compile Include="Menu1\InputState.cs" />
     <Compile Include="Menu1\Scenes\BackgroundScene.cs" />
@@ -137,7 +138,9 @@
     <Compile Include="Menu1\Scenes\%28UNUSED%29OptionsMenuScene.cs" />
     <Compile Include="Menu1\Scenes\PauseMenuScene.cs" />
     <Compile Include="Missiles\Missile1_2_joueur.cs" />
+    <Compile Include="Missiles\Missile1_boss.cs" />
     <Compile Include="Missiles\Missile1_joueur.cs" />
+    <Compile Include="Missiles\Missile2_boss.cs" />
     <Compile Include="Missiles\Missiles.cs" />
     <Compile Include="Missiles\Missile_Drone.cs" />
     <Compile Include="Obstacles\Obstacles.cs" />
