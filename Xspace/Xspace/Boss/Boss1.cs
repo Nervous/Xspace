@@ -14,7 +14,6 @@ namespace Xspace.Boss
     
     class Boss1 : Boss
     {
-        int[] phaseArray = {100,60,20};
         public Texture2D _T_Missile1, _T_Missile2, _T_Missile3;
 
         public Boss1(Texture2D texture, int[] phaseArray)
@@ -26,8 +25,8 @@ namespace Xspace.Boss
         public void LoadContent(ContentManager content)
         {
             _T_Missile1 = content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\missile_new1");
-            _T_Missile2 = content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\missile_new1");
-            _T_Missile3 = content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\missile_new1");
+            _T_Missile2 = content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\drone");
+            _T_Missile3 = content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\missile_boule1");
         }
 
         public void Update(float fps_fix, double time, List<Missiles> listeMissile)
@@ -50,7 +49,7 @@ namespace Xspace.Boss
                     break;
                 case 2:
                     {
-                        if (time - LastTir > Vitesse)
+                        if (time - LastTir > _timingAttack)
                         {
                             Vector2 pos = new Vector2(Position.X - 35, Position.Y + _texture.Height / 3 - 6);
                             listeMissile.Add(new Missile1_boss(_T_Missile2, pos));
@@ -61,7 +60,7 @@ namespace Xspace.Boss
                     break;
                 case 3:
                     {
-                        if (time - LastTir > Vitesse)
+                        if (time - LastTir > _timingAttack)
                         {
                             Vector2 pos = new Vector2(Position.X - 35, Position.Y + _texture.Height / 3 - 6);
                             listeMissile.Add(new Missile2_boss(_T_Missile3, pos));

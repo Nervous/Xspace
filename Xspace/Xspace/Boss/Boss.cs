@@ -44,6 +44,11 @@ namespace Xspace.Boss
             get { return _position; }
         }
 
+        public Texture2D Texture
+        {
+            get { return _texture; }
+        }
+
         public int Vitesse
         {
             get { return _vitesse; }
