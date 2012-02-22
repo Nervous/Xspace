@@ -187,8 +187,8 @@ namespace Xspace
             if (existe)
             {
                 Color color;
-                if (this._lastDamage + 100 > time)
-                    color = Color.Red;
+                if (this._lastDamage + 120 > time)
+                    color = Color.Tomato;
                 else
                     color = Color.White;
                 batch.Draw(_textureVaisseau, _emplacement, color);
