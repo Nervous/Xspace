@@ -248,7 +248,7 @@ namespace MenuSample.Scenes
                         score = score + vaisseau.score;
 
                     listeVaisseauToRemove.Add(vaisseau);
-                    listeVaisseau[0].hurt(vaisseau.damageCollision);
+                    listeVaisseau[0].hurt(vaisseau.damageCollision, time);
                     if (listeVaisseau[0].vie < 0)
                         listeVaisseauToRemove.Add(listeVaisseau[0]);
                     return new doneParticles(false, new Vector2(vaisseau.position.X + vaisseau.sprite.Width / 2, vaisseau.position.Y + vaisseau.sprite.Height / 2));
@@ -268,7 +268,7 @@ namespace MenuSample.Scenes
                         {
                             listeMissileToRemove.Add(missile);
 
-                            if (vaisseau.hurt(missile.degats))
+                            if (vaisseau.hurt(missile.degats, time))
                             {
                                 // Vaisseau dead
                                             
@@ -326,7 +326,8 @@ namespace MenuSample.Scenes
             fps_fix = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             time += gameTime.ElapsedGameTime.TotalMilliseconds;
             base.Update(gameTime, othersceneHasFocus, false);
-            
+
+            #region Analyse de la musique
             float coeff_speed_variation = 1f; //coefficient de la variation de la vitesse des fonds.
             float coeff_speed = 0.05f; //coefficient de vitesse du fond.
             float coeff_speed_middle = 0.1f; //coefficient de vitesse du fond au milieu.
@@ -338,7 +339,7 @@ namespace MenuSample.Scenes
             fond_ecran_front.Update(fps_fix, (default_speed + (music_energy - default_speed) * coeff_speed_variation) * coeff_speed_front);
 
             AudioPlayer.Update();
-
+            #endregion
             #region Gestion de la musique en cas de pause
             if (InputState.IsPauseGame())
             {
@@ -502,7 +503,7 @@ namespace MenuSample.Scenes
                 {
                     for (int i = 0; i <= 127; i++)
                     {
-                        spectre_tmp[i] = Math.Min(1, spectre_tmp[i] * 20);
+                        spectre_tmp[i] = Math.Min(2, spectre_tmp[i] * 10);
                     }
 
                     lastTimeSpectre = time;
@@ -587,7 +588,7 @@ namespace MenuSample.Scenes
             #region Draw des vaisseaux
             foreach (Vaisseau vaisseau in listeVaisseau)
             {
-                vaisseau.Draw(spriteBatch);
+                vaisseau.Draw(spriteBatch, time);
             }
             #endregion
             #region Draw des missiles
@@ -615,7 +616,7 @@ namespace MenuSample.Scenes
                     for (int j = 0; j <= lenght / 4; j++)
                     {
                         Rectangle r = new Rectangle(Xspace.Xspace.window_width - lenght + j * 4, pxBegin + i * 4, j * 4, 4);
-                        spriteBatch.Draw(empty_texture, r, new Color(j, 128 - j * 4, 0));
+                        spriteBatch.Draw(empty_texture, r, new Color(j*2, 255 - j*2, 0));
                     }
                 }
 

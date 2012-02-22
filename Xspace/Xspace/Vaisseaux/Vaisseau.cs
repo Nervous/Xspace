@@ -20,6 +20,7 @@ namespace Xspace
         protected double _timingAttack;
         protected bool _ennemi, _existe;
         protected double _lastTir;
+        protected double _lastDamage;
 
         public Vaisseau(Texture2D texture, int vie, int vieMax, int armure, int damageCollision, float vitesseVaisseau, Vector2 startPosition, bool ennemi, double timingAttack, int score)
         {
@@ -38,26 +39,27 @@ namespace Xspace
             _timingAttack = timingAttack;
             _armeActuelle = 0;
             _score = score;
+            _lastDamage = -500;
         }
 
-        public void applyBonus(string effect, int ammount, int time)
+        public void applyBonus(string effect, int amount, int time)
         {
             switch (effect)
             {
                 case "vie":
-                    this.heal(ammount);
+                    this.heal(amount);
                     break;
                 case "weapon":
-                    this.changeWeapon(ammount);
+                    this.changeWeapon(amount);
                     break;
                 default:
                     break;
             }
         }
 
-        public void move(Vector2 ammount, float fps_fix)
+        public void move(Vector2 amount, float fps_fix)
         {
-            _emplacement -= ammount;
+            _emplacement -= amount;
         }
 
         public int vie
@@ -106,16 +108,17 @@ namespace Xspace
             get { return _textureVaisseau; }
         }
 
-        public bool hurt(int ammount)
+        public bool hurt(int amount, double time)
         {
-            this._vie -= ammount;
+            this._vie -= amount;
+            this._lastDamage = time;
             return (this._vie <= 0);
         }
 
-        public void heal(int ammount)
+        public void heal(int amount)
         {
-            if (ammount + vie <= vieMax)
-                this._vie += ammount;
+            if (amount + vie <= vieMax)
+                this._vie += amount;
             else
                 this._vie = vieMax;
         }
@@ -179,11 +182,16 @@ namespace Xspace
         }
 
 
-        public void Draw(SpriteBatch batch)
+        public void Draw(SpriteBatch batch, double time)
         {
             if (existe)
             {
-                batch.Draw(_textureVaisseau, _emplacement, Color.White);
+                Color color;
+                if (this._lastDamage + 100 > time)
+                    color = Color.Red;
+                else
+                    color = Color.White;
+                batch.Draw(_textureVaisseau, _emplacement, color);
             }
         }
     }
