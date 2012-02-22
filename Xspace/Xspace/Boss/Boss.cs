@@ -8,42 +8,37 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+
 namespace Xspace.Boss
 {
     class Boss
     {
         protected Texture2D _texture;
-        protected int _vie, _vitesse, _NbShootsperPhases, _score, _vieMax, _armeActuelle, _phase;
-        protected int[] _phaseList;
+        protected int _vie,_score, _vieMax, _armeActuelle, _phase, _lastVie;
+        protected float _vitesse;
+        protected int[] _phaseArray;
         protected double _timingAttack, _lastTir;
-        protected Missiles[] _missiles;
         protected Vector2 _position;
-        protected bool _existe, _phase1, _phase2, _phase3;
+        protected bool _existe;
         /* Phase list: Example: [100,60,20]: As soon as phase[0] < vie, second phase begin, then third phase when phase[1] (so at 20 of life) < vie, etc..
-         * So, you should ALWAYS have phase[0] >= vieMax
-        Same thing for missiles, NbShootsperPhases determines how many missiles you have in one phase.
-         * So, if you have NbShootsperPhases = 3, then the three first missiles of the list will be launched during phase 1.
-         * Then, missiles[3] will be in phase 2, missiles[6] in 3 etc.. 
-         * If missiles[n+1] doesn't exist, then missiles[n] will be launch..
-         
+         * So, you should ALWAYS have phase[0] >= vieMax        
          WARNING: Only three phases maximum are supported right now*/
 
-        public Boss(Texture2D texture, int vie, int vieMax, double timingAttack, int[] phaseList, int vitesse, Missiles[] missiles, int NbShootsperPhases, Vector2 position, int damageCollision, int score)
+        public Boss(Texture2D texture, int vie, int vieMax, double timingAttack, int[] phaseArray, int vitesse, Vector2 position, int damageCollision, int score)
         {
             _texture = texture;
             _vie = vie;
             _vieMax = vieMax;
             _score = score;
             _vitesse = vitesse;
-            _phaseList = phaseList;
-            _missiles = missiles;
+            _phaseArray = phaseArray;
             _position = position;
-            _NbShootsperPhases = NbShootsperPhases;
             _armeActuelle = 0;
             _lastTir = 0;
             _timingAttack = timingAttack;
             _existe = true;
             _phase = 1;
+            _lastVie = vie;
         }
 
         public Vector2 Position
@@ -51,9 +46,27 @@ namespace Xspace.Boss
             get { return _position; }
         }
 
-        public int Vitesse
+        public float PositionX
+        {
+            get { return _position.X; }
+            set { _position.X = value; }
+        }
+
+        public float PositionY
+        {
+            get { return _position.Y; }
+            set { _position.Y = value; }
+        }
+
+        public Texture2D Texture
+        {
+            get { return _texture; }
+        }
+
+        public float Vitesse
         {
             get { return _vitesse; }
+            set { _vitesse = value; }
         }
 
         public int vieActuelle
@@ -128,28 +141,40 @@ namespace Xspace.Boss
 
         public void Update(float fps_fix)
         {
-            if (_phaseList.Length == 3)
+            if (_phaseArray.Length == 3)
             {
-                if ((_vie > _phaseList[1]) && (_phaseList[0] >= _vie))
+                if ((_vie > _phaseArray[1]) && (_phaseArray[0] >= _vie))
                     _phase = 1;
-                
 
-                else if ((_vie > _phaseList[2]) && (_phaseList[1] >= _vie))
+
+                else if ((_vie > _phaseArray[2]) && (_phaseArray[1] >= _vie))
                     _phase = 2;
-                
 
-                else if ((_vie > 0) && (_phaseList[2] >= _vie))
+
+                else if ((_vie > 0) && (_phaseArray[2] >= _vie))
                     _phase = 3;
                 
             }
-            else if (_phaseList.Length == 2)
+            else if (_phaseArray.Length == 2)
             {
-                if ((_vie > _phaseList[1]) && (_phaseList[0] >= _vie))
+                if ((_vie > _phaseArray[1]) && (_phaseArray[0] >= _vie))
                     _phase = 1;
 
-                else if ((_vie > 0) && (_phaseList[1] >= _vie))
+                else if ((_vie > 0) && (_phaseArray[1] >= _vie))
                     _phase = 2;
             }
+        }
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            if (_vie < _lastVie)
+            {
+                spriteBatch.Draw(_texture, _position, Color.Red);
+                _lastVie = _vie;
+            }
+            else
+                spriteBatch.Draw(_texture, _position, Color.White);
+
         }
     }
 }
