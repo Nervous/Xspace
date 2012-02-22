@@ -15,11 +15,14 @@ namespace Xspace.Boss
     class Boss1 : Boss
     {
         public Texture2D _T_Missile1, _T_Missile2, _T_Missile3;
-
+        protected int addX, addY;
+        
         public Boss1(Texture2D texture, int[] phaseArray)
-            : base(texture, 1000, 1000, 1000, phaseArray, 1, new Vector2(500, 500), 100, 1000)
+            : base(texture, 1000, 1000, 100, phaseArray, 1, new Vector2(500, 0), 100, 1000)
         {
             _texture = texture;
+            addX = 10;
+            addY = 10;
         }
 
         public void LoadContent(ContentManager content)
@@ -32,59 +35,76 @@ namespace Xspace.Boss
         public void Update(float fps_fix, double time, List<Missiles> listeMissile)
         {
             Update(fps_fix);
-            if(Existe)
-            switch (Phase)
+            if (Existe)
             {
-                case 1:
-                    {
-                        if (time - LastTir > _timingAttack)
+                switch (Phase)
+                {
+                    case 1:
                         {
-                            Vector2 pos = new Vector2(Position.X - 35, Position.Y + _texture.Height / 3 - 6);
-                            listeMissile.Add(new Missile_drone(_T_Missile1, pos));
-                            LastTir = time;
-                            
-                        }
-                        
-                    } 
-                    break;
-                case 2:
-                    {
-                        if (time - LastTir > _timingAttack)
-                        {
-                            Vector2 pos = new Vector2(Position.X - 35, Position.Y + _texture.Height / 3 - 6);
-                            listeMissile.Add(new Missile1_boss(_T_Missile2, pos));
-                            LastTir = time;
-                        }
+                            if (time - LastTir > _timingAttack)
+                            {
+                                Vector2 pos = new Vector2(Position.X - 35, Position.Y + _texture.Height / 3 - 6);
+                                listeMissile.Add(new Missile_drone(_T_Missile1, pos));
+                                LastTir = time;
+                                Vitesse = 0.5f;
+                            }
 
-                    } 
-                    break;
-                case 3:
-                    {
-                        if (time - LastTir > _timingAttack)
-                        {
-                            Vector2 pos = new Vector2(Position.X - 35, Position.Y + _texture.Height / 3 - 6);
-                            listeMissile.Add(new Missile2_boss(_T_Missile3, pos));
-                            LastTir = time;
                         }
-
-                    } 
-                    break;
-                default:
-                    {
-                        if (time - LastTir > Vitesse)
+                        break;
+                    case 2:
                         {
-                            Vector2 pos = new Vector2(Position.X - 35, Position.Y + _texture.Height / 3 - 6);
-                            listeMissile.Add(new Missile2_boss(_T_Missile1, pos));
-                            LastTir = time;
-                        }
+                            if (time - LastTir > _timingAttack)
+                            {
+                                Vector2 pos = new Vector2(Position.X - 35, Position.Y + _texture.Height / 3 - 6);
+                                listeMissile.Add(new Missile1_boss(_T_Missile2, pos));
+                                LastTir = time;
+                                Vitesse = 1.5f;
+                            }
 
-                    } 
-                    break;
+                        }
+                        break;
+                    case 3:
+                        {
+                            if (time - LastTir > _timingAttack)
+                            {
+                                Vector2 pos = new Vector2(Position.X - 35, Position.Y + _texture.Height / 3 - 6);
+                                listeMissile.Add(new Missile2_boss(_T_Missile3, pos));
+                                LastTir = time;
+                                Vitesse = 1.0f;
+                            }
+
+                        }
+                        break;
+                    default:
+                        {
+                            if (time - LastTir > Vitesse)
+                            {
+                                Vector2 pos = new Vector2(Position.X - 35, Position.Y + _texture.Height / 3 - 6);
+                                listeMissile.Add(new Missile2_boss(_T_Missile1, pos));
+                                LastTir = time;
+                            }
+
+                        }
+                        break;
+                }
+                //Mouvements
+                PositionX += addX * Vitesse;
+                PositionY += addY * Vitesse;
+
+                if (Position.Y - Texture.Height / 2 < -Texture.Height / 2 ) // haut              
+                    addY = -addY;
+
+                if (Position.Y - Texture.Height / 2 > 390) // bas
+                    addY = -addY;
+
+                if (Position.X - Texture.Width / 2 < -18) // gauche
+                    addX = -addX;
+
+                 if (Position.X - Texture.Width / 2 - 10 > 1024) // droite
+                    addX = -addX;
             }
 
         }
-
-
 
 
 

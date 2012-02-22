@@ -14,7 +14,8 @@ namespace Xspace.Boss
     class Boss
     {
         protected Texture2D _texture;
-        protected int _vie, _vitesse, _score, _vieMax, _armeActuelle, _phase;
+        protected int _vie,_score, _vieMax, _armeActuelle, _phase, _lastVie;
+        protected float _vitesse;
         protected int[] _phaseArray;
         protected double _timingAttack, _lastTir;
         protected Vector2 _position;
@@ -37,6 +38,7 @@ namespace Xspace.Boss
             _timingAttack = timingAttack;
             _existe = true;
             _phase = 1;
+            _lastVie = vie;
         }
 
         public Vector2 Position
@@ -44,14 +46,27 @@ namespace Xspace.Boss
             get { return _position; }
         }
 
+        public float PositionX
+        {
+            get { return _position.X; }
+            set { _position.X = value; }
+        }
+
+        public float PositionY
+        {
+            get { return _position.Y; }
+            set { _position.Y = value; }
+        }
+
         public Texture2D Texture
         {
             get { return _texture; }
         }
 
-        public int Vitesse
+        public float Vitesse
         {
             get { return _vitesse; }
+            set { _vitesse = value; }
         }
 
         public int vieActuelle
@@ -152,7 +167,14 @@ namespace Xspace.Boss
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(_texture, _position, Color.White);
+            if (_vie < _lastVie)
+            {
+                spriteBatch.Draw(_texture, _position, Color.Red);
+                _lastVie = _vie;
+            }
+            else
+                spriteBatch.Draw(_texture, _position, Color.White);
+
         }
     }
 }
