@@ -15,27 +15,31 @@ namespace Xspace.Boss
     class Boss1 : Boss
     {
         public Texture2D _T_Missile1, _T_Missile2, _T_Missile3;
-        protected int addX, addY;
+        protected int addX, addY, i;
+        protected double pause;
         
         public Boss1(Texture2D texture, int[] phaseArray)
-            : base(texture, 1000, 1000, 100, phaseArray, 1, new Vector2(500, 0), 100, 1000)
+            : base(texture, 1000, 1000, 100, phaseArray, 1, new Vector2(1400, 0), 100, 1000)
         {
             _texture = texture;
             addX = 10;
             addY = 10;
+            Vitesse = 0.3f;
+            pause = 5000;
+            i=0;
         }
 
         public void LoadContent(ContentManager content)
         {
             _T_Missile1 = content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\missile_new1");
             _T_Missile2 = content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\drone");
-            _T_Missile3 = content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\missile_boule1");
+            _T_Missile3 = content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\drone");
         }
 
         public void Update(float fps_fix, double time, List<Missiles> listeMissile)
         {
             Update(fps_fix);
-            if (Existe)
+            if ((Existe) && (!Init))
             {
                 switch (Phase)
                 {
@@ -53,24 +57,41 @@ namespace Xspace.Boss
                         break;
                     case 2:
                         {
-                            if (time - LastTir > _timingAttack)
+                            if ((time - LastTir > _timingAttack) && (i < 50))
                             {
+                                _timingAttack = 80;
+                                Invincible = false;
                                 Vector2 pos = new Vector2(Position.X - 35, Position.Y + _texture.Height / 3 - 6);
                                 listeMissile.Add(new Missile1_boss(_T_Missile2, pos));
                                 LastTir = time;
-                                Vitesse = 1.5f;
+                                Vitesse = 1.0f;
+                                i++;
                             }
+                            else if ((i >= 50) && (i < 60) && (time - LastTir > _timingAttack)) // ouai, on aurait pu mettre dans le meme if mais non, explain later
+                            {
+                                _timingAttack = 1000;
+                                Invincible = true;
+                                Vector2 pos = new Vector2(Position.X - 35, Position.Y + _texture.Height / 3 - 6);
+                                listeMissile.Add(new Missile1_boss(_T_Missile2, pos));
+                                LastTir = time;
+                                Vitesse = 1.2f;
+                                i++;
+                            }
+                            else if (i >= 60)
+                                i = 0;
 
                         }
                         break;
                     case 3:
                         {
+                           
                             if (time - LastTir > _timingAttack)
                             {
+                                _timingAttack = 300;
                                 Vector2 pos = new Vector2(Position.X - 35, Position.Y + _texture.Height / 3 - 6);
                                 listeMissile.Add(new Missile2_boss(_T_Missile3, pos));
                                 LastTir = time;
-                                Vitesse = 1.0f;
+                                Vitesse = 1.4f;
                             }
 
                         }
@@ -88,20 +109,33 @@ namespace Xspace.Boss
                         break;
                 }
                 //Mouvements
-                PositionX += addX * Vitesse;
                 PositionY += addY * Vitesse;
 
-                if (Position.Y - Texture.Height / 2 < -Texture.Height / 2 ) // haut              
+                if (Position.Y - Texture.Height / 2 < -Texture.Height / 2) // haut              
                     addY = -addY;
 
-                if (Position.Y - Texture.Height / 2 > 390) // bas
+                if (Position.Y - Texture.Height / 2 > 400) // bas
                     addY = -addY;
 
                 if (Position.X - Texture.Width / 2 < -18) // gauche
                     addX = -addX;
 
-                 if (Position.X - Texture.Width / 2 - 10 > 1024) // droite
+                if (Position.X - Texture.Width / 2 - 10 > 1024) // droite
                     addX = -addX;
+            }
+            else // Initialisation du boss 
+            {
+
+                do
+                    PositionX -= addX * 0.1f;
+                while ((Position.X - Texture.Width / 2 - 10 < 850));
+
+                if (((Position.X - Texture.Width / 2 - 10 <= 851)))
+                {
+                    Init = false;
+                    Invincible = false;
+                }
+
             }
 
         }

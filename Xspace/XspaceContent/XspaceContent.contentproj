@@ -215,13 +215,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Sprites\Missiles\Ennemi\missile_boule1.png">
-      <Name>missile_boule1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Sprites\Missiles\Joueur\missile_rocket1.png">
       <Name>missile_rocket1</Name>
       <Importer>TextureImporter</Importer>
@@ -343,6 +336,27 @@
   <ItemGroup>
     <Compile Include="Sprites\Vaisseaux\Boss\boss1.png">
       <Name>boss1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Sprites\Missiles\Ennemi\missile_boule1.png">
+      <Name>missile_boule1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Sprites\Missiles\Ennemi\missilenew1.jpg">
+      <Name>missilenew1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Sprites\Missiles\Ennemi\missile_rocket1.png">
+      <Name>missile_rocket1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

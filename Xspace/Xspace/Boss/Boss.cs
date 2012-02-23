@@ -19,7 +19,7 @@ namespace Xspace.Boss
         protected int[] _phaseArray;
         protected double _timingAttack, _lastTir;
         protected Vector2 _position;
-        protected bool _existe;
+        protected bool _existe, _invincible, _init;
         /* Phase list: Example: [100,60,20]: As soon as phase[0] < vie, second phase begin, then third phase when phase[1] (so at 20 of life) < vie, etc..
          * So, you should ALWAYS have phase[0] >= vieMax        
          WARNING: Only three phases maximum are supported right now*/
@@ -39,6 +39,8 @@ namespace Xspace.Boss
             _existe = true;
             _phase = 1;
             _lastVie = vie;
+            _invincible = true;
+            _init = true;
         }
 
         public Vector2 Position
@@ -112,7 +114,9 @@ namespace Xspace.Boss
 
         public bool Hurt(int amount)
         {
+            if(!_invincible)
             _vie -= amount;
+
             return (_vie <= 0);
         }
 
@@ -139,9 +143,21 @@ namespace Xspace.Boss
             _armeActuelle = nouveau;
         }
 
+        public bool Init
+        {
+            get { return _init; }
+            set { _init = value; }
+        }
+
+        public bool Invincible
+        {
+            get { return _invincible; }
+            set { _invincible = value; }
+        }
+
         public void Update(float fps_fix)
         {
-            if (_phaseArray.Length == 3)
+            if ((_phaseArray.Length == 3)&&(!_init))
             {
                 if ((_vie > _phaseArray[1]) && (_phaseArray[0] >= _vie))
                     _phase = 1;
@@ -155,7 +171,7 @@ namespace Xspace.Boss
                     _phase = 3;
                 
             }
-            else if (_phaseArray.Length == 2)
+            else if ((_phaseArray.Length == 2)&&(!_init))
             {
                 if ((_vie > _phaseArray[1]) && (_phaseArray[0] >= _vie))
                     _phase = 1;
@@ -172,6 +188,8 @@ namespace Xspace.Boss
                 spriteBatch.Draw(_texture, _position, Color.Red);
                 _lastVie = _vie;
             }
+            else if ((_invincible)&&(!_init))
+                spriteBatch.Draw(_texture, _position, Color.Blue);
             else
                 spriteBatch.Draw(_texture, _position, Color.White);
 

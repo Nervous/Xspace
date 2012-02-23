@@ -350,7 +350,7 @@ namespace MenuSample.Scenes
             AudioPlayer.Update();
 			#endregion
             #region Boss 1
-            if (boss1.Existe)
+            if ((boss1.Existe)&&(listeVaisseau[0] >0))
             {
                 boss1.Update(fps_fix, time, listeMissile);
                 if (((listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > boss1.Position.X && listeVaisseau[0].position.X < boss1.Position.X) ||
@@ -358,7 +358,7 @@ namespace MenuSample.Scenes
            && ((listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height > boss1.Position.Y && listeVaisseau[0].position.Y < boss1.Position.Y) ||
                  (listeVaisseau[0].position.Y < boss1.Position.Y + boss1.Texture.Height && listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height > boss1.Position.Y + boss1.Texture.Height)))
                 {
-                    // Collision entre vaisseau joueur & ennemi trouvée
+                    
 
                     if ((!end) && (!endDead))
                         score = score + boss1.Score;
@@ -375,7 +375,7 @@ namespace MenuSample.Scenes
                             && ((missile.position.Y + missile.sprite.Height / 2 > boss1.Position.Y - boss1.Texture.Height * 0.10)
                             && (missile.position.Y + missile.sprite.Height / 2 < boss1.Position.Y + boss1.Texture.Height + boss1.Texture.Height * 0.10))
                             )
-                    {  // Collision missile => Vaisseau trouvée
+                    {  
 
                         listeMissileToRemove.Add(missile);
 
@@ -699,7 +699,7 @@ namespace MenuSample.Scenes
             #endregion
             #region Draw des boss
             spriteBatch.DrawString(_gameFont, Convert.ToString(boss1.vieActuelle), new Vector2(600, 500), Color.Red);
-            if(boss1.Existe)
+            if((boss1.Existe)&&(!end)&&(!endDead))
             boss1.Draw(spriteBatch);
             #endregion 
             spriteBatch.End();

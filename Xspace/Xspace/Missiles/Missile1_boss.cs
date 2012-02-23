@@ -14,7 +14,7 @@ namespace Xspace
     class Missile1_boss : Missiles
     {
         public Missile1_boss(Texture2D texture, Vector2 position)
-            : base(texture, true, 50, position, new Vector2(-7, 0), new Vector2(0, 0))
+            : base(texture, true, 50, position, new Vector2(-25, 0), new Vector2(0, 0))
         { }
     }
 }
