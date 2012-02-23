@@ -350,7 +350,7 @@ namespace MenuSample.Scenes
             AudioPlayer.Update();
 			#endregion
             #region Boss 1
-            if ((boss1.Existe)&&(listeVaisseau[0] >0))
+            if ((boss1.Existe)&&(listeVaisseau[0].existe))
             {
                 boss1.Update(fps_fix, time, listeMissile);
                 if (((listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > boss1.Position.X && listeVaisseau[0].position.X < boss1.Position.X) ||
