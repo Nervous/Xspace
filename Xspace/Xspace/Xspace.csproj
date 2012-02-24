@@ -123,11 +123,15 @@
     <Compile Include="Boss\Boss1.cs" />
     <Compile Include="gestionLevels.cs" />
     <Compile Include="Menu1\InputState.cs" />
+    <Compile Include="Menu1\Scenes\ActChoiceMenuScene.cs" />
     <Compile Include="Menu1\Scenes\BackgroundScene.cs" />
     <Compile Include="Menu1\Scenes\Core\AbstractGameScene.cs" />
     <Compile Include="Menu1\Scenes\Core\AbstractMenuScene.cs" />
     <Compile Include="Menu1\Scenes\Core\MenuItem.cs" />
     <Compile Include="Menu1\Scenes\Core\SceneManager.cs" />
+    <Compile Include="Menu1\Scenes\LevelChoice1MenuScene.cs" />
+    <Compile Include="Menu1\Scenes\LevelChoice2MenuScene.cs" />
+    <Compile Include="Menu1\Scenes\LevelChoice3MenuScene.cs" />
     <Compile Include="Menu1\Scenes\OptionMenuScene.cs" />
     <Compile Include="Menu1\Scenes\ScoreArcadeMenuScene.cs" />
     <Compile Include="Menu1\Scenes\ScoreMenuScene.cs" />

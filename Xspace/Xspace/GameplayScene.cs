@@ -33,7 +33,7 @@ namespace MenuSample.Scenes
     public class GameplayScene : AbstractGameScene
     {
         #region Déclaration variables usuelles
-        private int score;
+        private int score, _level;
         private float fps_fix, _pauseAlpha;
         private double time, lastTime, lastTimeSpectre, lastTimeEnergy;
         private string path_level, stock_score_inferieur, stock_score_superieur;
@@ -85,7 +85,7 @@ namespace MenuSample.Scenes
         private AffichageInformations HUD = new AffichageInformations();
         
         
-        public GameplayScene(SceneManager sceneMgr, GraphicsDeviceManager graphics)
+        public GameplayScene(SceneManager sceneMgr, GraphicsDeviceManager graphics, int level, int act)
             : base(sceneMgr)
         {
 
@@ -95,7 +95,7 @@ namespace MenuSample.Scenes
             };
             particleEffect = new ParticleEffect();
 
-
+            _level = level + (act-1) * 3;
             score = 0;
             lastTime = 0;
             lastTimeEnergy = 0;
@@ -200,7 +200,7 @@ namespace MenuSample.Scenes
             listeTextureObstacles = new List<Texture2D>();
             listeTextureObstacles.Add(T_Obstacles_Hole);
 
-            thisLevel = new gestionLevels(0, listeTextureVaisseauxEnnemis, listeTextureBonus, listeTextureObstacles);
+            thisLevel = new gestionLevels(_level, listeTextureVaisseauxEnnemis, listeTextureBonus, listeTextureObstacles);
             infLevel = new List<gestionLevels>();
             thisLevel.readInfos(delimitationFilesInfo, delimitationFilesInfo2, delimitationFilesInfo3, infLevel);
             #endregion
