@@ -140,8 +140,8 @@ namespace MenuSample.Scenes
             #region Chargement particules
             particleRenderer.LoadContent(_content);
             particleEffect = _content.Load<ParticleEffect>("Collisions\\BasicExplosion\\BasicExplosion");
-            particleEffect.LoadContent(_content);
             particleEffect.Initialise();
+            particleEffect.LoadContent(_content);
             #endregion
             #region Chargement textures vaisseaux
             T_Vaisseau_Joueur = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Joueur\\Joueur_1");
@@ -543,11 +543,12 @@ namespace MenuSample.Scenes
                 listeBonus.Remove(bonus);
             #endregion
             #region Collisions & Update des particules
-            if (!(partManage.startingParticle == Vector2.Zero))
+            if (partManage.startingParticle != Vector2.Zero)
                 particleEffect.Trigger(partManage.startingParticle);
+            
             partManage = collisions(listeVaisseau, listeMissile, listeBonus, listeObstacles, fps_fix, particleEffect, gameTime);
-
             particleEffect.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+
             #endregion
             #region Update spectre & historique
             if (lastTimeSpectre + 25 < time)
@@ -656,6 +657,13 @@ namespace MenuSample.Scenes
             {
                 bonus.Draw(spriteBatch);
             }
+            #endregion
+            #region Draw des particules
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive);
+            particleRenderer.RenderEffect(particleEffect);
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
             #endregion
             #region Draw du spectre
             if (spectre.Length == 128 && drawSpectre)
