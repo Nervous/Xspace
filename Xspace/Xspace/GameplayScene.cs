@@ -140,8 +140,8 @@ namespace MenuSample.Scenes
             #region Chargement particules
             particleRenderer.LoadContent(_content);
             particleEffect = _content.Load<ParticleEffect>("Collisions\\BasicExplosion\\BasicExplosion");
-            particleEffect.LoadContent(_content);
             particleEffect.Initialise();
+            particleEffect.LoadContent(_content);
             #endregion
             #region Chargement textures vaisseaux
             T_Vaisseau_Joueur = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Joueur\\Joueur_1");
@@ -223,6 +223,51 @@ namespace MenuSample.Scenes
 
         doneParticles collisions(List<Vaisseau> listeVaisseau, List<Missiles> listeMissile, List<Bonus> listeBonus, List<Obstacles> listeObstacles, float spentTime, ParticleEffect particleEffect, GameTime gametime)
         {
+            #region Boss 1
+            if ((boss1.Existe) && (listeVaisseau.Count != 0))
+            {
+                boss1.Update(fps_fix, time, listeMissile);
+                if (((listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > boss1.Position.X && listeVaisseau[0].position.X < boss1.Position.X) ||
+                (listeVaisseau[0].position.X < boss1.Position.X + boss1.Texture.Width && listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > boss1.Position.X + boss1.Texture.Width))
+           && ((listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height > boss1.Position.Y && listeVaisseau[0].position.Y < boss1.Position.Y) ||
+                 (listeVaisseau[0].position.Y < boss1.Position.Y + boss1.Texture.Height && listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height > boss1.Position.Y + boss1.Texture.Height)))
+                {
+
+
+                    if ((!end) && (!endDead))
+                        score = score + boss1.Score;
+
+                    boss1.Hurt(10);
+                    listeVaisseau[0].hurt(10, time);
+                    if (listeVaisseau[0].vie < 0)
+                        listeVaisseauToRemove.Add(listeVaisseau[0]);
+                }
+                foreach (Missiles missile in listeMissile)
+                {
+                    if (((missile.position.X + missile.sprite.Width > boss1.Position.X)
+                            && (missile.position.X + missile.sprite.Width < boss1.Position.X + boss1.Texture.Width))
+                            && ((missile.position.Y + missile.sprite.Height / 2 > boss1.Position.Y - boss1.Texture.Height * 0.10)
+                            && (missile.position.Y + missile.sprite.Height / 2 < boss1.Position.Y + boss1.Texture.Height + boss1.Texture.Height * 0.10))
+                            )
+                    {
+
+                        listeMissileToRemove.Add(missile);
+
+                        if (!missile.ennemi)
+                        {
+                            if (boss1.Hurt(missile.degats))
+                            {
+                                // Vaisseau dead
+                                boss1.Kill();
+                                if ((!end) && (!endDead))
+                                    score = score + boss1.Score;
+                            }
+                        }
+                    }
+                }
+            }
+            #endregion
+
             foreach(Vaisseau vaisseau in listeVaisseau)
             {
                 #region Collision joueur => bonus
@@ -350,7 +395,7 @@ namespace MenuSample.Scenes
             AudioPlayer.Update();
 			#endregion
             #region Boss 1
-            if ((boss1.Existe)&&(listeVaisseau.Count >0))
+            if ((boss1.Existe)&&(listeVaisseau[0].existe))
             {
                 boss1.Update(fps_fix, time, listeMissile);
                 if (((listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > boss1.Position.X && listeVaisseau[0].position.X < boss1.Position.X) ||
@@ -543,11 +588,12 @@ namespace MenuSample.Scenes
                 listeBonus.Remove(bonus);
             #endregion
             #region Collisions & Update des particules
-            if (!(partManage.startingParticle == Vector2.Zero))
+            if (partManage.startingParticle != Vector2.Zero)
                 particleEffect.Trigger(partManage.startingParticle);
+            
             partManage = collisions(listeVaisseau, listeMissile, listeBonus, listeObstacles, fps_fix, particleEffect, gameTime);
-
             particleEffect.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+
             #endregion
             #region Update spectre & historique
             if (lastTimeSpectre + 25 < time)
@@ -657,6 +703,13 @@ namespace MenuSample.Scenes
                 bonus.Draw(spriteBatch);
             }
             #endregion
+            #region Draw des particules
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive);
+            particleRenderer.RenderEffect(particleEffect);
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
+            #endregion
             #region Draw du spectre
             if (spectre.Length == 128 && drawSpectre)
             {
@@ -698,9 +751,12 @@ namespace MenuSample.Scenes
             }
             #endregion
             #region Draw des boss
-            spriteBatch.DrawString(_gameFont, Convert.ToString(boss1.vieActuelle), new Vector2(600, 500), Color.Red);
-            if((boss1.Existe)&&(!end)&&(!endDead))
-            boss1.Draw(spriteBatch);
+            if ((boss1.Existe) && (!end) && (!endDead))
+            {
+                spriteBatch.DrawString(_gameFont, "Spaceship X42", new Vector2(390, 10), Color.Red);
+                boss1.Draw(spriteBatch);
+                boss1.Drawbar(spriteBatch, barre_vie, boss1.vieActuelle, boss1.VieMax);
+            }
             #endregion 
             spriteBatch.End();
         }

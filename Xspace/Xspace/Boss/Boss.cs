@@ -20,6 +20,7 @@ namespace Xspace.Boss
         protected double _timingAttack, _lastTir;
         protected Vector2 _position;
         protected bool _existe, _invincible, _init;
+        private Vector2 _position_bar;
         /* Phase list: Example: [100,60,20]: As soon as phase[0] < vie, second phase begin, then third phase when phase[1] (so at 20 of life) < vie, etc..
          * So, you should ALWAYS have phase[0] >= vieMax        
          WARNING: Only three phases maximum are supported right now*/
@@ -110,6 +111,18 @@ namespace Xspace.Boss
         {
             get { return _lastTir; }
             set { _lastTir = value; }
+        }
+
+        public void Drawbar(SpriteBatch spriteBatch, Texture2D texture, int vieActuelle, int vieMax)
+        {
+            _position_bar.Y = 60;
+            for (int i = 0; i <= vieActuelle /2; i++)
+            {
+                _position_bar.X = 320 + i;
+
+                spriteBatch.Draw(texture, _position_bar, Color.White);
+
+            }
         }
 
         public bool Hurt(int amount)
