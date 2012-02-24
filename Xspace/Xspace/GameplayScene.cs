@@ -223,6 +223,51 @@ namespace MenuSample.Scenes
 
         doneParticles collisions(List<Vaisseau> listeVaisseau, List<Missiles> listeMissile, List<Bonus> listeBonus, List<Obstacles> listeObstacles, float spentTime, ParticleEffect particleEffect, GameTime gametime)
         {
+            #region Boss 1
+            if ((boss1.Existe) && (listeVaisseau.Count != 0))
+            {
+                boss1.Update(fps_fix, time, listeMissile);
+                if (((listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > boss1.Position.X && listeVaisseau[0].position.X < boss1.Position.X) ||
+                (listeVaisseau[0].position.X < boss1.Position.X + boss1.Texture.Width && listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > boss1.Position.X + boss1.Texture.Width))
+           && ((listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height > boss1.Position.Y && listeVaisseau[0].position.Y < boss1.Position.Y) ||
+                 (listeVaisseau[0].position.Y < boss1.Position.Y + boss1.Texture.Height && listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height > boss1.Position.Y + boss1.Texture.Height)))
+                {
+
+
+                    if ((!end) && (!endDead))
+                        score = score + boss1.Score;
+
+                    boss1.Hurt(10);
+                    listeVaisseau[0].hurt(10, time);
+                    if (listeVaisseau[0].vie < 0)
+                        listeVaisseauToRemove.Add(listeVaisseau[0]);
+                }
+                foreach (Missiles missile in listeMissile)
+                {
+                    if (((missile.position.X + missile.sprite.Width > boss1.Position.X)
+                            && (missile.position.X + missile.sprite.Width < boss1.Position.X + boss1.Texture.Width))
+                            && ((missile.position.Y + missile.sprite.Height / 2 > boss1.Position.Y - boss1.Texture.Height * 0.10)
+                            && (missile.position.Y + missile.sprite.Height / 2 < boss1.Position.Y + boss1.Texture.Height + boss1.Texture.Height * 0.10))
+                            )
+                    {
+
+                        listeMissileToRemove.Add(missile);
+
+                        if (!missile.ennemi)
+                        {
+                            if (boss1.Hurt(missile.degats))
+                            {
+                                // Vaisseau dead
+                                boss1.Kill();
+                                if ((!end) && (!endDead))
+                                    score = score + boss1.Score;
+                            }
+                        }
+                    }
+                }
+            }
+            #endregion
+
             foreach(Vaisseau vaisseau in listeVaisseau)
             {
                 #region Collision joueur => bonus
@@ -349,50 +394,6 @@ namespace MenuSample.Scenes
 
             AudioPlayer.Update();
 			#endregion
-            #region Boss 1
-            if (boss1.Existe)
-            {
-                boss1.Update(fps_fix, time, listeMissile);
-                if (((listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > boss1.Position.X && listeVaisseau[0].position.X < boss1.Position.X) ||
-                (listeVaisseau[0].position.X < boss1.Position.X + boss1.Texture.Width && listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > boss1.Position.X + boss1.Texture.Width))
-           && ((listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height > boss1.Position.Y && listeVaisseau[0].position.Y < boss1.Position.Y) ||
-                 (listeVaisseau[0].position.Y < boss1.Position.Y + boss1.Texture.Height && listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height > boss1.Position.Y + boss1.Texture.Height)))
-                {
-                    // Collision entre vaisseau joueur & ennemi trouvée
-
-                    if ((!end) && (!endDead))
-                        score = score + boss1.Score;
-
-                    boss1.Hurt(10);
-                    listeVaisseau[0].hurt(10, time);
-                    if (listeVaisseau[0].vie < 0)
-                        listeVaisseauToRemove.Add(listeVaisseau[0]);
-                }
-                foreach (Missiles missile in listeMissile)
-                {
-                    if (((missile.position.X + missile.sprite.Width > boss1.Position.X)
-                            && (missile.position.X + missile.sprite.Width < boss1.Position.X + boss1.Texture.Width))
-                            && ((missile.position.Y + missile.sprite.Height / 2 > boss1.Position.Y - boss1.Texture.Height * 0.10)
-                            && (missile.position.Y + missile.sprite.Height / 2 < boss1.Position.Y + boss1.Texture.Height + boss1.Texture.Height * 0.10))
-                            )
-                    {  // Collision missile => Vaisseau trouvée
-
-                        listeMissileToRemove.Add(missile);
-
-                        if (!missile.ennemi)
-                        {
-                            if (boss1.Hurt(missile.degats))
-                            {
-                                // Vaisseau dead
-                                boss1.Kill();
-                                if ((!end) && (!endDead))
-                                    score = score + boss1.Score;
-                            }
-                        }
-                    }
-                }
-            }
-            #endregion
             #region Gestion de la musique en cas de pause
             if (InputState.IsPauseGame())
             {
@@ -706,9 +707,12 @@ namespace MenuSample.Scenes
             }
             #endregion
             #region Draw des boss
-            spriteBatch.DrawString(_gameFont, Convert.ToString(boss1.vieActuelle), new Vector2(600, 500), Color.Red);
-            if(boss1.Existe)
-            boss1.Draw(spriteBatch);
+            if ((boss1.Existe) && (!end) && (!endDead))
+            {
+                spriteBatch.DrawString(_gameFont, "Spaceship X42", new Vector2(390, 10), Color.Red);
+                boss1.Draw(spriteBatch);
+                boss1.Drawbar(spriteBatch, barre_vie, boss1.vieActuelle, boss1.VieMax);
+            }
             #endregion 
             spriteBatch.End();
         }
