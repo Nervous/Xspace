@@ -19,7 +19,7 @@ namespace Xspace.Boss
         protected double pause;
         
         public Boss1(Texture2D texture, int[] phaseArray)
-            : base(texture, 1000, 1000, 100, phaseArray, 1, new Vector2(1400, 0), 100, 1000)
+            : base(texture, 1000, 1000, 100, phaseArray, 1, new Vector2(1400, 150), 100, 1000)
         {
             _texture = texture;
             addX = 10;
@@ -47,6 +47,7 @@ namespace Xspace.Boss
                         {
                             if (time - LastTir > _timingAttack)
                             {
+                                _timingAttack = 500;
                                 Vector2 pos = new Vector2(Position.X - 35, Position.Y + _texture.Height / 3 - 6);
                                 listeMissile.Add(new Missile_drone(_T_Missile1, pos));
                                 LastTir = time;
@@ -57,29 +58,29 @@ namespace Xspace.Boss
                         break;
                     case 2:
                         {
-                            if ((time - LastTir > _timingAttack) && (i < 50))
+                            if ((time - LastTir > _timingAttack) && (i < 10))
                             {
-                                _timingAttack = 80;
+                                _timingAttack = 200;
                                 Invincible = false;
                                 Vector2 pos = new Vector2(Position.X - 35, Position.Y + _texture.Height / 3 - 6);
                                 listeMissile.Add(new Missile1_boss(_T_Missile2, pos));
                                 LastTir = time;
-                                Vitesse = 1.0f;
+                                Vitesse = 0.2f;
                                 i++;
                             }
-                            else if ((i >= 50) && (i < 60) && (time - LastTir > _timingAttack)) // ouai, on aurait pu mettre dans le meme if mais non, explain later
+                            else if ((i >= 10) && (i < 30) && (time - LastTir > _timingAttack)) // ouai, on aurait pu mettre dans le meme if mais non, explain later
                             {
-                                _timingAttack = 1000;
+                                _timingAttack = 200;
                                 Invincible = true;
                                 Vector2 pos = new Vector2(Position.X - 35, Position.Y + _texture.Height / 3 - 6);
                                 listeMissile.Add(new Missile1_boss(_T_Missile2, pos));
                                 LastTir = time;
-                                Vitesse = 1.2f;
+                                Vitesse = 0.4f;
                                 i++;
                             }
-                            else if (i >= 60)
+                            else if (i >= 30) 
                                 i = 0;
-
+                            
                         }
                         break;
                     case 3:
@@ -91,7 +92,7 @@ namespace Xspace.Boss
                                 Vector2 pos = new Vector2(Position.X - 35, Position.Y + _texture.Height / 3 - 6);
                                 listeMissile.Add(new Missile2_boss(_T_Missile3, pos));
                                 LastTir = time;
-                                Vitesse = 1.4f;
+                                Vitesse = 0.6f;
                             }
 
                         }
@@ -111,13 +112,13 @@ namespace Xspace.Boss
                 //Mouvements
                 PositionY += addY * Vitesse;
 
-                if (Position.Y - Texture.Height / 2 < -Texture.Height / 2) // haut              
+                if (Position.Y - Texture.Height / 2 < -Texture.Height / 2 + 100 ) // haut   
                     addY = -addY;
 
                 if (Position.Y - Texture.Height / 2 > 400) // bas
                     addY = -addY;
 
-                if (Position.X - Texture.Width / 2 < -18) // gauche
+                if (Position.X - Texture.Width / 2 < 500) // gauche
                     addX = -addX;
 
                 if (Position.X - Texture.Width / 2 - 10 > 1024) // droite
