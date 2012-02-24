@@ -38,7 +38,6 @@ namespace MenuSample.Scenes
             var OptionMenuItem = new MenuItem("Options");
             var exitMenuItem = new MenuItem("Quitter");
             var completeItem = new MenuItem("Complete");
-            GameplayScene gameplayscene = new GameplayScene(sceneMgr, graphicsReceive);
 
             // Gestion des évènements
             playGameMenuItem.Selected += PlayGameMenuItemSelected;
@@ -69,7 +68,7 @@ namespace MenuSample.Scenes
 
         private void PlayGameMenuItemSelected(object sender, EventArgs e)
         {
-            LoadingScene.Load(SceneManager, true, new GameplayScene(SceneManager, graphics));
+            new ActChoiceMenuScene(SceneManager, graphics).Add();
         }
 
         private void OptionMenuItemSelected(object sender, EventArgs e)
