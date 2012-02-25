@@ -217,8 +217,8 @@ namespace MenuSample.Scenes
             #endregion
             #region Chargement textures boss
             T_boss1 = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Boss\\boss1"); 
-            boss1 = new Xspace.Boss.Boss1(T_boss1, phaseArray1);
-            boss1.LoadContent(_content);
+
+
             #endregion
             #region Chargement fin level
             T_Divers_Levelcomplete = _content.Load<Texture2D>("Sprites\\Divers\\levelcompleted");
