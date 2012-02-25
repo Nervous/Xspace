@@ -8,9 +8,9 @@ vaisseau;drone:6 4200
 vaisseau;drone:7 4700
 vaisseau;drone:8 5200
 vaisseau;drone:9 5700
-bonus;vie:7 6500
 vaisseau;drone:0 6200
-vaisseau;drone:1 6700
+bonus;vie:7 6500
+boss;boss1:5 6550
 vaisseau;drone:2 8200
 vaisseau;drone:3 8700
 vaisseau;drone:4 9200
@@ -63,3 +63,4 @@ vaisseau;drone:6 20000
 vaisseau;drone:1 21000
 vaisseau;drone:2 21250
 vaisseau;drone:3 21000
+eol;eol:5 27000
