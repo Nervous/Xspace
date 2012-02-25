@@ -588,12 +588,7 @@ namespace MenuSample.Scenes
             #region Collisions & Update des particules
             if (partManage.startingParticle != Vector2.Zero)
                 particleEffect.Trigger(partManage.startingParticle);
-<<<<<<< HEAD
-            partManage = collisions(listeVaisseau, listeMissile, listeBonus, listeObstacles, fps_fix, particleEffect, gameTime);
-=======
-            
             partManage = collisions(listeVaisseau, listeMissile, listeBonus, listeObstacles, boss1, fps_fix, particleEffect, gameTime);
->>>>>>> 893a0289cd24b3d4fbd683622fbe4979e5a9ec35
             particleEffect.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
             #endregion
             #region Update spectre & historique
