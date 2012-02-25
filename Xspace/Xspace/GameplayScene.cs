@@ -511,14 +511,14 @@ namespace MenuSample.Scenes
             #region Update des vaisseaux
             foreach (Vaisseau vaisseau in listeVaisseau)
             {
-                if (vaisseau == null || vaisseau.existe == false)
+                if (vaisseau.existe == false)
                     listeVaisseauToRemove.Add(vaisseau);
                 else if (vaisseau.ennemi)
                     vaisseau.Update(fps_fix);
                 else
                     vaisseau.Update(fps_fix, keyboardState);
 
-                if (vaisseau != null && vaisseau.ennemi && vaisseau.existe)
+                if (vaisseau.ennemi && vaisseau.existe)
                 {
                     if (time - vaisseau.lastTir > vaisseau.timingAttack)
                     {
