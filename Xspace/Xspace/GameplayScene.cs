@@ -362,7 +362,6 @@ namespace MenuSample.Scenes
 
         public override void Update(GameTime gameTime, bool othersceneHasFocus, bool coveredByOtherscene)
         {
-            Console.SetBufferSize(500, 500);
             keyboardState = Keyboard.GetState();
             _pauseAlpha = coveredByOtherscene ? Math.Min(_pauseAlpha + 1f / 32, 1) : Math.Max(_pauseAlpha - 1f / 32, 0);
 
@@ -512,27 +511,38 @@ namespace MenuSample.Scenes
             #region Update des vaisseaux
             foreach (Vaisseau vaisseau in listeVaisseau)
             {
-                if (vaisseau.existe == false)
+                if (vaisseau == null || vaisseau.existe == false)
                     listeVaisseauToRemove.Add(vaisseau);
                 else if (vaisseau.ennemi)
                     vaisseau.Update(fps_fix);
                 else
                     vaisseau.Update(fps_fix, keyboardState);
 
-                if (vaisseau.ennemi && vaisseau.existe)
+                if (vaisseau != null && vaisseau.ennemi && vaisseau.existe)
                 {
                     if (time - vaisseau.lastTir > vaisseau.timingAttack)
                     {
+                        Vector2 spawn, spawnHaut, spawnBas;
                         switch (vaisseau.armeActuelle)
                         {
                             case 0: // Tir normal
-                                Vector2 spawn = new Vector2(vaisseau.position.X - 35, vaisseau.position.Y + vaisseau._textureVaisseau.Height / 2);
+                                spawn = new Vector2(vaisseau.position.X - 35, vaisseau.position.Y + vaisseau._textureVaisseau.Height / 2);
                                 listeMissile.Add(new Missile_drone(T_Missile_Drone, spawn));
-                                vaisseau.lastTir = time;
+                                break;
+                            case 1: // Tir double
+                                spawnHaut = new Vector2(vaisseau.position.X - 30, vaisseau.position.Y + vaisseau._textureVaisseau.Height / 2 - 20);
+                                spawnBas = new Vector2(vaisseau.position.X - 30, vaisseau.position.Y + vaisseau._textureVaisseau.Height / 2 + 20);
+                                listeMissile.Add(new Missile_drone(T_Missile_Drone, spawnHaut));
+                                listeMissile.Add(new Missile_drone(T_Missile_Drone, spawnBas));
+                                break;
+                            case 2: // Blaster
+                                spawn = new Vector2(vaisseau.position.X - 35, vaisseau.position.Y + vaisseau._textureVaisseau.Height / 2);
+                                listeMissile.Add(new Blaster_Ennemi(T_Missile_Drone, spawn));
                                 break;
                             default:
                                 break;
                         }
+                        vaisseau.lastTir = time;
                     }
                 } 
             }

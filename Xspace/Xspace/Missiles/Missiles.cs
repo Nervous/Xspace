@@ -17,8 +17,9 @@ namespace Xspace
         protected Texture2D _textureMissile;
         protected int _vie, _degats;
         private bool _ennemi;
+        float _vitesse;
 
-        public Missiles(Texture2D texture, bool ennemi, int degats, Vector2 emplacement, Vector2 moveX, Vector2 moveY)
+        public Missiles(Texture2D texture, bool ennemi, int degats, Vector2 emplacement, Vector2 moveX, Vector2 moveY, float vitesse)
         {
             _textureMissile = texture;
             _vie = 1;
@@ -27,6 +28,7 @@ namespace Xspace
             _moveX = Vector2.Normalize(moveX);
             _moveY = Vector2.Normalize(moveY);
             _ennemi = ennemi;
+            _vitesse = vitesse;
         }
 
         public void initialiserTexture(Texture2D texture)
@@ -56,7 +58,8 @@ namespace Xspace
 
         public void avancerMissile(float fps_fix)
         {
-            _emplacement.X += fps_fix * _moveX.X;
+            _emplacement.X += fps_fix * _moveX.X * _vitesse;
+            _emplacement.Y += fps_fix * _moveX.Y * _vitesse;
         }
 
         public void Update()

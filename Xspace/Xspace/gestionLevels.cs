@@ -157,6 +157,12 @@ namespace Xspace
                         case "kamikaze":
                             vaisseau = new kamikaze(listeTextureVaisseauxEnnemis[1], start);
                             break;
+                        case "rapidshooter":
+                            vaisseau = new RapidShooter(listeTextureVaisseauxEnnemis[1], start);
+                            break;
+                        case "blasterer":
+                            vaisseau = new Blasterer(listeTextureVaisseauxEnnemis[1], start);
+                            break;
                         default:
                             break;
                     }
