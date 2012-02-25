@@ -9,9 +9,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
-namespace Xspace.Boss
+namespace Xspace
 {
-    class Boss
+    abstract class Boss
     {
         protected Texture2D _texture;
         protected int _vie,_score, _vieMax, _armeActuelle, _phase, _lastVie;
@@ -21,6 +21,7 @@ namespace Xspace.Boss
         protected Vector2 _position;
         protected bool _existe, _invincible, _init;
         private Vector2 _position_bar;
+        public static int[] phaseArray1 = { 1000, 600, 200 };
         /* Phase list: Example: [100,60,20]: As soon as phase[0] < vie, second phase begin, then third phase when phase[1] (so at 20 of life) < vie, etc..
          * So, you should ALWAYS have phase[0] >= vieMax        
          WARNING: Only three phases maximum are supported right now*/
@@ -113,6 +114,8 @@ namespace Xspace.Boss
             set { _lastTir = value; }
         }
 
+        public virtual void LoadContent(ContentManager content) { }
+
         public void Drawbar(SpriteBatch spriteBatch, Texture2D texture, int vieActuelle, int vieMax)
         {
             _position_bar.Y = 60;
@@ -168,9 +171,9 @@ namespace Xspace.Boss
             set { _invincible = value; }
         }
 
-        public void Update(float fps_fix)
+        public bool checkPhase(float fps_fix)
         {
-            if ((_phaseArray.Length == 3)&&(!_init))
+            if ((_phaseArray.Length == 3) && (!_init))
             {
                 if ((_vie > _phaseArray[1]) && (_phaseArray[0] >= _vie))
                     _phase = 1;
@@ -182,9 +185,9 @@ namespace Xspace.Boss
 
                 else if ((_vie > 0) && (_phaseArray[2] >= _vie))
                     _phase = 3;
-                
+
             }
-            else if ((_phaseArray.Length == 2)&&(!_init))
+            else if ((_phaseArray.Length == 2) && (!_init))
             {
                 if ((_vie > _phaseArray[1]) && (_phaseArray[0] >= _vie))
                     _phase = 1;
@@ -192,7 +195,11 @@ namespace Xspace.Boss
                 else if ((_vie > 0) && (_phaseArray[1] >= _vie))
                     _phase = 2;
             }
+
+            return (this._vie < 0);
         }
+
+        public virtual void Update(float fps_fix, double time, List<Missiles> listeMissile) { }
 
         public void Draw(SpriteBatch spriteBatch)
         {

@@ -24,12 +24,13 @@ namespace Xspace
         Vaisseau adresse;
         Bonus bonusAdresse;
         Obstacles obstacleAdresse;
+        public Boss boss;
         double time;
         bool hasSpawned;
-        List<Texture2D> listeTextureVaisseauxEnnemis, listeTextureBonus, listeTextureObstacles;
+        List<Texture2D> listeTextureVaisseauxEnnemis, listeTextureBonus, listeTextureObstacles, listeTextureBoss;
 
 
-        public gestionLevels(int numero, List<Texture2D> texturesVaisseaux, List<Texture2D> texturesBonus, List<Texture2D> textureObstacles)
+        public gestionLevels(int numero, List<Texture2D> texturesVaisseaux, List<Texture2D> texturesBonus, List<Texture2D> textureObstacles, List<Texture2D> textureBoss)
         {
             nbLevel = numero;
             pathLevel = "levels/" + nbLevel + ".xpa"; ;
@@ -37,14 +38,16 @@ namespace Xspace
             listeTextureVaisseauxEnnemis = texturesVaisseaux;
             listeTextureBonus = texturesBonus;
             listeTextureObstacles = textureObstacles;
+            listeTextureBoss = textureBoss;
         }
 
-        public gestionLevels(string setCategorie, Vaisseau setAdresse, Bonus adresseBonus, Obstacles adresseObstacle, int setTime, string setPosition)
+        public gestionLevels(string setCategorie, Vaisseau setAdresse, Bonus adresseBonus, Obstacles adresseObstacle, Boss adresseBoss, int setTime, string setPosition)
         {
             categorie = setCategorie;
             adresse = setAdresse;
             bonusAdresse = adresseBonus;
             obstacleAdresse = adresseObstacle;
+            boss = adresseBoss;
             time = setTime;
             hasSpawned = false;
             position = setPosition;
@@ -87,20 +90,15 @@ namespace Xspace
                                 foreach (string info4 in info3.Split(delimitationFilesInfo2))
                                 {
                                     if (i == 0) // Premiere info : catégorie de l'objet
-                                    {
                                         categorie = info4;
-                                    }
                                     else // Deuxième info : type de l'objet
-                                    {
                                         type = info4;
-                                    }
+
                                     i++;
                                 }
                             }
                             else
-                            {
                                 position = info3;
-                            }
                         }
                     }
                     else
@@ -159,10 +157,16 @@ namespace Xspace
                         case "kamikaze":
                             vaisseau = new kamikaze(listeTextureVaisseauxEnnemis[1], start);
                             break;
+                        case "rapidshooter":
+                            vaisseau = new RapidShooter(listeTextureVaisseauxEnnemis[1], start);
+                            break;
+                        case "blasterer":
+                            vaisseau = new Blasterer(listeTextureVaisseauxEnnemis[1], start);
+                            break;
                         default:
                             break;
                     }
-                    infLevel.Add(new gestionLevels(categorie, vaisseau, null, null, timing, position));
+                    infLevel.Add(new gestionLevels(categorie, vaisseau, null, null, null, timing, position));
                 }
                 else if(categorie == "bonus")
                 {
@@ -178,7 +182,7 @@ namespace Xspace
                         default:
                             break;
                     }
-                    infLevel.Add(new gestionLevels(categorie, null, bonus, null, timing, position));
+                    infLevel.Add(new gestionLevels(categorie, null, bonus, null, null, timing, position));
                 }
                 else if (categorie == "obstacle")
                 {
@@ -191,7 +195,20 @@ namespace Xspace
                         default:
                             break;
                     }
-                    infLevel.Add(new gestionLevels(categorie, null, null, obstacle, timing, position));
+                    infLevel.Add(new gestionLevels(categorie, null, null, obstacle, null, timing, position));
+                }
+                else if (categorie == "boss")
+                {
+                    Boss boss = null;
+                    switch (type)
+                    {
+                        case "boss1":
+                            boss = new Boss1(listeTextureBoss[0], Boss.phaseArray1);
+                            break;
+                        default:
+                            break;
+                    }
+                    infLevel.Add(new gestionLevels(categorie, null, null, null, boss, timing, position));
                 }
                 else if (categorie == "eol")
                 {
