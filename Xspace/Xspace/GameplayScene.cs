@@ -523,10 +523,16 @@ namespace MenuSample.Scenes
                 {
                     if (time - vaisseau.lastTir > vaisseau.timingAttack)
                     {
-                        Vector2 spawn = new Vector2(vaisseau.position.X - 35, vaisseau.position.Y + vaisseau._textureVaisseau.Height / 3 - 6);
-                        // FAIRE EN FONCTION DU TYPE DE MISSILE
-                        listeMissile.Add(new Missile_drone(T_Missile_Drone, spawn));
-                        vaisseau.lastTir = time;
+                        switch (vaisseau.armeActuelle)
+                        {
+                            case 0: // Tir normal
+                                Vector2 spawn = new Vector2(vaisseau.position.X - 35, vaisseau.position.Y + vaisseau._textureVaisseau.Height / 2);
+                                listeMissile.Add(new Missile_drone(T_Missile_Drone, spawn));
+                                vaisseau.lastTir = time;
+                                break;
+                            default:
+                                break;
+                        }
                     }
                 } 
             }

@@ -22,7 +22,7 @@ namespace Xspace
         protected double _lastTir;
         protected double _lastDamage;
 
-        public Vaisseau(Texture2D texture, int vie, int vieMax, int armure, int damageCollision, float vitesseVaisseau, Vector2 startPosition, bool ennemi, double timingAttack, int score)
+        public Vaisseau(Texture2D texture, int vie, int vieMax, int armure, int damageCollision, float vitesseVaisseau, Vector2 startPosition, bool ennemi, double timingAttack, int score, int arme)
         {
             _textureVaisseau = texture;
             _vie = vie;
@@ -37,7 +37,7 @@ namespace Xspace
             _existe = true;
             lastTir = 0;
             _timingAttack = timingAttack;
-            _armeActuelle = 0;
+            _armeActuelle = arme;
             _score = score;
             _lastDamage = -500;
         }

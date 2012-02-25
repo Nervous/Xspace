@@ -14,7 +14,7 @@ namespace Xspace
     class kamikaze : Vaisseau
     {
         public kamikaze(Texture2D sprite, Vector2 position)
-            : base(sprite, 1, 0, 0, 100, 1f, position, true, 10000, 15)
+            : base(sprite, 1, 0, 0, 100, 1f, position, true, 10000, 15, 0)
         { }
     }
 }
