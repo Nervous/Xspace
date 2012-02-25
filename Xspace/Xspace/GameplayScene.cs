@@ -215,6 +215,11 @@ namespace MenuSample.Scenes
             #region Chargement barre de vie
             barre_vie = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Joueur\\barre-vie-test1");
             #endregion
+            #region Chargement textures boss
+            T_boss1 = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Boss\\boss1"); 
+            boss1 = new Xspace.Boss.Boss1(T_boss1, phaseArray1);
+            boss1.LoadContent(_content);
+            #endregion
             #region Chargement fin level
             T_Divers_Levelcomplete = _content.Load<Texture2D>("Sprites\\Divers\\levelcompleted");
             T_Divers_Levelfail = _content.Load<Texture2D>("Sprites\\Divers\\gameover");
@@ -583,10 +588,8 @@ namespace MenuSample.Scenes
             #region Collisions & Update des particules
             if (partManage.startingParticle != Vector2.Zero)
                 particleEffect.Trigger(partManage.startingParticle);
-            
             partManage = collisions(listeVaisseau, listeMissile, listeBonus, listeObstacles, boss1, fps_fix, particleEffect, gameTime);
             particleEffect.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
-
             #endregion
             #region Update spectre & historique
             if (lastTimeSpectre + 25 < time)
