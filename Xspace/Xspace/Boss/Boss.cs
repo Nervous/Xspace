@@ -9,9 +9,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
-namespace Xspace.Boss
+namespace Xspace
 {
-    class Boss
+    abstract class Boss
     {
         protected Texture2D _texture;
         protected int _vie,_score, _vieMax, _armeActuelle, _phase, _lastVie;
@@ -113,6 +113,8 @@ namespace Xspace.Boss
             set { _lastTir = value; }
         }
 
+        public virtual void LoadContent(ContentManager content) { }
+
         public void Drawbar(SpriteBatch spriteBatch, Texture2D texture, int vieActuelle, int vieMax)
         {
             _position_bar.Y = 60;
@@ -168,9 +170,9 @@ namespace Xspace.Boss
             set { _invincible = value; }
         }
 
-        public void Update(float fps_fix)
+        public void checkPhase(float fps_fix)
         {
-            if ((_phaseArray.Length == 3)&&(!_init))
+            if ((_phaseArray.Length == 3) && (!_init))
             {
                 if ((_vie > _phaseArray[1]) && (_phaseArray[0] >= _vie))
                     _phase = 1;
@@ -182,9 +184,9 @@ namespace Xspace.Boss
 
                 else if ((_vie > 0) && (_phaseArray[2] >= _vie))
                     _phase = 3;
-                
+
             }
-            else if ((_phaseArray.Length == 2)&&(!_init))
+            else if ((_phaseArray.Length == 2) && (!_init))
             {
                 if ((_vie > _phaseArray[1]) && (_phaseArray[0] >= _vie))
                     _phase = 1;
@@ -193,6 +195,8 @@ namespace Xspace.Boss
                     _phase = 2;
             }
         }
+
+        public virtual void Update(float fps_fix, double time, List<Missiles> listeMissile) { }
 
         public void Draw(SpriteBatch spriteBatch)
         {

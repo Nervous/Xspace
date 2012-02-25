@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
-namespace Xspace.Boss
+namespace Xspace
 {
     
     class Boss1 : Boss
@@ -29,16 +29,16 @@ namespace Xspace.Boss
             i=0;
         }
 
-        public void LoadContent(ContentManager content)
+        override public void LoadContent(ContentManager content)
         {
             _T_Missile1 = content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\missile_new1");
             _T_Missile2 = content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\drone");
             _T_Missile3 = content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\drone");
         }
 
-        public void Update(float fps_fix, double time, List<Missiles> listeMissile)
+        override public void Update(float fps_fix, double time, List<Missiles> listeMissile)
         {
-            Update(fps_fix);
+            checkPhase(fps_fix);
             if ((Existe) && (!Init))
             {
                 switch (Phase)
@@ -129,18 +129,15 @@ namespace Xspace.Boss
 
                 do
                     PositionX -= addX * 0.1f;
-                while ((Position.X - Texture.Width / 2 - 10 < 850));
+                while (Position.X - Texture.Width / 2 - 10 < 850);
 
-                if (((Position.X - Texture.Width / 2 - 10 <= 851)))
+                if (Position.X - Texture.Width / 2 - 10 <= 851)
                 {
                     Init = false;
                     Invincible = false;
                 }
-
             }
-
         }
-
 
 
     }

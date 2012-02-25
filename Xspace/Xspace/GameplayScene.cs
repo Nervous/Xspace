@@ -57,9 +57,9 @@ namespace MenuSample.Scenes
         private gestionLevels thisLevel;
         private List<gestionLevels> infLevel;
         Renderer particleRenderer;
-        private Xspace.Boss.Boss1 boss1;
         int[] phaseArray1 = { 1000, 600, 200 };
         ParticleEffect particleEffect;
+        private Boss boss1;
         List<Vaisseau> listeVaisseau, listeVaisseauToRemove;
         List<Missiles> listeMissile, listeMissileToRemove;
         List<Bonus> listeBonus, listeBonusToRemove;
@@ -155,6 +155,11 @@ namespace MenuSample.Scenes
             T_Vaisseau_Drone = Texture2D.FromStream(GraphicsDevice, new FileStream("Content\\Sprites\\Vaisseaux\\logintmp.jpg", FileMode.Open)); */
 
             #endregion
+            #region Chargement textures boss
+            T_boss1 = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Boss\\boss1");
+            boss1 = new Boss1(T_boss1, phaseArray1);
+            boss1.LoadContent(_content);
+            #endregion 
             #region Chargement textures HUD
             T_HUD = _content.Load<Texture2D>("Sprites\\HUD\\interface");
             T_HUD_bars = _content.Load<Texture2D>("Sprites\\HUD\\energyBars1"); 
@@ -207,11 +212,6 @@ namespace MenuSample.Scenes
             #region Chargement barre de vie
             barre_vie = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Joueur\\barre-vie-test1");
             #endregion
-            #region Chargement textures boss
-            T_boss1 = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Boss\\boss1"); 
-            boss1 = new Xspace.Boss.Boss1(T_boss1, phaseArray1);
-            boss1.LoadContent(_content);
-            #endregion 
 
 
             #region Chargement fin level
@@ -221,7 +221,7 @@ namespace MenuSample.Scenes
         }
 
 
-        doneParticles collisions(List<Vaisseau> listeVaisseau, List<Missiles> listeMissile, List<Bonus> listeBonus, List<Obstacles> listeObstacles, float spentTime, ParticleEffect particleEffect, GameTime gametime)
+        doneParticles collisions(List<Vaisseau> listeVaisseau, List<Missiles> listeMissile, List<Bonus> listeBonus, List<Obstacles> listeObstacles, Boss boss1, float spentTime, ParticleEffect particleEffect, GameTime gametime)
         {
             #region Boss 1
             if ((boss1.Existe) && (listeVaisseau.Count != 0))
@@ -591,7 +591,7 @@ namespace MenuSample.Scenes
             if (partManage.startingParticle != Vector2.Zero)
                 particleEffect.Trigger(partManage.startingParticle);
             
-            partManage = collisions(listeVaisseau, listeMissile, listeBonus, listeObstacles, fps_fix, particleEffect, gameTime);
+            partManage = collisions(listeVaisseau, listeMissile, listeBonus, listeObstacles, boss1, fps_fix, particleEffect, gameTime);
             particleEffect.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
 
             #endregion
@@ -703,6 +703,14 @@ namespace MenuSample.Scenes
                 bonus.Draw(spriteBatch);
             }
             #endregion
+            #region Draw des boss
+            if ((boss1.Existe) && (!end) && (!endDead))
+            {
+                spriteBatch.DrawString(_gameFont, "Spaceship X42", new Vector2(390, 10), Color.Red);
+                boss1.Draw(spriteBatch);
+                boss1.Drawbar(spriteBatch, barre_vie, boss1.vieActuelle, boss1.VieMax);
+            }
+            #endregion 
             #region Draw des particules
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive);
@@ -750,14 +758,6 @@ namespace MenuSample.Scenes
                 spriteBatch.DrawString(_gameFont, Convert.ToString(score), new Vector2(500, 500), Color.Red);
             }
             #endregion
-            #region Draw des boss
-            if ((boss1.Existe) && (!end) && (!endDead))
-            {
-                spriteBatch.DrawString(_gameFont, "Spaceship X42", new Vector2(390, 10), Color.Red);
-                boss1.Draw(spriteBatch);
-                boss1.Drawbar(spriteBatch, barre_vie, boss1.vieActuelle, boss1.VieMax);
-            }
-            #endregion 
             spriteBatch.End();
         }
 
