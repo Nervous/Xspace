@@ -1,6 +1,8 @@
 ﻿using System;
 using MenuSample.Scenes.Core;
 
+using Xspace.Son;
+
 namespace MenuSample.Scenes
 {
     /// <summary>
@@ -45,8 +47,10 @@ namespace MenuSample.Scenes
 
             Remove();
             _parent.Remove();
+            AudioPlayer.StopMusic();
+            AudioPlayer.SetVolume(1f);
+            AudioPlayer.PlayMusic("Musiques\\Menu\\Musique.flac");
             LoadingScene.Load(SceneManager, false);
-            
         }
 
     }
