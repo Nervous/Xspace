@@ -131,7 +131,7 @@ namespace Xspace
         public bool Hurt(int amount)
         {
             if(!_invincible)
-            _vie -= amount;
+                _vie -= amount;
 
             return (_vie <= 0);
         }

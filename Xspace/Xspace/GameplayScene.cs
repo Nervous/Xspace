@@ -238,15 +238,16 @@ namespace MenuSample.Scenes
         && ((listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height > aBoss.Position.Y && listeVaisseau[0].position.Y < aBoss.Position.Y) ||
                 (listeVaisseau[0].position.Y < aBoss.Position.Y + aBoss.Texture.Height && listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height > aBoss.Position.Y + aBoss.Texture.Height)))
             {
-
-
-                if ((!end) && (!endDead))
-                    score = score + aBoss.Score;
-
                 aBoss.Hurt(10);
                 listeVaisseau[0].hurt(10, time);
                 if (listeVaisseau[0].vie < 0)
                     listeVaisseauToRemove.Add(listeVaisseau[0]);
+
+                if ((!end) && (!endDead) && aBoss.Existe && aBoss.Hurt(listeVaisseau[0].damageCollision))
+                {
+                    score = score + aBoss.Score;
+                    aBoss.Kill();
+                }
             }
             #endregion
             foreach(Vaisseau vaisseau in listeVaisseau)
