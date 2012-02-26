@@ -15,8 +15,8 @@ namespace Xspace
     class Boss1 : Boss
     {
         public Texture2D _T_Missile1, _T_Missile2, _T_Missile3;
-        protected int addX, addY, i;
-        protected double pause;
+        protected int addX, addY, i, i1, i3;
+        protected double pausetime, pausetime2, lastpausetime;
         
         public Boss1(Texture2D texture, int[] phaseArray)
             : base(texture, 1000, 1000, 100, phaseArray, 1, new Vector2(1400, 150), 100, 1000)
@@ -25,8 +25,11 @@ namespace Xspace
             addX = 10;
             addY = 10;
             Vitesse = 0.3f;
-            pause = 5000;
+            pausetime = 800;
+            lastpausetime = 0;
             i=0;
+            i1 = 0;
+            i3 = 0;
         }
 
         override public void LoadContent(ContentManager content)
@@ -45,56 +48,64 @@ namespace Xspace
                 {
                     case 1:
                         {
-                            if (time - LastTir > _timingAttack)
+                            if ((time - LastTir > _timingAttack) && (i1 < 5))
                             {
-                                _timingAttack = 500;
+                                _timingAttack = 200;
                                 Vector2 pos = new Vector2(Position.X - 35, Position.Y + _texture.Height / 3 - 6);
                                 listeMissile.Add(new Missile_drone(_T_Missile1, pos));
                                 LastTir = time;
+                                pausetime = time;
                                 Vitesse = 0.5f;
+                                i1++;
+                            }
+                            else if (time - pausetime > 800)
+                            {
+                                i1 = 0;
                             }
 
                         }
                         break;
                     case 2:
                         {
-                            if ((time - LastTir > _timingAttack) && (i < 10))
-                            {
-                                _timingAttack = 200;
-                                Invincible = false;
-                                Vector2 pos = new Vector2(Position.X - 35, Position.Y + _texture.Height / 3 - 6);
-                                listeMissile.Add(new Missile1_boss(_T_Missile2, pos));
-                                LastTir = time;
-                                Vitesse = 0.2f;
-                                i++;
-                            }
-                            else if ((i >= 10) && (i < 30) && (time - LastTir > _timingAttack)) // ouai, on aurait pu mettre dans le meme if mais non, explain later
-                            {
-                                _timingAttack = 200;
-                                Invincible = true;
-                                Vector2 pos = new Vector2(Position.X - 35, Position.Y + _texture.Height / 3 - 6);
-                                listeMissile.Add(new Missile1_boss(_T_Missile2, pos));
-                                LastTir = time;
-                                Vitesse = 0.4f;
-                                i++;
-                            }
-                            else if (i >= 30) 
-                                i = 0;
-                            
+                            Vitesse = 1.0f;
+                            pausetime = time;
+                            pausetime2 = time;
                         }
                         break;
                     case 3:
                         {
-                           
-                            if (time - LastTir > _timingAttack)
+                            if ((time - LastTir > _timingAttack) && (i < 3) && (time - pausetime2 < 4000))
+                              {
+                                    _timingAttack = 200;
+                                    Invincible = true;
+                                    Vector2 pos = new Vector2(Position.X - 35, Position.Y + _texture.Height / 3 - 6);
+                                    listeMissile.Add(new Missile1_boss(_T_Missile2, pos));
+                                    LastTir = time;
+                                    Vitesse = 0.2f;
+                                    pausetime = time;
+                                    i++;
+                                }
+                            else if ((time - LastTir > _timingAttack) && (i3 < 2) && (time - pausetime2 > 5000))
                             {
-                                _timingAttack = 300;
+                                Invincible = false;
+                                _timingAttack = 1000;
                                 Vector2 pos = new Vector2(Position.X - 35, Position.Y + _texture.Height / 3 - 6);
-                                listeMissile.Add(new Missile2_boss(_T_Missile3, pos));
+                                listeMissile.Add(new Missile1_boss(_T_Missile2, pos));
                                 LastTir = time;
-                                Vitesse = 0.6f;
+                                Vitesse = 0.0f;
+                                pausetime = time;
+                                i3++;
                             }
-
+                            else if ((time - pausetime > 800) && (i>=3))
+                                i = 0;
+                            else if (i3 >= 2)
+                            {
+                                pausetime = time;
+                                pausetime2 = time;
+                                i3 = 0;
+                                i = 0;
+                            }
+                            
                         }
                         break;
                     default:
@@ -112,10 +123,10 @@ namespace Xspace
                 //Mouvements
                 PositionY += addY * Vitesse;
 
-                if (Position.Y - Texture.Height / 2 < -Texture.Height / 2 + 100 ) // haut   
+                if (Position.Y - Texture.Height / 2 < -Texture.Height / 2) // haut   
                     addY = -addY;
 
-                if (Position.Y - Texture.Height / 2 > 400) // bas
+                if (Position.Y - Texture.Height / 2 > 380) // bas
                     addY = -addY;
 
                 if (Position.X - Texture.Width / 2 < 500) // gauche
