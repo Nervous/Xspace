@@ -35,8 +35,8 @@ namespace Xspace
         override public void LoadContent(ContentManager content)
         {
             _T_Missile1 = content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\missile_new1");
-            _T_Missile2 = content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\drone");
-            _T_Missile3 = content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\drone");
+            _T_Missile2 = content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\missile_new1");
+            _T_Missile3 = content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\missile_boule1");
         }
 
         override public void Update(float fps_fix, double time, List<Missiles> listeMissile)
@@ -90,7 +90,7 @@ namespace Xspace
                                 Invincible = false;
                                 _timingAttack = 1000;
                                 Vector2 pos = new Vector2(Position.X - 35, Position.Y + _texture.Height / 3 - 6);
-                                listeMissile.Add(new Missile1_boss(_T_Missile2, pos));
+                                listeMissile.Add(new Blaster_Ennemi(_T_Missile3, pos));
                                 LastTir = time;
                                 Vitesse = 0.0f;
                                 pausetime = time;

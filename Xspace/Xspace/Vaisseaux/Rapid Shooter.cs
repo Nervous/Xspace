@@ -14,7 +14,7 @@ namespace Xspace
     class RapidShooter : Vaisseau
     {
         public RapidShooter(Texture2D sprite, Vector2 position)
-            : base(sprite, 20, 0, 0, 30, 0.30f, position, true, 1300, 15, 1)
+            : base(sprite, 20, 0, 0,0,0, 30, 0.30f, position, true, 1300, 15, 1)
         { }
     }
 }
