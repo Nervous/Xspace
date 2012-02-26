@@ -49,7 +49,7 @@ namespace MenuSample.Scenes
         private doneParticles partManage;
         private ScrollingBackground fond_ecran, fond_ecran_front, fond_ecran_middle;
         public SpriteBatch spriteBatch;
-        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Vaisseau_Kamikaze, T_Missile_Joueur_1, T_Missile_Drone, T_Bonus_Vie, T_Bonus_Weapon1, T_Obstacles_Hole, barre_vie, T_HUD, T_HUD_bars, T_Divers_Levelcomplete, T_Divers_Levelfail, T_boss1;
+        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Vaisseau_Kamikaze, T_Missile_Joueur_1, T_Missile_Drone, T_Bonus_Vie, T_Bonus_Weapon1, T_Obstacles_Hole, barre_vie, T_HUD, T_HUD_boss, T_HUD_bars, T_HUD_bar_boss, T_Divers_Levelcomplete, T_Divers_Levelfail, T_boss1;
         private List<Texture2D> listeTextureVaisseauxEnnemis, listeTextureBonus, listeTextureObstacles, listeTextureBoss;
         private SoundEffect musique_tir;
         private KeyboardState keyboardState;
@@ -64,7 +64,7 @@ namespace MenuSample.Scenes
         List<Bonus> listeBonus, listeBonusToRemove;
         List<Obstacles> listeObstacles, listeObstaclesToRemove;
         private ContentManager _content;
-        private SpriteFont _gameFont, _ingameFont;
+        private SpriteFont _gameFont, _ingameFont, _HUDfont;
         #endregion
         #region Déclaration structures relatives au jeu
         struct doneParticles
@@ -127,6 +127,7 @@ namespace MenuSample.Scenes
             #region Chargement des polices d'écritures
             _gameFont = _content.Load<SpriteFont>("Fonts\\Menu\\Menu");
             _ingameFont = _content.Load<SpriteFont>("Fonts\\Jeu\\Jeu");
+            _HUDfont = _content.Load<SpriteFont>("Fonts\\Jeu\\HUD");
             #endregion
             #region Chargement fond du jeu
             fond_ecran = new ScrollingBackground();
@@ -161,7 +162,9 @@ namespace MenuSample.Scenes
             #endregion 
             #region Chargement textures HUD
             T_HUD = _content.Load<Texture2D>("Sprites\\HUD\\interface");
-            T_HUD_bars = _content.Load<Texture2D>("Sprites\\HUD\\energyBars1"); 
+            T_HUD_boss = _content.Load<Texture2D>("Sprites\\HUD\\interface-boss");
+            T_HUD_bars = _content.Load<Texture2D>("Sprites\\HUD\\energyBars1");
+            T_HUD_bar_boss = _content.Load<Texture2D>("Sprites\\HUD\\energyBarsBoss");
             #endregion
             #region Chargement textures missiles
             T_Missile_Joueur_1 = _content.Load<Texture2D>("Sprites\\Missiles\\Joueur\\missilenew1");
@@ -667,7 +670,7 @@ namespace MenuSample.Scenes
             if(listeVaisseau.Count != 0)
                 HUD.Drawbar(spriteBatch, barre_vie, listeVaisseau[0].vie, listeVaisseau[0].vieMax);
             spriteBatch.Draw(T_HUD_bars, new Vector2(380, 630), Color.White);
-            spriteBatch.DrawString(_ingameFont, Convert.ToString(score), new Vector2(90, 647), new Color(30, 225, 30));
+            spriteBatch.DrawString(_HUDfont, Convert.ToString(score), new Vector2(95, 628), new Color(30, 225, 30));
             #endregion
             #region Draw des obstacles
             foreach (Obstacles obstacle in listeObstacles)
@@ -696,9 +699,13 @@ namespace MenuSample.Scenes
             #region Draw des boss
             if (boss1 != null && boss1.Existe && !(end || endDead))
             {
-                spriteBatch.DrawString(_gameFont, "Spaceship X42", new Vector2(390, 10), Color.White);
+                spriteBatch.Draw(T_HUD_boss, new Vector2(726, 622), Color.White);
+                for (int i = 0; i <= (boss1.vieActuelle * (T_HUD_bar_boss.Width - 30)) / boss1.VieMax; i++)
+                    spriteBatch.Draw(barre_vie, new Vector2(775 + i, 692), Color.White);
+                spriteBatch.Draw(T_HUD_bar_boss, new Vector2(760, 680), Color.White);
+                spriteBatch.DrawString(_HUDfont, "Spaceship X42", new Vector2(760, 645), new Color(30, 225, 30));
+                spriteBatch.Draw(T_boss1, new Rectangle(726 + 340, 622 + 35, 75, 75), Color.White);
                 boss1.Draw(spriteBatch);
-                boss1.Drawbar(spriteBatch, barre_vie, boss1.vieActuelle, boss1.VieMax);
             }
             #endregion 
             #region Draw des particules
