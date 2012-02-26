@@ -46,7 +46,7 @@ namespace MenuSample.Scenes
         private float music_energy;
         #endregion
         #region Déclaration variables relatives au jeu
-        private doneParticles partManage;
+        private List<doneParticles> partManage;
         private ScrollingBackground fond_ecran, fond_ecran_front, fond_ecran_middle;
         public SpriteBatch spriteBatch;
         private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Vaisseau_Kamikaze, T_Missile_Joueur_1, T_Missile_Drone, T_Bonus_Vie, T_Bonus_Weapon1, T_Obstacles_Hole, barre_vie, T_HUD, T_HUD_boss, T_HUD_bars, T_HUD_bar_boss, T_Divers_Levelcomplete, T_Divers_Levelfail, T_boss1, T_Missile_Blaster_Ennemi;
@@ -108,6 +108,7 @@ namespace MenuSample.Scenes
 		    base.Initialize();
             aBossWasThere = false;
             bossTime = 0;
+            partManage = new List<doneParticles>();
         }
 
         protected override void LoadContent()
@@ -235,8 +236,9 @@ namespace MenuSample.Scenes
         }
 
 
-        doneParticles collisions(List<Vaisseau> listeVaisseau, List<Missiles> listeMissile, List<Bonus> listeBonus, List<Obstacles> listeObstacles, Boss aBoss, float spentTime, ParticleEffect particleEffect, GameTime gametime, bool dead)
+        List<doneParticles> collisions(List<Vaisseau> listeVaisseau, List<Missiles> listeMissile, List<Bonus> listeBonus, List<Obstacles> listeObstacles, Boss aBoss, float spentTime, ParticleEffect particleEffect, GameTime gametime, bool dead)
         {
+            List<doneParticles> listeParticules = new List<doneParticles>();
             #region Collision joueur <=> boss
             if (aBoss != null && !dead && ((listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > aBoss.Position.X && listeVaisseau[0].position.X < aBoss.Position.X) ||
             (listeVaisseau[0].position.X < aBoss.Position.X + aBoss.Texture.Width && listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > aBoss.Position.X + aBoss.Texture.Width))
@@ -292,7 +294,7 @@ namespace MenuSample.Scenes
                     listeVaisseau[0].hurt(vaisseau.damageCollision, time);
                     if (listeVaisseau[0].vie < 0)
                         listeVaisseauToRemove.Add(listeVaisseau[0]);
-                    return new doneParticles(false, new Vector2(vaisseau.position.X + vaisseau.sprite.Width / 2, vaisseau.position.Y + vaisseau.sprite.Height / 2));
+                    listeParticules.Add(new doneParticles(false, new Vector2(vaisseau.position.X + vaisseau.sprite.Width / 2, vaisseau.position.Y + vaisseau.sprite.Height / 2)));
                 }
                 #endregion
                 foreach (Missiles missile in listeMissile)
@@ -317,7 +319,7 @@ namespace MenuSample.Scenes
                                 if((!end)&&(!endDead))
                                 score = score + vaisseau.score;
 
-                                return new doneParticles(false, new Vector2(vaisseau.position.X + vaisseau.sprite.Width / 2, vaisseau.position.Y + vaisseau.sprite.Height / 2));        
+                                listeParticules.Add(new doneParticles(false, new Vector2(vaisseau.position.X + vaisseau.sprite.Width / 2, vaisseau.position.Y + vaisseau.sprite.Height / 2)));        
                             }
                         }
                     }
@@ -363,7 +365,7 @@ namespace MenuSample.Scenes
                     #endregion
                 }
             }
-            return new doneParticles(true, new Vector2(0, 0));
+            return listeParticules;
         }
 
         public override void HandleInput()
@@ -594,8 +596,11 @@ namespace MenuSample.Scenes
                 listeBonus.Remove(bonus);
             #endregion
             #region Collisions & Update des particules
-            if (partManage.startingParticle != Vector2.Zero)
-                particleEffect.Trigger(partManage.startingParticle);
+            foreach (doneParticles particle in partManage)
+            {
+                if (particle.startingParticle != Vector2.Zero)
+                    particleEffect.Trigger(particle.startingParticle);
+            }
             partManage = collisions(listeVaisseau, listeMissile, listeBonus, listeObstacles, boss1, fps_fix, particleEffect, gameTime, listeVaisseau.Count==0);
             particleEffect.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
 
