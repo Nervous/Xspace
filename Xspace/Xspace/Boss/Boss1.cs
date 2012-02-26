@@ -89,7 +89,7 @@ namespace Xspace
                             {
                                 Invincible = false;
                                 _timingAttack = 1000;
-                                Vector2 pos = new Vector2(Position.X - 50, Position.Y + _texture.Height / 3 - 6);
+                                Vector2 pos = new Vector2(Position.X - 60, Position.Y + _texture.Height / 3 - 6);
                                 listeMissile.Add(new Blaster_Ennemi(_T_Missile3, pos));
                                 LastTir = time;
                                 Vitesse = 0.0f;
