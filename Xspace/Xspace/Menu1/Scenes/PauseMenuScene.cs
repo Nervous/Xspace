@@ -52,6 +52,5 @@ namespace MenuSample.Scenes
             AudioPlayer.PlayMusic("Musiques\\Menu\\Musique.flac");
             LoadingScene.Load(SceneManager, false);
         }
-
     }
 }

@@ -46,7 +46,7 @@ namespace MenuSample.Scenes
             var Nv1 = new MenuItem("Nv.1");
             sr_arcade = new StreamReader(path_arcade);
             sr_arcade_level = new StreamReader(path_arcade_level);
-
+            position_board = new Vector2();
             MenuItems.Add(back);
 
         }

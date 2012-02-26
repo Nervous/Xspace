@@ -29,7 +29,7 @@ namespace Xspace.Son
         {
             if (result != RESULT.OK)
             {
-                // throw new ApplicationException("FMOD : " + result + " - " + Error.String(result));
+                throw new ApplicationException("FMOD : " + result + " - " + Error.String(result));
             }
         }
 
