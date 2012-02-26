@@ -653,14 +653,12 @@ namespace MenuSample.Scenes
                         stock_score_inferieur += score_level[i] + '\n' + score_level[i+1] +'\n';
                     else
                         stock_score_superieur += score_level[i] + '\n' + score_level[i+1] +'\n';
-                    Console.WriteLine("for");
                 }
     
                 sr_level.Close();
                 sw_level = new StreamWriter(path_level);
 
                 sw_level.WriteLine(stock_score_inferieur + "Nervous" + '\n' + Convert.ToString(score) + '\n' + stock_score_superieur);
-                Console.WriteLine("ecriture");
                 sw_level.Close();
                 first = false;
                     AudioPlayer.StopMusic();
