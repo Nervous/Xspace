@@ -374,6 +374,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collisions\Moteur\Moteur.xml">
+      <Name>Moteur</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Sprites\Missiles\Ennemi\missile_boule2.png">
       <Name>missile_boule2</Name>
       <Importer>TextureImporter</Importer>
@@ -385,6 +392,13 @@
       <Name>levelcompleted</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Collisions\Moteur\Moteurlocal.xml">
+      <Name>Moteurlocal</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
