@@ -16,13 +16,13 @@ namespace Xspace
         public Vector2 _emplacement, _deplacementDirectionY, _deplacementDirectionX;
         public Texture2D _textureVaisseau;
         public float _vitesseVaisseau;
-        protected int _vie, _armure, _damageCollision, _armeActuelle, _vieMax, _score;
+        protected int _vie, _armure, _damageCollision, _armeActuelle, _vieMax, _score, _energie, _energieMax;
         protected double _timingAttack;
         protected bool _ennemi, _existe;
         protected double _lastTir;
         protected double _lastDamage;
 
-        public Vaisseau(Texture2D texture, int vie, int vieMax, int armure, int damageCollision, float vitesseVaisseau, Vector2 startPosition, bool ennemi, double timingAttack, int score, int arme)
+        public Vaisseau(Texture2D texture, int vie, int vieMax, int energie, int energieMax, int armure, int damageCollision, float vitesseVaisseau, Vector2 startPosition, bool ennemi, double timingAttack, int score, int arme)
         {
             _textureVaisseau = texture;
             _vie = vie;
@@ -40,6 +40,8 @@ namespace Xspace
             _armeActuelle = arme;
             _score = score;
             _lastDamage = -500;
+            _energie = energie;
+            _energieMax = energieMax;
         }
 
         public void applyBonus(string effect, int amount, int time)
@@ -70,6 +72,16 @@ namespace Xspace
         public int vieMax
         {
             get { return _vieMax; }
+        }
+
+        public int Energie
+        {
+            get { return _energie; }
+        }
+
+        public int EnergieMax
+        {
+            get { return _energieMax; }
         }
 
         public int damageCollision
@@ -113,6 +125,12 @@ namespace Xspace
             this._vie -= amount;
             this._lastDamage = time;
             return (this._vie <= 0);
+        }
+
+        public bool useEnergy(int amount)
+        {
+            this._energie -= amount;
+            return (this._energie <= 0);
         }
 
         public void heal(int amount)
