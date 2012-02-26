@@ -327,13 +327,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Sprites\Divers\levelcompleted.png">
-      <Name>levelcompleted</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Sprites\Vaisseaux\Boss\boss1.png">
       <Name>boss1</Name>
       <Importer>TextureImporter</Importer>
@@ -383,6 +376,13 @@
   <ItemGroup>
     <Compile Include="Sprites\Missiles\Ennemi\missile_boule2.png">
       <Name>missile_boule2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Sprites\Divers\levelcompleted.png">
+      <Name>levelcompleted</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

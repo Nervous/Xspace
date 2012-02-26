@@ -748,12 +748,11 @@ namespace MenuSample.Scenes
             if (end)
             {
                 spriteBatch.Draw(T_Divers_Levelcomplete, new Vector2(0, 0), Color.White);
-                spriteBatch.DrawString(_gameFont, Convert.ToString(score), new Vector2(500, 500), Color.Red);
+                spriteBatch.DrawString(_gameFont, Convert.ToString(score), new Vector2(530,276), Color.Green);
             }
             else if (endDead)
             {
                 spriteBatch.Draw(T_Divers_Levelfail, new Vector2(0, 0), Color.White);
-                spriteBatch.DrawString(_gameFont, Convert.ToString(score), new Vector2(500, 500), Color.Red);
             }
             #endregion
             spriteBatch.End();
