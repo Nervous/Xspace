@@ -227,15 +227,31 @@ namespace MenuSample.Scenes
         }
 
 
-        doneParticles collisions(List<Vaisseau> listeVaisseau, List<Missiles> listeMissile, List<Bonus> listeBonus, List<Obstacles> listeObstacles, Boss aBoss, float spentTime, ParticleEffect particleEffect, GameTime gametime)
+        doneParticles collisions(List<Vaisseau> listeVaisseau, List<Missiles> listeMissile, List<Bonus> listeBonus, List<Obstacles> listeObstacles, Boss aBoss, float spentTime, ParticleEffect particleEffect, GameTime gametime, bool dead)
         {
+            #region Collision joueur <=> boss
+            if (aBoss != null && !dead && ((listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > aBoss.Position.X && listeVaisseau[0].position.X < aBoss.Position.X) ||
+            (listeVaisseau[0].position.X < aBoss.Position.X + aBoss.Texture.Width && listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > aBoss.Position.X + aBoss.Texture.Width))
+        && ((listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height > aBoss.Position.Y && listeVaisseau[0].position.Y < aBoss.Position.Y) ||
+                (listeVaisseau[0].position.Y < aBoss.Position.Y + aBoss.Texture.Height && listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height > aBoss.Position.Y + aBoss.Texture.Height)))
+            {
 
+
+                if ((!end) && (!endDead))
+                    score = score + aBoss.Score;
+
+                aBoss.Hurt(10);
+                listeVaisseau[0].hurt(10, time);
+                if (listeVaisseau[0].vie < 0)
+                    listeVaisseauToRemove.Add(listeVaisseau[0]);
+            }
+            #endregion
             foreach(Vaisseau vaisseau in listeVaisseau)
             {
                 #region Collision joueur => bonus
                 foreach (Bonus bonus in listeBonus)
                 {
-                    if (((listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width >= bonus.position.X && listeVaisseau[0].position.X <= bonus.position.X) ||
+                    if (!dead && ((listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width >= bonus.position.X && listeVaisseau[0].position.X <= bonus.position.X) ||
                                 (listeVaisseau[0].position.X <= bonus.position.X + bonus.sprite.Width && listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width >= bonus.position.X + bonus.sprite.Width) ||
                                 (listeVaisseau[0].position.X <= bonus.position.X && listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > bonus.position.X + bonus.sprite.Width))
                            && ((listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height >= bonus.position.Y && listeVaisseau[0].position.Y <= bonus.position.Y) ||
@@ -252,7 +268,7 @@ namespace MenuSample.Scenes
                 }
                 #endregion
                 #region Collision joueur <=> vaisseau
-                if (((listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > vaisseau.position.X && listeVaisseau[0].position.X < vaisseau.position.X) ||
+                if (!dead && ((listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > vaisseau.position.X && listeVaisseau[0].position.X < vaisseau.position.X) ||
                             (listeVaisseau[0].position.X < vaisseau.position.X + vaisseau.sprite.Width && listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > vaisseau.position.X + vaisseau.sprite.Width))
                        && ((listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height > vaisseau.position.Y && listeVaisseau[0].position.Y < vaisseau.position.Y) ||
                              (listeVaisseau[0].position.Y < vaisseau.position.Y + vaisseau.sprite.Height && listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height > vaisseau.position.Y + vaisseau.sprite.Height)))
@@ -270,27 +286,10 @@ namespace MenuSample.Scenes
                     return new doneParticles(false, new Vector2(vaisseau.position.X + vaisseau.sprite.Width / 2, vaisseau.position.Y + vaisseau.sprite.Height / 2));
                 }
                 #endregion
-                #region Collision joueur <=> boss
-                if (aBoss != null && ((listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > aBoss.Position.X && listeVaisseau[0].position.X < aBoss.Position.X) ||
-                (listeVaisseau[0].position.X < aBoss.Position.X + aBoss.Texture.Width && listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > aBoss.Position.X + aBoss.Texture.Width))
-            && ((listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height > aBoss.Position.Y && listeVaisseau[0].position.Y < aBoss.Position.Y) ||
-                    (listeVaisseau[0].position.Y < aBoss.Position.Y + aBoss.Texture.Height && listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height > aBoss.Position.Y + aBoss.Texture.Height)))
-                {
-
-
-                    if ((!end) && (!endDead))
-                        score = score + aBoss.Score;
-
-                    aBoss.Hurt(10);
-                    listeVaisseau[0].hurt(10, time);
-                    if (listeVaisseau[0].vie < 0)
-                        listeVaisseauToRemove.Add(listeVaisseau[0]);
-                }
-                #endregion
                 foreach (Missiles missile in listeMissile)
                 {
                     #region Collision missile => vaisseau
-                    if (((missile.position.X + missile.sprite.Width > vaisseau.position.X)
+                    if (!dead && ((missile.position.X + missile.sprite.Width > vaisseau.position.X)
                         && (missile.position.X + missile.sprite.Width < vaisseau.position.X + vaisseau.sprite.Width))
                         && ((missile.position.Y + missile.sprite.Height / 2 > vaisseau.position.Y - vaisseau.sprite.Height*0.10)
                         && (missile.position.Y + missile.sprite.Height / 2 < vaisseau.position.Y + vaisseau.sprite.Height + vaisseau.sprite.Height*0.10))
@@ -334,7 +333,7 @@ namespace MenuSample.Scenes
                 foreach (Obstacles obstacle in listeObstacles)
                 {
                     #region Collision joueur <=> Obstacle
-                    if (((listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > obstacle.position.X && listeVaisseau[0].position.X < obstacle.position.X) || (listeVaisseau[0].position.X < obstacle.position.X + obstacle.sprite.Width && listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > obstacle.position.X + obstacle.sprite.Width) || (listeVaisseau[0].position.X > obstacle.position.X && listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width < obstacle.position.X + obstacle.sprite.Width))
+                    if (!dead && ((listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > obstacle.position.X && listeVaisseau[0].position.X < obstacle.position.X) || (listeVaisseau[0].position.X < obstacle.position.X + obstacle.sprite.Width && listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > obstacle.position.X + obstacle.sprite.Width) || (listeVaisseau[0].position.X > obstacle.position.X && listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width < obstacle.position.X + obstacle.sprite.Width))
                         &&
                         ((listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height > obstacle.position.Y && listeVaisseau[0].position.Y < obstacle.position.Y) || (listeVaisseau[0].position.Y < obstacle.position.Y + obstacle.sprite.Height && listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height > obstacle.position.Y + obstacle.sprite.Height) || (listeVaisseau[0].position.Y > obstacle.position.Y && listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height < obstacle.position.Y + obstacle.sprite.Height)))
                     {
@@ -588,7 +587,7 @@ namespace MenuSample.Scenes
             #region Collisions & Update des particules
             if (partManage.startingParticle != Vector2.Zero)
                 particleEffect.Trigger(partManage.startingParticle);
-            partManage = collisions(listeVaisseau, listeMissile, listeBonus, listeObstacles, boss1, fps_fix, particleEffect, gameTime);
+            partManage = collisions(listeVaisseau, listeMissile, listeBonus, listeObstacles, boss1, fps_fix, particleEffect, gameTime, listeVaisseau.Count<0);
             particleEffect.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
             #endregion
             #region Update spectre & historique
