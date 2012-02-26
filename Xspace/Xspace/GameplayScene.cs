@@ -57,7 +57,7 @@ namespace MenuSample.Scenes
         private gestionLevels thisLevel;
         private List<gestionLevels> infLevel, listeLevelToRemove;
         Renderer particleRenderer;
-        ParticleEffect particleEffect;
+        ParticleEffect particleEffect, particleEffectMoteur;
         private Boss boss1;
         List<Vaisseau> listeVaisseau, listeVaisseauToRemove;
         List<Missiles> listeMissile, listeMissileToRemove;
@@ -140,7 +140,12 @@ namespace MenuSample.Scenes
             fond_ecran_front.Load(GraphicsDevice, _content.Load<Texture2D>("Sprites\\Background\\space-front"));
             #endregion
             #region Chargement particules
+            //Moteur
             particleRenderer.LoadContent(_content);
+            particleEffectMoteur = _content.Load<ParticleEffect>("Collisions\\Moteur\\Moteur");
+            particleEffectMoteur.Initialise();
+            particleEffectMoteur.LoadContent(_content);
+            //Explosions
             particleEffect = _content.Load<ParticleEffect>("Collisions\\BasicExplosion\\BasicExplosion");
             particleEffect.Initialise();
             particleEffect.LoadContent(_content);
@@ -593,6 +598,15 @@ namespace MenuSample.Scenes
                 particleEffect.Trigger(partManage.startingParticle);
             partManage = collisions(listeVaisseau, listeMissile, listeBonus, listeObstacles, boss1, fps_fix, particleEffect, gameTime, listeVaisseau.Count==0);
             particleEffect.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+
+            Vector2 positionVaisseau = listeVaisseau[0]._emplacement;
+            positionVaisseau.Y = positionVaisseau.Y + listeVaisseau[0]._textureVaisseau.Height / 2;
+            positionVaisseau.X -= 5;
+
+            ((EmitterCollection)particleEffectMoteur)[0].ReleaseImpulse.X = -400 * music_energy;
+
+            particleEffectMoteur.Trigger(positionVaisseau);
+            particleEffectMoteur.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
             #endregion
             #region Update spectre & historique
             if (lastTimeSpectre + 25 < time)
@@ -679,6 +693,13 @@ namespace MenuSample.Scenes
                 obstacle.Draw(spriteBatch);
             }
             #endregion
+            #region Draw des particules de déplacement
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive);
+            particleRenderer.RenderEffect(particleEffectMoteur);
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
+            #endregion
             #region Draw des vaisseaux
             foreach (Vaisseau vaisseau in listeVaisseau)
             {
@@ -709,7 +730,7 @@ namespace MenuSample.Scenes
                 boss1.Draw(spriteBatch);
             }
             #endregion 
-            #region Draw des particules
+            #region Draw des particules de collision
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive);
             particleRenderer.RenderEffect(particleEffect);
