@@ -5,7 +5,7 @@
     <ProjectTypeGuids>{6D335F3A-9D43-41b4-9D22-F6F17C4BE596};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Xspace</RootNamespace>
     <AssemblyName>Xspace</AssemblyName>
@@ -123,23 +123,35 @@
     <Compile Include="Boss\Boss1.cs" />
     <Compile Include="gestionLevels.cs" />
     <Compile Include="Menu1\InputState.cs" />
-    <Compile Include="Menu1\Scenes\ActChoiceMenuScene.cs" />
-    <Compile Include="Menu1\Scenes\BackgroundScene.cs" />
+    <Compile Include="Menu1\Scenes\ActChoiceMenuScene.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Menu1\Scenes\BackgroundScene.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Menu1\Scenes\Core\AbstractGameScene.cs" />
     <Compile Include="Menu1\Scenes\Core\AbstractMenuScene.cs" />
     <Compile Include="Menu1\Scenes\Core\MenuItem.cs" />
     <Compile Include="Menu1\Scenes\Core\SceneManager.cs" />
-    <Compile Include="Menu1\Scenes\LevelChoice1MenuScene.cs" />
-    <Compile Include="Menu1\Scenes\LevelChoice2MenuScene.cs" />
-    <Compile Include="Menu1\Scenes\LevelChoice3MenuScene.cs" />
+    <Compile Include="Menu1\Scenes\LevelChoice1MenuScene.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Menu1\Scenes\LevelChoice2MenuScene.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Menu1\Scenes\LevelChoice3MenuScene.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Menu1\Scenes\LoadingScene.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Menu1\Scenes\ModeChoiceMenuScene.cs" />
     <Compile Include="Menu1\Scenes\OptionMenuScene.cs" />
     <Compile Include="Menu1\Scenes\ScoreArcadeMenuScene.cs" />
     <Compile Include="Menu1\Scenes\ScoreMenuScene.cs" />
     <Compile Include="GameplayScene.cs" />
-    <Compile Include="Menu1\Scenes\LoadingScene.cs" />
     <Compile Include="Menu1\Scenes\MainMenuScene.cs" />
     <Compile Include="Menu1\Scenes\MessageBoxScene.cs" />
-    <Compile Include="Menu1\Scenes\%28UNUSED%29OptionsMenuScene.cs" />
     <Compile Include="Menu1\Scenes\PauseMenuScene.cs" />
     <Compile Include="Missiles\Boss\Missile1_boss.cs" />
     <Compile Include="Missiles\Ennemi\Blaster_Ennemi.cs" />

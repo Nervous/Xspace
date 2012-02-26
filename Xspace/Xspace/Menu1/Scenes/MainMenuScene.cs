@@ -68,7 +68,7 @@ namespace MenuSample.Scenes
 
         private void PlayGameMenuItemSelected(object sender, EventArgs e)
         {
-            new ActChoiceMenuScene(SceneManager, graphics).Add();
+            new ModeChoiceMenuScene(SceneManager, graphics).Add();
         }
 
         private void OptionMenuItemSelected(object sender, EventArgs e)

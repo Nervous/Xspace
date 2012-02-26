@@ -42,7 +42,7 @@ namespace MenuSample.Scenes
         private StreamReader sr_level;
         private char[] delimitationFilesInfo = new char[] { ' ' }, delimitationFilesInfo2 = new char[] { ';' }, delimitationFilesInfo3 = new char[] { ':' };
         private float[] spectre;
-        private bool drawSpectre, aBossWasThere;
+        private bool drawSpectre, aBossWasThere, first;
         private float music_energy;
         #endregion
         #region Déclaration variables relatives au jeu
@@ -98,6 +98,7 @@ namespace MenuSample.Scenes
             score = 0;
             lastTime = 0;
             lastTimeEnergy = 0;
+            first = true;
             lastTimeSpectre = 150;
             spectre = new float[128];
             SoundEffect.MasterVolume = 0.15f;
@@ -618,38 +619,41 @@ namespace MenuSample.Scenes
 
             #endregion
             #region Fin du level
-            if (end || endDead)
+
+            if ((end || endDead)&&(first))
             {
-                path_level = "Scores\\Arcade\\lvl1" + ".score";
+                path_level = "Scores\\Arcade\\lvl" + _level + ".score";
                 sr_level = new StreamReader(path_level);
                 score_level = System.IO.File.ReadAllLines(@path_level);
                 stock_score_inferieur = "";
                 stock_score_superieur = "";
 
                 for (int i = 0; i < 10; i+=2) 
-                {
-                        
+                {      
                     if (score < Convert.ToInt32(score_level[i + 1]))
                         stock_score_inferieur += score_level[i] + '\n' + score_level[i+1] +'\n';
                     else
                         stock_score_superieur += score_level[i] + '\n' + score_level[i+1] +'\n';
+                    Console.WriteLine("for");
                 }
-
-                
+    
                 sr_level.Close();
                 sw_level = new StreamWriter(path_level);
-                sw_level.WriteLine(stock_score_inferieur + "Nervous" + '\n' + Convert.ToString(score) + '\n' + stock_score_superieur);
-                sw_level.Close();
 
+                sw_level.WriteLine(stock_score_inferieur + "Nervous" + '\n' + Convert.ToString(score) + '\n' + stock_score_superieur);
+                Console.WriteLine("ecriture");
+                sw_level.Close();
+                first = false;
                     AudioPlayer.StopMusic();
-                    SoundEffect.MasterVolume = 0.00f;
-                    if (keyboardState.IsKeyDown(Keys.Enter))
-                    {
-                        AudioPlayer.PlayMusic("Musiques\\Menu\\Musique.flac");
-                        Remove();
-                    }
-                
-                
+                    SoundEffect.MasterVolume = 0.00f;                           
+            }
+            if (end || endDead)
+            {
+                if (keyboardState.IsKeyDown(Keys.Enter))
+                {
+                    AudioPlayer.PlayMusic("Musiques\\Menu\\Musique.flac");
+                    Remove();
+                }
             }
             #endregion
             base.Update(gameTime);

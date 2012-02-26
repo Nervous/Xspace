@@ -51,7 +51,7 @@ namespace Xspace
                             if ((time - LastTir > _timingAttack) && (i1 < 5))
                             {
                                 _timingAttack = 200;
-                                Vector2 pos = new Vector2(Position.X - 35, Position.Y + _texture.Height / 3 - 6);
+                                Vector2 pos = new Vector2(Position.X - 40, Position.Y + _texture.Height / 3 - 6);
                                 listeMissile.Add(new Missile_drone(_T_Missile1, pos));
                                 LastTir = time;
                                 pausetime = time;
@@ -78,7 +78,7 @@ namespace Xspace
                               {
                                     _timingAttack = 200;
                                     Invincible = true;
-                                    Vector2 pos = new Vector2(Position.X - 35, Position.Y + _texture.Height / 3 - 6);
+                                    Vector2 pos = new Vector2(Position.X - 40, Position.Y + _texture.Height / 3 - 6);
                                     listeMissile.Add(new Missile1_boss(_T_Missile2, pos));
                                     LastTir = time;
                                     Vitesse = 0.2f;
@@ -89,7 +89,7 @@ namespace Xspace
                             {
                                 Invincible = false;
                                 _timingAttack = 1000;
-                                Vector2 pos = new Vector2(Position.X - 35, Position.Y + _texture.Height / 3 - 6);
+                                Vector2 pos = new Vector2(Position.X - 50, Position.Y + _texture.Height / 3 - 6);
                                 listeMissile.Add(new Blaster_Ennemi(_T_Missile3, pos));
                                 LastTir = time;
                                 Vitesse = 0.0f;
