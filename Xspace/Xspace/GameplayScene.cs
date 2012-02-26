@@ -660,12 +660,13 @@ namespace MenuSample.Scenes
                 sw_level.WriteLine(stock_score_inferieur + "Nervous" + '\n' + Convert.ToString(score) + '\n' + stock_score_superieur);
                 sw_level.Close();
 
-                    AudioPlayer.StopMusic();
+                    
                     SoundEffect.MasterVolume = 0.00f;
                     if (keyboardState.IsKeyDown(Keys.Enter))
                     {
-                        AudioPlayer.PlayMusic("Musiques\\Menu\\Musique.flac");
                         Remove();
+                        AudioPlayer.StopMusic();
+                        AudioPlayer.PlayMusic("Musiques\\Menu\\Musique.flac");
                     }
                 
                 
