@@ -49,7 +49,7 @@ namespace MenuSample.Scenes
         private List<doneParticles> partManage;
         private ScrollingBackground fond_ecran, fond_ecran_front, fond_ecran_middle;
         public SpriteBatch spriteBatch;
-        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Vaisseau_Kamikaze, T_Missile_Joueur_1, T_Missile_Drone, T_Bonus_Vie, T_Bonus_Weapon1, T_Obstacles_Hole, barre_vie, T_HUD, T_HUD_boss, T_HUD_bars, T_HUD_bar_boss, T_Divers_Levelcomplete, T_Divers_Levelfail, T_boss1, T_Missile_Blaster_Ennemi;
+        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Vaisseau_Kamikaze, T_Missile_Joueur_1, T_Missile_Drone, T_Bonus_Vie, T_Bonus_Weapon1, T_Obstacles_Hole, barre_vie, T_HUD, T_HUD_boss, T_HUD_bars, T_HUD_bar_boss, T_Divers_Levelcomplete, T_Divers_Levelfail, T_boss1, T_Missile_Blaster_Ennemi, T_Vaisseau_Energizer, T_Vaisseau_Doubleshooter, T_Missile_Energie;
         private List<Texture2D> listeTextureVaisseauxEnnemis, listeTextureBonus, listeTextureObstacles, listeTextureBoss;
         private SoundEffect musique_tir;
         private KeyboardState keyboardState;
@@ -160,6 +160,8 @@ namespace MenuSample.Scenes
             T_Vaisseau_Joueur = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Joueur\\Joueur_1");
             T_Vaisseau_Drone = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Ennemi\\Drone");
             T_Vaisseau_Kamikaze = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Ennemi\\Kamikaze");
+            T_Vaisseau_Energizer = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Ennemi\\energizer");
+            T_Vaisseau_Doubleshooter = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Ennemi\\doubleshooter");
 			
 			drawSpectre = false;
 
@@ -180,6 +182,7 @@ namespace MenuSample.Scenes
             #region Chargement textures missiles
             T_Missile_Joueur_1 = _content.Load<Texture2D>("Sprites\\Missiles\\Joueur\\missilenew1");
             T_Missile_Drone = _content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\missile_new1");
+            T_Missile_Energie = _content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\missile_boule1");
             #endregion
             #region Chargement textures bonus
             // TODO : Chargement de toutes les textures des bonus en dessous
@@ -210,6 +213,8 @@ namespace MenuSample.Scenes
             listeTextureVaisseauxEnnemis = new List<Texture2D>();
             listeTextureVaisseauxEnnemis.Add(T_Vaisseau_Drone);
             listeTextureVaisseauxEnnemis.Add(T_Vaisseau_Kamikaze);
+            listeTextureVaisseauxEnnemis.Add(T_Vaisseau_Energizer);
+            listeTextureVaisseauxEnnemis.Add(T_Vaisseau_Doubleshooter);
 
             listeTextureBonus = new List<Texture2D>();
             listeTextureBonus.Add(T_Bonus_Vie);
@@ -557,13 +562,13 @@ namespace MenuSample.Scenes
                                 break;
                             case 1: // Tir double
                                 spawnHaut = new Vector2(vaisseau.position.X - 30, vaisseau.position.Y + vaisseau._textureVaisseau.Height / 2 - 20);
-                                spawnBas = new Vector2(vaisseau.position.X - 30, vaisseau.position.Y + vaisseau._textureVaisseau.Height / 2 + 20);
+                                spawnBas = new Vector2(vaisseau.position.X - 30, vaisseau.position.Y + vaisseau._textureVaisseau.Height / 2 + 10);
                                 listeMissile.Add(new Missile_drone(T_Missile_Drone, spawnHaut, vaisseau, null));
                                 listeMissile.Add(new Missile_drone(T_Missile_Drone, spawnBas, vaisseau, null));
                                 break;
                             case 2: // Blaster
-                                spawn = new Vector2(vaisseau.position.X - 35, vaisseau.position.Y + vaisseau._textureVaisseau.Height / 2);
-                                listeMissile.Add(new Blaster_Ennemi(T_Missile_Drone, spawn, vaisseau, null));
+                                spawn = new Vector2(vaisseau.position.X - 35, vaisseau.position.Y + vaisseau._textureVaisseau.Height / 2 - 20);
+                                listeMissile.Add(new Blaster_Ennemi(T_Missile_Energie, spawn, vaisseau, null));
                                 break;
                             default:
                                 break;
