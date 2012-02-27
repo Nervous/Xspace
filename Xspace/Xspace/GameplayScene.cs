@@ -551,7 +551,7 @@ namespace MenuSample.Scenes
 
                 if (vaisseau.ennemi && vaisseau.existe)
                 {
-                    if (time - vaisseau.lastTir > vaisseau.timingAttack)
+                    if (time - vaisseau.lastTir > vaisseau.timingAttack && vaisseau.timingAttack != 0)
                     {
                         Vector2 spawn, spawnHaut, spawnBas;
                         switch (vaisseau.armeActuelle)
