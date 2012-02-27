@@ -612,7 +612,13 @@ namespace MenuSample.Scenes
             partManage = collisions(listeVaisseau, listeMissile, listeBonus, listeObstacles, boss1, fps_fix, particleEffect, gameTime, listeVaisseau.Count==0);
             particleEffect.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
 
-            Vector2 positionVaisseau = listeVaisseau[0]._emplacement;
+            Vector2 positionVaisseau;
+
+            if(listeVaisseau.Count > 0)
+                positionVaisseau = listeVaisseau[0]._emplacement;
+            else
+                positionVaisseau = Vector2.Zero;
+
             positionVaisseau.Y = positionVaisseau.Y + listeVaisseau[0]._textureVaisseau.Height / 2;
             positionVaisseau.X -= 5;
 
