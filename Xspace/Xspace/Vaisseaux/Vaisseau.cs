@@ -156,6 +156,11 @@ namespace Xspace
             get { return _score; }
         }
 
+        public double lastDamage
+        {
+            set { this._lastDamage = value; }
+        }
+
         public void changeWeapon(int nouveau)
         {
             this._armeActuelle = nouveau;

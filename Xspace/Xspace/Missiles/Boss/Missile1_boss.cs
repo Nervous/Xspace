@@ -13,8 +13,8 @@ namespace Xspace
 {
     class Missile1_boss : Missiles
     {
-        public Missile1_boss(Texture2D texture, Vector2 position)
-            : base(texture, true, 50, position, new Vector2(-25, 0), new Vector2(0, 0), 1.0f)
+        public Missile1_boss(Texture2D texture, Vector2 position, Vaisseau owner, Boss ownerB)
+            : base(texture, true, 50, position, new Vector2(-25, 0), new Vector2(0, 0), 1.0f, owner, ownerB)
         { }
     }
 }

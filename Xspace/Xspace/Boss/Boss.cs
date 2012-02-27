@@ -21,7 +21,7 @@ namespace Xspace
         protected Vector2 _position;
         protected bool _existe, _invincible, _init;
         private Vector2 _position_bar;
-        public static int[] phaseArray1 = { 1000, 600, 200 };
+        public static int[] phaseArray1 = { 2000, 1200, 800 };
         /* Phase list: Example: [100,60,20]: As soon as phase[0] < vie, second phase begin, then third phase when phase[1] (so at 20 of life) < vie, etc..
          * So, you should ALWAYS have phase[0] >= vieMax        
          WARNING: Only three phases maximum are supported right now*/

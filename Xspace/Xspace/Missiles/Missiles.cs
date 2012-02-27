@@ -15,11 +15,13 @@ namespace Xspace
     {
         protected Vector2 _emplacement, _moveX, _moveY;
         protected Texture2D _textureMissile;
+        private Vaisseau _ownerV;
+        private Boss _ownerB;
         protected int _vie, _degats;
-        private bool _ennemi;
+        private bool _ennemi, _existe;
         float _vitesse;
 
-        public Missiles(Texture2D texture, bool ennemi, int degats, Vector2 emplacement, Vector2 moveX, Vector2 moveY, float vitesse)
+        public Missiles(Texture2D texture, bool ennemi, int degats, Vector2 emplacement, Vector2 moveX, Vector2 moveY, float vitesse, Vaisseau owner, Boss ownerB)
         {
             _textureMissile = texture;
             _vie = 1;
@@ -29,6 +31,9 @@ namespace Xspace
             _moveY = Vector2.Normalize(moveY);
             _ennemi = ennemi;
             _vitesse = vitesse;
+            _ownerV = owner;
+            _ownerB = ownerB;
+            _existe = true;
         }
 
         public void initialiserTexture(Texture2D texture)
@@ -54,6 +59,21 @@ namespace Xspace
         public bool ennemi
         {
             get { return _ennemi; }
+        }
+
+        public bool isAlive
+        {
+            get { return this._existe; }
+        }
+
+        public void kill()
+        {
+            this._existe = false;
+        }
+
+        public bool isOwner(Vaisseau v, Boss b)
+        {
+            return ((this._ownerV != null && this._ownerV != v) || (this._ownerB != null && this._ownerB != b));
         }
 
         public void avancerMissile(float fps_fix)

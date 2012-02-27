@@ -66,7 +66,7 @@ namespace MenuSample.Scenes
             {
                 SpriteBatch spriteBatch = SceneManager.SpriteBatch;
                 SpriteFont font = SceneManager.Font;
-                const string message = "Il y a bien longtemps... \nDans une galaxie lointaine, tres lointaine...";
+                const string message = " Chargement en cours...";
                 Viewport viewport = SceneManager.GraphicsDevice.Viewport;
                 var viewportSize = new Vector2(viewport.Width, viewport.Height);
                 Vector2 textSize = font.MeasureString(message);
