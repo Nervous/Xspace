@@ -627,6 +627,7 @@ namespace MenuSample.Scenes
                 positionVaisseau.Y = positionVaisseau.Y + listeVaisseau[0]._textureVaisseau.Height / 2;
                 positionVaisseau.X -= 5;
                 ((EmitterCollection)particleEffectMoteur)[0].ReleaseImpulse.X = -400 * music_energy;
+                ((EmitterCollection)particleEffectMoteur)[0].ReleaseScale.Value = 32 + (music_energy - 1) * 25;
                 particleEffectMoteur.Trigger(positionVaisseau);
             }
             particleEffectMoteur.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
