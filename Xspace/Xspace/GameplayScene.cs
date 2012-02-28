@@ -335,7 +335,7 @@ namespace MenuSample.Scenes
                     }
                     #endregion
                     #region Collision missile => boss
-                    if (aBoss != null && missile.isOwner(null, aBoss) && ((missile.position.X + missile.sprite.Width > aBoss.Position.X)
+                    if (aBoss != null && missile.isAlive && missile.isOwner(null, aBoss) && ((missile.position.X + missile.sprite.Width > aBoss.Position.X)
                                     && (missile.position.X + missile.sprite.Width < aBoss.Position.X + aBoss.Texture.Width))
                                     && ((missile.position.Y + missile.sprite.Height / 2 > aBoss.Position.Y - aBoss.Texture.Height * 0.10)
                                     && (missile.position.Y + missile.sprite.Height / 2 < aBoss.Position.Y + aBoss.Texture.Height + aBoss.Texture.Height * 0.10)))
