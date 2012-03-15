@@ -1,0 +1,297 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XnaContent xmlns:Pipeline="Microsoft.Xna.Framework.Content.Pipeline">
+  <Asset Type="Pipeline:BuildItemCollection">
+    <Item>
+      <Source>Vaisseau_joueur.png</Source>
+      <Name>Vaisseau_joueur</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\Vaisseau_joueur.xnb</Output>
+      <Time>2011-11-29T21:09:49.199761+01:00</Time>
+    </Item>
+    <Item>
+      <Source>MissileJoueur_Base.png</Source>
+      <Name>MissileJoueur_Base</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\MissileJoueur_Base.xnb</Output>
+      <Time>2011-11-29T21:09:49.1757596+01:00</Time>
+    </Item>
+    <Item>
+      <Source>missile1.png</Source>
+      <Name>missile1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\missile1.xnb</Output>
+      <Time>2011-11-29T21:09:49.3867717+01:00</Time>
+    </Item>
+    <Item>
+      <Source>space_bg.jpg</Source>
+      <Name>space_bg</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\space_bg.xnb</Output>
+      <Time>2011-11-29T21:09:49.5007782+01:00</Time>
+    </Item>
+    <Item>
+      <Source>vie.png</Source>
+      <Name>vie</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\vie.xnb</Output>
+      <Time>2011-11-29T21:09:49.5167791+01:00</Time>
+    </Item>
+    <Item>
+      <Source>contourvie.png</Source>
+      <Name>contourvie</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\contourvie.xnb</Output>
+      <Time>2011-11-29T21:09:49.3767711+01:00</Time>
+    </Item>
+    <Item>
+      <Source>particle2.png</Source>
+      <Name>particle2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\particle2.xnb</Output>
+      <Time>2011-11-29T21:09:49.4917777+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Vaisseau_ennemi1.png</Source>
+      <Name>Vaisseau_ennemi1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\Vaisseau_ennemi1.xnb</Output>
+      <Time>2011-11-29T21:09:49.1987609+01:00</Time>
+    </Item>
+    <Item>
+      <Source>missile1_e.png</Source>
+      <Name>missile1_e</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\missile1_e.xnb</Output>
+      <Time>2011-11-29T21:09:49.3877718+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Menu.png</Source>
+      <Name>Menu</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\Menu.xnb</Output>
+      <Time>2011-11-29T21:09:49.1747596+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Modele1.png</Source>
+      <Name>Modele1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\Modele1.xnb</Output>
+      <Time>2011-11-29T21:09:49.1767597+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Modele2.png</Source>
+      <Name>Modele2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\Modele2.xnb</Output>
+      <Time>2011-11-29T21:09:49.1797599+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Pile1.png</Source>
+      <Name>Pile1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\Pile1.xnb</Output>
+      <Time>2011-11-29T21:09:49.1897604+01:00</Time>
+    </Item>
+    <Item>
+      <Source>blank.png</Source>
+      <Name>blank</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\blank.xnb</Output>
+      <Time>2011-11-29T21:09:49.3757711+01:00</Time>
+    </Item>
+    <Item>
+      <Source>gradient.png</Source>
+      <Name>gradient</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\gradient.xnb</Output>
+      <Time>2011-11-29T21:09:49.3797713+01:00</Time>
+    </Item>
+    <Item>
+      <Source>background.jpg</Source>
+      <Name>background</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\background.xnb</Output>
+      <Time>2011-11-29T21:09:49.3727709+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Collisions\BasicExplosion\Cloud001.png</Source>
+      <Name>Collisions\BasicExplosion\Cloud001</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\Collisions\BasicExplosion\Cloud001.xnb</Output>
+      <Time>2011-11-29T21:09:49.1687592+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Collisions\BasicExplosion\Particle004.png</Source>
+      <Name>Collisions\BasicExplosion\Particle004</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\Collisions\BasicExplosion\Particle004.xnb</Output>
+      <Time>2011-11-29T21:09:49.1707593+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Collisions\BasicExplosion\Particle005.png</Source>
+      <Name>Collisions\BasicExplosion\Particle005</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\Collisions\BasicExplosion\Particle005.xnb</Output>
+      <Time>2011-11-29T21:09:49.1727595+01:00</Time>
+    </Item>
+    <Item>
+      <Source>musique.mp3</Source>
+      <Name>musique</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\musique.xnb</Output>
+      <Extra>C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\musique.wma</Extra>
+      <Time>2011-11-29T21:09:49.4647762+01:00</Time>
+    </Item>
+    <Item>
+      <Source>against_the_waves.mp3</Source>
+      <Name>against_the_waves</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\against_the_waves.xnb</Output>
+      <Extra>C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\against_the_waves.wma</Extra>
+      <Time>2011-11-29T21:09:49.3647704+01:00</Time>
+    </Item>
+    <Item>
+      <Source>wow-music1.mp3</Source>
+      <Name>wow-music1</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\wow-music1.xnb</Output>
+      <Extra>C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\wow-music1.wma</Extra>
+      <Time>2011-11-29T21:09:49.5707822+01:00</Time>
+    </Item>
+    <Item>
+      <Source>musique_tir.mp3</Source>
+      <Name>musique_tir</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\musique_tir.xnb</Output>
+      <Time>2011-11-29T21:09:49.4667763+01:00</Time>
+    </Item>
+    <Item>
+      <Source>gamefont.spritefont</Source>
+      <Name>gamefont</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\gamefont.xnb</Output>
+      <Time>2011-11-29T21:09:49.3787712+01:00</Time>
+    </Item>
+    <Item>
+      <Source>menufont.spritefont</Source>
+      <Name>menufont</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\menufont.xnb</Output>
+      <Time>2011-11-29T21:09:49.3847716+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Collisions\BasicExplosion\BasicExplosion.xml</Source>
+      <Name>Collisions\BasicExplosion\BasicExplosion</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\Collisions\BasicExplosion\BasicExplosion.xnb</Output>
+      <Time>2011-11-29T21:09:49.1667591+01:00</Time>
+    </Item>
+    <Item>
+      <Source>TOR_01_the_mandalorian_blockade.mp3</Source>
+      <Name>TOR_01_the_mandalorian_blockade</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\TOR_01_the_mandalorian_blockade.xnb</Output>
+      <Extra>C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\TOR_01_the_mandalorian_blockade.wma</Extra>
+      <Time>2011-12-04T01:59:29.3807818+01:00</Time>
+    </Item>
+    <BuildSuccessful>true</BuildSuccessful>
+    <Settings>
+      <TargetPlatform>Windows</TargetPlatform>
+      <TargetProfile>HiDef</TargetProfile>
+      <BuildConfiguration>Release</BuildConfiguration>
+      <CompressContent>true</CompressContent>
+      <RootDirectory>C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\XspaceContent\</RootDirectory>
+      <LoggerRootDirectory>C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\XspaceContent\obj\x86\Release\</IntermediateDirectory>
+      <OutputDirectory>C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\</OutputDirectory>
+    </Settings>
+    <Assemblies>
+      <Assembly>
+        <Key>C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Debug\ProjectMercury.dll</Key>
+        <Value>2011-11-29T21:09:48.7957379+01:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.XImporter.dll</Key>
+        <Value>2010-08-23T12:41:18+02:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.VideoImporters.dll</Key>
+        <Value>2010-08-23T12:41:18+02:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.TextureImporter.dll</Key>
+        <Value>2010-08-23T12:41:18+02:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.FBXImporter.dll</Key>
+        <Value>2010-08-23T12:41:18+02:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.EffectImporter.dll</Key>
+        <Value>2010-08-23T12:41:18+02:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.AudioImporters.dll</Key>
+        <Value>2010-08-23T12:41:18+02:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
+        <Value>2011-07-01T16:44:03.7559627+02:00</Value>
+      </Assembly>
+    </Assemblies>
+  </Asset>
+</XnaContent>

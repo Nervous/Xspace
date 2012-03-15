@@ -1,0 +1,74 @@
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\bin\x86\Release\Content\Vaisseau_joueur.xnb
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\bin\x86\Release\Content\space_bg.xnb
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\bin\x86\Release\Content\MissileJoueur_Base.xnb
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\bin\x86\Release\Content\musique.xnb
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\bin\x86\Release\Content\musique.wma
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\bin\x86\Release\Xspace.exe
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\bin\x86\Release\Xspace.pdb
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\obj\x86\Release\ResolveAssemblyReference.cache
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\obj\x86\Release\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\obj\x86\Release\Xspace.exe
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\obj\x86\Release\Xspace.pdb
+C:\Users\Nervous\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Release\Content\Vaisseau_joueur.xnb
+C:\Users\Nervous\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Release\Content\space_bg.xnb
+C:\Users\Nervous\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Release\Content\MissileJoueur_Base.xnb
+C:\Users\Nervous\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Release\Content\musique.xnb
+C:\Users\Nervous\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Release\Content\musique.wma
+C:\Users\Nervous\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Release\Xspace.exe
+C:\Users\Nervous\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Release\Xspace.pdb
+C:\Users\Nervous\Desktop\Xspace\Xspace\Xspace\Xspace\obj\x86\Release\ResolveAssemblyReference.cache
+C:\Users\Nervous\Desktop\Xspace\Xspace\Xspace\Xspace\obj\x86\Release\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\Nervous\Desktop\Xspace\Xspace\Xspace\Xspace\obj\x86\Release\Xspace.exe
+C:\Users\Nervous\Desktop\Xspace\Xspace\Xspace\Xspace\obj\x86\Release\Xspace.pdb
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Release\Content\Vaisseau_joueur.xnb
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Release\Content\MissileJoueur_Base.xnb
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Release\Content\missile1.xnb
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Release\Content\space_bg.xnb
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Release\Content\musique.xnb
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Release\Content\against_the_waves.xnb
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Release\Content\musique.wma
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Release\Content\against_the_waves.wma
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Release\Xspace.exe
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\bin\x86\Release\Xspace.pdb
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\obj\x86\Release\ResolveAssemblyReference.cache
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\obj\x86\Release\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\obj\x86\Release\Xspace.exe
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\Xspace\obj\x86\Release\Xspace.pdb
+C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\Vaisseau_joueur.xnb
+C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\MissileJoueur_Base.xnb
+C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\missile1.xnb
+C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\space_bg.xnb
+C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\vie.xnb
+C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\contourvie.xnb
+C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\particle2.xnb
+C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\Vaisseau_ennemi1.xnb
+C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\missile1_e.xnb
+C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\Menu.xnb
+C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\Modele1.xnb
+C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\Modele2.xnb
+C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\Pile1.xnb
+C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\blank.xnb
+C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\gradient.xnb
+C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\background.xnb
+C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\Collisions\BasicExplosion\Cloud001.xnb
+C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\Collisions\BasicExplosion\Particle004.xnb
+C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\Collisions\BasicExplosion\Particle005.xnb
+C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\musique.xnb
+C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\against_the_waves.xnb
+C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\wow-music1.xnb
+C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\musique_tir.xnb
+C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\gamefont.xnb
+C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\menufont.xnb
+C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\Collisions\BasicExplosion\BasicExplosion.xnb
+C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\musique.wma
+C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\against_the_waves.wma
+C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\wow-music1.wma
+C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Xspace.exe
+C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Xspace.pdb
+C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\ProjectMercury.dll
+C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\obj\x86\Release\ResolveAssemblyReference.cache
+C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\obj\x86\Release\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\obj\x86\Release\Xspace.exe
+C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\obj\x86\Release\Xspace.pdb
+C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\TOR_01_the_mandalorian_blockade.xnb
+C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\Xspace\bin\x86\Release\Content\TOR_01_the_mandalorian_blockade.wma

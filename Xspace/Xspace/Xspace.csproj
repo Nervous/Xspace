@@ -129,6 +129,7 @@
     <Compile Include="Menu1\Scenes\BackgroundScene.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Menu1\Scenes\CoopChoiceMenu.cs" />
     <Compile Include="Menu1\Scenes\Core\AbstractGameScene.cs" />
     <Compile Include="Menu1\Scenes\Core\AbstractMenuScene.cs" />
     <Compile Include="Menu1\Scenes\Core\MenuItem.cs" />
@@ -159,6 +160,7 @@
     <Compile Include="Missiles\Boss\Missile2_boss.cs" />
     <Compile Include="Missiles\Missiles.cs" />
     <Compile Include="Missiles\Ennemi\Missile_Drone.cs" />
+    <Compile Include="Multiplayer\Player.cs" />
     <Compile Include="Obstacles\Obstacles.cs" />
     <Compile Include="Obstacles\Obstacles_Hole.cs" />
     <Compile Include="ScrollingBackground.cs" />

@@ -1,0 +1,4 @@
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\XspaceContent\obj\x86\Release\ResolveAssemblyReference.cache
+C:\Users\Nervous\Desktop\Xspace\Xspace\Xspace\XspaceContent\obj\x86\Release\ResolveAssemblyReference.cache
+C:\Users\Emmanuel\Desktop\Xspace\Xspace\Xspace\XspaceContent\obj\x86\Release\ResolveAssemblyReference.cache
+C:\Users\Antoine\Desktop\Space Symphonia\Xspace\Xspace\XspaceContent\obj\x86\Release\ResolveAssemblyReference.cache

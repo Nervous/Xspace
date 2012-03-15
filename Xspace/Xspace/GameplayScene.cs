@@ -33,9 +33,9 @@ namespace MenuSample.Scenes
     public class GameplayScene : AbstractGameScene
     {
         #region Déclaration variables usuelles
-        private int score, _level;
+        private int score, _level, _levelextreme = 10;
         private float fps_fix, _pauseAlpha;
-        private double time, lastTime, lastTimeSpectre, lastTimeEnergy, bossTime;
+        private double time, lastTime, lastTimeSpectre, lastTimeEnergy, bossTime, compteur;
         private string path_level, stock_score_inferieur, stock_score_superieur;
         private string[] score_level;
         private StreamWriter sw_level;
@@ -501,6 +501,10 @@ namespace MenuSample.Scenes
                 }
             }
             #endregion
+            #region Mode extreme
+            if (_level == _levelextreme)
+                compteur += gameTime.ElapsedGameTime.TotalMilliseconds;
+            #endregion 
             #region Update du boss
             if (boss1 != null && boss1.Existe && !endDead)
             {
@@ -708,8 +712,16 @@ namespace MenuSample.Scenes
             if(listeVaisseau.Count != 0)
                 HUD.Drawbar(spriteBatch, barre_vie, listeVaisseau[0].vie, listeVaisseau[0].vieMax);
             spriteBatch.Draw(T_HUD_bars, new Vector2(380, 630), Color.White);
+            if(_level != _levelextreme)
             spriteBatch.DrawString(_HUDfont, Convert.ToString(score), new Vector2(95, 628), new Color(30, 225, 30));
             #endregion
+            #region Draw mode extreme
+            if (_level == _levelextreme)
+            {
+                if (listeVaisseau.Count != 0)
+                    spriteBatch.DrawString(_HUDfont, Convert.ToString(Convert.ToInt32(compteur/1000)), new Vector2(95, 628), new Color(30, 225, 30));
+            }
+            #endregion 
             #region Draw des obstacles
             foreach (Obstacles obstacle in listeObstacles)
             {

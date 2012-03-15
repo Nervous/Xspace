@@ -121,6 +121,7 @@ namespace Xspace.Son
             if (EndMusic != null)
                 EndMusic(currentMusicPath, new EventArgs());
             musicChannel = null;
+            PlayMusic();
             return RESULT.OK;
         }
 

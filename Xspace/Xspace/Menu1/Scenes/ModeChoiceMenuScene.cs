@@ -75,6 +75,7 @@ namespace MenuSample.Scenes
 
         private void CoopMenuItemSelected(object sender, EventArgs e)
         {
+            new CoopChoiceMenu(SceneManager, graphics).Add();
         }
 
     }
