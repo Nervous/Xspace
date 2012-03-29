@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
-using Xspace.Son;
+using Xspace;
 
 namespace MenuSample.Scenes
 {

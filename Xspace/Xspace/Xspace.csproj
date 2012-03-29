@@ -165,7 +165,6 @@
     <Compile Include="Obstacles\Obstacles_Hole.cs" />
     <Compile Include="ScrollingBackground.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Son\AudioFile.cs" />
     <Compile Include="Son\AudioPlayer.cs" />
     <Compile Include="Son\fmod.cs" />
     <Compile Include="Son\fmod_dsp.cs" />

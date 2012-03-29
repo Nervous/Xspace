@@ -8,7 +8,7 @@ using FMOD;
 
 /* Interface entre le jeu et l'API Fmod */
 
-namespace Xspace.Son
+namespace Xspace
 {
     public delegate void EndMusicEventHandler(object sender, EventArgs e);
 

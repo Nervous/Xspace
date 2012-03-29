@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-using Xspace.Son;
+using Xspace;
 
 namespace MenuSample.Inputs
 {
