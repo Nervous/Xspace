@@ -121,6 +121,7 @@ namespace Xspace
                 music.@lock(0, length, ref ptr1, ref ptr2, ref len1, ref len2);
                 for (int i = 0; i < length; i++)
                 {
+                    // On lit la ième adresse après le pointeur puis on clamp les 16 bits de poids faible
                     data_channel[i] = (Marshal.ReadInt32(ptr1 + i) << 16) >> 16;
                 }
                 music.@unlock(ptr1, ptr2, len1, len2);
@@ -212,7 +213,7 @@ namespace Xspace
             return now.Sum();
         }
 
-        public static uint Getlength()
+        public static uint GetLength()
         {
             return length;
         }
