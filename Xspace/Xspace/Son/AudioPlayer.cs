@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using FMOD;
+using System.Runtime.InteropServices;
 
 
 /* Interface entre le jeu et l'API Fmod */
@@ -19,6 +20,8 @@ namespace Xspace
         private static Sound music = null;
         private static string currentMusicPath;
         private static Channel musicChannel = null;
+        private static uint length;
+        private static int[] data_channel;
 
         private static FMOD.CHANNEL_CALLBACK channelCallback;
         public static event EndMusicEventHandler EndMusic;
@@ -41,7 +44,7 @@ namespace Xspace
             ErrCheck(result);
 
             uint version = 0;
-
+            length = 0;
             result = system.getVersion(ref version);
             ErrCheck(result);
 
@@ -73,7 +76,7 @@ namespace Xspace
             PlayMusic(currentMusicPath);
         }
 
-        public static void PlayMusic(string path, bool paused = false)
+        public static void PlayMusic(string path, int loop = 0, bool paused = false)
         {
             bool isPlaying = false;
             RESULT result;
@@ -104,15 +107,29 @@ namespace Xspace
                     ErrCheck(result);
                 }
 
-                result = system.createSound(path, MODE.SOFTWARE | MODE.CREATECOMPRESSEDSAMPLE | MODE.LOOP_OFF, ref music);
+                result = system.createSound(path, MODE.SOFTWARE | MODE.CREATECOMPRESSEDSAMPLE | MODE.LOOP_NORMAL, ref music);
                 ErrCheck(result);
-
+                music.setLoopCount(loop);
+                music.getLength(ref length, TIMEUNIT.PCM);
+                
+                /* Shitstorm incoming */
+                IntPtr ptr1 = IntPtr.Zero;
+                IntPtr ptr2 = IntPtr.Zero;
+                uint len1 = 0;
+                uint len2 = 0;
+                data_channel = new int[length];
+                music.@lock(0, length, ref ptr1, ref ptr2, ref len1, ref len2);
+                for (int i = 0; i < length; i++)
+                {
+                    data_channel[i] = (Marshal.ReadInt32(ptr1 + i) << 16) >> 16;
+                }
+                music.@unlock(ptr1, ptr2, len1, len2);
+                
                 result = system.playSound(CHANNELINDEX.FREE, music, paused, ref musicChannel);
                 ErrCheck(result);
-                musicChannel.setCallback(channelCallback); //musicChannel.setCallback(FMOD.CHANNEL_CALLBACKTYPE.END, channelCallback, 0);
-
-                currentMusicPath = path;
+                musicChannel.setCallback(channelCallback);
                 
+                currentMusicPath = path;
             }
         }
 
@@ -121,7 +138,6 @@ namespace Xspace
             if (EndMusic != null)
                 EndMusic(currentMusicPath, new EventArgs());
             musicChannel = null;
-            PlayMusic();
             return RESULT.OK;
         }
 
@@ -194,6 +210,11 @@ namespace Xspace
         {
             float[] now = GetSpectrum(64);
             return now.Sum();
+        }
+
+        public static uint Getlength()
+        {
+            return length;
         }
     }
 }
