@@ -15,7 +15,7 @@ namespace Xspace.Multiplayer
         Socket socket;
         StreamReader reader;
         StreamWriter writer;
-        Thread t_receiver;
+        //Thread t_receiver;
 
         public Player(string pseudo)
         {

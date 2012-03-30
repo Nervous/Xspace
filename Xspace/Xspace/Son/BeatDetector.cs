@@ -105,15 +105,20 @@ namespace Xspace
             int T_occ_max;
             float T_occ_moy;
             int[] occurences_T;
-            int voisin;
+            int voisin = -1;
             double energie_ratio = 1.3;
+            bool second_passage = false;
             do
             {
-
+                if (voisin >= 0)
+                {
+                    energie_ratio -= 0.13;
+                    second_passage = true;
+                }
                 /* Ratio energie1024/energie44100 */
                 for (int i = 21; i < length / 1024; i++)
                 {
-                    if (energie1024[i] > energie_ratio * energie44100[i - 21])
+                    if (energie1024[i] > Math.Max(1.1, energie_ratio) * energie44100[i - 21])
                     {
                         energie_peak[i] = 1;
                     }
@@ -159,7 +164,7 @@ namespace Xspace
 
                 energie_ratio -= 0.02;
                 voisin = T_occ_max - 1;
-            } while (voisin < 0);
+            } while (!second_passage);
 
             if (occurences_T[T_occ_max + 1] > occurences_T[voisin]) voisin = T_occ_max + 1;
             float div = occurences_T[T_occ_max] + occurences_T[voisin];

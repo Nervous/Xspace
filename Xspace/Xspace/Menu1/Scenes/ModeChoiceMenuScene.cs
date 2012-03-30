@@ -35,6 +35,7 @@ namespace MenuSample.Scenes
             var campagneMenuItem = new MenuItem("Campagne");
             var coopMenuItem = new MenuItem("Cooperation");
             var extremMenuItem = new MenuItem("Extreme");
+            var libreMenuItem = new MenuItem("Libre");
             var back = new MenuItem("Retour");
 
             // Gestion des évènements

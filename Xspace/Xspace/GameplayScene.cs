@@ -120,8 +120,8 @@ namespace MenuSample.Scenes
             SceneManager.Game.ResetElapsedTime();
             #region Chargement musiques & sons
             musique_tir = _content.Load<SoundEffect>("Sons\\Tir\\Tir");
-            
-            AudioPlayer.PlayMusic("Musiques\\Jeu\\fat1.wav", -1, true);
+
+            AudioPlayer.PlayMusic("Musiques\\Jeu\\boozer.mp3", -1, true);
             AudioPlayer.SetVolume(1f);
 
             BeatDetector.Initialize();
