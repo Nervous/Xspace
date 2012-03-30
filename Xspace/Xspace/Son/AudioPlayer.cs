@@ -217,7 +217,7 @@ namespace Xspace
             return length;
         }
 
-        public int[] GetMusicData()
+        public static int[] GetMusicData()
         {
             return data_channel;
         }
