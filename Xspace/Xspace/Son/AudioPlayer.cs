@@ -223,6 +223,18 @@ namespace Xspace
         {
             return data_channel;
         }
+
+        public static uint get_current_time()
+        {
+            uint pos = 0;
+            musicChannel.getPosition(ref pos, TIMEUNIT.PCM);
+            return pos;
+        }
+
+        public static void set_current_time(uint pcm)
+        {
+            musicChannel.setPosition(pcm, TIMEUNIT.PCM);
+        }
     }
 }
 
