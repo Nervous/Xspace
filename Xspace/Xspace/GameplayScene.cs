@@ -116,13 +116,16 @@ namespace MenuSample.Scenes
             if (_content == null)
                 _content = new ContentManager(SceneManager.Game.Services, "Content");
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            Thread.Sleep(500);
+            Thread.Sleep(50);
             SceneManager.Game.ResetElapsedTime();
             #region Chargement musiques & sons
             musique_tir = _content.Load<SoundEffect>("Sons\\Tir\\Tir");
             
             AudioPlayer.PlayMusic("Musiques\\Jeu\\fat1.wav");
             AudioPlayer.SetVolume(1f);
+
+            BeatDetector.Initialize();
+            BeatDetector.audio_process();
 
             #endregion
             #region Chargement des polices d'écritures

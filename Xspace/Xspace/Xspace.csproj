@@ -166,6 +166,7 @@
     <Compile Include="ScrollingBackground.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Son\AudioPlayer.cs" />
+    <Compile Include="Son\BeatDetector.cs" />
     <Compile Include="Son\fmod.cs" />
     <Compile Include="Son\fmod_dsp.cs" />
     <Compile Include="Son\fmod_errors.cs" />

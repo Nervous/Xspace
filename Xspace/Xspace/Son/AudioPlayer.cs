@@ -131,6 +131,7 @@ namespace Xspace
                 musicChannel.setCallback(channelCallback);
                 
                 currentMusicPath = path;
+
             }
         }
 
