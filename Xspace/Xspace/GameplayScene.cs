@@ -705,7 +705,7 @@ namespace MenuSample.Scenes
             SceneManager.GraphicsDevice.Clear(ClearOptions.Target, Color.Transparent, 0, 0);
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
 
-            int time_music = (int)(AudioPlayer.GetCurrentTime() / 1024f);
+            int time_music = (int)((AudioPlayer.GetCurrentTime() % (AudioPlayer.GetLength() - 1024))/ 1024f);
 
             #region Draw du fond
             fond_ecran.Draw(spriteBatch);
@@ -779,12 +779,11 @@ namespace MenuSample.Scenes
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
             #endregion
             #region Draw du spectre
+            Texture2D empty_texture = new Texture2D(SceneManager.GraphicsDevice, 1, 1, true, SurfaceFormat.Color);
+            empty_texture.SetData(new[] { Color.White });
             if (spectre.Length == 128 && drawSpectre)
             {
                 int pxBegin = (Xspace.Xspace.window_height - 512) / 2;
-                Texture2D empty_texture = new Texture2D(SceneManager.GraphicsDevice, 1, 1, true, SurfaceFormat.Color);
-                empty_texture.SetData(new[] { Color.White });
-
                 for (int i = 0; i <= 127; i++)
                 {
                     int lenght = (int) (spectre[i] * 250);
@@ -795,11 +794,27 @@ namespace MenuSample.Scenes
                     }
                 }
 
-                spriteBatch.DrawString(_gameFont, Convert.ToString(music_energy), new Vector2(100, 100), Color.LightGreen);
+                spriteBatch.DrawString(_HUDfont, "Energy : " + Convert.ToString(music_energy), new Vector2(10, 10), new Color(30, 225, 30));
+                spriteBatch.DrawString(_HUDfont, "Tempo : " + Convert.ToString(BeatDetector.get_tempo()), new Vector2(10, 35), new Color(30, 225, 30));
+                spriteBatch.DrawString(_HUDfont, "Region  : " + Convert.ToString(BeatDetector.get_energie44100()[(int)time_music]), new Vector2(10, 60), new Color(30, 225, 30));
+                if (BeatDetector.get_beat()[(int)time_music] > 0)
+                    spriteBatch.DrawString(_HUDfont, "TUMP TUMP", new Vector2(10, 85), new Color(30, 225, 30));
             }
 
-            if (BeatDetector.get_beat()[(int) time_music] > 0)
-                spriteBatch.DrawString(_HUDfont, "TUMP TUMP", new Vector2(95, 698), new Color(30, 225, 30));
+            /*
+            Rectangle machin;
+            if (BeatDetector.get_energie1024()[(int)time_music] > 0)
+            {
+                machin = new Rectangle(Xspace.Xspace.window_width - 4, Xspace.Xspace.window_height - (int)BeatDetector.get_energie1024()[(int)time_music] / 300000 + 100, 4, 4);
+                spriteBatch.Draw(empty_texture, machin, new Color(255, 0, 0));
+            }
+
+            if (BeatDetector.get_energie44100()[(int)time_music] > 0)
+            {
+                machin = new Rectangle(Xspace.Xspace.window_width - 4, Xspace.Xspace.window_height - (int)(BeatDetector.get_energie44100()[(int)time_music] * 1.15f) / 300000 + 100, 4, 4);
+                spriteBatch.Draw(empty_texture, machin, new Color(0, 255, 0));
+            }
+            */
             #endregion
             #region Draw du menu de pause
             if (TransitionPosition > 0 || _pauseAlpha > 0)
