@@ -107,7 +107,7 @@ namespace Xspace
                     ErrCheck(result);
                 }
 
-                result = system.createSound(path, MODE.SOFTWARE | MODE.CREATECOMPRESSEDSAMPLE | MODE.LOOP_NORMAL, ref music);
+                result = system.createSound(path, MODE.SOFTWARE | MODE.LOOP_NORMAL | MODE._2D, ref music);
                 ErrCheck(result);
                 music.setLoopCount(loop);
                 music.getLength(ref length, TIMEUNIT.PCM);
@@ -118,11 +118,13 @@ namespace Xspace
                 uint len1 = 0;
                 uint len2 = 0;
                 data_channel = new int[length];
-                music.@lock(0, length, ref ptr1, ref ptr2, ref len1, ref len2);
+                result = music.@lock(0, length, ref ptr1, ref ptr2, ref len1, ref len2);
+                ErrCheck(result);
                 for (int i = 0; i < length; i++)
                 {
                     // On lit la ième adresse après le pointeur puis on clamp les 16 bits de poids faible
-                    data_channel[i] = (Marshal.ReadInt32(ptr1 + i) << 16) >> 16;
+                    if(ptr1 != IntPtr.Zero)
+                        data_channel[i] = (Marshal.ReadInt32(ptr1 + i)) >> 16;
                 }
                 music.@unlock(ptr1, ptr2, len1, len2);
                 
@@ -208,7 +210,7 @@ namespace Xspace
             return freq;
         }
 
-        public static float Energy()
+        public static float GetEnergy()
         {
             float[] now = GetSpectrum(64);
             return now.Sum();
@@ -224,14 +226,14 @@ namespace Xspace
             return data_channel;
         }
 
-        public static uint get_current_time()
+        public static uint GetCurrentTime()
         {
             uint pos = 0;
             musicChannel.getPosition(ref pos, TIMEUNIT.PCM);
             return pos;
         }
 
-        public static void set_current_time(uint pcm)
+        public static void SetCurrentTime(uint pcm)
         {
             musicChannel.setPosition(pcm, TIMEUNIT.PCM);
         }

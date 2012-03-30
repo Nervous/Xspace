@@ -121,11 +121,12 @@ namespace MenuSample.Scenes
             #region Chargement musiques & sons
             musique_tir = _content.Load<SoundEffect>("Sons\\Tir\\Tir");
             
-            AudioPlayer.PlayMusic("Musiques\\Jeu\\fat1.wav");
+            AudioPlayer.PlayMusic("Musiques\\Jeu\\fat1.wav", -1, true);
             AudioPlayer.SetVolume(1f);
 
             BeatDetector.Initialize();
             BeatDetector.audio_process();
+            AudioPlayer.PauseMusic();
 
             #endregion
             #region Chargement des polices d'écritures
@@ -657,7 +658,7 @@ namespace MenuSample.Scenes
             if (lastTimeEnergy + 25 < time)
             {
                 lastTimeEnergy = time;
-                music_energy = AudioPlayer.Energy();
+                music_energy = AudioPlayer.GetEnergy();
             }
 
             #endregion
@@ -703,6 +704,8 @@ namespace MenuSample.Scenes
             SpriteBatch spriteBatch = SceneManager.SpriteBatch;
             SceneManager.GraphicsDevice.Clear(ClearOptions.Target, Color.Transparent, 0, 0);
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
+
+            int time_music = (int)(AudioPlayer.GetCurrentTime() / 1024f);
 
             #region Draw du fond
             fond_ecran.Draw(spriteBatch);
@@ -794,6 +797,9 @@ namespace MenuSample.Scenes
 
                 spriteBatch.DrawString(_gameFont, Convert.ToString(music_energy), new Vector2(100, 100), Color.LightGreen);
             }
+
+            if (BeatDetector.get_beat()[(int) time_music] > 0)
+                spriteBatch.DrawString(_HUDfont, "TUMP TUMP", new Vector2(95, 698), new Color(30, 225, 30));
             #endregion
             #region Draw du menu de pause
             if (TransitionPosition > 0 || _pauseAlpha > 0)
