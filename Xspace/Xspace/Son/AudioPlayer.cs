@@ -76,7 +76,7 @@ namespace Xspace
             PlayMusic(currentMusicPath);
         }
 
-        public static void PlayMusic(string path, int loop = 0, bool paused = false)
+        public static void PlayMusic(string path, int loop = -1, bool paused = false)
         {
             bool isPlaying = false;
             RESULT result;
