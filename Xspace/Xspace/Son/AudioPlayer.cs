@@ -216,6 +216,11 @@ namespace Xspace
         {
             return length;
         }
+
+        public int[] GetMusicData()
+        {
+            return data_channel;
+        }
     }
 }
 
