@@ -161,7 +161,7 @@ namespace Xspace
                         occ_max = occurences_T[i];
                     }
                 }
-
+                T_occ_max = Math.Min(84, T_occ_max);
                 energie_ratio -= 0.02;
                 voisin = T_occ_max - 1;
             } while (!second_passage);

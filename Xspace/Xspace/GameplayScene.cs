@@ -32,9 +32,9 @@ namespace MenuSample.Scenes
     public class GameplayScene : AbstractGameScene
     {
         #region Déclaration variables usuelles
-        private int score, _level, _levelextreme = 10;
+        private int score, _level;
         private float fps_fix, _pauseAlpha;
-        private double time, lastTime, lastTimeSpectre, lastTimeEnergy, bossTime, compteur;
+        private double time, lastTime, lastTimeSpectre, lastTimeEnergy, bossTime, compteur, lastTimeRandomSpawn, lastTimeMusic;
         private string path_level, stock_score_inferieur, stock_score_superieur;
         private string[] score_level;
         private StreamWriter sw_level;
@@ -43,6 +43,7 @@ namespace MenuSample.Scenes
         private float[] spectre;
         private bool drawSpectre, aBossWasThere, first;
         private float music_energy;
+        private Random r;
         #endregion
         #region Déclaration variables relatives au jeu
         private List<doneParticles> partManage;
@@ -64,6 +65,7 @@ namespace MenuSample.Scenes
         List<Obstacles> listeObstacles, listeObstaclesToRemove;
         private ContentManager _content;
         private SpriteFont _gameFont, _ingameFont, _HUDfont;
+        private GAME_MODE mode;
         #endregion
         #region Déclaration structures relatives au jeu
         struct doneParticles
@@ -77,13 +79,21 @@ namespace MenuSample.Scenes
                 startingParticle = pos;
             }
         };
+
+        public enum GAME_MODE
+        {
+            CAMPAGNE,
+            EXTREME,
+            LIBRE,
+            COOP,
+        }
         #endregion
 
         private readonly Random _random = new Random();
         private AffichageInformations HUD = new AffichageInformations();
         
         
-        public GameplayScene(SceneManager sceneMgr, GraphicsDeviceManager graphics, int level, int act)
+        public GameplayScene(SceneManager sceneMgr, GraphicsDeviceManager graphics, int level, int act, GAME_MODE mode)
             : base(sceneMgr)
         {
 
@@ -99,8 +109,12 @@ namespace MenuSample.Scenes
             lastTimeEnergy = 0;
             first = true;
             lastTimeSpectre = 150;
+            lastTimeRandomSpawn = 0;
+            lastTimeMusic = 0;
             spectre = new float[128];
             SoundEffect.MasterVolume = 0.15f;
+            this.mode = mode;
+            r = new Random();
         }
 
         public override void Initialize()
@@ -121,7 +135,7 @@ namespace MenuSample.Scenes
             #region Chargement musiques & sons
             musique_tir = _content.Load<SoundEffect>("Sons\\Tir\\Tir");
 
-            AudioPlayer.PlayMusic("Musiques\\Jeu\\fat1.wav", -1, true);
+            AudioPlayer.PlayMusic("Musiques\\Jeu\\royksopp.mp3", -1, true);
             AudioPlayer.SetVolume(1f);
 
             BeatDetector.Initialize();
@@ -247,7 +261,6 @@ namespace MenuSample.Scenes
             T_Divers_Levelfail = _content.Load<Texture2D>("Sprites\\Divers\\gameover");
             #endregion
         }
-
 
         List<doneParticles> collisions(List<Vaisseau> listeVaisseau, List<Missiles> listeMissile, List<Bonus> listeBonus, List<Obstacles> listeObstacles, Boss aBoss, float spentTime, ParticleEffect particleEffect, GameTime gametime, bool dead)
         {
@@ -505,7 +518,7 @@ namespace MenuSample.Scenes
             }
             #endregion
             #region Mode extreme
-            if (_level == _levelextreme)
+            if (mode == GAME_MODE.EXTREME)
                 compteur += gameTime.ElapsedGameTime.TotalMilliseconds;
             #endregion 
             #region Update du boss
@@ -662,6 +675,35 @@ namespace MenuSample.Scenes
             }
 
             #endregion
+            #region Gestion du mode Libre
+            int time_music = (int)((AudioPlayer.GetCurrentTime() % (AudioPlayer.GetLength() - 1024)) / 1024f);
+            if (mode == GAME_MODE.LIBRE && lastTimeMusic < time_music)
+            {
+                if ((lastTimeRandomSpawn + 60000 / BeatDetector.get_tempo() < time_music) || (BeatDetector.get_beat()[(int)time_music] > 0))
+                {
+                    if (music_energy > 1.7)
+                    {
+                        listeVaisseau.Add(new RapidShooter(T_Vaisseau_Energizer, new Vector2(1180, r.Next(5, 564))));
+                    }
+                    else if (music_energy > 1.4)
+                    {
+                        listeVaisseau.Add(new Drone(T_Vaisseau_Drone, new Vector2(1180, r.Next(5, 564))));
+                    }
+                    else if (music_energy > 0.9)
+                    {
+                        listeVaisseau.Add(new Drone(T_Vaisseau_Drone, new Vector2(1180, r.Next(5, 564))));
+                    }
+                    else
+                    {
+                        
+                    }
+
+                    lastTimeRandomSpawn = time_music;
+                }
+
+                lastTimeMusic = time_music;
+            }
+            #endregion
             #region Fin du level
 
             if ((end || endDead)&&(first))
@@ -717,11 +759,11 @@ namespace MenuSample.Scenes
             if(listeVaisseau.Count != 0)
                 HUD.Drawbar(spriteBatch, barre_vie, listeVaisseau[0].vie, listeVaisseau[0].vieMax);
             spriteBatch.Draw(T_HUD_bars, new Vector2(380, 630), Color.White);
-            if(_level != _levelextreme)
-            spriteBatch.DrawString(_HUDfont, Convert.ToString(score), new Vector2(95, 628), new Color(30, 225, 30));
+            if (mode != GAME_MODE.EXTREME)
+                spriteBatch.DrawString(_HUDfont, Convert.ToString(score), new Vector2(95, 628), new Color(30, 225, 30));
             #endregion
             #region Draw mode extreme
-            if (_level == _levelextreme)
+            if (mode == GAME_MODE.EXTREME)
             {
                 if (listeVaisseau.Count != 0)
                     spriteBatch.DrawString(_HUDfont, Convert.ToString(Convert.ToInt32(compteur/1000)), new Vector2(95, 628), new Color(30, 225, 30));

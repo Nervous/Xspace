@@ -43,11 +43,13 @@ namespace MenuSample.Scenes
             extremMenuItem.Selected += ExtremMenuItemSelected;
             back.Selected += OnCancel;
             coopMenuItem.Selected += CoopMenuItemSelected;
+            libreMenuItem.Selected += LibreMenuItemSelected;
 
             // Ajout des options du menu
             MenuItems.Add(campagneMenuItem);
             MenuItems.Add(coopMenuItem);
             MenuItems.Add(extremMenuItem);
+            MenuItems.Add(libreMenuItem);
             MenuItems.Add(back);
 
 
@@ -70,7 +72,7 @@ namespace MenuSample.Scenes
         {
             _level = 1;
             _act = 4;
-            LoadingScene.Load(SceneManager, true, new GameplayScene(SceneManager, graphics, _level, _act));
+            LoadingScene.Load(SceneManager, true, new GameplayScene(SceneManager, graphics, _level, _act, GameplayScene.GAME_MODE.EXTREME));
         }
 
         private void CoopMenuItemSelected(object sender, EventArgs e)
@@ -78,5 +80,11 @@ namespace MenuSample.Scenes
             new CoopChoiceMenu(SceneManager, graphics).Add();
         }
 
+        private void LibreMenuItemSelected(object sender, EventArgs e)
+        {
+            _level = 1;
+            _act = 1;
+            LoadingScene.Load(SceneManager, true, new GameplayScene(SceneManager, graphics, _level, _act, GameplayScene.GAME_MODE.LIBRE));
+        }
     }
 }
