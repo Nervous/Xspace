@@ -10,7 +10,7 @@ namespace Xspace
     static class BeatDetector
     {
         /* Déclaration des constantes */
-        const double K_ENERGIE_RATIO = 1.10; // energie1024 par rapport aux energie44100 pour trouver les peaks
+        const double K_ENERGIE_RATIO = 1.3; // energie1024 par rapport aux energie44100 pour trouver les peaks
         const int K_TRAIN_DIMP_SIZE = 108; // en pack de 1024 (430=10sec)
 
         private static uint length;
@@ -100,71 +100,54 @@ namespace Xspace
                 energie44100[i] = somme / 43;
             }
 
-            List<int> T;
-            int i_prec;
-            int T_occ_max;
-            float T_occ_moy;
-            int[] occurences_T;
-            int voisin = -1;
-            double energie_ratio = 1.3;
-            bool second_passage = false;
-            do
+            /* Ratio energie1024/energie44100 */
+            for (int i = 21; i < length / 1024; i++)
             {
-                if (voisin >= 0)
+                if (energie1024[i] > K_ENERGIE_RATIO * energie44100[i - 21])
                 {
-                    energie_ratio -= 0.13;
-                    second_passage = true;
+                    energie_peak[i] = 1;
                 }
-                /* Ratio energie1024/energie44100 */
-                for (int i = 21; i < length / 1024; i++)
+            }
+
+            /* Calcul des BPMs */
+
+            List<int> T = new List<int>();
+            int i_prec = 0;
+            for (int i = 1; i < length / 1024; i++)
+            {
+                if ((energie_peak[i] == 1) && (energie_peak[i - 1] == 0))
                 {
-                    if (energie1024[i] > Math.Max(1.1, energie_ratio) * energie44100[i - 21])
+                    int di = i - i_prec;
+                    if (di > 5)
                     {
-                        energie_peak[i] = 1;
+                        T.Add(di);
+                        i_prec = i;
                     }
                 }
+            }
 
-                /* Calcul des BPMs */
+            int T_occ_max = 0;
+            float T_occ_moy = 0f;
 
-                T = new List<int>();
-                i_prec = 0;
-                for (int i = 1; i < length / 1024; i++)
+
+            int[] occurences_T = new int[86];
+            for (int i = 0; i < 86; i++)
+                occurences_T[i] = 0;
+            for (int i = 1; i < T.Count; i++)
+            {
+                if (T[i] < 86) occurences_T[T[i]]++;
+            }
+            int occ_max = 0;
+            for (int i = 1; i < 86; i++)
+            {
+                if (occurences_T[i] > occ_max)
                 {
-                    if ((energie_peak[i] == 1) && (energie_peak[i - 1] == 0))
-                    {
-                        int di = i - i_prec;
-                        if (di > 5)
-                        {
-                            T.Add(di);
-                            i_prec = i;
-                        }
-                    }
+                    T_occ_max = i;
+                    occ_max = occurences_T[i];
                 }
+            }
 
-                T_occ_max = 0;
-                T_occ_moy = 0f;
-
-
-                occurences_T = new int[86];
-                for (int i = 0; i < 86; i++)
-                    occurences_T[i] = 0;
-                for (int i = 1; i < T.Count; i++)
-                {
-                    if (T[i] < 86) occurences_T[T[i]]++;
-                }
-                int occ_max = 0;
-                for (int i = 1; i < 86; i++)
-                {
-                    if (occurences_T[i] > occ_max)
-                    {
-                        T_occ_max = i;
-                        occ_max = occurences_T[i];
-                    }
-                }
-                T_occ_max = Math.Min(84, T_occ_max);
-                energie_ratio -= 0.02;
-                voisin = T_occ_max - 1;
-            } while (!second_passage);
+            int voisin = T_occ_max - 1;
 
             if (occurences_T[T_occ_max + 1] > occurences_T[voisin]) voisin = T_occ_max + 1;
             float div = occurences_T[T_occ_max] + occurences_T[voisin];

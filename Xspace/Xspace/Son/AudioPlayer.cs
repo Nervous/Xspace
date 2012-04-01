@@ -120,14 +120,12 @@ namespace Xspace
                 data_channel = new int[length];
                 result = music.@lock(0, length, ref ptr1, ref ptr2, ref len1, ref len2);
                 ErrCheck(result);
+                Marshal.Copy(ptr1, data_channel, 0, (int) length);
                 for (int i = 0; i < length; i++)
                 {
-                    // On lit la ième adresse après le pointeur puis on clamp les 16 bits de poids faible
-                    if(ptr1 != IntPtr.Zero)
-                        data_channel[i] = (Marshal.ReadInt32(ptr1 + i)) >> 16;
+                    data_channel[i] = data_channel[i] >> 16;
                 }
                 music.@unlock(ptr1, ptr2, len1, len2);
-                
                 result = system.playSound(CHANNELINDEX.FREE, music, paused, ref musicChannel);
                 ErrCheck(result);
                 musicChannel.setCallback(channelCallback);
@@ -192,12 +190,6 @@ namespace Xspace
             return spectre;
         }
 
-        public static float GetMoySpectrum()
-        {
-            float[] a = GetSpectrum(1);
-            return a[0];
-        }
-
         public static float GetFreq()
         {
             float freq = 0;
@@ -236,6 +228,14 @@ namespace Xspace
         public static void SetCurrentTime(uint pcm)
         {
             musicChannel.setPosition(pcm, TIMEUNIT.PCM);
+        }
+
+        public static bool IsPlaying()
+        {
+            bool isPlaying = false;
+            if (musicChannel != null)
+                musicChannel.isPlaying(ref isPlaying);
+            return isPlaying;
         }
     }
 }

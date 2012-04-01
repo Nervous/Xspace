@@ -24,7 +24,6 @@ namespace MenuSample.Scenes
             MenuItems.Add(Level2);
             MenuItems.Add(Level3);
             MenuItems.Add(back);
-
         }
 
         private void Level1MenuItemSelected(object sender, EventArgs e)

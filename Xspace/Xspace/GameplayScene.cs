@@ -135,7 +135,8 @@ namespace MenuSample.Scenes
             #region Chargement musiques & sons
             musique_tir = _content.Load<SoundEffect>("Sons\\Tir\\Tir");
 
-            AudioPlayer.PlayMusic("Musiques\\Jeu\\royksopp.mp3", -1, true);
+            int loop = (mode == GAME_MODE.LIBRE) ? 0 : -1;
+            AudioPlayer.PlayMusic("Musiques\\Jeu\\fat1.wav", loop, true);
             AudioPlayer.SetVolume(1f);
 
             BeatDetector.Initialize();
@@ -676,33 +677,50 @@ namespace MenuSample.Scenes
 
             #endregion
             #region Gestion du mode Libre
-            int time_music = (int)((AudioPlayer.GetCurrentTime() % (AudioPlayer.GetLength() - 1024)) / 1024f);
-            if (mode == GAME_MODE.LIBRE && lastTimeMusic < time_music)
+            if (AudioPlayer.IsPlaying())
             {
-                if ((lastTimeRandomSpawn + 60000 / BeatDetector.get_tempo() < time_music) || (BeatDetector.get_beat()[(int)time_music] > 0))
+                int time_music = (int)((AudioPlayer.GetCurrentTime() % (AudioPlayer.GetLength() - 1024)) / 1024f);
+                Vector2 position_spawn = new Vector2(1180, r.Next(5, 564));
+                if (mode == GAME_MODE.LIBRE && lastTimeMusic < time_music)
                 {
-                    if (music_energy > 1.7)
+                    if ((time_music - lastTimeRandomSpawn > 50) && (BeatDetector.get_beat()[(int)time_music] > 0))
                     {
-                        listeVaisseau.Add(new RapidShooter(T_Vaisseau_Energizer, new Vector2(1180, r.Next(5, 564))));
-                    }
-                    else if (music_energy > 1.4)
-                    {
-                        listeVaisseau.Add(new Drone(T_Vaisseau_Drone, new Vector2(1180, r.Next(5, 564))));
-                    }
-                    else if (music_energy > 0.9)
-                    {
-                        listeVaisseau.Add(new Drone(T_Vaisseau_Drone, new Vector2(1180, r.Next(5, 564))));
-                    }
-                    else
-                    {
-                        
+                        if (music_energy > 2)
+                        {
+                            listeVaisseau.Add(new kamikaze(T_Vaisseau_Kamikaze, position_spawn));
+                        }
+                        else if (music_energy > 1.7)
+                        {
+                            listeVaisseau.Add(new RapidShooter(T_Vaisseau_Doubleshooter, position_spawn));
+                        }
+                        else if (music_energy > 1.2)
+                        {
+                            listeVaisseau.Add(new Blasterer(T_Vaisseau_Energizer, position_spawn));
+                        }
+                        else if (music_energy > 0.8)
+                        {
+                            listeVaisseau.Add(new Drone(T_Vaisseau_Drone, position_spawn));
+                        }
+                        else if (music_energy > 0.72)
+                        {
+                            listeBonus.Add(new Bonus_NouvelleArme1(T_Bonus_Weapon1, position_spawn));
+                        }
+                        else if (music_energy > 0.65)
+                        {
+                            listeBonus.Add(new Bonus_Vie(T_Bonus_Vie, position_spawn));
+                        }
+
+                        lastTimeRandomSpawn = time_music;
                     }
 
-                    lastTimeRandomSpawn = time_music;
+                    lastTimeMusic = time_music;
                 }
-
-                lastTimeMusic = time_music;
             }
+            else
+            {
+                end = true;
+            }
+
             #endregion
             #region Fin du level
 
@@ -823,6 +841,7 @@ namespace MenuSample.Scenes
             #region Draw du spectre
             Texture2D empty_texture = new Texture2D(SceneManager.GraphicsDevice, 1, 1, true, SurfaceFormat.Color);
             empty_texture.SetData(new[] { Color.White });
+            Rectangle r;
             if (spectre.Length == 128 && drawSpectre)
             {
                 int pxBegin = (Xspace.Xspace.window_height - 512) / 2;
@@ -831,7 +850,7 @@ namespace MenuSample.Scenes
                     int lenght = (int) (spectre[i] * 250);
                     for (int j = 0; j <= lenght / 4; j++)
                     {
-                        Rectangle r = new Rectangle(Xspace.Xspace.window_width - lenght + j * 4, pxBegin + i * 4, j * 4, 4);
+                        r = new Rectangle(Xspace.Xspace.window_width - lenght + j * 4, pxBegin + i * 4, j * 4, 4);
                         spriteBatch.Draw(empty_texture, r, new Color(j*2, 255 - j*2, 0));
                     }
                 }
@@ -841,22 +860,20 @@ namespace MenuSample.Scenes
                 spriteBatch.DrawString(_HUDfont, "Region  : " + Convert.ToString(BeatDetector.get_energie44100()[(int)time_music]), new Vector2(10, 60), new Color(30, 225, 30));
                 if (BeatDetector.get_beat()[(int)time_music] > 0)
                     spriteBatch.DrawString(_HUDfont, "TUMP TUMP", new Vector2(10, 85), new Color(30, 225, 30));
-            }
 
-            /*
-            Rectangle machin;
-            if (BeatDetector.get_energie1024()[(int)time_music] > 0)
-            {
-                machin = new Rectangle(Xspace.Xspace.window_width - 4, Xspace.Xspace.window_height - (int)BeatDetector.get_energie1024()[(int)time_music] / 300000 + 100, 4, 4);
-                spriteBatch.Draw(empty_texture, machin, new Color(255, 0, 0));
-            }
+                if (BeatDetector.get_energie1024()[(int)time_music] > 0)
+                {
+                    r = new Rectangle(Xspace.Xspace.window_width - 100, Xspace.Xspace.window_height - (int)BeatDetector.get_energie1024()[(int)time_music] / 70000, 100, 4);
+                    spriteBatch.Draw(empty_texture, r, new Color(255, 0, 0));
+                }
 
-            if (BeatDetector.get_energie44100()[(int)time_music] > 0)
-            {
-                machin = new Rectangle(Xspace.Xspace.window_width - 4, Xspace.Xspace.window_height - (int)(BeatDetector.get_energie44100()[(int)time_music] * 1.15f) / 300000 + 100, 4, 4);
-                spriteBatch.Draw(empty_texture, machin, new Color(0, 255, 0));
+                if (BeatDetector.get_energie44100()[(int)time_music] > 0)
+                {
+                    r = new Rectangle(Xspace.Xspace.window_width - 100, Xspace.Xspace.window_height - (int)(BeatDetector.get_energie44100()[(int)time_music]) / 70000, 100, 4);
+                    spriteBatch.Draw(empty_texture, r, new Color(0, 255, 0));
+                }
             }
-            */
+            
             #endregion
             #region Draw du menu de pause
             if (TransitionPosition > 0 || _pauseAlpha > 0)
