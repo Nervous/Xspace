@@ -19,6 +19,7 @@ namespace MenuSample.Scenes.Core
         public string Text
         {
             set { _text = value; }
+            get { return _text; }
         }
 
         public Vector2 Position

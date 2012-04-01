@@ -120,7 +120,15 @@ namespace Xspace
                 data_channel = new int[length];
                 result = music.@lock(0, length, ref ptr1, ref ptr2, ref len1, ref len2);
                 ErrCheck(result);
-                Marshal.Copy(ptr1, data_channel, 0, (int) length);
+                try
+                {
+                    Marshal.Copy(ptr1, data_channel, 0, (int)length);
+                }
+                catch (AccessViolationException)
+                {
+                    throw new ApplicationException("Cannot read the music file.");
+                }
+
                 for (int i = 0; i < length; i++)
                 {
                     data_channel[i] = data_channel[i] >> 16;

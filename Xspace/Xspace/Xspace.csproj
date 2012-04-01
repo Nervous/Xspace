@@ -130,6 +130,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Menu1\Scenes\CoopChoiceMenu.cs" />
+    <Compile Include="Menu1\Scenes\SongChoiceMenuScene.cs" />
     <Compile Include="Menu1\Scenes\Core\AbstractGameScene.cs" />
     <Compile Include="Menu1\Scenes\Core\AbstractMenuScene.cs" />
     <Compile Include="Menu1\Scenes\Core\MenuItem.cs" />

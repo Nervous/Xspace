@@ -44,6 +44,7 @@ namespace MenuSample.Scenes
         private bool drawSpectre, aBossWasThere, first;
         private float music_energy;
         private Random r;
+        private string song_path;
         #endregion
         #region Déclaration variables relatives au jeu
         private List<doneParticles> partManage;
@@ -93,7 +94,7 @@ namespace MenuSample.Scenes
         private AffichageInformations HUD = new AffichageInformations();
         
         
-        public GameplayScene(SceneManager sceneMgr, GraphicsDeviceManager graphics, int level, int act, GAME_MODE mode)
+        public GameplayScene(SceneManager sceneMgr, GraphicsDeviceManager graphics, int level, int act, GAME_MODE mode, string song_path = "fat1.wav")
             : base(sceneMgr)
         {
 
@@ -115,6 +116,7 @@ namespace MenuSample.Scenes
             SoundEffect.MasterVolume = 0.15f;
             this.mode = mode;
             r = new Random();
+            this.song_path = song_path;
         }
 
         public override void Initialize()
@@ -137,7 +139,7 @@ namespace MenuSample.Scenes
             musique_bossExplosion = _content.Load<SoundEffect>("Sons\\BossExplosion");
 
             int loop = (mode == GAME_MODE.LIBRE) ? 0 : -1;
-            AudioPlayer.PlayMusic("Musiques\\Jeu\\fat1.wav", loop, true);
+            AudioPlayer.PlayMusic("Musiques\\Jeu\\" + song_path, loop, true);
             AudioPlayer.SetVolume(1f);
 
             BeatDetector.Initialize();

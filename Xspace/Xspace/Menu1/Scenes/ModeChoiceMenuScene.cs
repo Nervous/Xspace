@@ -82,9 +82,7 @@ namespace MenuSample.Scenes
 
         private void LibreMenuItemSelected(object sender, EventArgs e)
         {
-            _level = 1;
-            _act = 1;
-            LoadingScene.Load(SceneManager, true, new GameplayScene(SceneManager, graphics, _level, _act, GameplayScene.GAME_MODE.LIBRE));
+            new SongChoiceMenuScene(SceneManager, graphics).Add();
         }
     }
 }
