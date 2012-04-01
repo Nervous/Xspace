@@ -51,13 +51,13 @@ namespace MenuSample.Scenes
         public SpriteBatch spriteBatch;
         private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Vaisseau_Kamikaze, T_Missile_Joueur_1, T_Missile_Drone, T_Bonus_Vie, T_Bonus_Weapon1, T_Obstacles_Hole, barre_vie, T_HUD, T_HUD_boss, T_HUD_bars, T_HUD_bar_boss, T_Divers_Levelcomplete, T_Divers_Levelfail, T_boss1, T_Vaisseau_Energizer, T_Vaisseau_Doubleshooter, T_Missile_Energie;
         private List<Texture2D> listeTextureVaisseauxEnnemis, listeTextureBonus, listeTextureObstacles, listeTextureBoss;
-        private SoundEffect musique_tir;
+        private SoundEffect musique_tir, musique_bossExplosion;
         private KeyboardState keyboardState;
         bool lastKeyDown = true, end = false, endDead = false;
         private gestionLevels thisLevel;
         private List<gestionLevels> infLevel, listeLevelToRemove;
         Renderer particleRenderer;
-        ParticleEffect particleEffect, particleEffectMoteur, particleEffectBoss1;
+        ParticleEffect particleEffect, particleEffectMoteur, particleEffectBoss1, particleBossExplosion;
         private Boss boss1;
         List<Vaisseau> listeVaisseau, listeVaisseauToRemove;
         List<Missiles> listeMissile, listeMissileToRemove;
@@ -134,6 +134,7 @@ namespace MenuSample.Scenes
             SceneManager.Game.ResetElapsedTime();
             #region Chargement musiques & sons
             musique_tir = _content.Load<SoundEffect>("Sons\\Tir\\Tir");
+            musique_bossExplosion = _content.Load<SoundEffect>("Sons\\BossExplosion");
 
             int loop = (mode == GAME_MODE.LIBRE) ? 0 : -1;
             AudioPlayer.PlayMusic("Musiques\\Jeu\\fat1.wav", loop, true);
@@ -173,6 +174,9 @@ namespace MenuSample.Scenes
             particleEffect = _content.Load<ParticleEffect>("Collisions\\BasicExplosion\\BasicExplosion");
             particleEffect.Initialise();
             particleEffect.LoadContent(_content);
+            particleBossExplosion = _content.Load<ParticleEffect>("Collisions\\BasicExplosion\\BossExplosion");
+            particleBossExplosion.Initialise();
+            particleBossExplosion.LoadContent(_content);
             #endregion
             #region Chargement textures vaisseaux
             T_Vaisseau_Joueur = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Joueur\\Joueur_1");
@@ -531,6 +535,8 @@ namespace MenuSample.Scenes
             }
             else if (boss1 != null && aBossWasThere)
             {
+                musique_bossExplosion.Play(1.0f, 0f, 0f);
+                particleBossExplosion.Trigger(new Vector2(boss1.PositionX + boss1.Texture.Width / 2, boss1.PositionY + boss1.Texture.Height / 2));
                 aBossWasThere = false;
                 time -= bossTime;
                 lastTime -= bossTime;
@@ -541,6 +547,7 @@ namespace MenuSample.Scenes
                 if (listeVaisseau.Count > 0)
                     listeVaisseau[0].lastDamage = time - 200;
             }
+            particleBossExplosion.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
             particleEffectBoss1.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
             #endregion
             #region Update des missiles
@@ -683,7 +690,7 @@ namespace MenuSample.Scenes
                 Vector2 position_spawn = new Vector2(1180, r.Next(5, 564));
                 if (mode == GAME_MODE.LIBRE && lastTimeMusic < time_music)
                 {
-                    if ((time_music - lastTimeRandomSpawn > 50) && (BeatDetector.get_beat()[(int)time_music] > 0))
+                    if ((time_music - lastTimeRandomSpawn > 10) && (BeatDetector.get_beat()[(int)time_music] > 0))
                     {
                         if (music_energy > 2)
                         {
@@ -835,6 +842,7 @@ namespace MenuSample.Scenes
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive);
             particleRenderer.RenderEffect(particleEffect);
+            particleRenderer.RenderEffect(particleBossExplosion);
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
             #endregion
