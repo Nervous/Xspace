@@ -41,7 +41,7 @@ namespace MenuSample.Scenes
         private StreamReader sr_level;
         private char[] delimitationFilesInfo = new char[] { ' ' }, delimitationFilesInfo2 = new char[] { ';' }, delimitationFilesInfo3 = new char[] { ':' };
         private float[] spectre;
-        private bool drawSpectre, drawBeatSpawn, aBossWasThere, first;
+        private bool drawSpectre, aBossWasThere, first;
         private float amplitude_sum_music;
         private Random r;
         private string song_path;
