@@ -41,8 +41,8 @@ namespace MenuSample.Scenes
         private StreamReader sr_level;
         private char[] delimitationFilesInfo = new char[] { ' ' }, delimitationFilesInfo2 = new char[] { ';' }, delimitationFilesInfo3 = new char[] { ':' };
         private float[] spectre;
-        private bool drawSpectre, aBossWasThere, first;
-        private float music_energy;
+        private bool drawSpectre, drawBeatSpawn, aBossWasThere, first;
+        private float amplitude_sum_music;
         private Random r;
         private string song_path;
         #endregion
@@ -67,6 +67,8 @@ namespace MenuSample.Scenes
         private ContentManager _content;
         private SpriteFont _gameFont, _ingameFont, _HUDfont;
         private GAME_MODE mode;
+        private Vector2 position_spawn;
+        private BEAT_SPAWNED beat_spawned;
         #endregion
         #region Déclaration structures relatives au jeu
         struct doneParticles
@@ -87,6 +89,13 @@ namespace MenuSample.Scenes
             EXTREME,
             LIBRE,
             COOP,
+        }
+        public enum BEAT_SPAWNED
+        {
+            NO_BEAT,
+            NOTHING,
+            BONUS,
+            ENEMY
         }
         #endregion
 
@@ -117,6 +126,8 @@ namespace MenuSample.Scenes
             this.mode = mode;
             r = new Random();
             this.song_path = song_path;
+            position_spawn = new Vector2();
+            beat_spawned = BEAT_SPAWNED.NO_BEAT;
         }
 
         public override void Initialize()
@@ -430,9 +441,9 @@ namespace MenuSample.Scenes
             float coeff_speed_front = 0.5f; //coefficient de vitesse du fond en avant.
             float default_speed = 1f; //La vitesse doit tendre vers (default_speed * coeff)
 
-            fond_ecran.Update(fps_fix, (default_speed + (music_energy - default_speed) * coeff_speed_variation) * coeff_speed);
-            fond_ecran_middle.Update(fps_fix, (default_speed + (music_energy - default_speed) * coeff_speed_variation) * coeff_speed_middle);
-            fond_ecran_front.Update(fps_fix, (default_speed + (music_energy - default_speed) * coeff_speed_variation) * coeff_speed_front);
+            fond_ecran.Update(fps_fix, (default_speed + (amplitude_sum_music - default_speed) * coeff_speed_variation) * coeff_speed);
+            fond_ecran_middle.Update(fps_fix, (default_speed + (amplitude_sum_music - default_speed) * coeff_speed_variation) * coeff_speed_middle);
+            fond_ecran_front.Update(fps_fix, (default_speed + (amplitude_sum_music - default_speed) * coeff_speed_variation) * coeff_speed_front);
 
             AudioPlayer.Update();
 			#endregion
@@ -656,8 +667,8 @@ namespace MenuSample.Scenes
                 Vector2 positionVaisseau = listeVaisseau[0]._emplacement;
                 positionVaisseau.Y = positionVaisseau.Y + listeVaisseau[0]._textureVaisseau.Height / 2;
                 positionVaisseau.X -= 5;
-                ((EmitterCollection)particleEffectMoteur)[0].ReleaseImpulse.X = -400 * music_energy;
-                ((EmitterCollection)particleEffectMoteur)[0].ReleaseScale.Value = 32 + (music_energy - 1) * 25;
+                ((EmitterCollection)particleEffectMoteur)[0].ReleaseImpulse.X = -400 * amplitude_sum_music;
+                ((EmitterCollection)particleEffectMoteur)[0].ReleaseScale.Value = 32 + (amplitude_sum_music - 1) * 25;
                 particleEffectMoteur.Trigger(positionVaisseau);
             }
             particleEffectMoteur.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
@@ -681,7 +692,7 @@ namespace MenuSample.Scenes
             if (lastTimeEnergy + 25 < time)
             {
                 lastTimeEnergy = time;
-                music_energy = AudioPlayer.GetEnergy();
+                amplitude_sum_music = AudioPlayer.GetEnergy();
             }
 
             #endregion
@@ -689,34 +700,46 @@ namespace MenuSample.Scenes
             if (AudioPlayer.IsPlaying())
             {
                 int time_music = (int)((AudioPlayer.GetCurrentTime() % (AudioPlayer.GetLength() - 1024)) / 1024f);
-                Vector2 position_spawn = new Vector2(1180, r.Next(5, 564));
+                float energy_44100_music = (float) BeatDetector.get_energie44100()[(int)time_music] / 100000;
+
+                position_spawn = new Vector2(1180, r.Next(5, 564));
                 if (mode == GAME_MODE.LIBRE && lastTimeMusic < time_music)
                 {
                     if ((time_music - lastTimeRandomSpawn > 10) && (BeatDetector.get_beat()[(int)time_music] > 0))
                     {
-                        if (music_energy > 2)
+                        if (amplitude_sum_music > 2)
                         {
                             listeVaisseau.Add(new kamikaze(T_Vaisseau_Kamikaze, position_spawn));
+                            beat_spawned = BEAT_SPAWNED.ENEMY;
                         }
-                        else if (music_energy > 1.7)
+                        else if (amplitude_sum_music > 1.7)
                         {
                             listeVaisseau.Add(new RapidShooter(T_Vaisseau_Doubleshooter, position_spawn));
+                            beat_spawned = BEAT_SPAWNED.ENEMY;
                         }
-                        else if (music_energy > 1.2)
+                        else if (amplitude_sum_music > 1.2)
                         {
                             listeVaisseau.Add(new Blasterer(T_Vaisseau_Energizer, position_spawn));
+                            beat_spawned = BEAT_SPAWNED.ENEMY;
                         }
-                        else if (music_energy > 0.8)
+                        else if (amplitude_sum_music > 0.8)
                         {
                             listeVaisseau.Add(new Drone(T_Vaisseau_Drone, position_spawn));
+                            beat_spawned = BEAT_SPAWNED.ENEMY;
                         }
-                        else if (music_energy > 0.72)
+                        else if (amplitude_sum_music > 0.72)
                         {
                             listeBonus.Add(new Bonus_NouvelleArme1(T_Bonus_Weapon1, position_spawn));
+                            beat_spawned = BEAT_SPAWNED.BONUS;
                         }
-                        else if (music_energy > 0.65)
+                        else if (amplitude_sum_music > 0.65)
                         {
                             listeBonus.Add(new Bonus_Vie(T_Bonus_Vie, position_spawn));
+                            beat_spawned = BEAT_SPAWNED.BONUS;
+                        }
+                        else
+                        {
+                            beat_spawned = BEAT_SPAWNED.NOTHING;
                         }
 
                         lastTimeRandomSpawn = time_music;
@@ -848,10 +871,40 @@ namespace MenuSample.Scenes
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
             #endregion
-            #region Draw du spectre
+            #region Draw des infos sonores
+            Rectangle r;
             Texture2D empty_texture = new Texture2D(SceneManager.GraphicsDevice, 1, 1, true, SurfaceFormat.Color);
             empty_texture.SetData(new[] { Color.White });
-            Rectangle r;
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
+            if (beat_spawned != BEAT_SPAWNED.NO_BEAT)
+            {
+                Color color = new Color();
+                switch (beat_spawned)
+                {
+                    case BEAT_SPAWNED.BONUS:
+                        color = new Color(0, 255, 0, 0);
+                        break;
+                    case BEAT_SPAWNED.ENEMY:
+                        color = new Color(255, 0, 0, 0);
+                        break;
+                    case BEAT_SPAWNED.NOTHING:
+                        color = new Color(5, 130, 255, 0);
+                        break;
+                    default:
+                        break;
+                }
+                beat_spawned = BEAT_SPAWNED.NO_BEAT;
+                for (int i = 0; i <= 100; i++)
+                {
+                    color.A = (byte) ((100 - i));
+                    r = new Rectangle(Xspace.Xspace.window_width - i, 0, 1, 622);
+                    spriteBatch.Draw(empty_texture, r, color);
+                }
+            }
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
+
             if (spectre.Length == 128 && drawSpectre)
             {
                 int pxBegin = (Xspace.Xspace.window_height - 512) / 2;
@@ -865,9 +918,9 @@ namespace MenuSample.Scenes
                     }
                 }
 
-                spriteBatch.DrawString(_HUDfont, "Energy : " + Convert.ToString(music_energy), new Vector2(10, 10), new Color(30, 225, 30));
+                spriteBatch.DrawString(_HUDfont, "Energy : " + Convert.ToString(amplitude_sum_music), new Vector2(10, 10), new Color(30, 225, 30));
                 spriteBatch.DrawString(_HUDfont, "Tempo : " + Convert.ToString(BeatDetector.get_tempo()), new Vector2(10, 35), new Color(30, 225, 30));
-                spriteBatch.DrawString(_HUDfont, "Region  : " + Convert.ToString(BeatDetector.get_energie44100()[(int)time_music]), new Vector2(10, 60), new Color(30, 225, 30));
+                spriteBatch.DrawString(_HUDfont, "Region  : " + Convert.ToString((float)BeatDetector.get_energie44100()[(int)time_music] / 100000), new Vector2(10, 60), new Color(30, 225, 30));
                 if (BeatDetector.get_beat()[(int)time_music] > 0)
                     spriteBatch.DrawString(_HUDfont, "TUMP TUMP", new Vector2(10, 85), new Color(30, 225, 30));
 
