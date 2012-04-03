@@ -4,6 +4,7 @@ using System.Threading;
 using System.Linq;
 using System.Net;
 using System.IO;
+using System.Text;
 
 using MenuSample.Inputs;
 using MenuSample.Scenes;
@@ -22,6 +23,7 @@ using ProjectMercury.Modifiers;
 using ProjectMercury.Renderers;
 
 using Xspace;
+using System.Security.Cryptography;
 
 
 namespace MenuSample.Scenes
@@ -124,7 +126,6 @@ namespace MenuSample.Scenes
             spectre = new float[128];
             SoundEffect.MasterVolume = 0.15f;
             this.mode = mode;
-            r = new Random();
             this.song_path = song_path;
             position_spawn = new Vector2();
             beat_spawned = BEAT_SPAWNED.NO_BEAT;
@@ -148,6 +149,15 @@ namespace MenuSample.Scenes
             #region Chargement musiques & sons
             musique_tir = _content.Load<SoundEffect>("Sons\\Tir\\Tir");
             musique_bossExplosion = _content.Load<SoundEffect>("Sons\\BossExplosion");
+
+            MD5CryptoServiceProvider md5crypto = new MD5CryptoServiceProvider();
+            Stream s = (Stream)new FileStream("Musiques\\Jeu\\" + song_path, FileMode.Open);
+            byte[] music_md5_bytes = md5crypto.ComputeHash(s);
+            string music_md5 = Encoding.ASCII.GetString(music_md5_bytes);
+            int music_md5_seed = BitConverter.ToInt32(music_md5_bytes, 0);
+            s.Close();
+
+            r = new Random(music_md5_seed);
 
             int loop = (mode == GAME_MODE.LIBRE) ? 0 : -1;
             AudioPlayer.PlayMusic("Musiques\\Jeu\\" + song_path, loop, true);
@@ -872,7 +882,7 @@ namespace MenuSample.Scenes
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
             #endregion
             #region Draw des infos sonores
-            Rectangle r;
+            Rectangle rect;
             Texture2D empty_texture = new Texture2D(SceneManager.GraphicsDevice, 1, 1, true, SurfaceFormat.Color);
             empty_texture.SetData(new[] { Color.White });
             spriteBatch.End();
@@ -898,8 +908,8 @@ namespace MenuSample.Scenes
                 for (int i = 0; i <= 100; i++)
                 {
                     color.A = (byte) ((100 - i));
-                    r = new Rectangle(Xspace.Xspace.window_width - i, 0, 1, 622);
-                    spriteBatch.Draw(empty_texture, r, color);
+                    rect = new Rectangle(Xspace.Xspace.window_width - i, 0, 1, 622);
+                    spriteBatch.Draw(empty_texture, rect, color);
                 }
             }
             spriteBatch.End();
@@ -913,8 +923,8 @@ namespace MenuSample.Scenes
                     int lenght = (int) (spectre[i] * 250);
                     for (int j = 0; j <= lenght / 4; j++)
                     {
-                        r = new Rectangle(Xspace.Xspace.window_width - lenght + j * 4, pxBegin + i * 4, j * 4, 4);
-                        spriteBatch.Draw(empty_texture, r, new Color(j*2, 255 - j*2, 0));
+                        rect = new Rectangle(Xspace.Xspace.window_width - lenght + j * 4, pxBegin + i * 4, j * 4, 4);
+                        spriteBatch.Draw(empty_texture, rect, new Color(j * 2, 255 - j * 2, 0));
                     }
                 }
 
@@ -926,14 +936,14 @@ namespace MenuSample.Scenes
 
                 if (BeatDetector.get_energie1024()[(int)time_music] > 0)
                 {
-                    r = new Rectangle(Xspace.Xspace.window_width - 100, Xspace.Xspace.window_height - (int)BeatDetector.get_energie1024()[(int)time_music] / 70000, 100, 4);
-                    spriteBatch.Draw(empty_texture, r, new Color(255, 0, 0));
+                    rect = new Rectangle(Xspace.Xspace.window_width - 100, Xspace.Xspace.window_height - (int)BeatDetector.get_energie1024()[(int)time_music] / 70000, 100, 4);
+                    spriteBatch.Draw(empty_texture, rect, new Color(255, 0, 0));
                 }
 
                 if (BeatDetector.get_energie44100()[(int)time_music] > 0)
                 {
-                    r = new Rectangle(Xspace.Xspace.window_width - 100, Xspace.Xspace.window_height - (int)(BeatDetector.get_energie44100()[(int)time_music]) / 70000, 100, 4);
-                    spriteBatch.Draw(empty_texture, r, new Color(0, 255, 0));
+                    rect = new Rectangle(Xspace.Xspace.window_width - 100, Xspace.Xspace.window_height - (int)(BeatDetector.get_energie44100()[(int)time_music]) / 70000, 100, 4);
+                    spriteBatch.Draw(empty_texture, rect, new Color(0, 255, 0));
                 }
             }
             

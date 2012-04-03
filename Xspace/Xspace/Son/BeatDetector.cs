@@ -20,6 +20,8 @@ namespace Xspace
         private static float[] conv;
         private static float[] beat;
         private static int tempo;
+        private static float moy_energie1024;
+        private static float moy_energie44100;
 
         public static void Initialize()
         {
@@ -99,6 +101,9 @@ namespace Xspace
                 somme = somme - energie1024[i - 1] + energie1024[i + 42];
                 energie44100[i] = somme / 43;
             }
+
+            moy_energie1024 = energie1024.Sum() / energie1024.Length;
+            moy_energie44100 = energie44100.Sum() / energie44100.Length;
 
             /* Ratio energie1024/energie44100 */
             for (int i = 21; i < length / 1024; i++)
@@ -220,9 +225,19 @@ namespace Xspace
             return energie1024;
         }
 
+        public static float get_moy_energie1024()
+        {
+            return moy_energie1024;
+        }
+
         public static float[] get_energie44100()
         {
             return energie44100;
+        }
+
+        public static float get_moy_energie44100()
+        {
+            return moy_energie44100;
         }
 
         public static float[] get_energie_peak()
