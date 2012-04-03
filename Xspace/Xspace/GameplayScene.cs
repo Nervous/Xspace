@@ -219,7 +219,10 @@ namespace MenuSample.Scenes
             T_boss1 = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Boss\\boss1");
             #endregion 
             #region Chargement textures HUD
-            T_HUD = _content.Load<Texture2D>("Sprites\\HUD\\interface");
+            if(mode == GAME_MODE.EXTREME)
+                T_HUD = _content.Load<Texture2D>("Sprites\\HUD\\interface-extreme");
+            else
+                T_HUD = _content.Load<Texture2D>("Sprites\\HUD\\interface");
             T_HUD_boss = _content.Load<Texture2D>("Sprites\\HUD\\interface-boss");
             T_HUD_bars = _content.Load<Texture2D>("Sprites\\HUD\\energyBars1");
             T_HUD_bar_boss = _content.Load<Texture2D>("Sprites\\HUD\\energyBarsBoss");
@@ -826,7 +829,7 @@ namespace MenuSample.Scenes
             if (mode == GAME_MODE.EXTREME)
             {
                 if (listeVaisseau.Count != 0)
-                    spriteBatch.DrawString(_HUDfont, Convert.ToString(Convert.ToInt32(compteur/1000)), new Vector2(95, 628), new Color(30, 225, 30));
+                    spriteBatch.DrawString(_HUDfont, (compteur/1000).ToString("N6"), new Vector2(95, 628), new Color(30, 225, 30));
             }
             #endregion 
             #region Draw des obstacles
