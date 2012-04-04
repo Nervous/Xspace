@@ -44,7 +44,7 @@ namespace MenuSample.Scenes
         private char[] delimitationFilesInfo = new char[] { ' ' }, delimitationFilesInfo2 = new char[] { ';' }, delimitationFilesInfo3 = new char[] { ':' };
         private float[] spectre;
         private bool drawSpectre, aBossWasThere, first;
-        private float amplitude_sum_music;
+        private float amplitude_sum_music, moy_energie1024;
         private Random r;
         private string song_path;
         #endregion
@@ -165,6 +165,7 @@ namespace MenuSample.Scenes
 
             BeatDetector.Initialize();
             BeatDetector.audio_process();
+            moy_energie1024 = BeatDetector.get_moy_energie1024();
             AudioPlayer.PauseMusic();
 
             #endregion
@@ -713,39 +714,39 @@ namespace MenuSample.Scenes
             if (AudioPlayer.IsPlaying())
             {
                 int time_music = (int)((AudioPlayer.GetCurrentTime() % (AudioPlayer.GetLength() - 1024)) / 1024f);
-                float energy_44100_music = (float) BeatDetector.get_energie44100()[(int)time_music] / 100000;
+                float energy_44100_music = (float) BeatDetector.get_energie44100()[(int)time_music];
 
                 position_spawn = new Vector2(1180, r.Next(5, 564));
                 if (mode == GAME_MODE.LIBRE && lastTimeMusic < time_music)
                 {
                     if ((time_music - lastTimeRandomSpawn > 10) && (BeatDetector.get_beat()[(int)time_music] > 0))
                     {
-                        if (amplitude_sum_music > 2)
+                        if (energy_44100_music / moy_energie1024 > 1.8)
                         {
                             listeVaisseau.Add(new kamikaze(T_Vaisseau_Kamikaze, position_spawn));
                             beat_spawned = BEAT_SPAWNED.ENEMY;
                         }
-                        else if (amplitude_sum_music > 1.7)
+                        else if (energy_44100_music / moy_energie1024 > 1.5)
                         {
                             listeVaisseau.Add(new RapidShooter(T_Vaisseau_Doubleshooter, position_spawn));
                             beat_spawned = BEAT_SPAWNED.ENEMY;
                         }
-                        else if (amplitude_sum_music > 1.2)
+                        else if (energy_44100_music / moy_energie1024 > 1.2)
                         {
                             listeVaisseau.Add(new Blasterer(T_Vaisseau_Energizer, position_spawn));
                             beat_spawned = BEAT_SPAWNED.ENEMY;
                         }
-                        else if (amplitude_sum_music > 0.8)
+                        else if (energy_44100_music / moy_energie1024 > 0.8)
                         {
                             listeVaisseau.Add(new Drone(T_Vaisseau_Drone, position_spawn));
                             beat_spawned = BEAT_SPAWNED.ENEMY;
                         }
-                        else if (amplitude_sum_music > 0.72)
+                        else if (energy_44100_music / moy_energie1024 > 0.75)
                         {
                             listeBonus.Add(new Bonus_NouvelleArme1(T_Bonus_Weapon1, position_spawn));
                             beat_spawned = BEAT_SPAWNED.BONUS;
                         }
-                        else if (amplitude_sum_music > 0.65)
+                        else if (energy_44100_music / moy_energie1024 > 0.65)
                         {
                             listeBonus.Add(new Bonus_Vie(T_Bonus_Vie, position_spawn));
                             beat_spawned = BEAT_SPAWNED.BONUS;
@@ -933,7 +934,7 @@ namespace MenuSample.Scenes
 
                 spriteBatch.DrawString(_HUDfont, "Energy : " + Convert.ToString(amplitude_sum_music), new Vector2(10, 10), new Color(30, 225, 30));
                 spriteBatch.DrawString(_HUDfont, "Tempo : " + Convert.ToString(BeatDetector.get_tempo()), new Vector2(10, 35), new Color(30, 225, 30));
-                spriteBatch.DrawString(_HUDfont, "Region  : " + Convert.ToString((float)BeatDetector.get_energie44100()[(int)time_music] / 100000), new Vector2(10, 60), new Color(30, 225, 30));
+                spriteBatch.DrawString(_HUDfont, "Ratio  : " + Convert.ToString((float)BeatDetector.get_energie44100()[(int)time_music] / moy_energie1024), new Vector2(10, 60), new Color(30, 225, 30));
                 if (BeatDetector.get_beat()[(int)time_music] > 0)
                     spriteBatch.DrawString(_HUDfont, "TUMP TUMP", new Vector2(10, 85), new Color(30, 225, 30));
 
