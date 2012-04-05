@@ -658,13 +658,19 @@ namespace MenuSample.Scenes
             foreach (Obstacles obstacle in listeObstacles)
             {
                 if (obstacle.position.X > -250)
+                {
                     obstacle.Update(fps_fix);
+                }
                 else
+                {
                     listeObstaclesToRemove.Add(obstacle);
+                }
             }
 
             foreach (Bonus bonus in listeBonusToRemove)
                 listeBonus.Remove(bonus);
+            foreach (Obstacles obstacle in listeObstaclesToRemove)
+                listeObstacles.Remove(obstacle);
             #endregion
             #region Collisions & Update des particules
             foreach (doneParticles particle in partManage)

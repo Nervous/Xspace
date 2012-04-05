@@ -180,11 +180,14 @@ namespace Xspace
 
         public void UpdateJoueur(float fps_fix, KeyboardState keyboard, List<Obstacles> obstacles)
         {
+            const float K_GRAVITE = 1000;
+            const float K_ANGLE_DELTA = 30;
+
             foreach(Obstacles obstacle in obstacles)
             {
                 if (obstacle is Obstacles_Hole)
                 {
-                    // On commence par passer en coordonées polaires
+                    // On commence par passer en coordonées polaires centré sur l'obstacle
                     float xa = _emplacement.X - obstacle.position.X;
                     float ya = _emplacement.Y - obstacle.position.Y;
                     float r = (float)Math.Sqrt(Math.Pow(xa, 2) + Math.Pow(ya, 2));
@@ -197,8 +200,8 @@ namespace Xspace
                     // Puis on retourne dans le repère d'origine avec « + obstacle.position.X ».
                     if (stucked == Vector2.Zero)
                     {
-                        _emplacement.X = (float)((r - 50000 / Math.Pow(r, 2)) * Math.Cos(theta - fps_fix * 30 / (1 * Math.Pow(r, 2))) + obstacle.position.X);
-                        _emplacement.Y = (float)((r - 50000 / Math.Pow(r, 2)) * Math.Sin(theta - fps_fix * 30 / (1 * Math.Pow(r, 2))) + obstacle.position.Y);
+                        _emplacement.X = (float)((r - fps_fix * K_GRAVITE / Math.Pow(r, 2)) * Math.Cos(theta - fps_fix * K_ANGLE_DELTA / (Math.Pow(r, 2))) + obstacle.position.X);
+                        _emplacement.Y = (float)((r - fps_fix * K_GRAVITE / Math.Pow(r, 2)) * Math.Sin(theta - fps_fix * K_ANGLE_DELTA / (Math.Pow(r, 2))) + obstacle.position.Y);
                     }
                 }
             }
