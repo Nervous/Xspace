@@ -21,6 +21,7 @@ namespace Xspace
         protected bool _ennemi, _existe;
         protected double _lastTir;
         protected double _lastDamage;
+        protected Vector2 stucked;
 
         public Vaisseau(Texture2D texture, int vie, int vieMax, int energie, int energieMax, int armure, int damageCollision, float vitesseVaisseau, Vector2 startPosition, bool ennemi, double timingAttack, int score, int arme)
         {
@@ -42,6 +43,7 @@ namespace Xspace
             _lastDamage = -500;
             _energie = energie;
             _energieMax = energieMax;
+            stucked = Vector2.Zero;
         }
 
         public void applyBonus(string effect, int amount, int time)
@@ -187,48 +189,49 @@ namespace Xspace
                     float ya = _emplacement.Y - obstacle.position.Y;
                     float r = (float)Math.Sqrt(Math.Pow(xa, 2) + Math.Pow(ya, 2));
                     float theta = (float) Math.Atan2(ya, xa);
+                    
+                    if(r < 10)
+                        stucked = obstacle.position;
 
                     // On retourne en cartésien avec « x = (r - dr) * cos(θ - dθ) »,
                     // Puis on retourne dans le repère d'origine avec « + obstacle.position.X ».
-                    _emplacement.X = (float)((r - 50000 / Math.Pow(r + 10, 2)) * Math.Cos(theta - fps_fix * 30 / (1 * Math.Pow(r, 2))) + obstacle.position.X);
-                    _emplacement.Y = (float)((r - 50000 / Math.Pow(r + 10, 2)) * Math.Sin(theta - fps_fix * 30 / (1 * Math.Pow(r, 2))) + obstacle.position.Y);
+                    if (stucked == Vector2.Zero)
+                    {
+                        _emplacement.X = (float)((r - 50000 / Math.Pow(r, 2)) * Math.Cos(theta - fps_fix * 30 / (1 * Math.Pow(r, 2))) + obstacle.position.X);
+                        _emplacement.Y = (float)((r - 50000 / Math.Pow(r, 2)) * Math.Sin(theta - fps_fix * 30 / (1 * Math.Pow(r, 2))) + obstacle.position.Y);
+                    }
                 }
             }
 
-            /*
-             * Ce truc fait du caca, et en plus c'est moche. FIXME.
-            if (_emplacement.Y - _textureVaisseau.Height / 2 < -18)
-                _emplacement.Y = _textureVaisseau.Height / 2 - 18;
-            if (_emplacement.Y - _textureVaisseau.Height / 2 > 530)
-                _emplacement.Y = _textureVaisseau.Height / 2 + 530;
-            if (_emplacement.X - _textureVaisseau.Width / 2 < -18)
-                _emplacement.X = _textureVaisseau.Width / 2 - 18;
-            if (_emplacement.X - _textureVaisseau.Width / 2 - 10 > 1070)
-                _emplacement.X = _textureVaisseau.Width / 2 + 10 + 1070;
-            */
-
-            if (keyboard.IsKeyDown(Keys.Z))
+            if (stucked != Vector2.Zero)
             {
-                if (_emplacement.Y - _textureVaisseau.Height / 2 >= -18)
-                    _emplacement -= _deplacementDirectionY * _vitesseVaisseau * fps_fix;
+                _emplacement = stucked;
             }
-
-            if (keyboard.IsKeyDown(Keys.S))
+            else
             {
-                if (_emplacement.Y - _textureVaisseau.Height / 2 <= 530)
-                    _emplacement += _deplacementDirectionY * _vitesseVaisseau * fps_fix;
-            }
+                if (keyboard.IsKeyDown(Keys.Z))
+                {
+                    if (_emplacement.Y - _textureVaisseau.Height / 2 >= -18)
+                        _emplacement -= _deplacementDirectionY * _vitesseVaisseau * fps_fix;
+                }
 
-            if (keyboard.IsKeyDown(Keys.Q))
-            {
-                if (_emplacement.X - _textureVaisseau.Width / 2  >= -18)
-                    _emplacement -= _deplacementDirectionX * _vitesseVaisseau * fps_fix;
-            }
+                if (keyboard.IsKeyDown(Keys.S))
+                {
+                    if (_emplacement.Y - _textureVaisseau.Height / 2 <= 530)
+                        _emplacement += _deplacementDirectionY * _vitesseVaisseau * fps_fix;
+                }
 
-            if (keyboard.IsKeyDown(Keys.D))
-            {
-                if (_emplacement.X - _textureVaisseau.Width / 2 - 10 <= 1070)
-                    _emplacement += _deplacementDirectionX * _vitesseVaisseau * fps_fix;
+                if (keyboard.IsKeyDown(Keys.Q))
+                {
+                    if (_emplacement.X - _textureVaisseau.Width / 2 >= -18)
+                        _emplacement -= _deplacementDirectionX * _vitesseVaisseau * fps_fix;
+                }
+
+                if (keyboard.IsKeyDown(Keys.D))
+                {
+                    if (_emplacement.X - _textureVaisseau.Width / 2 - 10 <= 1070)
+                        _emplacement += _deplacementDirectionX * _vitesseVaisseau * fps_fix;
+                }
             }
         }
 
