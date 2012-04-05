@@ -171,13 +171,41 @@ namespace Xspace
              _emplacement -= _deplacementDirectionX * _vitesseVaisseau * fps_fix;
         }
 
-        public void Update(float fps_fix, KeyboardState keyboard)
+        public void Update(float fps_fix, KeyboardState keyboard, List<Obstacles> obstacles)
         {
-            UpdateJoueur(fps_fix, keyboard);
+            UpdateJoueur(fps_fix, keyboard, obstacles);
         }
 
-        public void UpdateJoueur(float fps_fix, KeyboardState keyboard)
+        public void UpdateJoueur(float fps_fix, KeyboardState keyboard, List<Obstacles> obstacles)
         {
+            foreach(Obstacles obstacle in obstacles)
+            {
+                if (obstacle is Obstacles_Hole)
+                {
+                    // On commence par passer en coordonées polaires
+                    float xa = _emplacement.X - obstacle.position.X;
+                    float ya = _emplacement.Y - obstacle.position.Y;
+                    float r = (float)Math.Sqrt(Math.Pow(xa, 2) + Math.Pow(ya, 2));
+                    float theta = (float) Math.Atan2(ya, xa);
+
+                    // On retourne en cartésien avec « x = (r - dr) * cos(θ - dθ) »,
+                    // Puis on retourne dans le repère d'origine avec « + obstacle.position.X ».
+                    _emplacement.X = (float)((r - 50000 / Math.Pow(r + 10, 2)) * Math.Cos(theta - fps_fix * 30 / (1 * Math.Pow(r, 2))) + obstacle.position.X);
+                    _emplacement.Y = (float)((r - 50000 / Math.Pow(r + 10, 2)) * Math.Sin(theta - fps_fix * 30 / (1 * Math.Pow(r, 2))) + obstacle.position.Y);
+                }
+            }
+
+            /*
+             * Ce truc fait du caca, et en plus c'est moche. FIXME.
+            if (_emplacement.Y - _textureVaisseau.Height / 2 < -18)
+                _emplacement.Y = _textureVaisseau.Height / 2 - 18;
+            if (_emplacement.Y - _textureVaisseau.Height / 2 > 530)
+                _emplacement.Y = _textureVaisseau.Height / 2 + 530;
+            if (_emplacement.X - _textureVaisseau.Width / 2 < -18)
+                _emplacement.X = _textureVaisseau.Width / 2 - 18;
+            if (_emplacement.X - _textureVaisseau.Width / 2 - 10 > 1070)
+                _emplacement.X = _textureVaisseau.Width / 2 + 10 + 1070;
+            */
 
             if (keyboard.IsKeyDown(Keys.Z))
             {

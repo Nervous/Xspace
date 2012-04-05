@@ -602,7 +602,7 @@ namespace MenuSample.Scenes
                 else if (vaisseau.ennemi)
                     vaisseau.Update(fps_fix);
                 else
-                    vaisseau.Update(fps_fix, keyboardState);
+                    vaisseau.Update(fps_fix, keyboardState, listeObstacles);
 
                 if (vaisseau.ennemi && vaisseau.existe)
                 {
