@@ -329,6 +329,7 @@ namespace MenuSample.Scenes
                     {
                         if (!bonus.disabled)
                         {
+                            score += bonus.score;
                             listeVaisseau[0].applyBonus(bonus.effect, bonus.amount, bonus.time);
                             bonus.disabled = true;
                         }
