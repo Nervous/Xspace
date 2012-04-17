@@ -11,15 +11,13 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Xspace
 {
-    abstract class Boss
+    abstract class Boss : item
     {
-        protected Texture2D _texture;
-        protected int _vie,_score, _vieMax, _armeActuelle, _phase, _lastVie;
+        protected int _vieMax, _armeActuelle, _phase, _lastVie;
         protected float _vitesse;
         protected int[] _phaseArray;
         protected double _timingAttack, _lastTir;
-        protected Vector2 _position;
-        protected bool _existe, _invincible, _init;
+        protected bool _invincible, _init;
         private Vector2 _position_bar;
         public static int[] phaseArray1 = { 2000, 1200, 800 };
         /* Phase list: Example: [100,60,20]: As soon as phase[0] < vie, second phase begin, then third phase when phase[1] (so at 20 of life) < vie, etc..
@@ -27,14 +25,13 @@ namespace Xspace
          WARNING: Only three phases maximum are supported right now*/
 
         public Boss(Texture2D texture, int vie, int vieMax, double timingAttack, int[] phaseArray, int vitesse, Vector2 position, int damageCollision, int score)
+            :base(texture, position, new Vector2(0,0), vie, score)
         {
-            _texture = texture;
             _vie = vie;
             _vieMax = vieMax;
             _score = score;
             _vitesse = vitesse;
             _phaseArray = phaseArray;
-            _position = position;
             _armeActuelle = 0;
             _lastTir = 0;
             _timingAttack = timingAttack;
@@ -47,24 +44,29 @@ namespace Xspace
 
         public Vector2 Position
         {
-            get { return _position; }
+            get { return _pos; }
+        }
+
+        public Texture2D sprite
+        {
+            get { return _sprite; } 
         }
 
         public float PositionX
         {
-            get { return _position.X; }
-            set { _position.X = value; }
+            get { return _pos.X; }
+            set { _pos.X = value; }
         }
 
         public float PositionY
         {
-            get { return _position.Y; }
-            set { _position.Y = value; }
+            get { return _pos.Y; }
+            set { _pos.Y = value; }
         }
 
         public Texture2D Texture
         {
-            get { return _texture; }
+            get { return _sprite; }
         }
 
         public float Vitesse
@@ -90,7 +92,7 @@ namespace Xspace
 
         public void Move(Vector2 amount, float fps_fix)
         {
-            _position -= amount;
+            _pos -= amount;
         }
 
         public bool Existe
@@ -205,13 +207,13 @@ namespace Xspace
         {
             if (_vie < _lastVie)
             {
-                spriteBatch.Draw(_texture, _position, Color.Red);
+                spriteBatch.Draw(_sprite, _pos, Color.Red);
                 _lastVie = _vie;
             }
             else if ((_invincible)&&(!_init))
-                spriteBatch.Draw(_texture, _position, Color.Blue);
+                spriteBatch.Draw(_sprite, _pos, Color.Blue);
             else
-                spriteBatch.Draw(_texture, _position, Color.White);
+                spriteBatch.Draw(_sprite, _pos, Color.White);
 
         }
     }

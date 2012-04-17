@@ -18,10 +18,9 @@ namespace Xspace
         protected int addX, addY, i, i1, i3;
         protected double pausetime, pausetime2, lastpausetime;
         
-        public Boss1(Texture2D texture, int[] phaseArray)
-            : base(texture, 2000, 2000, 100, phaseArray, 1, new Vector2(1400, 150), 100, 1000)
+        public Boss1(Texture2D _sprite, int[] phaseArray)
+            : base(_sprite, 2000, 2000, 100, phaseArray, 1, new Vector2(1400, 150), 100, 1000)
         {
-            _texture = texture;
             addX = 10;
             addY = 10;
             Vitesse = 0.3f;
@@ -51,7 +50,7 @@ namespace Xspace
                             if ((time - LastTir > _timingAttack) && (i1 < 5))
                             {
                                 _timingAttack = 200;
-                                Vector2 pos = new Vector2(Position.X, Position.Y + _texture.Height / 2);
+                                Vector2 pos = new Vector2(Position.X, Position.Y + _sprite.Height / 2);
                                 listeMissile.Add(new Missile_drone(_T_Missile1, pos, null, this));
                                 LastTir = time;
                                 pausetime = time;
@@ -78,7 +77,7 @@ namespace Xspace
                               {
                                     _timingAttack = 200;
                                     Invincible = true;
-                                    Vector2 pos = new Vector2(Position.X - 50, Position.Y + _texture.Height / 3 - 6);
+                                    Vector2 pos = new Vector2(Position.X - 50, Position.Y + _sprite.Height / 3 - 6);
                                     listeMissile.Add(new Missile1_boss(_T_Missile2, pos, null, this));
                                     LastTir = time;
                                     Vitesse = 0.2f;
@@ -89,7 +88,7 @@ namespace Xspace
                             {
                                 Invincible = false;
                                 _timingAttack = 600;
-                                Vector2 pos = new Vector2(Position.X - 70, Position.Y + _texture.Height / 3 - 6);
+                                Vector2 pos = new Vector2(Position.X - 70, Position.Y + _sprite.Height / 3 - 6);
                                 listeMissile.Add(new Blaster_Ennemi(_T_Missile3, pos, null, this));
                                 LastTir = time;
                                 Vitesse = 0.0f;
@@ -112,7 +111,7 @@ namespace Xspace
                         {
                             if (time - LastTir > Vitesse)
                             {
-                                Vector2 pos = new Vector2(Position.X - 35, Position.Y + _texture.Height / 3 - 6);
+                                Vector2 pos = new Vector2(Position.X - 35, Position.Y + _sprite.Height / 3 - 6);
                                 listeMissile.Add(new Missile2_boss(_T_Missile1, pos, null, this));
                                 LastTir = time;
                             }
@@ -123,16 +122,16 @@ namespace Xspace
                 //Mouvements
                 PositionY += addY * Vitesse;
 
-                if (Position.Y - Texture.Height / 2 < -Texture.Height / 2) // haut   
+                if (Position.Y - _sprite.Height / 2 < -_sprite.Height / 2) // haut   
                     addY = -addY;
 
-                if (Position.Y - Texture.Height / 2 > 380) // bas
+                if (Position.Y - _sprite.Height / 2 > 380) // bas
                     addY = -addY;
 
-                if (Position.X - Texture.Width / 2 < 500) // gauche
+                if (Position.X - _sprite.Width / 2 < 500) // gauche
                     addX = -addX;
 
-                if (Position.X - Texture.Width / 2 - 10 > 1024) // droite
+                if (Position.X - _sprite.Width / 2 - 10 > 1024) // droite
                     addX = -addX;
             }
             else // Initialisation du boss 
@@ -140,16 +139,15 @@ namespace Xspace
 
                 do
                     PositionX -= addX * 0.1f;
-                while (Position.X - Texture.Width / 2 - 10 < 850);
+                while (Position.X - _sprite.Width / 2 - 10 < 850);
 
-                if (Position.X - Texture.Width / 2 - 10 <= 851)
+                if (Position.X - _sprite.Width / 2 - 10 <= 851)
                 {
                     Init = false;
                     Invincible = false;
                 }
             }
+            updateRectangle();
         }
-
-
     }
 }

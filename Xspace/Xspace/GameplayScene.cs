@@ -103,18 +103,53 @@ namespace MenuSample.Scenes
 
         private readonly Random _random = new Random();
         private AffichageInformations HUD = new AffichageInformations();
-        
-        
+
+        static bool IntersectPixels(Rectangle rectangleA, Texture2D s1,
+                            Rectangle rectangleB, Texture2D s2)
+        {
+            Color[] dataA = new Color[s1.Width * s1.Height];
+            Color[] dataB = new Color[s2.Width * s2.Height];
+            s1.GetData<Color>(dataA);
+            s2.GetData<Color>(dataB);
+            // Find the bounds of the rectangle intersection
+            int top = Math.Max(rectangleA.Top, rectangleB.Top);
+            int bottom = Math.Min(rectangleA.Bottom, rectangleB.Bottom);
+            int left = Math.Max(rectangleA.Left, rectangleB.Left);
+            int right = Math.Min(rectangleA.Right, rectangleB.Right);
+
+            // Check every point within the intersection bounds
+            for (int y = top; y < bottom; y++)
+            {
+                for (int x = left; x < right; x++)
+                {
+                    // Get the color of both pixels at this point
+                    Color colorA = dataA[(x - rectangleA.Left) +
+                                         (y - rectangleA.Top) * rectangleA.Width];
+                    Color colorB = dataB[(x - rectangleB.Left) +
+                                         (y - rectangleB.Top) * rectangleB.Width];
+
+                    // If both pixels are not completely transparent,
+                    if (colorA.A != 0 && colorB.A != 0)
+                    {
+                        // then an intersection has been found
+                        return true;
+                    }
+                }
+            }
+
+            // No intersection found
+            return false;
+        }
+
         public GameplayScene(SceneManager sceneMgr, GraphicsDeviceManager graphics, int level, int act, GAME_MODE mode, string song_path = "fat1.wav")
             : base(sceneMgr)
         {
-
             particleRenderer = new SpriteBatchRenderer
             {
                 GraphicsDeviceService = graphics
             };
             particleEffect = new ParticleEffect();
-
+            #region Chargement musique
             _level = level + (act-1) * 3;
             score = 0;
             lastTime = 0;
@@ -129,6 +164,7 @@ namespace MenuSample.Scenes
             this.song_path = song_path;
             position_spawn = new Vector2();
             beat_spawned = BEAT_SPAWNED.NO_BEAT;
+            #endregion
         }
 
         public override void Initialize()
@@ -298,10 +334,7 @@ namespace MenuSample.Scenes
         {
             List<doneParticles> listeParticules = new List<doneParticles>();
             #region Collision joueur <=> boss
-            if (aBoss != null && !dead && ((listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > aBoss.Position.X && listeVaisseau[0].position.X < aBoss.Position.X) ||
-            (listeVaisseau[0].position.X < aBoss.Position.X + aBoss.Texture.Width && listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > aBoss.Position.X + aBoss.Texture.Width))
-        && ((listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height > aBoss.Position.Y && listeVaisseau[0].position.Y < aBoss.Position.Y) ||
-                (listeVaisseau[0].position.Y < aBoss.Position.Y + aBoss.Texture.Height && listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height > aBoss.Position.Y + aBoss.Texture.Height)))
+            if (aBoss != null && IntersectPixels(listeVaisseau[0].rectangle, listeVaisseau[0].sprite, aBoss.rectangle, aBoss.sprite))
             {
                 aBoss.Hurt(10);
                 listeVaisseau[0].hurt(10, time);
@@ -320,28 +353,20 @@ namespace MenuSample.Scenes
                 #region Collision joueur => bonus
                 foreach (Bonus bonus in listeBonus)
                 {
-                    if (!dead && ((listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width >= bonus.position.X && listeVaisseau[0].position.X <= bonus.position.X) ||
-                                (listeVaisseau[0].position.X <= bonus.position.X + bonus.sprite.Width && listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width >= bonus.position.X + bonus.sprite.Width) ||
-                                (listeVaisseau[0].position.X <= bonus.position.X && listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > bonus.position.X + bonus.sprite.Width))
-                           && ((listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height >= bonus.position.Y && listeVaisseau[0].position.Y <= bonus.position.Y) ||
-                                (listeVaisseau[0].position.Y <= bonus.position.Y + bonus.sprite.Height && listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height >= bonus.position.Y + bonus.sprite.Height) ||
-                                (listeVaisseau[0].position.Y <= bonus.position.Y && listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height > bonus.position.Y + bonus.sprite.Height)))
+                    if (!dead && IntersectPixels(listeVaisseau[0].rectangle, listeVaisseau[0].sprite, bonus.rectangle, bonus.sprite))
                     {
-                        if (!bonus.disabled)
+                        if (!bonus.existe)
                         {
                             score += bonus.score;
                             listeVaisseau[0].applyBonus(bonus.effect, bonus.amount, bonus.time);
-                            bonus.disabled = true;
+                            bonus.existe = true;
                         }
                         listeBonusToRemove.Add(bonus);
                     }
                 }
                 #endregion
                 #region Collision joueur <=> vaisseau
-                if (!dead && ((listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > vaisseau.position.X && listeVaisseau[0].position.X < vaisseau.position.X) ||
-                            (listeVaisseau[0].position.X < vaisseau.position.X + vaisseau.sprite.Width && listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > vaisseau.position.X + vaisseau.sprite.Width))
-                       && ((listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height > vaisseau.position.Y && listeVaisseau[0].position.Y < vaisseau.position.Y) ||
-                             (listeVaisseau[0].position.Y < vaisseau.position.Y + vaisseau.sprite.Height && listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height > vaisseau.position.Y + vaisseau.sprite.Height)))
+                if (!dead && vaisseau != listeVaisseau[0] && IntersectPixels(listeVaisseau[0].rectangle, listeVaisseau[0].sprite, vaisseau.rectangle, vaisseau.sprite))
                 {
                     // Collision entre vaisseau joueur & ennemi trouvée
                     vaisseau.kill();
@@ -353,17 +378,13 @@ namespace MenuSample.Scenes
                     listeVaisseau[0].hurt(vaisseau.damageCollision, time);
                     if (listeVaisseau[0].vie < 0)
                         listeVaisseauToRemove.Add(listeVaisseau[0]);
-                    listeParticules.Add(new doneParticles(false, new Vector2(vaisseau.position.X + vaisseau.sprite.Width / 2, vaisseau.position.Y + vaisseau.sprite.Height / 2)));
+                    listeParticules.Add(new doneParticles(false, new Vector2(vaisseau.pos.X + vaisseau.sprite.Width / 2, vaisseau.pos.Y + vaisseau.sprite.Height / 2)));
                 }
                 #endregion
                 foreach (Missiles missile in listeMissile)
                 {
                     #region Collision missile => vaisseau
-                    if (!dead && missile.isOwner(vaisseau, null) && ((missile.position.X + missile.sprite.Width > vaisseau.position.X)
-                        && (missile.position.X + missile.sprite.Width < vaisseau.position.X + vaisseau.sprite.Width))
-                        && ((missile.position.Y + missile.sprite.Height / 2 > vaisseau.position.Y - vaisseau.sprite.Height*0.10)
-                        && (missile.position.Y + missile.sprite.Height / 2 < vaisseau.position.Y + vaisseau.sprite.Height + vaisseau.sprite.Height*0.10))
-                        )
+                    if (!dead && IntersectPixels(missile.rectangle, missile.sprite, vaisseau.rectangle, vaisseau.sprite))
                     {  // Collision missile => Vaisseau trouvée
                                 
                         if ((vaisseau.ennemi && !missile.ennemi) || (!vaisseau.ennemi && missile.ennemi))
@@ -378,16 +399,13 @@ namespace MenuSample.Scenes
                                 if((!end)&&(!endDead))
                                 score = score + vaisseau.score;
 
-                                listeParticules.Add(new doneParticles(false, new Vector2(vaisseau.position.X + vaisseau.sprite.Width / 2, vaisseau.position.Y + vaisseau.sprite.Height / 2)));        
+                                listeParticules.Add(new doneParticles(false, new Vector2(vaisseau.pos.X + vaisseau.sprite.Width / 2, vaisseau.pos.Y + vaisseau.sprite.Height / 2)));        
                             }
                         }
                     }
                     #endregion
                     #region Collision missile => boss
-                    if (aBoss != null && missile.isAlive && missile.isOwner(null, aBoss) && ((missile.position.X + missile.sprite.Width > aBoss.Position.X)
-                                    && (missile.position.X + missile.sprite.Width < aBoss.Position.X + aBoss.Texture.Width))
-                                    && ((missile.position.Y + missile.sprite.Height / 2 > aBoss.Position.Y - aBoss.Texture.Height * 0.10)
-                                    && (missile.position.Y + missile.sprite.Height / 2 < aBoss.Position.Y + aBoss.Texture.Height + aBoss.Texture.Height * 0.10)))
+                    if (aBoss != null && IntersectPixels(missile.rectangle, missile.sprite, aBoss.rectangle, aBoss.sprite))
                     {
 
                         listeMissileToRemove.Add(missile);
@@ -404,22 +422,11 @@ namespace MenuSample.Scenes
                 foreach (Obstacles obstacle in listeObstacles)
                 {
                     #region Collision joueur <=> Obstacle
-                    if (!dead && ((listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > obstacle.position.X && listeVaisseau[0].position.X < obstacle.position.X) || (listeVaisseau[0].position.X < obstacle.position.X + obstacle.sprite.Width && listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width > obstacle.position.X + obstacle.sprite.Width) || (listeVaisseau[0].position.X > obstacle.position.X && listeVaisseau[0].position.X + listeVaisseau[0].sprite.Width < obstacle.position.X + obstacle.sprite.Width))
-                        &&
-                        ((listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height > obstacle.position.Y && listeVaisseau[0].position.Y < obstacle.position.Y) || (listeVaisseau[0].position.Y < obstacle.position.Y + obstacle.sprite.Height && listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height > obstacle.position.Y + obstacle.sprite.Height) || (listeVaisseau[0].position.Y > obstacle.position.Y && listeVaisseau[0].position.Y + listeVaisseau[0].sprite.Height < obstacle.position.Y + obstacle.sprite.Height)))
+                    if (!dead && IntersectPixels(listeVaisseau[0].rectangle, listeVaisseau[0].sprite, obstacle.rectangle, obstacle.sprite))
                     {
                         if (obstacle.Categorie == "hole")
                         {
-                            double centre_hole_x = obstacle.position.X + (obstacle.sprite.Width / 2);
-                            double centre_hole_y = obstacle.position.Y + (obstacle.sprite.Height / 2);
-                            double centre_joueur_x = listeVaisseau[0].position.X + (listeVaisseau[0].sprite.Width / 2);
-                            double centre_joueur_y = listeVaisseau[0].position.Y + (listeVaisseau[0].sprite.Height / 2);
-                            double distance_x = centre_hole_x - centre_joueur_x;
-                            double distance_y = centre_hole_y - centre_joueur_y;
-                            double distance_unit_x = centre_hole_x - centre_joueur_x / Math.Abs(centre_hole_x - centre_joueur_x);
-                            double distance_unit_y = centre_hole_y - centre_joueur_y / Math.Abs(centre_hole_y - centre_joueur_y);
-                            double distance_x_max = obstacle.sprite.Width / 2;
-                            double distance_y_max = obstacle.sprite.Height / 2;
+
                         }
                     }
                     #endregion
@@ -529,7 +536,7 @@ namespace MenuSample.Scenes
                         if (time - lastTime > 150 || lastTime == 0)
                         {
                             musique_tir.Play();
-                            Vector2 spawn = new Vector2(listeVaisseau[0].position.X + listeVaisseau[0]._textureVaisseau.Width - 1, listeVaisseau[0].position.Y + listeVaisseau[0]._textureVaisseau.Height / 2 - 2);
+                            Vector2 spawn = new Vector2(listeVaisseau[0].pos.X + listeVaisseau[0].sprite.Width - 1, listeVaisseau[0].pos.Y + listeVaisseau[0].sprite.Height / 2 - 2);
                             listeMissile.Add(new Xspace.Missile1_joueur(T_Missile_Joueur_1, spawn, listeVaisseau[0], null));
                             lastTime = time;
                         }
@@ -538,8 +545,8 @@ namespace MenuSample.Scenes
                         if (time - lastTime > 150 || lastTime == 0)
                         {
                             musique_tir.Play();
-                            Vector2 spawn1 = new Vector2(listeVaisseau[0].position.X + 35, listeVaisseau[0].position.Y + listeVaisseau[0]._textureVaisseau.Height / 3 - 18);
-                            Vector2 spawn2 = new Vector2(listeVaisseau[0].position.X + 35, listeVaisseau[0].position.Y + listeVaisseau[0]._textureVaisseau.Height / 3 + 25);
+                            Vector2 spawn1 = new Vector2(listeVaisseau[0].pos.X + 35, listeVaisseau[0].pos.Y + listeVaisseau[0].sprite.Height / 3 - 18);
+                            Vector2 spawn2 = new Vector2(listeVaisseau[0].pos.X + 35, listeVaisseau[0].pos.Y + listeVaisseau[0].sprite.Height / 3 + 25);
                             listeMissile.Add(new Xspace.Missile1_joueur(T_Missile_Joueur_1, spawn1, listeVaisseau[0], null));
                             listeMissile.Add(new Xspace.Missile1_joueur(T_Missile_Joueur_1, spawn2, listeVaisseau[0], null));
                             lastTime = time;
@@ -581,10 +588,10 @@ namespace MenuSample.Scenes
             #region Update des missiles
             foreach (Missiles missile in listeMissile)
             {
-                if (missile.position.X < 1150 && !missile.ennemi)
-                    missile.avancerMissile(fps_fix);
-                else if (missile.position.X > 0 && missile.ennemi)
-                    missile.avancerMissile(fps_fix);
+                if (missile.pos.X < 1150 && !missile.ennemi)
+                    missile.Update(fps_fix);
+                else if (missile.pos.X > 0 && missile.ennemi)
+                    missile.Update(fps_fix);
                 else
                     listeMissileToRemove.Add(missile);
             }
@@ -613,17 +620,17 @@ namespace MenuSample.Scenes
                         switch (vaisseau.armeActuelle)
                         {
                             case 0: // Tir normal
-                                spawn = new Vector2(vaisseau.position.X - 35, vaisseau.position.Y + vaisseau._textureVaisseau.Height / 2);
+                                spawn = new Vector2(vaisseau.pos.X - 35, vaisseau.pos.Y + vaisseau.sprite.Height / 2);
                                 listeMissile.Add(new Missile_drone(T_Missile_Drone, spawn, vaisseau, null));
                                 break;
                             case 1: // Tir double
-                                spawnHaut = new Vector2(vaisseau.position.X - 30, vaisseau.position.Y + vaisseau._textureVaisseau.Height / 2 - 20);
-                                spawnBas = new Vector2(vaisseau.position.X - 30, vaisseau.position.Y + vaisseau._textureVaisseau.Height / 2 + 10);
+                                spawnHaut = new Vector2(vaisseau.pos.X - 30, vaisseau.pos.Y + vaisseau.sprite.Height / 2 - 20);
+                                spawnBas = new Vector2(vaisseau.pos.X - 30, vaisseau.pos.Y + vaisseau.sprite.Height / 2 + 10);
                                 listeMissile.Add(new Missile_drone(T_Missile_Drone, spawnHaut, vaisseau, null));
                                 listeMissile.Add(new Missile_drone(T_Missile_Drone, spawnBas, vaisseau, null));
                                 break;
                             case 2: // Blaster
-                                spawn = new Vector2(vaisseau.position.X - 35, vaisseau.position.Y + vaisseau._textureVaisseau.Height / 2 - 20);
+                                spawn = new Vector2(vaisseau.pos.X - 35, vaisseau.pos.Y + vaisseau.sprite.Height / 2 - 20);
                                 listeMissile.Add(new Blaster_Ennemi(T_Missile_Energie, spawn, vaisseau, null));
                                 break;
                             default:
@@ -646,7 +653,7 @@ namespace MenuSample.Scenes
             #region Update des bonus
             foreach (Bonus bonus in listeBonus)
             {
-                if (bonus.position.X > 0)
+                if (bonus.pos.X > 0)
                     bonus.Update(fps_fix);
                 else
                     listeBonusToRemove.Add(bonus);
@@ -658,7 +665,7 @@ namespace MenuSample.Scenes
             #region Update des obstacles
             foreach (Obstacles obstacle in listeObstacles)
             {
-                if (obstacle.position.X > -250)
+                if (obstacle.pos.X > -250)
                 {
                     obstacle.Update(fps_fix);
                 }
@@ -685,8 +692,8 @@ namespace MenuSample.Scenes
 
             if (listeVaisseau.Count > 0)
             {
-                Vector2 positionVaisseau = listeVaisseau[0]._emplacement;
-                positionVaisseau.Y = positionVaisseau.Y + listeVaisseau[0]._textureVaisseau.Height / 2;
+                Vector2 positionVaisseau = listeVaisseau[0].pos;
+                positionVaisseau.Y = positionVaisseau.Y + listeVaisseau[0].sprite.Height / 2;
                 positionVaisseau.X -= 5;
                 ((EmitterCollection)particleEffectMoteur)[0].ReleaseImpulse.X = -400 * amplitude_sum_music;
                 ((EmitterCollection)particleEffectMoteur)[0].ReleaseScale.Value = 32 + (amplitude_sum_music - 1) * 25;
