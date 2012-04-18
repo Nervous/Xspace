@@ -116,14 +116,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AffichageInformations.cs" />
-    <Compile Include="Items\Bonus\Bonus.cs" />
-    <Compile Include="Items\Bonus\Bonus_NouvelleArme1.cs" />
-    <Compile Include="Items\Bonus\Bonus_Vie.cs" />
-    <Compile Include="Boss\Boss.cs" />
-    <Compile Include="Boss\Boss1.cs" />
+    <Compile Include="GameCore\afficherInformation.cs" />
+    <Compile Include="GameCore\Items\Bonus\Bonus.cs" />
+    <Compile Include="GameCore\Items\Bonus\Bonus_NouvelleArme1.cs" />
+    <Compile Include="GameCore\Items\Bonus\Bonus_Vie.cs" />
+    <Compile Include="GameCore\Boss\Boss.cs" />
+    <Compile Include="GameCore\Boss\Boss1.cs" />
     <Compile Include="gestionLevels.cs" />
-    <Compile Include="Items\item.cs" />
+    <Compile Include="GameCore\Items\item.cs" />
     <Compile Include="Menu\InputState.cs" />
     <Compile Include="Menu\Scenes\ActChoiceMenuScene.cs">
       <SubType>Code</SubType>
@@ -157,29 +157,29 @@
     <Compile Include="Menu\Scenes\MainMenuScene.cs" />
     <Compile Include="Menu\Scenes\MessageBoxScene.cs" />
     <Compile Include="Menu\Scenes\PauseMenuScene.cs" />
-    <Compile Include="Items\Missiles\Boss\Missile1_boss.cs" />
-    <Compile Include="Items\Missiles\Ennemi\Blaster_Ennemi.cs" />
-    <Compile Include="Items\Missiles\Joueur\Missile1_joueur.cs" />
-    <Compile Include="Items\Missiles\Boss\Missile2_boss.cs" />
-    <Compile Include="Items\Missiles\Missiles.cs" />
-    <Compile Include="Items\Missiles\Ennemi\Missile_Drone.cs" />
-    <Compile Include="Coopération\Server.cs" />
-    <Compile Include="Items\Obstacles\Obstacles.cs" />
-    <Compile Include="Items\Obstacles\Obstacles_Hole.cs" />
+    <Compile Include="GameCore\Items\Missiles\Boss\Missile1_boss.cs" />
+    <Compile Include="GameCore\Items\Missiles\Ennemi\Blaster_Ennemi.cs" />
+    <Compile Include="GameCore\Items\Missiles\Joueur\Missile1_joueur.cs" />
+    <Compile Include="GameCore\Items\Missiles\Boss\Missile2_boss.cs" />
+    <Compile Include="GameCore\Items\Missiles\Missiles.cs" />
+    <Compile Include="GameCore\Items\Missiles\Ennemi\Missile_Drone.cs" />
+    <Compile Include="GameCore\Coopération\Server.cs" />
+    <Compile Include="GameCore\Items\Obstacles\Obstacles.cs" />
+    <Compile Include="GameCore\Items\Obstacles\Obstacles_Hole.cs" />
     <Compile Include="ScrollingBackground.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Son\AudioPlayer.cs" />
-    <Compile Include="Son\BeatDetector.cs" />
-    <Compile Include="Son\fmod.cs" />
-    <Compile Include="Son\fmod_dsp.cs" />
-    <Compile Include="Son\fmod_errors.cs" />
-    <Compile Include="Son\fmod_memoryinfo.cs" />
-    <Compile Include="Items\Vaisseaux\Blasterer.cs" />
-    <Compile Include="Items\Vaisseaux\Drone.cs" />
-    <Compile Include="Items\Vaisseaux\Kamikaze.cs" />
-    <Compile Include="Items\Vaisseaux\Rapid Shooter.cs" />
-    <Compile Include="Items\Vaisseaux\Vaisseau.cs" />
-    <Compile Include="Items\Vaisseaux\Vaisseau_joueur.cs" />
+    <Compile Include="GameCore\Son\AudioPlayer.cs" />
+    <Compile Include="GameCore\Son\BeatDetector.cs" />
+    <Compile Include="GameCore\Son\fmod.cs" />
+    <Compile Include="GameCore\Son\fmod_dsp.cs" />
+    <Compile Include="GameCore\Son\fmod_errors.cs" />
+    <Compile Include="GameCore\Son\fmod_memoryinfo.cs" />
+    <Compile Include="GameCore\Items\Vaisseaux\Blasterer.cs" />
+    <Compile Include="GameCore\Items\Vaisseaux\Drone.cs" />
+    <Compile Include="GameCore\Items\Vaisseaux\Kamikaze.cs" />
+    <Compile Include="GameCore\Items\Vaisseaux\Rapid Shooter.cs" />
+    <Compile Include="GameCore\Items\Vaisseaux\Vaisseau.cs" />
+    <Compile Include="GameCore\Items\Vaisseaux\Vaisseau_joueur.cs" />
     <Compile Include="Xspace.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -334,7 +334,7 @@ namespace MenuSample.Scenes
         {
             List<doneParticles> listeParticules = new List<doneParticles>();
             #region Collision joueur <=> boss
-            if (aBoss != null && IntersectPixels(listeVaisseau[0].rectangle, listeVaisseau[0].sprite, aBoss.rectangle, aBoss.sprite))
+            if (aBoss != null && !dead && IntersectPixels(listeVaisseau[0].rectangle, listeVaisseau[0].sprite, aBoss.rectangle, aBoss.sprite))
             {
                 aBoss.Hurt(10);
                 listeVaisseau[0].hurt(10, time);
@@ -405,7 +405,7 @@ namespace MenuSample.Scenes
                     }
                     #endregion
                     #region Collision missile => boss
-                    if (aBoss != null && IntersectPixels(missile.rectangle, missile.sprite, aBoss.rectangle, aBoss.sprite))
+                    if (aBoss != null && missile.isOwner(null, aBoss) && IntersectPixels(missile.rectangle, missile.sprite, aBoss.rectangle, aBoss.sprite))
                     {
 
                         listeMissileToRemove.Add(missile);
