@@ -64,7 +64,7 @@ namespace MenuSample.Scenes
         private Boss boss1;
         List<Vaisseau> listeVaisseau, listeVaisseauToRemove;
         List<Missiles> listeMissile, listeMissileToRemove;
-        List<Bonus> listeBonus, listeBonusToRemove;
+        List<Bonus> listeBonus, listeBonusToRemove, listeBonusToAdd;
         List<Obstacles> listeObstacles, listeObstaclesToRemove;
         private ContentManager _content;
         private SpriteFont _gameFont, _ingameFont, _HUDfont;
@@ -102,6 +102,7 @@ namespace MenuSample.Scenes
         #endregion
 
         private readonly Random _random = new Random();
+        private Random randomizer = new Random();
         private AffichageInformations HUD = new AffichageInformations();
 
         static bool IntersectPixels(Rectangle rectangleA, Texture2D s1,
@@ -289,6 +290,7 @@ namespace MenuSample.Scenes
             #region Chargement bonus
             listeBonus = new List<Bonus>();
             listeBonusToRemove = new List<Bonus>();
+            listeBonusToAdd = new List<Bonus>();
             #endregion
             #region Chargement obstacles
             listeObstacles = new List<Obstacles>();
@@ -330,9 +332,10 @@ namespace MenuSample.Scenes
             #endregion
         }
 
-        List<doneParticles> collisions(List<Vaisseau> listeVaisseau, List<Missiles> listeMissile, List<Bonus> listeBonus, List<Obstacles> listeObstacles, Boss aBoss, float spentTime, ParticleEffect particleEffect, GameTime gametime, bool dead)
+        List<doneParticles> collisions(List<Vaisseau> listeVaisseau, List<Missiles> listeMissile, List<Bonus> listeBonus, List<Bonus> listeBonusToAdd, List<Obstacles> listeObstacles, Boss aBoss, float spentTime, ParticleEffect particleEffect, GameTime gametime, bool dead, Random rand)
         {
             List<doneParticles> listeParticules = new List<doneParticles>();
+            int randomed = 0;
             #region Collision joueur <=> boss
             if (aBoss != null && !dead && IntersectPixels(listeVaisseau[0].rectangle, listeVaisseau[0].sprite, aBoss.rectangle, aBoss.sprite))
             {
@@ -391,13 +394,19 @@ namespace MenuSample.Scenes
                         {
                             listeMissileToRemove.Add(missile);
 
-                            if (vaisseau.hurt(missile.degats, time))
+                            if (vaisseau.hurt(missile.degats, time)) // Mort du vaisseau
                             {
-                                // Vaisseau dead
-                                            
                                 vaisseau.kill();
                                 if((!end)&&(!endDead))
-                                score = score + vaisseau.score;
+                                    score = score + vaisseau.score;
+
+                                randomed = 0;
+                                randomed = rand.Next(0, 100);
+                                if (randomed > 98)       // 2% - Bonus arme
+                                    listeBonusToAdd.Add(new Bonus_NouvelleArme1(T_Bonus_Weapon1, vaisseau.pos));
+                                else if (randomed > 95) // 5% - Bonus vie
+                                    listeBonusToAdd.Add(new Bonus_Vie(T_Bonus_Vie, vaisseau.pos));
+                                
 
                                 listeParticules.Add(new doneParticles(false, new Vector2(vaisseau.pos.X + vaisseau.sprite.Width / 2, vaisseau.pos.Y + vaisseau.sprite.Height / 2)));        
                             }
@@ -686,7 +695,12 @@ namespace MenuSample.Scenes
                 if (particle.startingParticle != Vector2.Zero)
                     particleEffect.Trigger(particle.startingParticle);
             }
-            partManage = collisions(listeVaisseau, listeMissile, listeBonus, listeObstacles, boss1, fps_fix, particleEffect, gameTime, listeVaisseau.Count==0);
+            partManage = collisions(listeVaisseau, listeMissile, listeBonus, listeBonusToAdd, listeObstacles, boss1, fps_fix, particleEffect, gameTime, listeVaisseau.Count==0, randomizer);
+            foreach (Bonus b in listeBonusToAdd)
+            {
+                listeBonus.Add(b);
+            }
+            listeBonusToAdd.Clear();
             particleEffect.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
 
 
