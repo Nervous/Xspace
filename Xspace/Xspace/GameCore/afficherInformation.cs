@@ -16,11 +16,11 @@ namespace Xspace
     {
 
         private Vector2 _position_bar;
-        
+
         public void Drawbar(SpriteBatch spriteBatch, Texture2D texture, int vieActuelle, int vieMax)
         {
             _position_bar.Y = 662;
-            for (int i=0; i <= vieActuelle;i++)
+            for (int i = 0; i <= vieActuelle; i++)
             {
                 _position_bar.X = 405 + i;
 

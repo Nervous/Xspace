@@ -11,14 +11,11 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Xspace
 {
-    class Bonus
+    class Bonus : item
     {
-        protected Vector2 _emplacement, _deplacement;
         protected Texture2D _textureBonus;
         protected float _vitesseBonus;
         protected getBonus bonus;
-        protected bool _disabled;
-        protected int _score;
 
         protected struct getBonus
         {
@@ -33,20 +30,20 @@ namespace Xspace
             }
         };
 
-        public Bonus(Texture2D texture, float vitesseVaisseau, Vector2 startPosition, string effect, int amount, int time, int score)
+        public Bonus(Texture2D texture, float vitesseVaisseau, Vector2 startPosition, Vector2 deplacement, string effect, int amount, int time, int score)
+            :base(texture, startPosition, deplacement, 1, score)
         {
             _textureBonus = texture;
             _vitesseBonus = vitesseVaisseau;
-            _emplacement = startPosition;
-            _deplacement = Vector2.Normalize(new Vector2(5, 0));
-            _disabled = false;
+            //_deplacement = Vector2.Normalize(new Vector2(5, 0));
+            _existe = false;
             _score = score;
             bonus = new getBonus(effect, amount, time);
         }
 
-        public Vector2 position
+        public Vector2 pos
         {
-            get { return _emplacement; }
+            get { return _pos; }
         }
 
         public string effect
@@ -69,10 +66,10 @@ namespace Xspace
             get { return bonus._time; }
         }
 
-        public bool disabled
+        public bool existe
         {
-            get { return _disabled; }
-            set { _disabled = value; }
+            get { return _existe; }
+            set { _existe = value; }
         }
 
         public Texture2D sprite
@@ -82,12 +79,13 @@ namespace Xspace
 
         public void Update(float fps_fix)
         {
-            _emplacement -=  _deplacement * _vitesseBonus * fps_fix;
+            _pos -=  _deplacement * _vitesseBonus * fps_fix;
+            updateRectangle();
         }
 
         public void Draw(SpriteBatch batch)
         {
-            batch.Draw(_textureBonus, _emplacement, Color.White);
+            batch.Draw(_textureBonus, _pos, Color.White);
         }
 
     }

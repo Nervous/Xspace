@@ -14,7 +14,7 @@ namespace Xspace
     class Drone : Vaisseau
     {
         public Drone(Texture2D sprite, Vector2 position)
-            : base(sprite, 20,0,0,0, 0, 30, 0.30f, position, true, 1200, 10, 0)
+            : base(sprite, 20,0,0,0, 0, 30, 0.30f, position, true, 1200, 50, 0)
         { }
     }
 }

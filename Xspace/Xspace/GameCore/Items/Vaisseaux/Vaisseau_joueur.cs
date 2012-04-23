@@ -11,10 +11,11 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Xspace
 {
-    class Bonus_NouvelleArme1 : Bonus
+    class Vaisseau_joueur : Vaisseau
     {
-        public Bonus_NouvelleArme1(Texture2D texture, Vector2 position)
-            : base(texture, 0.30f, position, "weapon", 1, -1, 10)
+        public Vaisseau_joueur(Texture2D sprite)
+            : base(sprite, 300, 300, 100, 100, 100, -1, 0.55f, new Vector2(15, 225), Vector2.Normalize(new Vector2(5, 5)), false, 0, 0, 0)
         { }
     }
+
 }
