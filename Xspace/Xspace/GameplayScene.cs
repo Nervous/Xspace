@@ -720,39 +720,39 @@ namespace MenuSample.Scenes
             if (AudioPlayer.IsPlaying())
             {
                 int time_music = (int)((AudioPlayer.GetCurrentTime() % (AudioPlayer.GetLength() - 1024)) / 1024f);
-                float energy_44100_music = (float) BeatDetector.get_energie44100()[(int)time_music];
+                float energy_1024_music = (float)BeatDetector.get_energie1024()[(int)time_music];
 
                 position_spawn = new Vector2(1180, r.Next(5, 564));
                 if (mode == GAME_MODE.LIBRE && lastTimeMusic < time_music)
                 {
                     if ((time_music - lastTimeRandomSpawn > 10) && (BeatDetector.get_beat()[(int)time_music] > 0))
                     {
-                        if (energy_44100_music / moy_energie1024 > 1.8)
+                        if (energy_1024_music / moy_energie1024 > 1.8)
                         {
                             listeVaisseau.Add(new kamikaze(T_Vaisseau_Kamikaze, position_spawn));
                             beat_spawned = BEAT_SPAWNED.ENEMY;
                         }
-                        else if (energy_44100_music / moy_energie1024 > 1.5)
+                        else if (energy_1024_music / moy_energie1024 > 1.5)
                         {
                             listeVaisseau.Add(new RapidShooter(T_Vaisseau_Doubleshooter, position_spawn));
                             beat_spawned = BEAT_SPAWNED.ENEMY;
                         }
-                        else if (energy_44100_music / moy_energie1024 > 1.2)
+                        else if (energy_1024_music / moy_energie1024 > 1.2)
                         {
                             listeVaisseau.Add(new Blasterer(T_Vaisseau_Energizer, position_spawn));
                             beat_spawned = BEAT_SPAWNED.ENEMY;
                         }
-                        else if (energy_44100_music / moy_energie1024 > 0.8)
+                        else if (energy_1024_music / moy_energie1024 > 1)
                         {
                             listeVaisseau.Add(new Drone(T_Vaisseau_Drone, position_spawn));
                             beat_spawned = BEAT_SPAWNED.ENEMY;
                         }
-                        else if (energy_44100_music / moy_energie1024 > 0.75)
+                        else if (energy_1024_music / moy_energie1024 > 0.9)
                         {
                             listeBonus.Add(new Bonus_NouvelleArme1(T_Bonus_Weapon1, position_spawn));
                             beat_spawned = BEAT_SPAWNED.BONUS;
                         }
-                        else if (energy_44100_music / moy_energie1024 > 0.65)
+                        else if (energy_1024_music / moy_energie1024 > 0.8)
                         {
                             listeBonus.Add(new Bonus_Vie(T_Bonus_Vie, position_spawn));
                             beat_spawned = BEAT_SPAWNED.BONUS;
