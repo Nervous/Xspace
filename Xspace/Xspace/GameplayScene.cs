@@ -806,16 +806,6 @@ namespace MenuSample.Scenes
                             listeVaisseau.Add(new Drone(T_Vaisseau_Drone, position_spawn));
                             beat_spawned = BEAT_SPAWNED.ENEMY;
                         }
-                        else if (energy_1024_music / moy_energie1024 > 0.9)
-                        {
-                            listeBonus.Add(new Bonus_BaseWeapon(T_Bonus_Weapon1, position_spawn));
-                            beat_spawned = BEAT_SPAWNED.BONUS;
-                        }
-                        else if (energy_1024_music / moy_energie1024 > 0.8)
-                        {
-                            listeBonus.Add(new Bonus_Vie(T_Bonus_Vie, position_spawn));
-                            beat_spawned = BEAT_SPAWNED.BONUS;
-                        }
                         else
                         {
                             beat_spawned = BEAT_SPAWNED.NOTHING;
