@@ -405,9 +405,9 @@ namespace MenuSample.Scenes
 
                                 randomed = 0;
                                 randomed = rand.Next(0, 1000);
-                                if (randomed > 995)       // 0.5% - Bonus upgrade arme de base
+                                if (randomed > 990)       // 1% - Bonus upgrade arme de base
                                     listeBonusToAdd.Add(new Bonus_BaseWeapon(T_Bonus_Weapon1, vaisseau.pos));
-                                else if (randomed > 990) // 1%    - Bonus vie
+                                else if (randomed > 950) // 5%    - Bonus vie
                                     listeBonusToAdd.Add(new Bonus_Vie(T_Bonus_Vie, vaisseau.pos));
                                 
 
