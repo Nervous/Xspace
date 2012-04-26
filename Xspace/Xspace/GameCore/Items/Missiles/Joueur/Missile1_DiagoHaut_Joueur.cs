@@ -11,10 +11,10 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Xspace
 {
-    class Bonus_Vie : Bonus
+    class Missile1_DiagoBas_Joueur : Missiles
     {
-        public Bonus_Vie(Texture2D texture, Vector2 position)
-            : base(texture, 0.30f, position, Vector2.Normalize(new Vector2(1, 0)), "vie", 30, -1, 10)
+        public Missile1_DiagoBas_Joueur(Texture2D texture, Vector2 position, Vaisseau owner, Boss ownerB)
+            : base(texture, false, 20, position, new Vector2(1, -1), 0.60f, owner, ownerB)
         { }
     }
 }
