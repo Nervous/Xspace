@@ -15,6 +15,7 @@ namespace MenuSample.Scenes.Core
         private readonly List<MenuItem> _menuItems = new List<MenuItem>();
         private int _selecteditem;
         private readonly string _menuTitle;
+        private const int MAX_ITEMS = 13;
 
         /// <summary>
         /// Récupère la liste des objets de menu, ainsi les classes dérivées
@@ -82,8 +83,9 @@ namespace MenuSample.Scenes.Core
         private void UpdateMenuItemLocations()
         {
             var transitionOffset = (float)Math.Pow(TransitionPosition, 2);
-            var position = new Vector2(0f, 175f);
+            var position = new Vector2(0f, 0f);
 
+            int count = 0;
             foreach (MenuItem menuItem in _menuItems)
             {
                 position.X = SceneManager.GraphicsDevice.Viewport.Width / 2 - menuItem.GetWidth(this) / 2;
@@ -93,8 +95,9 @@ namespace MenuSample.Scenes.Core
                 else
                     position.X += transitionOffset * 512;
 
+                position.Y = 175f + MenuItem.GetHeight(this) * (count % MAX_ITEMS);
                 menuItem.Position = position;
-                position.Y += MenuItem.GetHeight(this);
+                count++;
             }
         }
 
@@ -118,7 +121,8 @@ namespace MenuSample.Scenes.Core
             SpriteFont font = SceneManager.Font;
 
             spriteBatch.Begin();
-            for (int i = 0; i < _menuItems.Count; i++)
+
+            for (int i = (_selecteditem / MAX_ITEMS) * MAX_ITEMS; i < _menuItems.Count && i < (_selecteditem / MAX_ITEMS + 1) * MAX_ITEMS; i++)
             {
                 MenuItem menuItem = _menuItems[i];
                 bool isSelected = IsActive && (i == _selecteditem);
