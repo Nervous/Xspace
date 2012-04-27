@@ -33,6 +33,7 @@ namespace MenuSample.Scenes
     /// </summary>
     public class GameplayScene : AbstractGameScene
     {
+        const int SCREEN_MAXTOP = 0, SCREEN_MAXBOT = 620;
         #region Déclaration variables usuelles
         private int score, _level;
         private float fps_fix, _pauseAlpha;
@@ -52,7 +53,7 @@ namespace MenuSample.Scenes
         private List<doneParticles> partManage;
         private ScrollingBackground fond_ecran, fond_ecran_front, fond_ecran_middle;
         public SpriteBatch spriteBatch;
-        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Vaisseau_Kamikaze, T_Missile_Joueur_1, T_Missile_Drone, T_Bonus_Vie, T_Bonus_Weapon1, T_Obstacles_Hole, barre_vie, T_HUD, T_HUD_boss, T_HUD_bars, T_HUD_bar_boss, T_Divers_Levelcomplete, T_Divers_Levelfail, T_boss1, T_Vaisseau_Energizer, T_Vaisseau_Doubleshooter, T_Missile_Energie;
+        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Vaisseau_Kamikaze, T_Missile_Joueur_1, T_Missile_Joueur_2, T_Missile_Joueur_3, T_Missile_Drone, T_Bonus_Vie, T_Bonus_Weapon1, T_Obstacles_Hole, barre_vie, T_HUD, T_HUD_boss, T_HUD_bars, T_HUD_bar_boss, T_Divers_Levelcomplete, T_Divers_Levelfail, T_boss1, T_Vaisseau_Energizer, T_Vaisseau_Doubleshooter, T_Missile_Energie;
         private List<Texture2D> listeTextureVaisseauxEnnemis, listeTextureBonus, listeTextureObstacles, listeTextureBoss;
         private SoundEffect musique_tir, musique_bossExplosion;
         private KeyboardState keyboardState;
@@ -266,7 +267,9 @@ namespace MenuSample.Scenes
             T_HUD_bar_boss = _content.Load<Texture2D>("Sprites\\HUD\\energyBarsBoss");
             #endregion
             #region Chargement textures missiles
-            T_Missile_Joueur_1 = _content.Load<Texture2D>("Sprites\\Missiles\\Joueur\\missilenew1");
+            T_Missile_Joueur_1 = _content.Load<Texture2D>("Sprites\\Missiles\\Joueur\\1");
+            T_Missile_Joueur_2 = _content.Load<Texture2D>("Sprites\\Missiles\\Joueur\\1_DiagoHaut");
+            T_Missile_Joueur_3 = _content.Load<Texture2D>("Sprites\\Missiles\\Joueur\\1_DiagoBas");
             T_Missile_Drone = _content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\missile_new1");
             T_Missile_Energie = _content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\missile_boule1");
             #endregion
@@ -319,7 +322,7 @@ namespace MenuSample.Scenes
             thisLevel.readInfos(delimitationFilesInfo, delimitationFilesInfo2, delimitationFilesInfo3, infLevel);
             #endregion
             #region Chargement barre de vie
-            barre_vie = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Joueur\\barre-vie-test1");
+            barre_vie = _content.Load<Texture2D>("Sprites\\HUD\\Life");
             #endregion
             #region Chargement textures boss
             T_boss1 = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Boss\\boss1"); 
@@ -401,10 +404,10 @@ namespace MenuSample.Scenes
                                     score = score + vaisseau.score;
 
                                 randomed = 0;
-                                randomed = rand.Next(0, 100);
-                                if (randomed > 98)       // 2% - Bonus arme
-                                    listeBonusToAdd.Add(new Bonus_NouvelleArme1(T_Bonus_Weapon1, vaisseau.pos));
-                                else if (randomed > 95) // 5% - Bonus vie
+                                randomed = rand.Next(0, 1000);
+                                if (randomed > 990)       // 1% - Bonus upgrade arme de base
+                                    listeBonusToAdd.Add(new Bonus_BaseWeapon(T_Bonus_Weapon1, vaisseau.pos));
+                                else if (randomed > 950) // 5%    - Bonus vie
                                     listeBonusToAdd.Add(new Bonus_Vie(T_Bonus_Vie, vaisseau.pos));
                                 
 
@@ -542,29 +545,63 @@ namespace MenuSample.Scenes
                 switch (listeVaisseau[0].armeActuelle)
                 {
                     case 0:
-                        if (time - lastTime > 150 || lastTime == 0)
+                        switch (listeVaisseau[0].baseWeapon)
                         {
-                            musique_tir.Play();
-                            Vector2 spawn = new Vector2(listeVaisseau[0].pos.X + listeVaisseau[0].sprite.Width - 1, listeVaisseau[0].pos.Y + listeVaisseau[0].sprite.Height / 2 - 2);
-                            listeMissile.Add(new Xspace.Missile1_joueur(T_Missile_Joueur_1, spawn, listeVaisseau[0], null));
-                            lastTime = time;
-                        }
-                        break;
-                    case 1:
-                        if (time - lastTime > 150 || lastTime == 0)
-                        {
-                            musique_tir.Play();
-                            Vector2 spawn1 = new Vector2(listeVaisseau[0].pos.X + 35, listeVaisseau[0].pos.Y + listeVaisseau[0].sprite.Height / 3 - 18);
-                            Vector2 spawn2 = new Vector2(listeVaisseau[0].pos.X + 35, listeVaisseau[0].pos.Y + listeVaisseau[0].sprite.Height / 3 + 25);
-                            listeMissile.Add(new Xspace.Missile1_joueur(T_Missile_Joueur_1, spawn1, listeVaisseau[0], null));
-                            listeMissile.Add(new Xspace.Missile1_joueur(T_Missile_Joueur_1, spawn2, listeVaisseau[0], null));
-                            lastTime = time;
+                            case 0:
+                                if (time - lastTime > 150 || lastTime == 0)
+                                {
+                                    musique_tir.Play();
+                                    Vector2 spawn = new Vector2(listeVaisseau[0].pos.X + listeVaisseau[0].sprite.Width - 1, listeVaisseau[0].pos.Y + listeVaisseau[0].sprite.Height / 2 - 2);
+                                    listeMissile.Add(new Xspace.Missile1_joueur(T_Missile_Joueur_1, spawn, listeVaisseau[0], null));
+                                    lastTime = time;
+                                }
+                                break;
+                            case 1:
+                                if (time - lastTime > 150 || lastTime == 0)
+                                {
+                                    musique_tir.Play();
+                                    Vector2 spawn1 = new Vector2(listeVaisseau[0].pos.X + 35, listeVaisseau[0].pos.Y + listeVaisseau[0].sprite.Height / 3 - 18);
+                                    Vector2 spawn2 = new Vector2(listeVaisseau[0].pos.X + 35, listeVaisseau[0].pos.Y + listeVaisseau[0].sprite.Height / 3 + 25);
+                                    listeMissile.Add(new Xspace.Missile1_joueur(T_Missile_Joueur_1, spawn1, listeVaisseau[0], null));
+                                    listeMissile.Add(new Xspace.Missile1_joueur(T_Missile_Joueur_1, spawn2, listeVaisseau[0], null));
+                                    lastTime = time;
+                                }
+                                break;
+                            case 2:
+                                if (time - lastTime > 150 || lastTime == 0)
+                                {
+                                    musique_tir.Play();
+                                    Vector2 spawn1 = new Vector2(listeVaisseau[0].pos.X + 35, listeVaisseau[0].pos.Y + listeVaisseau[0].sprite.Height / 3 - 18);
+                                    Vector2 spawn2 = new Vector2(listeVaisseau[0].pos.X + 35, listeVaisseau[0].pos.Y + listeVaisseau[0].sprite.Height / 3 + 25);
+                                    Vector2 spawn3 = new Vector2(listeVaisseau[0].pos.X + 29, listeVaisseau[0].pos.Y + listeVaisseau[0].sprite.Height / 3 + 29);
+                                    Vector2 spawn4 = new Vector2(listeVaisseau[0].pos.X + 29, listeVaisseau[0].pos.Y + listeVaisseau[0].sprite.Height / 3 - 38);
+                                    listeMissile.Add(new Xspace.Missile1_joueur(T_Missile_Joueur_1, spawn1, listeVaisseau[0], null));
+                                    listeMissile.Add(new Xspace.Missile1_joueur(T_Missile_Joueur_1, spawn2, listeVaisseau[0], null));
+                                    listeMissile.Add(new Xspace.Missile1_DiagoHaut_Joueur(T_Missile_Joueur_3, spawn3, listeVaisseau[0], null));
+                                    listeMissile.Add(new Xspace.Missile1_DiagoBas_Joueur(T_Missile_Joueur_2, spawn4, listeVaisseau[0], null));
+                                    lastTime = time;
+                                }
+                                break;
+                            default:
+                                break;
                         }
                         break;
                     default:
                         break;
                 }
             }
+
+            /* SWITCH ARMES
+            if ((keyboardState.IsKeyDown(Keys.D1) && (listeVaisseau.Count != 0)))
+                listeVaisseau[0].changeWeapon(0);
+            else if ((keyboardState.IsKeyDown(Keys.D2) && (listeVaisseau.Count != 0)))
+                listeVaisseau[0].changeWeapon(1);
+            else if ((keyboardState.IsKeyDown(Keys.D3) && (listeVaisseau.Count != 0)))
+                listeVaisseau[0].changeWeapon(2);
+             else if ((keyboardState.IsKeyDown(Keys.D4) && (listeVaisseau.Count != 0)))
+                listeVaisseau[0].changeWeapon(3);
+             */
+                
             #endregion
             #region Mode extreme
             if (mode == GAME_MODE.EXTREME)
@@ -597,9 +634,9 @@ namespace MenuSample.Scenes
             #region Update des missiles
             foreach (Missiles missile in listeMissile)
             {
-                if (missile.pos.X < 1150 && !missile.ennemi)
+                if (missile.pos.X < 1150 && (missile.pos.Y > SCREEN_MAXTOP && missile.pos.Y < SCREEN_MAXBOT) && !missile.ennemi)
                     missile.Update(fps_fix);
-                else if (missile.pos.X > 0 && missile.ennemi)
+                else if (missile.pos.X > 0 && (missile.pos.Y > SCREEN_MAXTOP && missile.pos.Y < SCREEN_MAXBOT) && missile.ennemi)
                     missile.Update(fps_fix);
                 else
                     listeMissileToRemove.Add(missile);
@@ -769,16 +806,6 @@ namespace MenuSample.Scenes
                             listeVaisseau.Add(new Drone(T_Vaisseau_Drone, position_spawn));
                             beat_spawned = BEAT_SPAWNED.ENEMY;
                         }
-                        else if (energy_1024_music / moy_energie1024 > 0.9)
-                        {
-                            listeBonus.Add(new Bonus_NouvelleArme1(T_Bonus_Weapon1, position_spawn));
-                            beat_spawned = BEAT_SPAWNED.BONUS;
-                        }
-                        else if (energy_1024_music / moy_energie1024 > 0.8)
-                        {
-                            listeBonus.Add(new Bonus_Vie(T_Bonus_Vie, position_spawn));
-                            beat_spawned = BEAT_SPAWNED.BONUS;
-                        }
                         else
                         {
                             beat_spawned = BEAT_SPAWNED.NOTHING;
@@ -845,14 +872,6 @@ namespace MenuSample.Scenes
             fond_ecran.Draw(spriteBatch);
             fond_ecran_middle.Draw(spriteBatch);
             fond_ecran_front.Draw(spriteBatch);
-            #endregion
-            #region Draw de l'HUD
-            spriteBatch.Draw(T_HUD, new Vector2(0, 380), Color.White);
-            if(listeVaisseau.Count != 0)
-                HUD.Drawbar(spriteBatch, barre_vie, listeVaisseau[0].vie, listeVaisseau[0].vieMax);
-            spriteBatch.Draw(T_HUD_bars, new Vector2(380, 630), Color.White);
-            if (mode != GAME_MODE.EXTREME)
-                spriteBatch.DrawString(_HUDfont, Convert.ToString(score), new Vector2(95, 628), new Color(30, 225, 30));
             #endregion
             #region Draw mode extreme
             if (mode == GAME_MODE.EXTREME)
@@ -979,6 +998,14 @@ namespace MenuSample.Scenes
                 }
             }
             
+            #endregion
+            #region Draw de l'HUD
+            spriteBatch.Draw(T_HUD, new Vector2(0, 380), Color.White);
+            if (listeVaisseau.Count != 0)
+                HUD.Drawbar(spriteBatch, barre_vie, listeVaisseau[0].vie, listeVaisseau[0].vieMax);
+            spriteBatch.Draw(T_HUD_bars, new Vector2(380, 630), Color.White);
+            if (mode != GAME_MODE.EXTREME)
+                spriteBatch.DrawString(_HUDfont, Convert.ToString(score), new Vector2(95, 628), new Color(30, 225, 30));
             #endregion
             #region Draw du menu de pause
             if (TransitionPosition > 0 || _pauseAlpha > 0)

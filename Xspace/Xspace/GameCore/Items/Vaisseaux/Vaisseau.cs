@@ -14,7 +14,8 @@ namespace Xspace
     class Vaisseau : item
     {
         public float _vitesseVaisseau;
-        protected int _armure, _damageCollision, _armeActuelle, _vieMax, _energie, _energieMax;
+        protected int _armure, _damageCollision, _armeActuelle, _baseWeapon, _vieMax, _energie, _energieMax;
+        protected const int MAX_BASEWEAPON = 2;
         protected double _timingAttack;
         protected bool _ennemi;
         protected double _lastTir;
@@ -40,6 +41,7 @@ namespace Xspace
             _energie = energie;
             _energieMax = energieMax;
             stucked = Vector2.Zero;
+            _baseWeapon = 0;
         }
 
         public void applyBonus(string effect, int amount, int time)
@@ -51,6 +53,9 @@ namespace Xspace
                     break;
                 case "weapon":
                     this.changeWeapon(amount);
+                    break;
+                case "baseWeapon":
+                    this.changeBaseWeapon(_baseWeapon + 1);
                     break;
                 default:
                     break;
@@ -154,6 +159,11 @@ namespace Xspace
             get { return _score; }
         }
 
+        public int baseWeapon
+        {
+            get { return _baseWeapon; }
+        }
+
         public double lastDamage
         {
             set { this._lastDamage = value; }
@@ -162,6 +172,12 @@ namespace Xspace
         public void changeWeapon(int nouveau)
         {
             this._armeActuelle = nouveau;
+        }
+
+        public void changeBaseWeapon(int nouveau)
+        {
+            if(nouveau <= MAX_BASEWEAPON)
+                this._baseWeapon = nouveau;
         }
 
         public void Update(float fps_fix)

@@ -35,7 +35,6 @@ namespace Xspace
         {
             _textureBonus = texture;
             _vitesseBonus = vitesseVaisseau;
-            //_deplacement = Vector2.Normalize(new Vector2(5, 0));
             _existe = false;
             _score = score;
             bonus = new getBonus(effect, amount, time);
