@@ -42,5 +42,11 @@ namespace Xspace
             get { return _rectangle; }
             set { _rectangle = value; }
         }
+
+        public Vector2 pos
+        {
+            get { return _pos; }
+            set { this._pos = value; }
+        }
     }
 }

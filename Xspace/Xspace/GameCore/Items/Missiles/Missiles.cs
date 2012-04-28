@@ -35,11 +35,6 @@ namespace Xspace
             _sprite = texture;
         }
 
-        public Vector2 pos
-        {
-            get { return _pos; }
-        }
-
         public int degats
         {
             get { return _degats; }

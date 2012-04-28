@@ -122,6 +122,7 @@
     <Compile Include="GameCore\Items\Bonus\Bonus_Vie.cs" />
     <Compile Include="GameCore\Boss\Boss.cs" />
     <Compile Include="GameCore\Boss\Boss1.cs" />
+    <Compile Include="GameCore\Items\Missiles\Joueur\Laser_joueur.cs" />
     <Compile Include="GameCore\Items\Missiles\Joueur\Missile1_DiagoHaut_Joueur.cs" />
     <Compile Include="GameCore\Items\Missiles\Joueur\Missile1_DiagoBas_Joueur.cs" />
     <Compile Include="gestionLevels.cs" />
@@ -179,7 +180,7 @@
     <Compile Include="GameCore\Items\Vaisseaux\Blasterer.cs" />
     <Compile Include="GameCore\Items\Vaisseaux\Drone.cs" />
     <Compile Include="GameCore\Items\Vaisseaux\Kamikaze.cs" />
-    <Compile Include="GameCore\Items\Vaisseaux\Rapid Shooter.cs" />
+    <Compile Include="GameCore\Items\Vaisseaux\Drone_DoubleShooter.cs" />
     <Compile Include="GameCore\Items\Vaisseaux\Vaisseau.cs" />
     <Compile Include="GameCore\Items\Vaisseaux\Vaisseau_joueur.cs" />
     <Compile Include="Xspace.cs" />

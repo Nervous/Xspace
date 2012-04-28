@@ -17,12 +17,13 @@ namespace Xspace
         protected int _armure, _damageCollision, _armeActuelle, _baseWeapon, _vieMax, _energie, _energieMax;
         protected const int MAX_BASEWEAPON = 2;
         protected double _timingAttack;
-        protected bool _ennemi;
+        protected bool _ennemi,_laser;
         protected double _lastTir;
         protected double _lastDamage;
         protected Vector2 stucked;
+        protected Laser_joueur pLaser;
 
-        public Vaisseau(Texture2D texture, int vie, int vieMax, int energie, int energieMax, int armure, int damageCollision, float vitesseVaisseau, Vector2 startPosition, Vector2 deplacement, bool ennemi, double timingAttack, int score, int arme)
+        public Vaisseau(Texture2D texture, int vie, int vieMax, int energieMax, int armure, int damageCollision, float vitesseVaisseau, Vector2 startPosition, Vector2 deplacement, bool ennemi, double timingAttack, int score, int arme)
             :base(texture, startPosition, deplacement, vie, score)
         {
             _sprite = texture;
@@ -38,10 +39,11 @@ namespace Xspace
             _armeActuelle = arme;
             _score = score;
             _lastDamage = -500;
-            _energie = energie;
+            _energie = energieMax;
             _energieMax = energieMax;
             stucked = Vector2.Zero;
             _baseWeapon = 0;
+            _laser = false;
         }
 
         public void applyBonus(string effect, int amount, int time)
@@ -113,11 +115,6 @@ namespace Xspace
             set {this._lastTir = value;}
         }
 
-        public Vector2 pos
-        {
-            get { return _pos; }
-        }
-
         public Texture2D sprite
         {
             get { return _sprite; }
@@ -132,8 +129,11 @@ namespace Xspace
 
         public bool useEnergy(int amount)
         {
-            this._energie -= amount;
-            return (this._energie <= 0);
+            if (this._energie - amount < 0)
+                this._energie = 0;
+            else
+                this._energie -= amount;
+                return (this._energie <= 0);
         }
 
         public void heal(int amount)
@@ -169,6 +169,28 @@ namespace Xspace
             set { this._lastDamage = value; }
         }
 
+        public bool laser
+        {
+            get { return _laser; }
+        }
+
+        public void disableLaser()
+        {
+            this._laser = false;
+            pLaser = null;
+        }
+
+        public Laser_joueur getLaser()
+        {
+            return pLaser;
+        }
+
+        public void enableLaser(Laser_joueur l)
+        {
+            this._laser = true;
+            pLaser = l;
+        }
+
         public void changeWeapon(int nouveau)
         {
             this._armeActuelle = nouveau;
@@ -190,6 +212,9 @@ namespace Xspace
         {
             const float K_GRAVITE = 1000;
             const float K_ANGLE_DELTA = 30;
+
+            if (_energie < EnergieMax)
+                _energie++;
 
             foreach(Obstacles obstacle in obstacles)
             {

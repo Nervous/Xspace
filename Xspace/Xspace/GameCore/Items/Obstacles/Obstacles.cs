@@ -27,11 +27,6 @@ namespace Xspace
             lastDeg = 0;
         }
 
-        public Vector2 pos
-        {
-            get { return _pos; }
-        }
-
         public string Categorie
         {
             get { return _categorie; }

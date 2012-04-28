@@ -11,11 +11,10 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Xspace
 {
-    class Vaisseau_joueur : Vaisseau
+    class RapidShooter : Vaisseau
     {
-        public Vaisseau_joueur(Texture2D sprite)
-            : base(sprite, 300, 300, 1000, 100, -1, 0.70f, new Vector2(15, 225), Vector2.Normalize(new Vector2(1, 1)), false, 0, 0, 0)
+        public RapidShooter(Texture2D sprite, Vector2 position)
+            : base(sprite, 40, 0, 0, 0, 30, 0.30f, position, Vector2.Normalize(new Vector2(1, 0)), true, 1300, 100, 1)
         { }
     }
-
 }

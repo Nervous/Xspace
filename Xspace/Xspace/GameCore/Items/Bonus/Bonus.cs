@@ -40,11 +40,6 @@ namespace Xspace
             bonus = new getBonus(effect, amount, time);
         }
 
-        public Vector2 pos
-        {
-            get { return _pos; }
-        }
-
         public string effect
         {
             get { return bonus._effect; }

@@ -11,10 +11,10 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Xspace
 {
-    class RapidShooter : Vaisseau
+    class Laser_joueur : Missiles
     {
-        public RapidShooter(Texture2D sprite, Vector2 position)
-            : base(sprite, 40, 0, 0, 0, 0, 30, 0.30f, position, Vector2.Normalize(new Vector2(1, 0)), true, 1300, 100, 1)
+        public Laser_joueur(Texture2D texture, Vector2 position, Vaisseau owner, Boss ownerB)
+            : base(texture, false, 10, position, new Vector2(0, 0), 0.00f, owner, ownerB)
         { }
     }
 }

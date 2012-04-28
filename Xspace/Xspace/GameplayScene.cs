@@ -53,7 +53,7 @@ namespace MenuSample.Scenes
         private List<doneParticles> partManage;
         private ScrollingBackground fond_ecran, fond_ecran_front, fond_ecran_middle;
         public SpriteBatch spriteBatch;
-        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Vaisseau_Kamikaze, T_Missile_Joueur_1, T_Missile_Joueur_2, T_Missile_Joueur_3, T_Missile_Drone, T_Bonus_Vie, T_Bonus_Weapon1, T_Obstacles_Hole, barre_vie, T_HUD, T_HUD_boss, T_HUD_bars, T_HUD_bar_boss, T_Divers_Levelcomplete, T_Divers_Levelfail, T_boss1, T_Vaisseau_Energizer, T_Vaisseau_Doubleshooter, T_Missile_Energie;
+        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Vaisseau_Kamikaze, T_Missile_Joueur_1, T_Missile_Joueur_2, T_Missile_Joueur_3, T_Laser_Joueur, T_Missile_Drone, T_Bonus_Vie, T_Bonus_Weapon1, T_Obstacles_Hole, barre_vie, T_HUD, T_HUD_boss, T_HUD_bars, T_HUD_bar_boss, T_Divers_Levelcomplete, T_Divers_Levelfail, T_boss1, T_Vaisseau_Energizer, T_Vaisseau_Doubleshooter, T_Missile_Energie;
         private List<Texture2D> listeTextureVaisseauxEnnemis, listeTextureBonus, listeTextureObstacles, listeTextureBoss;
         private SoundEffect musique_tir, musique_bossExplosion;
         private KeyboardState keyboardState;
@@ -271,6 +271,7 @@ namespace MenuSample.Scenes
             T_Missile_Joueur_2 = _content.Load<Texture2D>("Sprites\\Missiles\\Joueur\\1_DiagoHaut");
             T_Missile_Joueur_3 = _content.Load<Texture2D>("Sprites\\Missiles\\Joueur\\1_DiagoBas");
             T_Missile_Drone = _content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\missile_new1");
+            T_Laser_Joueur = _content.Load<Texture2D>("Sprites\\Missiles\\Joueur\\Laser");
             T_Missile_Energie = _content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\missile_boule1");
             #endregion
             #region Chargement textures bonus
@@ -339,6 +340,8 @@ namespace MenuSample.Scenes
         {
             List<doneParticles> listeParticules = new List<doneParticles>();
             int randomed = 0;
+            if (dead)
+                return null;
             #region Collision joueur <=> boss
             if (aBoss != null && !dead && IntersectPixels(listeVaisseau[0].rectangle, listeVaisseau[0].sprite, aBoss.rectangle, aBoss.sprite))
             {
@@ -395,17 +398,18 @@ namespace MenuSample.Scenes
                                 
                         if ((vaisseau.ennemi && !missile.ennemi) || (!vaisseau.ennemi && missile.ennemi))
                         {
-                            listeMissileToRemove.Add(missile);
+                            if(!(missile is Laser_joueur))
+                                listeMissileToRemove.Add(missile);
 
                             if (vaisseau.hurt(missile.degats, time)) // Mort du vaisseau
                             {
                                 vaisseau.kill();
                                 if((!end)&&(!endDead))
-                                    score = score + vaisseau.score;
+                                    score += vaisseau.score;
 
                                 randomed = 0;
                                 randomed = rand.Next(0, 1000);
-                                if (randomed > 990)       // 1% - Bonus upgrade arme de base
+                                if (randomed > 995)       // 0.5% - Bonus upgrade arme de base
                                     listeBonusToAdd.Add(new Bonus_BaseWeapon(T_Bonus_Weapon1, vaisseau.pos));
                                 else if (randomed > 950) // 5%    - Bonus vie
                                     listeBonusToAdd.Add(new Bonus_Vie(T_Bonus_Vie, vaisseau.pos));
@@ -420,8 +424,11 @@ namespace MenuSample.Scenes
                     if (aBoss != null && missile.isOwner(null, aBoss) && IntersectPixels(missile.rectangle, missile.sprite, aBoss.rectangle, aBoss.sprite))
                     {
 
-                        listeMissileToRemove.Add(missile);
-                        missile.kill();
+                        if (!(missile is Laser_joueur))
+                        {
+                            missile.kill();
+                            listeMissileToRemove.Add(missile);
+                        }
                         if (aBoss.Hurt(missile.degats))
                         {
                             aBoss.Kill();
@@ -430,6 +437,17 @@ namespace MenuSample.Scenes
                         }
                     }
                         #endregion
+                    #region Collision laser => missile
+                    if (listeVaisseau[0].laser)
+                    {
+                        if (!(missile is Laser_joueur) && missile.ennemi && IntersectPixels(missile.rectangle, missile.sprite, listeVaisseau[0].getLaser().rectangle, listeVaisseau[0].getLaser().sprite))
+                        {
+                            listeMissileToRemove.Add(missile);
+                            missile.kill();
+                            score += 5;
+                        }
+                    }
+                    #endregion
                 }
                 foreach (Obstacles obstacle in listeObstacles)
                 {
@@ -539,7 +557,7 @@ namespace MenuSample.Scenes
             }
             else if(keyboardState.IsKeyUp(Keys.F1))
                 lastKeyDown = true;
-			
+
             if ((keyboardState.IsKeyDown(Keys.Space) && (listeVaisseau.Count != 0)))
             {
                 switch (listeVaisseau[0].armeActuelle)
@@ -586,21 +604,56 @@ namespace MenuSample.Scenes
                                 break;
                         }
                         break;
+                    case 1:
+                        if (!listeVaisseau[0].laser)
+                        {
+                            if (!listeVaisseau[0].useEnergy(25))
+                            {
+                                Vector2 spawn = new Vector2(listeVaisseau[0].pos.X + listeVaisseau[0].sprite.Width, listeVaisseau[0].pos.Y + listeVaisseau[0].sprite.Height / 2 - 35);
+                                Laser_joueur las = new Laser_joueur(T_Laser_Joueur, spawn, listeVaisseau[0], null);
+                                listeMissile.Add(las);
+                                listeVaisseau[0].enableLaser(las);
+                            }
+                        }
+                        else
+                        {
+                            listeVaisseau[0].getLaser().pos = new Vector2(listeVaisseau[0].pos.X + listeVaisseau[0].sprite.Width, listeVaisseau[0].pos.Y + listeVaisseau[0].sprite.Height / 2 - 35);
+                            if (listeVaisseau[0].useEnergy(25)) // Si plus d'énergie
+                            {
+                                listeMissileToRemove.Add(listeVaisseau[0].getLaser());
+                                listeVaisseau[0].disableLaser();
+                            }
+                        }
+                        break;
                     default:
                         break;
                 }
             }
+            else if ((keyboardState.IsKeyUp(Keys.Space) && (listeVaisseau.Count != 0)))
+            {
+                if (listeVaisseau[0].laser)
+                {
+                    listeMissileToRemove.Add(listeVaisseau[0].getLaser());
+                    listeVaisseau[0].disableLaser();
+                }
+            }
 
-            /* SWITCH ARMES
             if ((keyboardState.IsKeyDown(Keys.D1) && (listeVaisseau.Count != 0)))
+            {
+                if (listeVaisseau[0].laser)
+                {
+                    listeMissileToRemove.Add(listeVaisseau[0].getLaser());
+                    listeVaisseau[0].disableLaser();
+                }
                 listeVaisseau[0].changeWeapon(0);
+            }
             else if ((keyboardState.IsKeyDown(Keys.D2) && (listeVaisseau.Count != 0)))
                 listeVaisseau[0].changeWeapon(1);
-            else if ((keyboardState.IsKeyDown(Keys.D3) && (listeVaisseau.Count != 0)))
+            /*else if ((keyboardState.IsKeyDown(Keys.D3) && (listeVaisseau.Count != 0)))
                 listeVaisseau[0].changeWeapon(2);
              else if ((keyboardState.IsKeyDown(Keys.D4) && (listeVaisseau.Count != 0)))
-                listeVaisseau[0].changeWeapon(3);
-             */
+                listeVaisseau[0].changeWeapon(3);*/
+             
                 
             #endregion
             #region Mode extreme
@@ -638,7 +691,7 @@ namespace MenuSample.Scenes
                     missile.Update(fps_fix);
                 else if (missile.pos.X > 0 && (missile.pos.Y > SCREEN_MAXTOP && missile.pos.Y < SCREEN_MAXBOT) && missile.ennemi)
                     missile.Update(fps_fix);
-                else
+                else if(!(missile is Laser_joueur))
                     listeMissileToRemove.Add(missile);
             }
             foreach (Missiles missile in listeMissileToRemove)
@@ -894,16 +947,16 @@ namespace MenuSample.Scenes
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
             #endregion
-            #region Draw des vaisseaux
-            foreach (Vaisseau vaisseau in listeVaisseau)
-            {
-                vaisseau.Draw(spriteBatch, time);
-            }
-            #endregion
             #region Draw des missiles
             foreach (Missiles sMissile in listeMissile)
             {
                 sMissile.Draw(spriteBatch);
+            }
+            #endregion
+            #region Draw des vaisseaux
+            foreach (Vaisseau vaisseau in listeVaisseau)
+            {
+                vaisseau.Draw(spriteBatch, time);
             }
             #endregion
             #region Draw des bonus
@@ -1006,6 +1059,7 @@ namespace MenuSample.Scenes
             spriteBatch.Draw(T_HUD_bars, new Vector2(380, 630), Color.White);
             if (mode != GAME_MODE.EXTREME)
                 spriteBatch.DrawString(_HUDfont, Convert.ToString(score), new Vector2(95, 628), new Color(30, 225, 30));
+            spriteBatch.DrawString(_HUDfont, "Energie : " + Convert.ToString(listeVaisseau[0].Energie), new Vector2(300, 100), new Color(30, 225, 30));
             #endregion
             #region Draw du menu de pause
             if (TransitionPosition > 0 || _pauseAlpha > 0)

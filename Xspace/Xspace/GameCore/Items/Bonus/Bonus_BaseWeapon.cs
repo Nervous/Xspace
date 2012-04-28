@@ -14,7 +14,7 @@ namespace Xspace
     class Bonus_BaseWeapon : Bonus
     {
         public Bonus_BaseWeapon(Texture2D texture, Vector2 position)
-            : base(texture, 0.30f, position, Vector2.Normalize(new Vector2(1, 0)), "baseWeapon", 1, -1, 10)
+            : base(texture, 0.30f, position, Vector2.Normalize(new Vector2(1, 0)), "baseWeapon", 1, -1, 500)
         { }
     }
 }
