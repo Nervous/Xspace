@@ -421,7 +421,7 @@ namespace MenuSample.Scenes
                 foreach (Missiles missile in listeMissile)
                 {
                     #region Collision missile => vaisseau
-                    if (IntersectPixels(missile.rectangle, missile.sprite, vaisseau.rectangle, vaisseau.sprite))
+                    if ((!(missile is Laser_joueur) && IntersectPixels(missile.rectangle, missile.sprite, vaisseau.rectangle, vaisseau.sprite)) || missile.rectangle.Intersects(vaisseau.rectangle))
                     {  // Collision missile => Vaisseau trouvée
                                 
                         if ((vaisseau.ennemi && !missile.ennemi) || (!vaisseau.ennemi && missile.ennemi))
