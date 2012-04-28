@@ -120,24 +120,29 @@ namespace MenuSample.Scenes
             int right = Math.Min(rectangleA.Right, rectangleB.Right);
 
             // Check every point within the intersection bounds
-            for (int y = top; y < bottom; y++)
+            if (rectangleA.Intersects(rectangleB))
             {
-                for (int x = left; x < right; x++)
+                for (int y = top; y < bottom; y++)
                 {
-                    // Get the color of both pixels at this point
-                    Color colorA = dataA[(x - rectangleA.Left) +
-                                         (y - rectangleA.Top) * rectangleA.Width];
-                    Color colorB = dataB[(x - rectangleB.Left) +
-                                         (y - rectangleB.Top) * rectangleB.Width];
-
-                    // If both pixels are not completely transparent,
-                    if (colorA.A != 0 && colorB.A != 0)
+                    for (int x = left; x < right; x++)
                     {
-                        // then an intersection has been found
-                        return true;
+                        // Get the color of both pixels at this point
+                        Color colorA = dataA[(x - rectangleA.Left) +
+                                             (y - rectangleA.Top) * rectangleA.Width];
+                        Color colorB = dataB[(x - rectangleB.Left) +
+                                             (y - rectangleB.Top) * rectangleB.Width];
+
+                        // If both pixels are not completely transparent,
+                        if (colorA.A != 0 && colorB.A != 0)
+                        {
+                            // then an intersection has been found
+                            return true;
+                        }
                     }
                 }
             }
+            else
+                return false;
 
             // No intersection found
             return false;
@@ -342,6 +347,29 @@ namespace MenuSample.Scenes
             int randomed = 0;
             if (dead)
                 return null;
+            #region Collision missile => boss
+            if (aBoss != null)
+            {
+                foreach (Missiles missile in listeMissile)
+                {
+                    if (missile.isOwner(null, aBoss) && IntersectPixels(missile.rectangle, missile.sprite, aBoss.rectangle, aBoss.sprite))
+                    {
+
+                        if (!(missile is Laser_joueur))
+                        {
+                            missile.kill();
+                            listeMissileToRemove.Add(missile);
+                        }
+                        if (aBoss.Hurt(missile.degats))
+                        {
+                            aBoss.Kill();
+                            if ((!end) && (!endDead))
+                                score = score + aBoss.Score;
+                        }
+                    }
+                }
+            }
+            #endregion
             #region Collision joueur <=> boss
             if (aBoss != null && !dead && IntersectPixels(listeVaisseau[0].rectangle, listeVaisseau[0].sprite, aBoss.rectangle, aBoss.sprite))
             {
@@ -362,7 +390,7 @@ namespace MenuSample.Scenes
                 #region Collision joueur => bonus
                 foreach (Bonus bonus in listeBonus)
                 {
-                    if (!dead && IntersectPixels(listeVaisseau[0].rectangle, listeVaisseau[0].sprite, bonus.rectangle, bonus.sprite))
+                    if (IntersectPixels(listeVaisseau[0].rectangle, listeVaisseau[0].sprite, bonus.rectangle, bonus.sprite))
                     {
                         if (!bonus.existe)
                         {
@@ -375,7 +403,7 @@ namespace MenuSample.Scenes
                 }
                 #endregion
                 #region Collision joueur <=> vaisseau
-                if (!dead && vaisseau != listeVaisseau[0] && IntersectPixels(listeVaisseau[0].rectangle, listeVaisseau[0].sprite, vaisseau.rectangle, vaisseau.sprite))
+                if (vaisseau != listeVaisseau[0] && IntersectPixels(listeVaisseau[0].rectangle, listeVaisseau[0].sprite, vaisseau.rectangle, vaisseau.sprite))
                 {
                     // Collision entre vaisseau joueur & ennemi trouvée
                     vaisseau.kill();
@@ -393,7 +421,7 @@ namespace MenuSample.Scenes
                 foreach (Missiles missile in listeMissile)
                 {
                     #region Collision missile => vaisseau
-                    if (!dead && IntersectPixels(missile.rectangle, missile.sprite, vaisseau.rectangle, vaisseau.sprite))
+                    if (IntersectPixels(missile.rectangle, missile.sprite, vaisseau.rectangle, vaisseau.sprite))
                     {  // Collision missile => Vaisseau trouvée
                                 
                         if ((vaisseau.ennemi && !missile.ennemi) || (!vaisseau.ennemi && missile.ennemi))
@@ -420,27 +448,10 @@ namespace MenuSample.Scenes
                         }
                     }
                     #endregion
-                    #region Collision missile => boss
-                    if (aBoss != null && missile.isOwner(null, aBoss) && IntersectPixels(missile.rectangle, missile.sprite, aBoss.rectangle, aBoss.sprite))
-                    {
-
-                        if (!(missile is Laser_joueur))
-                        {
-                            missile.kill();
-                            listeMissileToRemove.Add(missile);
-                        }
-                        if (aBoss.Hurt(missile.degats))
-                        {
-                            aBoss.Kill();
-                            if ((!end) && (!endDead))
-                                score = score + aBoss.Score;
-                        }
-                    }
-                        #endregion
                     #region Collision laser => missile
                     if (listeVaisseau[0].laser)
                     {
-                        if (!(missile is Laser_joueur) && missile.ennemi && IntersectPixels(missile.rectangle, missile.sprite, listeVaisseau[0].getLaser().rectangle, listeVaisseau[0].getLaser().sprite))
+                        if (!(missile is Laser_joueur) && missile.ennemi &&missile.rectangle.Intersects(listeVaisseau[0].getLaser().rectangle))
                         {
                             listeMissileToRemove.Add(missile);
                             missile.kill();
@@ -449,18 +460,14 @@ namespace MenuSample.Scenes
                     }
                     #endregion
                 }
-                foreach (Obstacles obstacle in listeObstacles)
+                /*foreach (Obstacles obstacle in listeObstacles)
                 {
                     #region Collision joueur <=> Obstacle
-                    if (!dead && IntersectPixels(listeVaisseau[0].rectangle, listeVaisseau[0].sprite, obstacle.rectangle, obstacle.sprite))
+                    if (IntersectPixels(listeVaisseau[0].rectangle, listeVaisseau[0].sprite, obstacle.rectangle, obstacle.sprite))
                     {
-                        if (obstacle.Categorie == "hole")
-                        {
-
-                        }
                     }
                     #endregion
-                }
+                }*/
             }
             return listeParticules;
         }
@@ -804,7 +811,7 @@ namespace MenuSample.Scenes
                 particleEffectMoteur.Trigger(positionVaisseau);
             }
             particleEffectMoteur.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
-            #endregion
+            #endregion*/
             #region Update spectre & historique
             if (lastTimeSpectre + 25 < time)
             {
