@@ -284,6 +284,9 @@ namespace MenuSample.Scenes
             #region Chargement textures obstacles
             T_Obstacles_Hole = _content.Load<Texture2D>("Sprites\\Obstacles\\Hole");
             #endregion
+            #region Chargement textures boss
+            T_boss1 = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Boss\\boss1");
+            #endregion
             #region Chargement vaisseaux
             listeVaisseau = new List<Vaisseau>();
             listeVaisseauToRemove = new List<Vaisseau>();
@@ -302,9 +305,6 @@ namespace MenuSample.Scenes
             listeObstacles = new List<Obstacles>();
             listeObstaclesToRemove = new List<Obstacles>();
             #endregion
-            #region Chargement textures boss
-            T_boss1 = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Boss\\boss1");
-            #endregion
             #region Chargement du level
             listeTextureVaisseauxEnnemis = new List<Texture2D>();
             listeTextureVaisseauxEnnemis.Add(T_Vaisseau_Drone);
@@ -321,7 +321,7 @@ namespace MenuSample.Scenes
 
             listeTextureBoss = new List<Texture2D>();
             listeTextureBoss.Add(T_boss1);
-            listeTextureBoss.Add(T_boss2);
+            listeTextureBoss.Add(T_boss1);
 
             thisLevel = new gestionLevels(_level, listeTextureVaisseauxEnnemis, listeTextureBonus, listeTextureObstacles, listeTextureBoss);
             infLevel = new List<gestionLevels>();
@@ -784,12 +784,15 @@ namespace MenuSample.Scenes
                 listeObstacles.Remove(obstacle);
             #endregion
             #region Collisions & Update des particules
-            foreach (doneParticles particle in partManage)
+            partManage = collisions(listeVaisseau, listeMissile, listeBonus, listeBonusToAdd, listeObstacles, boss1, fps_fix, particleEffect, gameTime, listeVaisseau.Count == 0, randomizer);
+            if (partManage != null)
             {
-                if (particle.startingParticle != Vector2.Zero)
-                    particleEffect.Trigger(particle.startingParticle);
+                foreach (doneParticles particle in partManage)
+                {
+                    if (particle.startingParticle != Vector2.Zero)
+                        particleEffect.Trigger(particle.startingParticle);
+                }
             }
-            partManage = collisions(listeVaisseau, listeMissile, listeBonus, listeBonusToAdd, listeObstacles, boss1, fps_fix, particleEffect, gameTime, listeVaisseau.Count==0, randomizer);
             foreach (Bonus b in listeBonusToAdd)
             {
                 listeBonus.Add(b);

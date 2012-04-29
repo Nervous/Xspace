@@ -119,7 +119,6 @@ namespace Xspace
             }
             else // Initialisation du boss 
             {
-
                 do
                     PositionX -= addX * 0.1f;
                 while (Position.X - _sprite.Width / 2 - 10 < 850);
