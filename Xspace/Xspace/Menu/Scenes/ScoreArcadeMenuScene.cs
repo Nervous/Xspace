@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework.Media;
 using System.Collections.Generic;
 using System.Linq;
 
+
 namespace MenuSample.Scenes
 {
     public class ScoreArcadeMenuScene : AbstractMenuScene
@@ -45,7 +46,6 @@ namespace MenuSample.Scenes
             var back = new MenuItem("Retour");
             var Nv1 = new MenuItem("Nv.1");
             sr_arcade = new StreamReader(path_arcade);
-            sr_arcade_level = new StreamReader(path_arcade_level);
             position_board = new Vector2();
             MenuItems.Add(back);
 
@@ -80,14 +80,27 @@ namespace MenuSample.Scenes
                 spriteBatch.Draw(_score_surbrillance2, position_Nv, Color.White);
             else
                 spriteBatch.Draw(_score_surbrillance, position_Nv, Color.White);
-
+            
             for (int lvl = 0; lvl < 15; lvl++) 
             {
                 path_arcade_level_best = "Scores\\Arcade\\lvl" + (lvl+1) + ".score";
                 sr_arcade_level = new StreamReader(path_arcade_level_best);
                 score_arcade_level_best = System.IO.File.ReadAllLines(@path_arcade_level_best);
+                sr_arcade_level.Close();
+                if (score_arcade_level_best.Length == 0)
+                {
+                    FileStream fs = new FileStream(path_arcade_level_best, FileMode.Open);
+                    StreamWriter sw = new StreamWriter(fs);
+                    sw.WriteLine("-");
+                    sw.Write("0");
+                    sw.Close();
+                    fs.Close();
+                }
+                StreamReader sr_arcade_level_back = new StreamReader(path_arcade_level_best);
+                string[] score_arcade_level_best_back = System.IO.File.ReadAllLines(@path_arcade_level_best);
+                sr_arcade_level_back.Close();
                 spriteBatch.DrawString(_gamefont, "Nv." + (lvl + 1), new Vector2(130 + 356 * (lvl / 5), (240 + (lvl % 5) * 55)), Color.LightGreen, 0, new Vector2(0, 0), 0.7f, SpriteEffects.None, 0);
-                spriteBatch.DrawString(_gamefont, score_arcade_level_best[1], new Vector2(220 + 356 * (lvl / 5), (240 + (lvl % 5) * 55)), Color.LightGreen, 0, new Vector2(0, 0), 0.7f, SpriteEffects.None, 0); // TODO
+                spriteBatch.DrawString(_gamefont, score_arcade_level_best_back[1], new Vector2(220 + 356 * (lvl / 5), (240 + (lvl % 5) * 55)), Color.LightGreen, 0, new Vector2(0, 0), 0.7f, SpriteEffects.None, 0); // TODO
             }
             
             if ((level_selected)&&(!backSelected))
@@ -95,11 +108,37 @@ namespace MenuSample.Scenes
                 spriteBatch.DrawString(_gamefont, score_arcade_level[0], new Vector2(220 + 373 * ((i) / 5), (240 + ((i) % 5) * 47)), Color.LightGreen, 0, new Vector2(0, 0), 0.7f, SpriteEffects.None, 0);
 
                 score_level = System.IO.File.ReadAllLines(@path_level);
+               
+                if (score_level.Length < 10)
+                {
+                    
+                    FileStream fs = new FileStream(@path_level, FileMode.Open);
+                    StreamReader sr = new StreamReader(fs);
+                    sr.ReadToEnd();
+                    StreamWriter sw = new StreamWriter(fs);
+                    sw.Write("\n");
+                    for (int k = score_level.Length; k < 10; k++)
+                    {
+                        if (k % 2 == 0)
+                            sw.WriteLine("-");
+                        else
+                            sw.WriteLine("0");
+                    }
+                    sw.Close();
+                    sr.Close();
+                    fs.Close();
+                }
                 spriteBatch.Draw(_score_lvl, position_board, Color.White);
                 position_Nv.X = 250;
                 position_Nv.Y = 253;
-                for (int pos = 0; pos < 10; pos++) // score for each levels (5)
-                    spriteBatch.DrawString(_gamefont, score_level[pos], new Vector2(452 + 151*((pos) % 2), 240 + (pos / 2)*(55)), Color.LightGreen, 0, new Vector2(0, 0), 0.7f, SpriteEffects.None, 0);
+                if (score_level.Length < 10)
+                {
+                    for (int pos = 0; pos < score_level.Length; pos++) // score for each levels (5)
+                        spriteBatch.DrawString(_gamefont, score_level[pos], new Vector2(452 + 151 * ((pos) % 2), 240 + (pos / 2) * (55)), Color.LightGreen, 0, new Vector2(0, 0), 0.7f, SpriteEffects.None, 0);
+                }
+                else
+                    for (int pos = 0; pos < 10; pos++) // score for each levels (5)
+                        spriteBatch.DrawString(_gamefont, score_level[pos], new Vector2(452 + 151 * ((pos) % 2), 240 + (pos / 2) * (55)), Color.LightGreen, 0, new Vector2(0, 0), 0.7f, SpriteEffects.None, 0);
             } 
             spriteBatch.End();
             sr_arcade.Close();

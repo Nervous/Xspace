@@ -11,10 +11,10 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Xspace
 {
-    class Missile1_boss : Missiles
-    {
-        public Missile1_boss(Texture2D texture, Vector2 position, Vaisseau owner, Boss ownerB)
-            : base(texture, true, 50, position, new Vector2(-1, 0), 1.0f, owner, ownerB)
-        { }
-    }
+        class Laser_boss : Missiles
+        {
+            public Laser_boss(Texture2D texture, Vector2 position, Vaisseau owner, Boss ownerB)
+                : base(texture, true, 10, position, new Vector2(0, 0), 0.00f, owner, ownerB)
+            { }
+        }
 }

@@ -117,11 +117,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameCore\afficherInformation.cs" />
+    <Compile Include="GameCore\Boss\Boss2.cs" />
     <Compile Include="GameCore\Items\Bonus\Bonus.cs" />
     <Compile Include="GameCore\Items\Bonus\Bonus_BaseWeapon.cs" />
     <Compile Include="GameCore\Items\Bonus\Bonus_Vie.cs" />
     <Compile Include="GameCore\Boss\Boss.cs" />
     <Compile Include="GameCore\Boss\Boss1.cs" />
+    <Compile Include="GameCore\Items\Missiles\Boss\Laser_boss.cs" />
+    <Compile Include="GameCore\Items\Missiles\Boss\Missile1_DiagoBas_Boss.cs" />
+    <Compile Include="GameCore\Items\Missiles\Boss\Missile1_DiagoHaut_Boss.cs" />
     <Compile Include="GameCore\Items\Missiles\Joueur\Laser_joueur.cs" />
     <Compile Include="GameCore\Items\Missiles\Joueur\Missile1_DiagoHaut_Joueur.cs" />
     <Compile Include="GameCore\Items\Missiles\Joueur\Missile1_DiagoBas_Joueur.cs" />
