@@ -46,7 +46,6 @@ namespace MenuSample.Scenes
             var back = new MenuItem("Retour");
             var Nv1 = new MenuItem("Nv.1");
             sr_arcade = new StreamReader(path_arcade);
-            sr_arcade_level = new StreamReader(path_arcade_level);
             position_board = new Vector2();
             MenuItems.Add(back);
 
@@ -81,7 +80,7 @@ namespace MenuSample.Scenes
                 spriteBatch.Draw(_score_surbrillance2, position_Nv, Color.White);
             else
                 spriteBatch.Draw(_score_surbrillance, position_Nv, Color.White);
-
+            
             for (int lvl = 0; lvl < 15; lvl++) 
             {
                 path_arcade_level_best = "Scores\\Arcade\\lvl" + (lvl+1) + ".score";
@@ -93,7 +92,7 @@ namespace MenuSample.Scenes
                     FileStream fs = new FileStream(path_arcade_level_best, FileMode.Open);
                     StreamWriter sw = new StreamWriter(fs);
                     sw.WriteLine("-");
-                    sw.WriteLine("0");
+                    sw.Write("0");
                     sw.Close();
                     fs.Close();
                 }
