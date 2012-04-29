@@ -13,20 +13,21 @@ namespace Xspace
 {
     abstract class Boss : item
     {
-        protected int _vieMax, _armeActuelle, _phase, _lastVie;
+        protected int _vieMax, _armeActuelle, _phase, _lastVie, _number;
         protected float _vitesse;
         protected int[] _phaseArray;
         protected double _timingAttack, _lastTir;
         protected bool _invincible, _init;
         private Vector2 _position_bar;
-        public static int[] phaseArray1 = { 2000, 1200, 800 };
+        public static int[] phaseArray1 = { 2000, 1200, 800 }, phaseArray2 = { 2000, 1600, 800 };
         /* Phase list: Example: [100,60,20]: As soon as phase[0] < vie, second phase begin, then third phase when phase[1] (so at 20 of life) < vie, etc..
          * So, you should ALWAYS have phase[0] >= vieMax        
          WARNING: Only three phases maximum are supported right now*/
 
-        public Boss(Texture2D texture, int vie, int vieMax, double timingAttack, int[] phaseArray, int vitesse, Vector2 position, int damageCollision, int score)
+        public Boss(Texture2D texture, int vie, int vieMax, double timingAttack, int[] phaseArray, int vitesse, Vector2 position, int damageCollision, int score, int number)
             :base(texture, position, new Vector2(0,0), vie, score)
         {
+            _number = number;
             _vie = vie;
             _vieMax = vieMax;
             _score = score;
@@ -97,7 +98,7 @@ namespace Xspace
 
         public bool Existe
         {
-            get { return _existe; }
+            get { return _existe;   }
         }
 
         public double TimingAttack
