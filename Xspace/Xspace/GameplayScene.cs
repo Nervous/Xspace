@@ -62,7 +62,7 @@ namespace MenuSample.Scenes
         private List<gestionLevels> infLevel, listeLevelToRemove;
         Renderer particleRenderer;
         ParticleEffect particleEffect, particleEffectMoteur, particleEffectBoss1, particleBossExplosion;
-        private Boss boss1, boss2;
+        private Boss boss1;
         List<Vaisseau> listeVaisseau, listeVaisseauToRemove;
         List<Missiles> listeMissile, listeMissileToRemove;
         List<Bonus> listeBonus, listeBonusToRemove, listeBonusToAdd;
@@ -304,7 +304,6 @@ namespace MenuSample.Scenes
             #endregion
             #region Chargement textures boss
             T_boss1 = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Boss\\boss1");
-            T_boss2 = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Boss\\boss2");
             #endregion
             #region Chargement du level
             listeTextureVaisseauxEnnemis = new List<Texture2D>();
@@ -515,7 +514,7 @@ namespace MenuSample.Scenes
             #region Gestion des évenements du level
             foreach (gestionLevels spawn in infLevel)
             {
-                if (boss1 == null && boss2 == null && spawn.isTime(time))
+                if (boss1 == null && spawn.isTime(time))
                 {
                     switch (spawn.Categorie)
                     {
@@ -528,11 +527,9 @@ namespace MenuSample.Scenes
                         case "obstacle":
                             listeObstacles.Add(spawn.Obstacle);
                             break;
-                        case "boss": // PROBLEME HERE
+                        case "boss":
                             boss1 = spawn.boss;
                             boss1.LoadContent(_content);
-                            //boss2 = spawn.boss;
-                            //boss2.LoadContent(_content);
                             aBossWasThere = true;
                             break;
                         case "EOL":
@@ -684,32 +681,10 @@ namespace MenuSample.Scenes
                 lastTimeEnergy -= bossTime;
                 bossTime = 0;
                 boss1 = null;
-                boss2 = null;
                 if (listeVaisseau.Count > 0)
                     listeVaisseau[0].lastDamage = time - 200;
             }
 
-            if (boss2 != null && boss2.Existe && !endDead)
-            {
-                boss2.Update(fps_fix, time, listeMissile);
-                particleEffectBoss1.Trigger(new Vector2(boss2.PositionX + boss2.Texture.Width + 5, boss2.PositionY + boss2.Texture.Height / 3 - 5));
-                particleEffectBoss1.Trigger(new Vector2(boss2.PositionX + boss2.Texture.Width + 5, boss2.PositionY + (boss2.Texture.Height * 2) / 3 + 10));
-            }
-            else if (boss2 != null && aBossWasThere)
-            {
-                musique_bossExplosion.Play(1.0f, 0f, 0f);
-                particleBossExplosion.Trigger(new Vector2(boss2.PositionX + boss2.Texture.Width / 2, boss2.PositionY + boss2.Texture.Height / 2));
-                aBossWasThere = false;
-                time -= bossTime;
-                lastTime -= bossTime;
-                lastTimeSpectre -= bossTime;
-                lastTimeEnergy -= bossTime;
-                bossTime = 0;
-                boss2 = null;
-                boss1 = null;
-                if (listeVaisseau.Count > 0)
-                    listeVaisseau[0].lastDamage = time - 200;
-            }
             particleBossExplosion.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
             particleEffectBoss1.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
             #endregion
