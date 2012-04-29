@@ -19,7 +19,7 @@ namespace Xspace
         protected double pausetime, pausetime2, lastpausetime;
         
         public Boss1(Texture2D _sprite, int[] phaseArray)
-            : base(_sprite, 2000, 2000, 100, phaseArray, 1, new Vector2(1400, 150), 100, 1000,1)
+            : base(_sprite, 2000, 2000, 100, phaseArray, 1, new Vector2(1400, 150), 100, 1000,1, "Spaceship X42")
         {
             addX = 10;
             addY = 10;

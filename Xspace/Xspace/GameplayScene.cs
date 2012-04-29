@@ -1087,20 +1087,9 @@ namespace MenuSample.Scenes
                 for (int i = 0; i <= (boss1.vieActuelle * (T_HUD_bar_boss.Width - 30)) / boss1.VieMax; i++)
                     spriteBatch.Draw(barre_vie, new Vector2(775 + i, 692), Color.White);
                 spriteBatch.Draw(T_HUD_bar_boss, new Vector2(760, 680), Color.White);
-                spriteBatch.DrawString(_HUDfont, "Spaceship X42", new Vector2(760, 645), new Color(30, 225, 30));
-                spriteBatch.Draw(T_boss1, new Rectangle(726 + 340, 622 + 35, 75, 75), Color.White);
+                    spriteBatch.DrawString(_HUDfont, boss1.Name, new Vector2(760, 645), new Color(30, 225, 30));
+                    spriteBatch.Draw(boss1.Texture, new Rectangle(726 + 340, 622 + 35, 75, 75), Color.White);
                 boss1.Draw(spriteBatch);
-            }
-
-            if (boss2 != null && boss2.Existe && !(end || endDead))
-            {
-                spriteBatch.Draw(T_HUD_boss, new Vector2(726, 622), Color.White);
-                for (int i = 0; i <= (boss1.vieActuelle * (T_HUD_bar_boss.Width - 30)) / boss2.VieMax; i++)
-                    spriteBatch.Draw(barre_vie, new Vector2(775 + i, 692), Color.White);
-                spriteBatch.Draw(T_HUD_bar_boss, new Vector2(760, 680), Color.White);
-                spriteBatch.DrawString(_HUDfont, "Metal'Krisboul", new Vector2(760, 645), new Color(30, 225, 30));
-                spriteBatch.Draw(T_boss2, new Rectangle(726 + 340, 622 + 35, 75, 75), Color.White);
-                boss2.Draw(spriteBatch);
             }
             #endregion
             #region Draw du menu de pause
