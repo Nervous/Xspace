@@ -53,7 +53,7 @@ namespace MenuSample.Scenes
         private List<doneParticles> partManage;
         private ScrollingBackground fond_ecran, fond_ecran_front, fond_ecran_middle;
         public SpriteBatch spriteBatch;
-        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Vaisseau_Kamikaze, T_Missile_Joueur_1, T_Missile_Joueur_2, T_Missile_Joueur_3, T_Laser_Joueur, T_Missile_Drone, T_Bonus_Vie, T_Bonus_Weapon1, T_Obstacles_Hole, barre_vie, T_HUD, T_HUD_boss, T_HUD_bars, T_HUD_bar_boss, T_Divers_Levelcomplete, T_Divers_Levelfail, T_boss1, T_Vaisseau_Energizer, T_Vaisseau_Doubleshooter, T_Missile_Energie, T_boss2;
+        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Vaisseau_Kamikaze, T_Missile_Joueur_1, T_Missile_Joueur_2, T_Missile_Joueur_3, T_Laser_Joueur, T_Missile_Drone, T_Bonus_Vie, T_Bonus_Weapon1, T_Obstacles_Hole, barre_vie, barre_energy, T_HUD, T_HUD_boss, T_HUD_bars, T_HUD_bar_boss, T_Divers_Levelcomplete, T_Divers_Levelfail, T_boss1, T_Vaisseau_Energizer, T_Vaisseau_Doubleshooter, T_Missile_Energie, T_boss2;
         private List<Texture2D> listeTextureVaisseauxEnnemis, listeTextureBonus, listeTextureObstacles, listeTextureBoss;
         private SoundEffect musique_tir, musique_bossExplosion;
         private KeyboardState keyboardState;
@@ -286,6 +286,7 @@ namespace MenuSample.Scenes
             #endregion
             #region Chargement textures boss
             T_boss1 = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Boss\\boss1");
+            T_boss2 = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Boss\\boss2");
             #endregion
             #region Chargement vaisseaux
             listeVaisseau = new List<Vaisseau>();
@@ -321,7 +322,7 @@ namespace MenuSample.Scenes
 
             listeTextureBoss = new List<Texture2D>();
             listeTextureBoss.Add(T_boss1);
-            listeTextureBoss.Add(T_boss1);
+            listeTextureBoss.Add(T_boss2);
 
             thisLevel = new gestionLevels(_level, listeTextureVaisseauxEnnemis, listeTextureBonus, listeTextureObstacles, listeTextureBoss);
             infLevel = new List<gestionLevels>();
@@ -330,6 +331,7 @@ namespace MenuSample.Scenes
             #endregion
             #region Chargement barre de vie
             barre_vie = _content.Load<Texture2D>("Sprites\\HUD\\Life");
+            barre_energy = _content.Load<Texture2D>("Sprites\\HUD\\Energy");
             #endregion
             #region Chargement fin level
             T_Divers_Levelcomplete = _content.Load<Texture2D>("Sprites\\Divers\\levelcompleted");
@@ -1051,7 +1053,7 @@ namespace MenuSample.Scenes
             #region Draw de l'HUD
             spriteBatch.Draw(T_HUD, new Vector2(0, 380), Color.White);
             if (listeVaisseau.Count != 0)
-                HUD.Drawbar(spriteBatch, barre_vie, listeVaisseau[0].vie, listeVaisseau[0].vieMax);
+                HUD.Drawbar(spriteBatch, barre_vie, barre_energy, listeVaisseau[0].vie, listeVaisseau[0].vieMax, listeVaisseau[0].Energie, listeVaisseau[0].EnergieMax);
             spriteBatch.Draw(T_HUD_bars, new Vector2(380, 630), Color.White);
             if (mode != GAME_MODE.EXTREME)
                 spriteBatch.DrawString(_HUDfont, Convert.ToString(score), new Vector2(95, 628), new Color(30, 225, 30));
