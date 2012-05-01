@@ -974,7 +974,6 @@ namespace MenuSample.Scenes
                 bonus.Draw(spriteBatch);
             }
             #endregion
- 
             #region Draw des particules de collision
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive);
@@ -1057,8 +1056,6 @@ namespace MenuSample.Scenes
             spriteBatch.Draw(T_HUD_bars, new Vector2(380, 630), Color.White);
             if (mode != GAME_MODE.EXTREME)
                 spriteBatch.DrawString(_HUDfont, Convert.ToString(score), new Vector2(95, 628), new Color(30, 225, 30));
-            if(listeVaisseau.Count != 0)
-            spriteBatch.DrawString(_HUDfont, "Energie : " + Convert.ToString(listeVaisseau[0].Energie), new Vector2(300, 100), new Color(30, 225, 30));
             #endregion
             #region Draw des boss
             if (boss1 != null && boss1.Existe && !(end || endDead))
