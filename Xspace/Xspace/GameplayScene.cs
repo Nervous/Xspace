@@ -930,7 +930,7 @@ namespace MenuSample.Scenes
             }
             else
             {
-                if ((InputState.IsPauseGame())||(InputState.IsMenuCancel())||(InputState.IsMenuSelect()))
+                if ((InputState.IsMenuCancel())||(InputState.IsMenuSelect()))
                     pause = false;
             }
         }
