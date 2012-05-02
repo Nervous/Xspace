@@ -38,7 +38,7 @@ namespace Xspace
             _T_Missile3 = content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\missile_boule1");
         }
 
-        override public void Update(float fps_fix, double time, List<Missiles> listeMissile)
+        override public void Update(float fps_fix, double time, List<Missiles> listeMissile, List<Vaisseau> listeVaisseau)
         {
             checkPhase(fps_fix);
             if ((Existe) && (!Init))

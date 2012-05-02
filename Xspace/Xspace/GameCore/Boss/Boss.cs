@@ -19,7 +19,7 @@ namespace Xspace
         protected double _timingAttack, _lastTir;
         protected bool _invincible, _init;
         private Vector2 _position_bar;
-        public static int[] phaseArray1 = { 2000, 1200, 800 }, phaseArray2 = { 2000, 1600, 800 };
+        public static int[] phaseArray1 = { 2000, 1200, 800 }, phaseArray2 = { 2000, 1600, 800 }, phaseArray3 = { 1700, 1400, 0 };
         protected string _name;
         /* Phase list: Example: [100,60,20]: As soon as phase[0] < vie, second phase begin, then third phase when phase[1] (so at 20 of life) < vie, etc..
          * So, you should ALWAYS have phase[0] >= vieMax        
@@ -214,7 +214,7 @@ namespace Xspace
             return (this._vie < 0);
         }
 
-        public virtual void Update(float fps_fix, double time, List<Missiles> listeMissile) { }
+        public virtual void Update(float fps_fix, double time, List<Missiles> listeMissile, List<Vaisseau> listeVaisseau) { }
 
         public void Draw(SpriteBatch spriteBatch)
         {

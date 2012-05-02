@@ -43,7 +43,7 @@ namespace Xspace
             _T_Meteore = content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\sun-boss2");
         }
 
-        override public void Update(float fps_fix, double time, List<Missiles> listeMissile)
+        override public void Update(float fps_fix, double time, List<Missiles> listeMissile, List<Vaisseau> listeVaisseau)
         {
             checkPhase(fps_fix);
             if ((Existe) && (!Init))

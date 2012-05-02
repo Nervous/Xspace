@@ -674,7 +674,7 @@ namespace MenuSample.Scenes
                 #region Update du boss
                 if (boss1 != null && boss1.Existe && !endDead)
                 {
-                    boss1.Update(fps_fix, time, listeMissile);
+                    boss1.Update(fps_fix, time, listeMissile, listeVaisseau);
                     if (boss1.Number == 1)
                     {
                         particleEffectBoss1.Trigger(new Vector2(boss1.PositionX + boss1.Texture.Width + 5, boss1.PositionY + boss1.Texture.Height / 3 - 5));
