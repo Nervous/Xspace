@@ -463,14 +463,6 @@ namespace MenuSample.Scenes
                     }
                     #endregion
                 }
-                /*foreach (Obstacles obstacle in listeObstacles)
-                {
-                    #region Collision joueur <=> Obstacle
-                    if (IntersectPixels(listeVaisseau[0].rectangle, listeVaisseau[0].sprite, obstacle.rectangle, obstacle.sprite))
-                    {
-                    }
-                    #endregion
-                }*/
             }
             return listeParticules;
         }
@@ -618,7 +610,7 @@ namespace MenuSample.Scenes
                             }
                             break;
                         case 1:
-                            if (time - lastTime > 450 || lastTime == 0)
+                            if (time - lastTime > 350 || lastTime == 0)
                             {
                                 if (!listeVaisseau[0].useEnergy(100))
                                 {
