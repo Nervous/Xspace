@@ -44,7 +44,6 @@ namespace MenuSample.Scenes
 
         private void ConfirmQuitMessageBoxAccepted(object sender, EventArgs e)
         {
-
             Remove();
             _parent.Remove();
             AudioPlayer.StopMusic();

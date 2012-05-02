@@ -44,7 +44,7 @@ namespace MenuSample.Scenes
         private StreamReader sr_level;
         private char[] delimitationFilesInfo = new char[] { ' ' }, delimitationFilesInfo2 = new char[] { ';' }, delimitationFilesInfo3 = new char[] { ':' };
         private float[] spectre;
-        private bool drawSpectre, aBossWasThere, first;
+        private bool drawSpectre, aBossWasThere, first, pause;
         private float amplitude_sum_music, moy_energie1024;
         private Random r;
         private string song_path;
@@ -180,6 +180,7 @@ namespace MenuSample.Scenes
             aBossWasThere = false;
             bossTime = 0;
             partManage = new List<doneParticles>();
+            pause = false;
         }
 
         protected override void LoadContent()
@@ -479,450 +480,459 @@ namespace MenuSample.Scenes
 
         public override void Update(GameTime gameTime, bool othersceneHasFocus, bool coveredByOtherscene)
         {
-            keyboardState = Keyboard.GetState();
-            _pauseAlpha = coveredByOtherscene ? Math.Min(_pauseAlpha + 1f / 32, 1) : Math.Max(_pauseAlpha - 1f / 32, 0);
-
-            fps_fix = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            time += gameTime.ElapsedGameTime.TotalMilliseconds;
-            base.Update(gameTime, othersceneHasFocus, false);
-            #region Update de l'état du jeu
-            if (listeVaisseau.Count == 0)
-                endDead = true;
-            else if (listeVaisseau[0].ennemi)
-                endDead = true;
-            #endregion
-            #region Analyse de la musique
-            float coeff_speed_variation = 1f; //coefficient de la variation de la vitesse des fonds.
-            float coeff_speed = 0.05f; //coefficient de vitesse du fond.
-            float coeff_speed_middle = 0.1f; //coefficient de vitesse du fond au milieu.
-            float coeff_speed_front = 0.5f; //coefficient de vitesse du fond en avant.
-            float default_speed = 1f; //La vitesse doit tendre vers (default_speed * coeff)
-
-            fond_ecran.Update(fps_fix, (default_speed + (amplitude_sum_music - default_speed) * coeff_speed_variation) * coeff_speed);
-            fond_ecran_middle.Update(fps_fix, (default_speed + (amplitude_sum_music - default_speed) * coeff_speed_variation) * coeff_speed_middle);
-            fond_ecran_front.Update(fps_fix, (default_speed + (amplitude_sum_music - default_speed) * coeff_speed_variation) * coeff_speed_front);
-
-            AudioPlayer.Update();
-			#endregion
-            #region Gestion de la musique en cas de pause
-            if (InputState.IsPauseGame())
+            if (!pause)
             {
-                AudioPlayer.SetVolume(0.2f);
-            }
-            else if (InputState.IsMenuSelect())
-                AudioPlayer.SetVolume(1f);
+                keyboardState = Keyboard.GetState();
+                _pauseAlpha = coveredByOtherscene ? Math.Min(_pauseAlpha + 1f / 32, 1) : Math.Max(_pauseAlpha - 1f / 32, 0);
 
-            #endregion
-            #region Gestion des évenements du level
-            foreach (gestionLevels spawn in infLevel)
-            {
-                if (boss1 == null && spawn.isTime(time))
+                fps_fix = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                time += gameTime.ElapsedGameTime.TotalMilliseconds;
+                base.Update(gameTime, othersceneHasFocus, false);
+                #region Update de l'état du jeu
+                if (listeVaisseau.Count == 0)
+                    endDead = true;
+                else if (listeVaisseau[0].ennemi)
+                    endDead = true;
+                #endregion
+                #region Analyse de la musique
+                float coeff_speed_variation = 1f; //coefficient de la variation de la vitesse des fonds.
+                float coeff_speed = 0.05f; //coefficient de vitesse du fond.
+                float coeff_speed_middle = 0.1f; //coefficient de vitesse du fond au milieu.
+                float coeff_speed_front = 0.5f; //coefficient de vitesse du fond en avant.
+                float default_speed = 1f; //La vitesse doit tendre vers (default_speed * coeff)
+
+                fond_ecran.Update(fps_fix, (default_speed + (amplitude_sum_music - default_speed) * coeff_speed_variation) * coeff_speed);
+                fond_ecran_middle.Update(fps_fix, (default_speed + (amplitude_sum_music - default_speed) * coeff_speed_variation) * coeff_speed_middle);
+                fond_ecran_front.Update(fps_fix, (default_speed + (amplitude_sum_music - default_speed) * coeff_speed_variation) * coeff_speed_front);
+
+                AudioPlayer.Update();
+                #endregion
+                #region Gestion de la musique en cas de pause
+                if (InputState.IsPauseGame())
                 {
-                    switch (spawn.Categorie)
+                    AudioPlayer.SetVolume(0.2f);
+                    pause = true;
+                }
+                else if (InputState.IsMenuSelect())
+                    AudioPlayer.SetVolume(1f);
+
+                #endregion
+                #region Gestion des évenements du level
+                foreach (gestionLevels spawn in infLevel)
+                {
+                    if (boss1 == null && spawn.isTime(time))
                     {
-                        case "vaisseau":
-                            listeVaisseau.Add(spawn.Adresse);
+                        switch (spawn.Categorie)
+                        {
+                            case "vaisseau":
+                                listeVaisseau.Add(spawn.Adresse);
+                                break;
+                            case "bonus":
+                                listeBonus.Add(spawn.bonus);
+                                break;
+                            case "obstacle":
+                                listeObstacles.Add(spawn.Obstacle);
+                                break;
+                            case "boss":
+                                boss1 = spawn.boss;
+                                boss1.LoadContent(_content);
+                                aBossWasThere = true;
+                                break;
+                            case "EOL":
+                                if (!endDead)
+                                    end = true;
+                                break;
+                            default:
+                                break;
+                        }
+                        listeLevelToRemove.Add(spawn);
+                    }
+                }
+                foreach (gestionLevels s in listeLevelToRemove)
+                    infLevel.Remove(s);
+
+                if (boss1 != null)
+                    bossTime += gameTime.ElapsedGameTime.TotalMilliseconds;
+                #endregion
+                #region Gestion des tirs du joueur
+
+                if (keyboardState.IsKeyDown(Keys.F1) && lastKeyDown)
+                {
+                    lastKeyDown = false;
+                    if (drawSpectre)
+                        drawSpectre = false;
+                    else
+                        drawSpectre = true;
+                }
+                else if (keyboardState.IsKeyUp(Keys.F1))
+                    lastKeyDown = true;
+
+                if ((keyboardState.IsKeyDown(Keys.Space) && (listeVaisseau.Count != 0)))
+                {
+                    switch (listeVaisseau[0].armeActuelle)
+                    {
+                        case 0:
+                            switch (listeVaisseau[0].baseWeapon)
+                            {
+                                case 0:
+                                    if (time - lastTime > 150 || lastTime == 0)
+                                    {
+                                        musique_tir.Play();
+                                        Vector2 spawn = new Vector2(listeVaisseau[0].pos.X + listeVaisseau[0].sprite.Width - 1, listeVaisseau[0].pos.Y + listeVaisseau[0].sprite.Height / 2 - 2);
+                                        listeMissile.Add(new Xspace.Missile1_joueur(T_Missile_Joueur_1, spawn, listeVaisseau[0], null));
+                                        lastTime = time;
+                                    }
+                                    break;
+                                case 1:
+                                    if (time - lastTime > 150 || lastTime == 0)
+                                    {
+                                        musique_tir.Play();
+                                        Vector2 spawn1 = new Vector2(listeVaisseau[0].pos.X + 35, listeVaisseau[0].pos.Y + listeVaisseau[0].sprite.Height / 3 - 18);
+                                        Vector2 spawn2 = new Vector2(listeVaisseau[0].pos.X + 35, listeVaisseau[0].pos.Y + listeVaisseau[0].sprite.Height / 3 + 25);
+                                        listeMissile.Add(new Xspace.Missile1_joueur(T_Missile_Joueur_1, spawn1, listeVaisseau[0], null));
+                                        listeMissile.Add(new Xspace.Missile1_joueur(T_Missile_Joueur_1, spawn2, listeVaisseau[0], null));
+                                        lastTime = time;
+                                    }
+                                    break;
+                                case 2:
+                                    if (time - lastTime > 150 || lastTime == 0)
+                                    {
+                                        musique_tir.Play();
+                                        Vector2 spawn1 = new Vector2(listeVaisseau[0].pos.X + 35, listeVaisseau[0].pos.Y + listeVaisseau[0].sprite.Height / 3 - 18);
+                                        Vector2 spawn2 = new Vector2(listeVaisseau[0].pos.X + 35, listeVaisseau[0].pos.Y + listeVaisseau[0].sprite.Height / 3 + 25);
+                                        Vector2 spawn3 = new Vector2(listeVaisseau[0].pos.X + 29, listeVaisseau[0].pos.Y + listeVaisseau[0].sprite.Height / 3 + 29);
+                                        Vector2 spawn4 = new Vector2(listeVaisseau[0].pos.X + 29, listeVaisseau[0].pos.Y + listeVaisseau[0].sprite.Height / 3 - 38);
+                                        listeMissile.Add(new Xspace.Missile1_joueur(T_Missile_Joueur_1, spawn1, listeVaisseau[0], null));
+                                        listeMissile.Add(new Xspace.Missile1_joueur(T_Missile_Joueur_1, spawn2, listeVaisseau[0], null));
+                                        listeMissile.Add(new Xspace.Missile1_DiagoHaut_Joueur(T_Missile_Joueur_3, spawn3, listeVaisseau[0], null));
+                                        listeMissile.Add(new Xspace.Missile1_DiagoBas_Joueur(T_Missile_Joueur_2, spawn4, listeVaisseau[0], null));
+                                        lastTime = time;
+                                    }
+                                    break;
+                                default:
+                                    break;
+                            }
                             break;
-                        case "bonus":
-                            listeBonus.Add(spawn.bonus);
-                            break;
-                        case "obstacle":
-                            listeObstacles.Add(spawn.Obstacle);
-                            break;
-                        case "boss":
-                            boss1 = spawn.boss;
-                            boss1.LoadContent(_content);
-                            aBossWasThere = true;
-                            break;
-                        case "EOL":
-                            if(!endDead)
-                                end = true;
+                        case 1:
+                            if (!listeVaisseau[0].laser)
+                            {
+                                if (!listeVaisseau[0].useEnergy(25))
+                                {
+                                    Vector2 spawn = new Vector2(listeVaisseau[0].pos.X + listeVaisseau[0].sprite.Width, listeVaisseau[0].pos.Y + listeVaisseau[0].sprite.Height / 2 - 35);
+                                    Laser_joueur las = new Laser_joueur(T_Laser_Joueur, spawn, listeVaisseau[0], null);
+                                    listeMissile.Add(las);
+                                    listeVaisseau[0].enableLaser(las);
+                                }
+                            }
+                            else
+                            {
+                                listeVaisseau[0].getLaser().pos = new Vector2(listeVaisseau[0].pos.X + listeVaisseau[0].sprite.Width, listeVaisseau[0].pos.Y + listeVaisseau[0].sprite.Height / 2 - 35);
+                                if (listeVaisseau[0].useEnergy(25)) // Si plus d'énergie
+                                {
+                                    listeMissileToRemove.Add(listeVaisseau[0].getLaser());
+                                    listeVaisseau[0].disableLaser();
+                                }
+                            }
                             break;
                         default:
                             break;
                     }
-                    listeLevelToRemove.Add(spawn);
                 }
-            }
-            foreach (gestionLevels s in listeLevelToRemove)
-                infLevel.Remove(s);
-
-            if(boss1 != null)
-                bossTime += gameTime.ElapsedGameTime.TotalMilliseconds;
-            #endregion
-            #region Gestion des tirs du joueur
-
-            if (keyboardState.IsKeyDown(Keys.F1) && lastKeyDown)
-            {
-                lastKeyDown = false;
-                if (drawSpectre)
-                    drawSpectre = false;
-                else
-                    drawSpectre = true;
-            }
-            else if(keyboardState.IsKeyUp(Keys.F1))
-                lastKeyDown = true;
-
-            if ((keyboardState.IsKeyDown(Keys.Space) && (listeVaisseau.Count != 0)))
-            {
-                switch (listeVaisseau[0].armeActuelle)
+                else if ((keyboardState.IsKeyUp(Keys.Space) && (listeVaisseau.Count != 0)))
                 {
-                    case 0:
-                        switch (listeVaisseau[0].baseWeapon)
+                    if (listeVaisseau[0].laser)
+                    {
+                        listeMissileToRemove.Add(listeVaisseau[0].getLaser());
+                        listeVaisseau[0].disableLaser();
+                    }
+                }
+
+                if ((keyboardState.IsKeyDown(Keys.D1) && (listeVaisseau.Count != 0)))
+                {
+                    if (listeVaisseau[0].laser)
+                    {
+                        listeMissileToRemove.Add(listeVaisseau[0].getLaser());
+                        listeVaisseau[0].disableLaser();
+                    }
+                    listeVaisseau[0].changeWeapon(0);
+                }
+                else if ((keyboardState.IsKeyDown(Keys.D2) && (listeVaisseau.Count != 0)))
+                    listeVaisseau[0].changeWeapon(1);
+                /*else if ((keyboardState.IsKeyDown(Keys.D3) && (listeVaisseau.Count != 0)))
+                    listeVaisseau[0].changeWeapon(2);
+                 else if ((keyboardState.IsKeyDown(Keys.D4) && (listeVaisseau.Count != 0)))
+                    listeVaisseau[0].changeWeapon(3);*/
+
+
+                #endregion
+                #region Mode extreme
+                if (mode == GAME_MODE.EXTREME)
+                    compteur += gameTime.ElapsedGameTime.TotalMilliseconds;
+                #endregion
+                #region Update du boss
+                if (boss1 != null && boss1.Existe && !endDead)
+                {
+                    boss1.Update(fps_fix, time, listeMissile);
+                    if (boss1.Number == 1)
+                    {
+                        particleEffectBoss1.Trigger(new Vector2(boss1.PositionX + boss1.Texture.Width + 5, boss1.PositionY + boss1.Texture.Height / 3 - 5));
+                        particleEffectBoss1.Trigger(new Vector2(boss1.PositionX + boss1.Texture.Width + 5, boss1.PositionY + (boss1.Texture.Height * 2) / 3 + 10));
+                    }
+                }
+                else if (boss1 != null && aBossWasThere)
+                {
+                    musique_bossExplosion.Play(1.0f, 0f, 0f);
+                    particleBossExplosion.Trigger(new Vector2(boss1.PositionX + boss1.Texture.Width / 2, boss1.PositionY + boss1.Texture.Height / 2));
+                    aBossWasThere = false;
+                    time -= bossTime;
+                    lastTime -= bossTime;
+                    lastTimeSpectre -= bossTime;
+                    lastTimeEnergy -= bossTime;
+                    bossTime = 0;
+                    boss1 = null;
+                    if (listeVaisseau.Count > 0)
+                        listeVaisseau[0].lastDamage = time - 200;
+                }
+
+                particleBossExplosion.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+                particleEffectBoss1.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+                #endregion
+                #region Update des missiles
+                foreach (Missiles missile in listeMissile)
+                {
+                    if (missile.pos.X < 1150 && (missile.pos.Y > SCREEN_MAXTOP && missile.pos.Y < SCREEN_MAXBOT) && !missile.ennemi)
+                        missile.Update(fps_fix);
+                    else if (missile.pos.X > 0 && (missile.pos.Y > SCREEN_MAXTOP && missile.pos.Y < SCREEN_MAXBOT) && missile.ennemi)
+                        missile.Update(fps_fix);
+                    else if (!(missile is Laser_joueur))
+                        listeMissileToRemove.Add(missile);
+                }
+                foreach (Missiles missile in listeMissileToRemove)
+                {
+                    listeMissile.Remove(missile);
+                }
+
+                listeMissileToRemove.Clear();
+                #endregion
+                #region Update des vaisseaux
+                foreach (Vaisseau vaisseau in listeVaisseau)
+                {
+                    if (vaisseau.existe == false)
+                        listeVaisseauToRemove.Add(vaisseau);
+                    else if (vaisseau.ennemi)
+                        vaisseau.Update(fps_fix);
+                    else
+                        vaisseau.Update(fps_fix, keyboardState, listeObstacles);
+
+                    if (vaisseau.ennemi && vaisseau.existe)
+                    {
+                        if (time - vaisseau.lastTir > vaisseau.timingAttack && vaisseau.timingAttack != 0)
                         {
-                            case 0:
-                                if (time - lastTime > 150 || lastTime == 0)
-                                {
-                                    musique_tir.Play();
-                                    Vector2 spawn = new Vector2(listeVaisseau[0].pos.X + listeVaisseau[0].sprite.Width - 1, listeVaisseau[0].pos.Y + listeVaisseau[0].sprite.Height / 2 - 2);
-                                    listeMissile.Add(new Xspace.Missile1_joueur(T_Missile_Joueur_1, spawn, listeVaisseau[0], null));
-                                    lastTime = time;
-                                }
-                                break;
-                            case 1:
-                                if (time - lastTime > 150 || lastTime == 0)
-                                {
-                                    musique_tir.Play();
-                                    Vector2 spawn1 = new Vector2(listeVaisseau[0].pos.X + 35, listeVaisseau[0].pos.Y + listeVaisseau[0].sprite.Height / 3 - 18);
-                                    Vector2 spawn2 = new Vector2(listeVaisseau[0].pos.X + 35, listeVaisseau[0].pos.Y + listeVaisseau[0].sprite.Height / 3 + 25);
-                                    listeMissile.Add(new Xspace.Missile1_joueur(T_Missile_Joueur_1, spawn1, listeVaisseau[0], null));
-                                    listeMissile.Add(new Xspace.Missile1_joueur(T_Missile_Joueur_1, spawn2, listeVaisseau[0], null));
-                                    lastTime = time;
-                                }
-                                break;
-                            case 2:
-                                if (time - lastTime > 150 || lastTime == 0)
-                                {
-                                    musique_tir.Play();
-                                    Vector2 spawn1 = new Vector2(listeVaisseau[0].pos.X + 35, listeVaisseau[0].pos.Y + listeVaisseau[0].sprite.Height / 3 - 18);
-                                    Vector2 spawn2 = new Vector2(listeVaisseau[0].pos.X + 35, listeVaisseau[0].pos.Y + listeVaisseau[0].sprite.Height / 3 + 25);
-                                    Vector2 spawn3 = new Vector2(listeVaisseau[0].pos.X + 29, listeVaisseau[0].pos.Y + listeVaisseau[0].sprite.Height / 3 + 29);
-                                    Vector2 spawn4 = new Vector2(listeVaisseau[0].pos.X + 29, listeVaisseau[0].pos.Y + listeVaisseau[0].sprite.Height / 3 - 38);
-                                    listeMissile.Add(new Xspace.Missile1_joueur(T_Missile_Joueur_1, spawn1, listeVaisseau[0], null));
-                                    listeMissile.Add(new Xspace.Missile1_joueur(T_Missile_Joueur_1, spawn2, listeVaisseau[0], null));
-                                    listeMissile.Add(new Xspace.Missile1_DiagoHaut_Joueur(T_Missile_Joueur_3, spawn3, listeVaisseau[0], null));
-                                    listeMissile.Add(new Xspace.Missile1_DiagoBas_Joueur(T_Missile_Joueur_2, spawn4, listeVaisseau[0], null));
-                                    lastTime = time;
-                                }
-                                break;
-                            default:
-                                break;
-                        }
-                        break;
-                    case 1:
-                        if (!listeVaisseau[0].laser)
-                        {
-                            if (!listeVaisseau[0].useEnergy(25))
+                            Vector2 spawn, spawnHaut, spawnBas;
+                            switch (vaisseau.armeActuelle)
                             {
-                                Vector2 spawn = new Vector2(listeVaisseau[0].pos.X + listeVaisseau[0].sprite.Width, listeVaisseau[0].pos.Y + listeVaisseau[0].sprite.Height / 2 - 35);
-                                Laser_joueur las = new Laser_joueur(T_Laser_Joueur, spawn, listeVaisseau[0], null);
-                                listeMissile.Add(las);
-                                listeVaisseau[0].enableLaser(las);
+                                case 0: // Tir normal
+                                    spawn = new Vector2(vaisseau.pos.X - 35, vaisseau.pos.Y + vaisseau.sprite.Height / 2);
+                                    listeMissile.Add(new Missile_drone(T_Missile_Drone, spawn, vaisseau, null));
+                                    break;
+                                case 1: // Tir double
+                                    spawnHaut = new Vector2(vaisseau.pos.X - 30, vaisseau.pos.Y + vaisseau.sprite.Height / 2 - 20);
+                                    spawnBas = new Vector2(vaisseau.pos.X - 30, vaisseau.pos.Y + vaisseau.sprite.Height / 2 + 10);
+                                    listeMissile.Add(new Missile_drone(T_Missile_Drone, spawnHaut, vaisseau, null));
+                                    listeMissile.Add(new Missile_drone(T_Missile_Drone, spawnBas, vaisseau, null));
+                                    break;
+                                case 2: // Blaster
+                                    spawn = new Vector2(vaisseau.pos.X - 35, vaisseau.pos.Y + vaisseau.sprite.Height / 2 - 20);
+                                    listeMissile.Add(new Blaster_Ennemi(T_Missile_Energie, spawn, vaisseau, null));
+                                    break;
+                                default:
+                                    break;
                             }
+                            vaisseau.lastTir = time;
                         }
-                        else
-                        {
-                            listeVaisseau[0].getLaser().pos = new Vector2(listeVaisseau[0].pos.X + listeVaisseau[0].sprite.Width, listeVaisseau[0].pos.Y + listeVaisseau[0].sprite.Height / 2 - 35);
-                            if (listeVaisseau[0].useEnergy(25)) // Si plus d'énergie
-                            {
-                                listeMissileToRemove.Add(listeVaisseau[0].getLaser());
-                                listeVaisseau[0].disableLaser();
-                            }
-                        }
-                        break;
-                    default:
-                        break;
+                    }
                 }
-            }
-            else if ((keyboardState.IsKeyUp(Keys.Space) && (listeVaisseau.Count != 0)))
-            {
-                if (listeVaisseau[0].laser)
-                {
-                    listeMissileToRemove.Add(listeVaisseau[0].getLaser());
-                    listeVaisseau[0].disableLaser();
-                }
-            }
 
-            if ((keyboardState.IsKeyDown(Keys.D1) && (listeVaisseau.Count != 0)))
-            {
-                if (listeVaisseau[0].laser)
+                foreach (Vaisseau vaisseau in listeVaisseauToRemove)
                 {
-                    listeMissileToRemove.Add(listeVaisseau[0].getLaser());
-                    listeVaisseau[0].disableLaser();
+                    listeVaisseau.Remove(vaisseau);
                 }
-                listeVaisseau[0].changeWeapon(0);
-            }
-            else if ((keyboardState.IsKeyDown(Keys.D2) && (listeVaisseau.Count != 0)))
-                listeVaisseau[0].changeWeapon(1);
-            /*else if ((keyboardState.IsKeyDown(Keys.D3) && (listeVaisseau.Count != 0)))
-                listeVaisseau[0].changeWeapon(2);
-             else if ((keyboardState.IsKeyDown(Keys.D4) && (listeVaisseau.Count != 0)))
-                listeVaisseau[0].changeWeapon(3);*/
-             
-                
-            #endregion
-            #region Mode extreme
-            if (mode == GAME_MODE.EXTREME)
-                compteur += gameTime.ElapsedGameTime.TotalMilliseconds;
-            #endregion 
-            #region Update du boss
-            if (boss1 != null && boss1.Existe && !endDead)
-            {
-                boss1.Update(fps_fix, time, listeMissile);
-                if (boss1.Number == 1)
+
+                listeVaisseauToRemove.Clear();
+
+
+                #endregion
+                #region Update des bonus
+                foreach (Bonus bonus in listeBonus)
                 {
-                    particleEffectBoss1.Trigger(new Vector2(boss1.PositionX + boss1.Texture.Width + 5, boss1.PositionY + boss1.Texture.Height / 3 - 5));
-                    particleEffectBoss1.Trigger(new Vector2(boss1.PositionX + boss1.Texture.Width + 5, boss1.PositionY + (boss1.Texture.Height * 2) / 3 + 10));
+                    if (bonus.pos.X > 0)
+                        bonus.Update(fps_fix);
+                    else
+                        listeBonusToRemove.Add(bonus);
                 }
-            }
-            else if (boss1 != null && aBossWasThere)
-            {
-                musique_bossExplosion.Play(1.0f, 0f, 0f);
-                particleBossExplosion.Trigger(new Vector2(boss1.PositionX + boss1.Texture.Width / 2, boss1.PositionY + boss1.Texture.Height / 2));
-                aBossWasThere = false;
-                time -= bossTime;
-                lastTime -= bossTime;
-                lastTimeSpectre -= bossTime;
-                lastTimeEnergy -= bossTime;
-                bossTime = 0;
-                boss1 = null;
+
+                foreach (Bonus bonus in listeBonusToRemove)
+                    listeBonus.Remove(bonus);
+                #endregion
+                #region Update des obstacles
+                foreach (Obstacles obstacle in listeObstacles)
+                {
+                    if (obstacle.pos.X > -250)
+                    {
+                        obstacle.Update(fps_fix);
+                    }
+                    else
+                    {
+                        listeObstaclesToRemove.Add(obstacle);
+                    }
+                }
+
+                foreach (Bonus bonus in listeBonusToRemove)
+                    listeBonus.Remove(bonus);
+                foreach (Obstacles obstacle in listeObstaclesToRemove)
+                    listeObstacles.Remove(obstacle);
+                #endregion
+                #region Collisions & Update des particules
+                partManage = collisions(listeVaisseau, listeMissile, listeBonus, listeBonusToAdd, listeObstacles, boss1, fps_fix, particleEffect, gameTime, listeVaisseau.Count == 0, randomizer);
+                if (partManage != null)
+                {
+                    foreach (doneParticles particle in partManage)
+                    {
+                        if (particle.startingParticle != Vector2.Zero)
+                            particleEffect.Trigger(particle.startingParticle);
+                    }
+                }
+                foreach (Bonus b in listeBonusToAdd)
+                {
+                    listeBonus.Add(b);
+                }
+                listeBonusToAdd.Clear();
+                particleEffect.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+
+
                 if (listeVaisseau.Count > 0)
-                    listeVaisseau[0].lastDamage = time - 200;
-            }
-
-            particleBossExplosion.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
-            particleEffectBoss1.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
-            #endregion
-            #region Update des missiles
-            foreach (Missiles missile in listeMissile)
-            {
-                if (missile.pos.X < 1150 && (missile.pos.Y > SCREEN_MAXTOP && missile.pos.Y < SCREEN_MAXBOT) && !missile.ennemi)
-                    missile.Update(fps_fix);
-                else if (missile.pos.X > 0 && (missile.pos.Y > SCREEN_MAXTOP && missile.pos.Y < SCREEN_MAXBOT) && missile.ennemi)
-                    missile.Update(fps_fix);
-                else if(!(missile is Laser_joueur))
-                    listeMissileToRemove.Add(missile);
-            }
-            foreach (Missiles missile in listeMissileToRemove)
-            {
-                listeMissile.Remove(missile);
-            }
-
-            listeMissileToRemove.Clear();
-            #endregion
-            #region Update des vaisseaux
-            foreach (Vaisseau vaisseau in listeVaisseau)
-            {
-                if (vaisseau.existe == false)
-                    listeVaisseauToRemove.Add(vaisseau);
-                else if (vaisseau.ennemi)
-                    vaisseau.Update(fps_fix);
-                else
-                    vaisseau.Update(fps_fix, keyboardState, listeObstacles);
-
-                if (vaisseau.ennemi && vaisseau.existe)
                 {
-                    if (time - vaisseau.lastTir > vaisseau.timingAttack && vaisseau.timingAttack != 0)
+                    Vector2 positionVaisseau = listeVaisseau[0].pos;
+                    positionVaisseau.Y = positionVaisseau.Y + listeVaisseau[0].sprite.Height / 2;
+                    positionVaisseau.X -= 5;
+                    ((EmitterCollection)particleEffectMoteur)[0].ReleaseImpulse.X = -400 * amplitude_sum_music;
+                    ((EmitterCollection)particleEffectMoteur)[0].ReleaseScale.Value = 32 + (amplitude_sum_music - 1) * 25;
+                    particleEffectMoteur.Trigger(positionVaisseau);
+                }
+                particleEffectMoteur.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+                #endregion*/
+                #region Update spectre & historique
+                if (lastTimeSpectre + 25 < time)
+                {
+                    float[] spectre_tmp = AudioPlayer.GetSpectrum(128);
+                    if (spectre_tmp.Length == 128)
                     {
-                        Vector2 spawn, spawnHaut, spawnBas;
-                        switch (vaisseau.armeActuelle)
+                        for (int i = 0; i <= 127; i++)
                         {
-                            case 0: // Tir normal
-                                spawn = new Vector2(vaisseau.pos.X - 35, vaisseau.pos.Y + vaisseau.sprite.Height / 2);
-                                listeMissile.Add(new Missile_drone(T_Missile_Drone, spawn, vaisseau, null));
-                                break;
-                            case 1: // Tir double
-                                spawnHaut = new Vector2(vaisseau.pos.X - 30, vaisseau.pos.Y + vaisseau.sprite.Height / 2 - 20);
-                                spawnBas = new Vector2(vaisseau.pos.X - 30, vaisseau.pos.Y + vaisseau.sprite.Height / 2 + 10);
-                                listeMissile.Add(new Missile_drone(T_Missile_Drone, spawnHaut, vaisseau, null));
-                                listeMissile.Add(new Missile_drone(T_Missile_Drone, spawnBas, vaisseau, null));
-                                break;
-                            case 2: // Blaster
-                                spawn = new Vector2(vaisseau.pos.X - 35, vaisseau.pos.Y + vaisseau.sprite.Height / 2 - 20);
-                                listeMissile.Add(new Blaster_Ennemi(T_Missile_Energie, spawn, vaisseau, null));
-                                break;
-                            default:
-                                break;
+                            spectre_tmp[i] = Math.Min(2, spectre_tmp[i] * 10);
                         }
-                        vaisseau.lastTir = time;
+
+                        lastTimeSpectre = time;
+                        spectre = spectre_tmp;
                     }
-                } 
-            }
-
-            foreach (Vaisseau vaisseau in listeVaisseauToRemove)
-            {
-                listeVaisseau.Remove(vaisseau);
-            }
-            
-            listeVaisseauToRemove.Clear();
-
-
-            #endregion
-            #region Update des bonus
-            foreach (Bonus bonus in listeBonus)
-            {
-                if (bonus.pos.X > 0)
-                    bonus.Update(fps_fix);
-                else
-                    listeBonusToRemove.Add(bonus);
-            }
-
-            foreach (Bonus bonus in listeBonusToRemove)
-                listeBonus.Remove(bonus);
-            #endregion
-            #region Update des obstacles
-            foreach (Obstacles obstacle in listeObstacles)
-            {
-                if (obstacle.pos.X > -250)
-                {
-                    obstacle.Update(fps_fix);
                 }
-                else
+
+                if (lastTimeEnergy + 25 < time)
                 {
-                    listeObstaclesToRemove.Add(obstacle);
+                    lastTimeEnergy = time;
+                    amplitude_sum_music = AudioPlayer.GetEnergy();
                 }
-            }
 
-            foreach (Bonus bonus in listeBonusToRemove)
-                listeBonus.Remove(bonus);
-            foreach (Obstacles obstacle in listeObstaclesToRemove)
-                listeObstacles.Remove(obstacle);
-            #endregion
-            #region Collisions & Update des particules
-            partManage = collisions(listeVaisseau, listeMissile, listeBonus, listeBonusToAdd, listeObstacles, boss1, fps_fix, particleEffect, gameTime, listeVaisseau.Count == 0, randomizer);
-            if (partManage != null)
-            {
-                foreach (doneParticles particle in partManage)
+                #endregion
+                #region Gestion du mode Libre
+                if (AudioPlayer.IsPlaying())
                 {
-                    if (particle.startingParticle != Vector2.Zero)
-                        particleEffect.Trigger(particle.startingParticle);
-                }
-            }
-            foreach (Bonus b in listeBonusToAdd)
-            {
-                listeBonus.Add(b);
-            }
-            listeBonusToAdd.Clear();
-            particleEffect.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+                    int time_music = (int)((AudioPlayer.GetCurrentTime() % (AudioPlayer.GetLength() - 1024)) / 1024f);
+                    float energy_1024_music = (float)BeatDetector.get_energie1024()[(int)time_music];
 
-
-            if (listeVaisseau.Count > 0)
-            {
-                Vector2 positionVaisseau = listeVaisseau[0].pos;
-                positionVaisseau.Y = positionVaisseau.Y + listeVaisseau[0].sprite.Height / 2;
-                positionVaisseau.X -= 5;
-                ((EmitterCollection)particleEffectMoteur)[0].ReleaseImpulse.X = -400 * amplitude_sum_music;
-                ((EmitterCollection)particleEffectMoteur)[0].ReleaseScale.Value = 32 + (amplitude_sum_music - 1) * 25;
-                particleEffectMoteur.Trigger(positionVaisseau);
-            }
-            particleEffectMoteur.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
-            #endregion*/
-            #region Update spectre & historique
-            if (lastTimeSpectre + 25 < time)
-            {
-                float[] spectre_tmp = AudioPlayer.GetSpectrum(128);
-                if (spectre_tmp.Length == 128)
-                {
-                    for (int i = 0; i <= 127; i++)
+                    position_spawn = new Vector2(1180, r.Next(5, 564));
+                    if (mode == GAME_MODE.LIBRE && lastTimeMusic < time_music)
                     {
-                        spectre_tmp[i] = Math.Min(2, spectre_tmp[i] * 10);
+                        if ((time_music - lastTimeRandomSpawn > 10) && (BeatDetector.get_beat()[(int)time_music] > 0))
+                        {
+                            if (energy_1024_music / moy_energie1024 > 1.8)
+                            {
+                                listeVaisseau.Add(new kamikaze(T_Vaisseau_Kamikaze, position_spawn));
+                                beat_spawned = BEAT_SPAWNED.ENEMY;
+                            }
+                            else if (energy_1024_music / moy_energie1024 > 1.5)
+                            {
+                                listeVaisseau.Add(new RapidShooter(T_Vaisseau_Doubleshooter, position_spawn));
+                                beat_spawned = BEAT_SPAWNED.ENEMY;
+                            }
+                            else if (energy_1024_music / moy_energie1024 > 1.2)
+                            {
+                                listeVaisseau.Add(new Blasterer(T_Vaisseau_Energizer, position_spawn));
+                                beat_spawned = BEAT_SPAWNED.ENEMY;
+                            }
+                            else if (energy_1024_music / moy_energie1024 > 1)
+                            {
+                                listeVaisseau.Add(new Drone(T_Vaisseau_Drone, position_spawn));
+                                beat_spawned = BEAT_SPAWNED.ENEMY;
+                            }
+                            else
+                            {
+                                beat_spawned = BEAT_SPAWNED.NOTHING;
+                            }
+
+                            lastTimeRandomSpawn = time_music;
+                        }
+
+                        lastTimeMusic = time_music;
                     }
-
-                    lastTimeSpectre = time;
-                    spectre = spectre_tmp;
                 }
-            }
-
-            if (lastTimeEnergy + 25 < time)
-            {
-                lastTimeEnergy = time;
-                amplitude_sum_music = AudioPlayer.GetEnergy();
-            }
-
-            #endregion
-            #region Gestion du mode Libre
-            if (AudioPlayer.IsPlaying())
-            {
-                int time_music = (int)((AudioPlayer.GetCurrentTime() % (AudioPlayer.GetLength() - 1024)) / 1024f);
-                float energy_1024_music = (float)BeatDetector.get_energie1024()[(int)time_music];
-
-                position_spawn = new Vector2(1180, r.Next(5, 564));
-                if (mode == GAME_MODE.LIBRE && lastTimeMusic < time_music)
+                else
                 {
-                    if ((time_music - lastTimeRandomSpawn > 10) && (BeatDetector.get_beat()[(int)time_music] > 0))
+                    end = true;
+                }
+
+                #endregion
+                #region Fin du level
+
+                if ((end || endDead) && (first))
+                {
+                    path_level = "Scores\\Arcade\\lvl" + _level + ".score";
+                    sr_level = new StreamReader(path_level);
+                    score_level = System.IO.File.ReadAllLines(@path_level);
+                    stock_score_inferieur = "";
+                    stock_score_superieur = "";
+
+                    for (int i = 0; i < 10; i += 2)
                     {
-                        if (energy_1024_music / moy_energie1024 > 1.8)
-                        {
-                            listeVaisseau.Add(new kamikaze(T_Vaisseau_Kamikaze, position_spawn));
-                            beat_spawned = BEAT_SPAWNED.ENEMY;
-                        }
-                        else if (energy_1024_music / moy_energie1024 > 1.5)
-                        {
-                            listeVaisseau.Add(new RapidShooter(T_Vaisseau_Doubleshooter, position_spawn));
-                            beat_spawned = BEAT_SPAWNED.ENEMY;
-                        }
-                        else if (energy_1024_music / moy_energie1024 > 1.2)
-                        {
-                            listeVaisseau.Add(new Blasterer(T_Vaisseau_Energizer, position_spawn));
-                            beat_spawned = BEAT_SPAWNED.ENEMY;
-                        }
-                        else if (energy_1024_music / moy_energie1024 > 1)
-                        {
-                            listeVaisseau.Add(new Drone(T_Vaisseau_Drone, position_spawn));
-                            beat_spawned = BEAT_SPAWNED.ENEMY;
-                        }
+                        if (score < Convert.ToInt32(score_level[i + 1]))
+                            stock_score_inferieur += score_level[i] + '\n' + score_level[i + 1] + '\n';
                         else
-                        {
-                            beat_spawned = BEAT_SPAWNED.NOTHING;
-                        }
-
-                        lastTimeRandomSpawn = time_music;
+                            stock_score_superieur += score_level[i] + '\n' + score_level[i + 1] + '\n';
                     }
 
-                    lastTimeMusic = time_music;
+                    sr_level.Close();
+                    sw_level = new StreamWriter(path_level);
+
+                    sw_level.WriteLine(stock_score_inferieur + "Nervous" + '\n' + Convert.ToString(score) + '\n' + stock_score_superieur);
+                    sw_level.Close();
+                    first = false;
+                    AudioPlayer.StopMusic();
+                    SoundEffect.MasterVolume = 0.00f;
                 }
+                if (end || endDead)
+                {
+                    AudioPlayer.PlayMusic("Musiques\\Menu\\Musique.flac");
+                    if (keyboardState.IsKeyDown(Keys.Enter))
+                        Remove();
+                }
+                #endregion
+                base.Update(gameTime);
             }
             else
             {
-                end = true;
+                if ((InputState.IsPauseGame())||(InputState.IsMenuCancel())||(InputState.IsMenuSelect()))
+                    pause = false;
             }
-
-            #endregion
-            #region Fin du level
-
-            if ((end || endDead)&&(first))
-            {
-                path_level = "Scores\\Arcade\\lvl" + _level + ".score";
-                sr_level = new StreamReader(path_level);
-                score_level = System.IO.File.ReadAllLines(@path_level);
-                stock_score_inferieur = "";
-                stock_score_superieur = "";
-
-                for (int i = 0; i < 10; i+=2) 
-                {      
-                    if (score < Convert.ToInt32(score_level[i + 1]))
-                        stock_score_inferieur += score_level[i] + '\n' + score_level[i+1] +'\n';
-                    else
-                        stock_score_superieur += score_level[i] + '\n' + score_level[i+1] +'\n';
-                }
-    
-                sr_level.Close();
-                sw_level = new StreamWriter(path_level);
-
-                sw_level.WriteLine(stock_score_inferieur + "Nervous" + '\n' + Convert.ToString(score) + '\n' + stock_score_superieur);
-                sw_level.Close();
-                first = false;
-                    AudioPlayer.StopMusic();
-                    SoundEffect.MasterVolume = 0.00f;                           
-            }
-            if (end || endDead)
-            {
-                AudioPlayer.PlayMusic("Musiques\\Menu\\Musique.flac");
-                if (keyboardState.IsKeyDown(Keys.Enter))
-                    Remove();
-            }
-            #endregion
-            base.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime)
