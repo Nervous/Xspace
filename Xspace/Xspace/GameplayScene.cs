@@ -53,9 +53,9 @@ namespace MenuSample.Scenes
         private List<doneParticles> partManage;
         private ScrollingBackground fond_ecran, fond_ecran_front, fond_ecran_middle;
         public SpriteBatch spriteBatch;
-        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Vaisseau_Kamikaze, T_Missile_Joueur_1, T_Missile_Joueur_2, T_Missile_Joueur_3, T_Laser_Joueur, T_Missile_Drone, T_Bonus_Vie, T_Bonus_Weapon1, T_Obstacles_Hole, barre_vie, barre_energy, T_HUD, T_HUD_boss, T_HUD_bars, T_HUD_bar_boss, T_Divers_Levelcomplete, T_Divers_Levelfail, T_boss1, T_Vaisseau_Energizer, T_Vaisseau_Doubleshooter, T_Missile_Energie, T_boss2, T_boss3;
+        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Vaisseau_Kamikaze, T_Missile_Joueur_1, T_Missile_Joueur_2, T_Missile_Joueur_3, T_Missile_HeavyLaser, T_Laser_Joueur, T_Missile_Drone, T_Bonus_Vie, T_Bonus_Weapon1, T_Obstacles_Hole, barre_vie, barre_energy, T_HUD, T_HUD_boss, T_HUD_bars, T_HUD_bar_boss, T_Divers_Levelcomplete, T_Divers_Levelfail, T_boss1, T_Vaisseau_Energizer, T_Vaisseau_Doubleshooter, T_Missile_Energie, T_boss2, T_boss3;
         private List<Texture2D> listeTextureVaisseauxEnnemis, listeTextureBonus, listeTextureObstacles, listeTextureBoss;
-        private SoundEffect musique_tir, musique_bossExplosion;
+        private SoundEffect sonLaser, sonHeavyLaser, musique_bossExplosion;
         private KeyboardState keyboardState;
         bool lastKeyDown = true, end = false, endDead = false;
         private gestionLevels thisLevel;
@@ -191,7 +191,8 @@ namespace MenuSample.Scenes
             Thread.Sleep(50);
             SceneManager.Game.ResetElapsedTime();
             #region Chargement musiques & sons
-            musique_tir = _content.Load<SoundEffect>("Sons\\Tir\\Tir");
+            sonLaser = _content.Load<SoundEffect>("Sons\\Tir\\Tir");
+            sonHeavyLaser = _content.Load<SoundEffect>("Sons\\Tir\\HeavyLaser");
             musique_bossExplosion = _content.Load<SoundEffect>("Sons\\BossExplosion");
 
             MD5CryptoServiceProvider md5crypto = new MD5CryptoServiceProvider();
@@ -273,6 +274,7 @@ namespace MenuSample.Scenes
             T_Missile_Joueur_1 = _content.Load<Texture2D>("Sprites\\Missiles\\Joueur\\1");
             T_Missile_Joueur_2 = _content.Load<Texture2D>("Sprites\\Missiles\\Joueur\\1_DiagoHaut");
             T_Missile_Joueur_3 = _content.Load<Texture2D>("Sprites\\Missiles\\Joueur\\1_DiagoBas");
+            T_Missile_HeavyLaser = _content.Load<Texture2D>("Sprites\\Missiles\\Joueur\\heavyLaser");
             T_Missile_Drone = _content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\missile_new1");
             T_Laser_Joueur = _content.Load<Texture2D>("Sprites\\Missiles\\Joueur\\Laser");
             T_Missile_Energie = _content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\missile_boule1");
@@ -461,14 +463,6 @@ namespace MenuSample.Scenes
                     }
                     #endregion
                 }
-                /*foreach (Obstacles obstacle in listeObstacles)
-                {
-                    #region Collision joueur <=> Obstacle
-                    if (IntersectPixels(listeVaisseau[0].rectangle, listeVaisseau[0].sprite, obstacle.rectangle, obstacle.sprite))
-                    {
-                    }
-                    #endregion
-                }*/
             }
             return listeParticules;
         }
@@ -579,7 +573,7 @@ namespace MenuSample.Scenes
                                 case 0:
                                     if (time - lastTime > 150 || lastTime == 0)
                                     {
-                                        musique_tir.Play();
+                                        sonLaser.Play();
                                         Vector2 spawn = new Vector2(listeVaisseau[0].pos.X + listeVaisseau[0].sprite.Width - 1, listeVaisseau[0].pos.Y + listeVaisseau[0].sprite.Height / 2 - 2);
                                         listeMissile.Add(new Xspace.Missile1_joueur(T_Missile_Joueur_1, spawn, listeVaisseau[0], null));
                                         lastTime = time;
@@ -588,7 +582,7 @@ namespace MenuSample.Scenes
                                 case 1:
                                     if (time - lastTime > 150 || lastTime == 0)
                                     {
-                                        musique_tir.Play();
+                                        sonLaser.Play();
                                         Vector2 spawn1 = new Vector2(listeVaisseau[0].pos.X + 35, listeVaisseau[0].pos.Y + listeVaisseau[0].sprite.Height / 3 - 18);
                                         Vector2 spawn2 = new Vector2(listeVaisseau[0].pos.X + 35, listeVaisseau[0].pos.Y + listeVaisseau[0].sprite.Height / 3 + 25);
                                         listeMissile.Add(new Xspace.Missile1_joueur(T_Missile_Joueur_1, spawn1, listeVaisseau[0], null));
@@ -599,7 +593,7 @@ namespace MenuSample.Scenes
                                 case 2:
                                     if (time - lastTime > 150 || lastTime == 0)
                                     {
-                                        musique_tir.Play();
+                                        sonLaser.Play();
                                         Vector2 spawn1 = new Vector2(listeVaisseau[0].pos.X + 35, listeVaisseau[0].pos.Y + listeVaisseau[0].sprite.Height / 3 - 18);
                                         Vector2 spawn2 = new Vector2(listeVaisseau[0].pos.X + 35, listeVaisseau[0].pos.Y + listeVaisseau[0].sprite.Height / 3 + 25);
                                         Vector2 spawn3 = new Vector2(listeVaisseau[0].pos.X + 29, listeVaisseau[0].pos.Y + listeVaisseau[0].sprite.Height / 3 + 29);
@@ -616,6 +610,18 @@ namespace MenuSample.Scenes
                             }
                             break;
                         case 1:
+                            if (time - lastTime > 350 || lastTime == 0)
+                            {
+                                if (!listeVaisseau[0].useEnergy(100))
+                                {
+                                    sonHeavyLaser.Play();
+                                    Vector2 spawn = new Vector2(listeVaisseau[0].pos.X + listeVaisseau[0].sprite.Width - 1, listeVaisseau[0].pos.Y + listeVaisseau[0].sprite.Height / 2 - 5);
+                                    listeMissile.Add(new Xspace.HeavyLaser(T_Missile_HeavyLaser, spawn, listeVaisseau[0], null));
+                                    lastTime = time;
+                                }
+                            }
+                            break;
+                        case 2:
                             if (!listeVaisseau[0].laser)
                             {
                                 if (!listeVaisseau[0].useEnergy(25))
@@ -659,10 +665,17 @@ namespace MenuSample.Scenes
                     listeVaisseau[0].changeWeapon(0);
                 }
                 else if ((keyboardState.IsKeyDown(Keys.D2) && (listeVaisseau.Count != 0)))
+                {
+                    if (listeVaisseau[0].laser)
+                    {
+                        listeMissileToRemove.Add(listeVaisseau[0].getLaser());
+                        listeVaisseau[0].disableLaser();
+                    }
                     listeVaisseau[0].changeWeapon(1);
-                /*else if ((keyboardState.IsKeyDown(Keys.D3) && (listeVaisseau.Count != 0)))
+                }
+                else if ((keyboardState.IsKeyDown(Keys.D3) && (listeVaisseau.Count != 0)))
                     listeVaisseau[0].changeWeapon(2);
-                 else if ((keyboardState.IsKeyDown(Keys.D4) && (listeVaisseau.Count != 0)))
+                 /*else if ((keyboardState.IsKeyDown(Keys.D4) && (listeVaisseau.Count != 0)))
                     listeVaisseau[0].changeWeapon(3);*/
 
 
