@@ -207,6 +207,9 @@ namespace Xspace
                         case "boss2":
                             boss = new Boss2(listeTextureBoss[1], Boss.phaseArray2);
                             break;
+                        case "boss3":
+                            boss = new Boss3(listeTextureBoss[2], Boss.phaseArray2);
+                            break;
                         default:
                             break;
                     }

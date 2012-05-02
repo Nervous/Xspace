@@ -505,6 +505,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Sprites\Vaisseaux\Boss\boss3.png">
+      <Name>boss3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Sons\Tir\HeavyLaser.mp3">
       <Name>HeavyLaser</Name>
       <Importer>Mp3Importer</Importer>
