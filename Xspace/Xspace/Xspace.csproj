@@ -130,6 +130,7 @@
     <Compile Include="GameCore\Items\Missiles\Boss\Boss2_Met_Hori_Gauche.cs" />
     <Compile Include="GameCore\Items\Missiles\Boss\Missile1_DiagoBas_Boss.cs" />
     <Compile Include="GameCore\Items\Missiles\Boss\Missile1_DiagoHaut_Boss.cs" />
+    <Compile Include="GameCore\Items\Missiles\Joueur\HeavyLaser.cs" />
     <Compile Include="GameCore\Items\Missiles\Joueur\Laser_joueur.cs" />
     <Compile Include="GameCore\Items\Missiles\Joueur\Missile1_DiagoHaut_Joueur.cs" />
     <Compile Include="GameCore\Items\Missiles\Joueur\Missile1_DiagoBas_Joueur.cs" />
