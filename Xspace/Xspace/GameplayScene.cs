@@ -58,7 +58,6 @@ namespace MenuSample.Scenes
         private SoundEffect sonLaser, sonHeavyLaser, musique_bossExplosion;
         private KeyboardState keyboardState;
         bool lastKeyDown = true, end = false, endDead = false;
-        private gestionLevels thisLevel;
         private List<gestionLevels> infLevel, listeLevelToRemove;
         Renderer particleRenderer;
         ParticleEffect particleEffect, particleEffectMoteur, particleEffectBoss1, particleBossExplosion;
@@ -328,11 +327,14 @@ namespace MenuSample.Scenes
             listeTextureBoss.Add(T_boss1);
             listeTextureBoss.Add(T_boss2);
             listeTextureBoss.Add(T_boss3);
-
-            thisLevel = new gestionLevels(_level, listeTextureVaisseauxEnnemis, listeTextureBonus, listeTextureObstacles, listeTextureBoss);
+            
             infLevel = new List<gestionLevels>();
             listeLevelToRemove = new List<gestionLevels>();
-            thisLevel.readInfos(delimitationFilesInfo, delimitationFilesInfo2, delimitationFilesInfo3, infLevel);
+            if (mode != GAME_MODE.LIBRE)
+            {
+                gestionLevels thisLevel = new gestionLevels(_level, listeTextureVaisseauxEnnemis, listeTextureBonus, listeTextureObstacles, listeTextureBoss);
+                thisLevel.readInfos(delimitationFilesInfo, delimitationFilesInfo2, delimitationFilesInfo3, infLevel);
+            }
             #endregion
             #region Chargement barre de vie
             barre_vie = _content.Load<Texture2D>("Sprites\\HUD\\Life");

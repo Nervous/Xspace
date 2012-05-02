@@ -34,9 +34,7 @@ namespace MenuSample.Scenes
         
         private void SongSelected(object sender, EventArgs e)
         {
-            _level = 1;
-            _act = 1;
-            LoadingScene.Load(SceneManager, true, new GameplayScene(SceneManager, graphics, _level, _act, GameplayScene.GAME_MODE.LIBRE, ((MenuItem)sender).Text));
+            LoadingScene.Load(SceneManager, true, new GameplayScene(SceneManager, graphics, 0, 0, GameplayScene.GAME_MODE.LIBRE, ((MenuItem)sender).Text));
         }
     }
 }
