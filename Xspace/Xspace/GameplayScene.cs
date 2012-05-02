@@ -234,9 +234,9 @@ namespace MenuSample.Scenes
             particleEffectMoteur.Initialise();
             particleEffectMoteur.LoadContent(_content);
             //Boss1
-            particleEffectBoss1 = _content.Load<ParticleEffect>("Collisions\\Moteur\\Boss1");
-            particleEffectBoss1.Initialise();
-            particleEffectBoss1.LoadContent(_content);
+                particleEffectBoss1 = _content.Load<ParticleEffect>("Collisions\\Moteur\\Boss1");
+                particleEffectBoss1.Initialise();
+                particleEffectBoss1.LoadContent(_content);        
             //Explosions
             particleEffect = _content.Load<ParticleEffect>("Collisions\\BasicExplosion\\BasicExplosion");
             particleEffect.Initialise();
@@ -669,8 +669,11 @@ namespace MenuSample.Scenes
             if (boss1 != null && boss1.Existe && !endDead)
             {
                 boss1.Update(fps_fix, time, listeMissile);
-                particleEffectBoss1.Trigger(new Vector2(boss1.PositionX + boss1.Texture.Width + 5, boss1.PositionY + boss1.Texture.Height / 3 - 5));
-                particleEffectBoss1.Trigger(new Vector2(boss1.PositionX + boss1.Texture.Width + 5, boss1.PositionY + (boss1.Texture.Height * 2) / 3 + 10));
+                if (boss1.Number == 1)
+                {
+                    particleEffectBoss1.Trigger(new Vector2(boss1.PositionX + boss1.Texture.Width + 5, boss1.PositionY + boss1.Texture.Height / 3 - 5));
+                    particleEffectBoss1.Trigger(new Vector2(boss1.PositionX + boss1.Texture.Width + 5, boss1.PositionY + (boss1.Texture.Height * 2) / 3 + 10));
+                }
             }
             else if (boss1 != null && aBossWasThere)
             {
