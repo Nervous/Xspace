@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Xspace
 {
-    abstract class item
+    abstract class Item
     {
         protected Texture2D _sprite;
         protected Vector2 _pos, _deplacement;
@@ -21,7 +21,7 @@ namespace Xspace
 
         protected Rectangle _rectangle;
 
-        public item(Texture2D text, Vector2 pos, Vector2 deplacement, int vie, int score)
+        public Item(Texture2D text, Vector2 pos, Vector2 deplacement, int vie, int score)
         {
             _existe = true;
             _sprite = text;

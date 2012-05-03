@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Xspace
 {
-    class Vaisseau : item
+    class Vaisseau : Item
     {
         public float _vitesseVaisseau;
         protected int _armure, _damageCollision, _armeActuelle, _baseWeapon, _vieMax, _energie, _energieMax;
@@ -129,11 +129,13 @@ namespace Xspace
 
         public bool useEnergy(int amount)
         {
-            if (this._energie - amount < 0)
-                this._energie = 0;
-            else
+            if (this._energie - amount >= 0)
+            {
                 this._energie -= amount;
-                return (this._energie <= 0);
+                return false;
+            }
+            else
+                return true; // What ?
         }
 
         public void heal(int amount)

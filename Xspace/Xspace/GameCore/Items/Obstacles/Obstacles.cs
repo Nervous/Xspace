@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Xspace
 {
-    class Obstacles : item
+    class Obstacles : Item
     {
         protected float _vitesseObstacle;
         protected string _categorie;

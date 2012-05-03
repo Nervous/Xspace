@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Xspace
 {
-    abstract class Boss : item
+    abstract class Boss : Item
     {
         protected int _vieMax, _armeActuelle, _phase, _lastVie, _number;
         protected float _vitesse;

@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Xspace
 {
-    class Bonus : item
+    class Bonus : Item
     {
         protected Texture2D _textureBonus;
         protected float _vitesseBonus;

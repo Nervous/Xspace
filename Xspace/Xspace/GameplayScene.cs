@@ -53,7 +53,7 @@ namespace MenuSample.Scenes
         private List<doneParticles> partManage;
         private ScrollingBackground fond_ecran, fond_ecran_front, fond_ecran_middle;
         public SpriteBatch spriteBatch;
-        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Vaisseau_Kamikaze, T_Missile_Joueur_1, T_Missile_Joueur_2, T_Missile_Joueur_3, T_Missile_HeavyLaser, T_Laser_Joueur, T_Missile_Drone, T_Bonus_Vie, T_Bonus_Weapon1, T_Obstacles_Hole, barre_vie, barre_energy, T_HUD, T_HUD_boss, T_HUD_bars, T_HUD_bar_boss, T_Divers_Levelcomplete, T_Divers_Levelfail, T_boss1, T_Vaisseau_Energizer, T_Vaisseau_Doubleshooter, T_Missile_Energie, T_boss2, T_boss3;
+        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Vaisseau_Kamikaze, T_Missile_Joueur_1, T_Missile_Joueur_2, T_Missile_Joueur_3, T_Missile_HeavyLaser, T_Laser_Joueur, T_Missile_Drone, T_Bonus_Vie, T_Bonus_Weapon1, T_Obstacles_Hole, barre_vie, barre_energy, T_HUD, T_HUD_boss, T_HUD_bars, T_HUD_bar_boss, T_Divers_Levelcomplete, T_Divers_Levelfail, T_boss1, T_Vaisseau_Energizer, T_Vaisseau_Doubleshooter, T_Missile_Energie, T_boss2, T_boss3, T_Missile_Rocket;
         private List<Texture2D> listeTextureVaisseauxEnnemis, listeTextureBonus, listeTextureObstacles, listeTextureBoss;
         private SoundEffect sonLaser, sonHeavyLaser, musique_bossExplosion;
         private KeyboardState keyboardState;
@@ -276,8 +276,9 @@ namespace MenuSample.Scenes
             T_Missile_Joueur_2 = _content.Load<Texture2D>("Sprites\\Missiles\\Joueur\\1_DiagoHaut");
             T_Missile_Joueur_3 = _content.Load<Texture2D>("Sprites\\Missiles\\Joueur\\1_DiagoBas");
             T_Missile_HeavyLaser = _content.Load<Texture2D>("Sprites\\Missiles\\Joueur\\heavyLaser");
-            T_Missile_Drone = _content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\missile_new1");
+            T_Missile_Rocket = _content.Load<Texture2D>("Sprites\\Missiles\\Joueur\\rocket");
             T_Laser_Joueur = _content.Load<Texture2D>("Sprites\\Missiles\\Joueur\\Laser");
+            T_Missile_Drone = _content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\missile_new1");
             T_Missile_Energie = _content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\missile_boule1");
             #endregion
             #region Chargement textures bonus
@@ -644,6 +645,17 @@ namespace MenuSample.Scenes
                                 }
                             }
                             break;
+                        case 3:
+                            if (time - lastTime > 350 || lastTime == 0)
+                            {
+                                if (!listeVaisseau[0].useEnergy(200))
+                                {
+                                    Vector2 spawn = new Vector2(listeVaisseau[0].pos.X + listeVaisseau[0].sprite.Width - 1, listeVaisseau[0].pos.Y + listeVaisseau[0].sprite.Height / 2 - T_Missile_Rocket.Height / 2);
+                                    listeMissile.Add(new Xspace.Rocket(T_Missile_Rocket, spawn, listeVaisseau[0], null));
+                                    lastTime = time;
+                                }
+                            }
+                            break;
                         default:
                             break;
                     }
@@ -677,8 +689,8 @@ namespace MenuSample.Scenes
                 }
                 else if ((keyboardState.IsKeyDown(Keys.D3) && (listeVaisseau.Count != 0)))
                     listeVaisseau[0].changeWeapon(2);
-                 /*else if ((keyboardState.IsKeyDown(Keys.D4) && (listeVaisseau.Count != 0)))
-                    listeVaisseau[0].changeWeapon(3);*/
+                else if ((keyboardState.IsKeyDown(Keys.D4) && (listeVaisseau.Count != 0)))
+                    listeVaisseau[0].changeWeapon(3);
 
 
                 #endregion
@@ -717,13 +729,18 @@ namespace MenuSample.Scenes
                 #region Update des missiles
                 foreach (Missiles missile in listeMissile)
                 {
-                    if (missile.pos.X < 1150 && (missile.pos.Y > SCREEN_MAXTOP && missile.pos.Y < SCREEN_MAXBOT) && !missile.ennemi)
+                    if ((missile.pos.X < 1150 && (missile.pos.Y > SCREEN_MAXTOP && missile.pos.Y < SCREEN_MAXBOT) && !missile.ennemi) || (missile.pos.X > 0 && (missile.pos.Y > SCREEN_MAXTOP && missile.pos.Y < SCREEN_MAXBOT) && missile.ennemi))
+                    {
                         missile.Update(fps_fix);
-                    else if (missile.pos.X > 0 && (missile.pos.Y > SCREEN_MAXTOP && missile.pos.Y < SCREEN_MAXBOT) && missile.ennemi)
-                        missile.Update(fps_fix);
+                        if (missile is Rocket)
+                        {
+                            particleEffectMissiles.Trigger(new Vector2(missile.pos.X, missile.pos.Y + T_Missile_Rocket.Height / 2));
+                        }
+                    }
                     else if (!(missile is Laser_joueur))
                         listeMissileToRemove.Add(missile);
                 }
+                particleEffectMissiles.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
                 foreach (Missiles missile in listeMissileToRemove)
                 {
                     listeMissile.Remove(missile);
@@ -782,7 +799,7 @@ namespace MenuSample.Scenes
                 #region Update des bonus
                 foreach (Bonus bonus in listeBonus)
                 {
-                    if (bonus.pos.X > 0)
+                    if (bonus != null && bonus.pos.X > 0)
                         bonus.Update(fps_fix);
                     else
                         listeBonusToRemove.Add(bonus);
@@ -986,6 +1003,7 @@ namespace MenuSample.Scenes
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive);
             particleRenderer.RenderEffect(particleEffectMoteur);
             particleRenderer.RenderEffect(particleEffectBoss1);
+            particleRenderer.RenderEffect(particleEffectMissiles);
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
             #endregion

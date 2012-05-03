@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Xspace
 {
-    class Missiles : item
+    class Missiles : Item
     {
         private Vaisseau _ownerV;
         private Boss _ownerB;
