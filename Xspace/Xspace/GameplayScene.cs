@@ -53,7 +53,7 @@ namespace MenuSample.Scenes
         private List<doneParticles> partManage;
         private ScrollingBackground fond_ecran, fond_ecran_front, fond_ecran_middle;
         public SpriteBatch spriteBatch;
-        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Vaisseau_Kamikaze, T_Missile_Joueur_1, T_Missile_Joueur_2, T_Missile_Joueur_3, T_Missile_HeavyLaser, T_Laser_Joueur, T_Missile_Drone, T_Bonus_Vie, T_Bonus_Weapon1, T_Bonus_Score, T_Bonus_Energie, T_Obstacles_Hole, barre_vie, barre_energy, T_HUD, T_HUD_boss, T_HUD_bars, T_HUD_bar_boss, T_Divers_Levelcomplete, T_Divers_Levelfail, T_boss1, T_Vaisseau_Energizer, T_Vaisseau_Doubleshooter, T_Missile_Energie, T_boss2, T_boss3;
+        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Vaisseau_Kamikaze, T_Missile_Joueur_1, T_Missile_Joueur_2, T_Missile_Joueur_3, T_Missile_HeavyLaser, T_Laser_Joueur, T_Missile_Drone, T_Bonus_Vie, T_Bonus_Weapon1, T_Bonus_Score, T_Bonus_Energie, T_Obstacles_Hole, barre_vie, barre_energy, T_HUD, T_HUD_boss, T_HUD_bars, T_HUD_bar_boss, T_Divers_Levelcomplete, T_Divers_Levelfail, T_boss1, T_Vaisseau_Energizer, T_Vaisseau_Doubleshooter, T_Missile_Energie, T_boss2, T_boss3, T_HUD_basic, T_HUD_laser, T_HUD_Heavy, T_HUD_red_rect;
         private List<Texture2D> listeTextureVaisseauxEnnemis, listeTextureBonus, listeTextureObstacles, listeTextureBoss;
         private SoundEffect sonLaser, sonHeavyLaser, musique_bossExplosion;
         private KeyboardState keyboardState;
@@ -270,6 +270,10 @@ namespace MenuSample.Scenes
             T_HUD_boss = _content.Load<Texture2D>("Sprites\\HUD\\interface-boss");
             T_HUD_bars = _content.Load<Texture2D>("Sprites\\HUD\\energyBars1");
             T_HUD_bar_boss = _content.Load<Texture2D>("Sprites\\HUD\\energyBarsBoss");
+            T_HUD_laser = _content.Load<Texture2D>("Sprites\\HUD\\laser_choice");
+            T_HUD_basic= _content.Load<Texture2D>("Sprites\\HUD\\basic_choice");
+            T_HUD_red_rect = _content.Load<Texture2D>("Sprites\\HUD\\rect_hud");
+            T_HUD_Heavy = _content.Load<Texture2D>("Sprites\\HUD\\red_laser_choice");
             #endregion
             #region Chargement textures missiles
             T_Missile_Joueur_1 = _content.Load<Texture2D>("Sprites\\Missiles\\Joueur\\1");
@@ -1101,6 +1105,42 @@ namespace MenuSample.Scenes
             spriteBatch.Draw(T_HUD_bars, new Vector2(380, 630), Color.White);
             if (mode != GAME_MODE.EXTREME)
                 spriteBatch.DrawString(_HUDfont, Convert.ToString(score), new Vector2(95, 628), new Color(30, 225, 30));
+
+            Color laser, red_laser;
+            Vector2 rect_vect;
+            if (listeVaisseau.Count != 0)
+            {
+                switch (listeVaisseau[0].armeActuelle)
+                {
+                    case 0:
+                        rect_vect = new Vector2(6, 706);
+                        break;
+                    case 1:
+                        rect_vect = new Vector2(46, 706);
+                        break;
+                    case 2:
+                        rect_vect = new Vector2(86, 706);
+                        break;
+                    default:
+                        rect_vect = new Vector2(6, 706);
+                        break;
+                }
+
+                if (listeVaisseau[0].Energie >= 20)
+                    laser = Color.White;
+                else
+                    laser = Color.Red;
+
+                if (listeVaisseau[0].Energie >= 100)
+                    red_laser = Color.White;
+                else
+                    red_laser = Color.Red;
+
+                spriteBatch.Draw(T_HUD_laser, new Vector2(90, 710), laser);
+                spriteBatch.Draw(T_HUD_basic, new Vector2(10, 710), Color.White);
+                spriteBatch.Draw(T_HUD_Heavy, new Vector2(50, 710), red_laser);
+                spriteBatch.Draw(T_HUD_red_rect, rect_vect, Color.White);
+            }
             #endregion
             #region Draw des boss
             if (boss1 != null && boss1.Existe && !(end || endDead))
