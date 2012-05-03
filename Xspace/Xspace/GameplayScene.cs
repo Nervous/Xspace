@@ -445,6 +445,42 @@ namespace MenuSample.Scenes
                             if(!(missile is Laser_joueur))
                                 listeMissileToRemove.Add(missile);
 
+                            if (missile is Rocket) // AoE sur les roquettes
+                            {
+                                foreach(Vaisseau v in listeVaisseau)
+                                {
+                                    Rectangle recRoquette = missile.rectangle;
+                                    double disX = Math.Abs(missile.pos.X - v.pos.X);
+                                    double disY = Math.Abs(missile.pos.Y - v.pos.Y);
+                                    double distance = Math.Sqrt(Math.Pow(disX, 2) + Math.Pow(disY, 2));
+                                    if (distance < 250 && !dead && v != listeVaisseau[0])
+                                    {
+                                        if (v.hurt(missile.degats, time))
+                                        {
+                                            vaisseau.kill();
+                                            if ((!end) && (!endDead))
+                                                score += vaisseau.score;
+
+                                            int random_bonus = r.Next(0, 100);
+                                            if (random_bonus > 98)       // 2% - Drop un bonus
+                                            {
+                                                random_bonus = r.Next(0, 100);
+                                                if (random_bonus < 50) // 50% que ce soit un bonus vie
+                                                    listeBonusToAdd.Add(new Bonus_Vie(T_Bonus_Vie, vaisseau.pos));
+                                                else if (random_bonus < 70) // 20% - Bonus score
+                                                    listeBonusToAdd.Add(new Bonus_Score(T_Bonus_Score, vaisseau.pos));
+                                                else if (random_bonus < 90) // 20% - Bonus énergie
+                                                    listeBonusToAdd.Add(new Bonus_Energie(T_Bonus_Energie, vaisseau.pos));
+                                                else
+                                                    listeBonusToAdd.Add(new Bonus_BaseWeapon(T_Bonus_Weapon1, vaisseau.pos));
+                                            }
+                                        }
+
+                                        listeParticules.Add(new doneParticles(false, new Vector2(vaisseau.pos.X + vaisseau.sprite.Width / 2, vaisseau.pos.Y + vaisseau.sprite.Height / 2)));    
+                                    }
+                                }
+                            }
+
                             if (vaisseau.hurt(missile.degats, time)) // Mort du vaisseau
                             {
                                 vaisseau.kill();
