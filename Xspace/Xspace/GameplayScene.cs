@@ -441,11 +441,19 @@ namespace MenuSample.Scenes
                                 if((!end)&&(!endDead))
                                     score += vaisseau.score;
 
-                                int random_bonus = r.Next(0, 1000);
-                                if (random_bonus > 995)       // 0.5% - Bonus upgrade arme de base
-                                    listeBonusToAdd.Add(new Bonus_BaseWeapon(T_Bonus_Weapon1, vaisseau.pos));
-                                else if (random_bonus > 950) // 5%    - Bonus vie
-                                    listeBonusToAdd.Add(new Bonus_Vie(T_Bonus_Vie, vaisseau.pos));
+                                int random_bonus = r.Next(0, 100);
+                                if (random_bonus > 98)       // 2% - Drop un bonus
+                                {
+                                    random_bonus = r.Next(0, 100);
+                                    if(random_bonus < 50) // 50% que ce soit un bonus vie
+                                        listeBonusToAdd.Add(new Bonus_Vie(T_Bonus_Vie, vaisseau.pos));
+                                    else if (random_bonus < 70) // 20% - Bonus score
+                                        listeBonusToAdd.Add(new Bonus_Score(T_Bonus_Vie, vaisseau.pos));
+                                    else if (random_bonus < 90) // 20% - Bonus énergie
+                                        listeBonusToAdd.Add(new Bonus_Energie(T_Bonus_Vie, vaisseau.pos));
+                                    else
+                                        listeBonusToAdd.Add(new Bonus_BaseWeapon(T_Bonus_Weapon1, vaisseau.pos));
+                                }
                                 
 
                                 listeParticules.Add(new doneParticles(false, new Vector2(vaisseau.pos.X + vaisseau.sprite.Width / 2, vaisseau.pos.Y + vaisseau.sprite.Height / 2)));        

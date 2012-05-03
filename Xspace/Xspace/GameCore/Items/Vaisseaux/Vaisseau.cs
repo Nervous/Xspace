@@ -59,6 +59,11 @@ namespace Xspace
                 case "baseWeapon":
                     this.changeBaseWeapon(_baseWeapon + 1);
                     break;
+                case "energie":
+                    this._energie += amount;
+                    if (this._energie > this._energieMax)
+                        this._energie = this._energieMax;
+                    break;
                 default:
                     break;
             }
