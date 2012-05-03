@@ -178,6 +178,12 @@ namespace Xspace
                         case "baseWeapon":
                             bonus = new Bonus_BaseWeapon(listeTextureBonus[1], start);
                             break;
+                        case "score":
+                            bonus = new Bonus_Score(listeTextureBonus[2], start);
+                            break;
+                        case "energie":
+                            bonus = new Bonus_Energie(listeTextureBonus[3], start);
+                            break;
                         default:
                             break;
                     }
