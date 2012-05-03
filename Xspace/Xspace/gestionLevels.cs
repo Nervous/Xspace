@@ -162,6 +162,9 @@ namespace Xspace
                         case "blasterer":
                             vaisseau = new Blasterer(listeTextureVaisseauxEnnemis[2], start);
                             break;
+                        case "zebra":
+                            vaisseau = new Zebra(listeTextureVaisseauxEnnemis[4], start);
+                            break;
                         default:
                             break;
                     }

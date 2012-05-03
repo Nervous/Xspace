@@ -136,6 +136,7 @@
     <Compile Include="GameCore\Items\Missiles\Joueur\Laser_joueur.cs" />
     <Compile Include="GameCore\Items\Missiles\Joueur\Missile1_DiagoHaut_Joueur.cs" />
     <Compile Include="GameCore\Items\Missiles\Joueur\Missile1_DiagoBas_Joueur.cs" />
+    <Compile Include="GameCore\Items\Vaisseaux\Zebra.cs" />
     <Compile Include="gestionLevels.cs" />
     <Compile Include="GameCore\Items\Item.cs" />
     <Compile Include="Menu\InputState.cs" />

@@ -213,6 +213,13 @@ namespace Xspace
         {
              _pos -= _deplacement * _vitesseVaisseau * fps_fix;
              updateRectangle();
+             if (this is Zebra) 
+             {
+                 if (this._pos.Y > 560)
+                     base._deplacement.Y = 1;
+                 else if (this._pos.Y < 15)
+                     base._deplacement.Y = -1;
+             }
         }
 
         public void Update(float fps_fix, KeyboardState keyboard, List<Obstacles> obstacles)

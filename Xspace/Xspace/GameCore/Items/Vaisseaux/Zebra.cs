@@ -11,10 +11,11 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Xspace
 {
-    class Rocket : Missiles
+    class Zebra : Vaisseau
     {
-        public Rocket(Texture2D texture, Vector2 position, Vaisseau owner, Boss ownerB)
-            : base(texture, false, 20000, position, new Vector2(2, 0), 0.30f, owner, ownerB)
+        public Zebra(Texture2D sprite, Vector2 position)
+            : base(sprite, 10, 0, 0, 0, 30, 0.60f, position, Vector2.Normalize(new Vector2(1, 1)), true, -1, 130, -1)
         { }
+
     }
 }
