@@ -53,7 +53,7 @@ namespace MenuSample.Scenes
         private List<doneParticles> partManage;
         private ScrollingBackground fond_ecran, fond_ecran_front, fond_ecran_middle;
         public SpriteBatch spriteBatch;
-        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Vaisseau_Kamikaze, T_Missile_Joueur_1, T_Missile_Joueur_2, T_Missile_Joueur_3, T_Missile_HeavyLaser, T_Laser_Joueur, T_Missile_Drone, T_Bonus_Vie, T_Bonus_Weapon1, T_Obstacles_Hole, barre_vie, barre_energy, T_HUD, T_HUD_boss, T_HUD_bars, T_HUD_bar_boss, T_Divers_Levelcomplete, T_Divers_Levelfail, T_boss1, T_Vaisseau_Energizer, T_Vaisseau_Doubleshooter, T_Missile_Energie, T_boss2, T_boss3;
+        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Vaisseau_Kamikaze, T_Missile_Joueur_1, T_Missile_Joueur_2, T_Missile_Joueur_3, T_Missile_HeavyLaser, T_Laser_Joueur, T_Missile_Drone, T_Bonus_Vie, T_Bonus_Weapon1, T_Bonus_Score, T_Bonus_Energie, T_Obstacles_Hole, barre_vie, barre_energy, T_HUD, T_HUD_boss, T_HUD_bars, T_HUD_bar_boss, T_Divers_Levelcomplete, T_Divers_Levelfail, T_boss1, T_Vaisseau_Energizer, T_Vaisseau_Doubleshooter, T_Missile_Energie, T_boss2, T_boss3;
         private List<Texture2D> listeTextureVaisseauxEnnemis, listeTextureBonus, listeTextureObstacles, listeTextureBoss;
         private SoundEffect sonLaser, sonHeavyLaser, musique_bossExplosion;
         private KeyboardState keyboardState;
@@ -284,6 +284,8 @@ namespace MenuSample.Scenes
             // TODO : Chargement de toutes les textures des bonus en dessous
             T_Bonus_Vie = _content.Load<Texture2D>("Sprites\\Bonus\\Life");
             T_Bonus_Weapon1 = _content.Load<Texture2D>("Sprites\\Bonus\\DoubleBaseWeapon");
+            T_Bonus_Score = _content.Load<Texture2D>("Sprites\\Bonus\\Score");
+            T_Bonus_Energie = _content.Load<Texture2D>("Sprites\\Bonus\\Energie");
             #endregion
             #region Chargement textures obstacles
             T_Obstacles_Hole = _content.Load<Texture2D>("Sprites\\Obstacles\\Hole");
@@ -321,6 +323,8 @@ namespace MenuSample.Scenes
             listeTextureBonus = new List<Texture2D>();
             listeTextureBonus.Add(T_Bonus_Vie);
             listeTextureBonus.Add(T_Bonus_Weapon1);
+            listeTextureBonus.Add(T_Bonus_Score);
+            listeTextureBonus.Add(T_Bonus_Energie);
 
             listeTextureObstacles = new List<Texture2D>();
             listeTextureObstacles.Add(T_Obstacles_Hole);
@@ -448,9 +452,9 @@ namespace MenuSample.Scenes
                                     if(random_bonus < 50) // 50% que ce soit un bonus vie
                                         listeBonusToAdd.Add(new Bonus_Vie(T_Bonus_Vie, vaisseau.pos));
                                     else if (random_bonus < 70) // 20% - Bonus score
-                                        listeBonusToAdd.Add(new Bonus_Score(T_Bonus_Vie, vaisseau.pos));
+                                        listeBonusToAdd.Add(new Bonus_Score(T_Bonus_Score, vaisseau.pos));
                                     else if (random_bonus < 90) // 20% - Bonus énergie
-                                        listeBonusToAdd.Add(new Bonus_Energie(T_Bonus_Vie, vaisseau.pos));
+                                        listeBonusToAdd.Add(new Bonus_Energie(T_Bonus_Energie, vaisseau.pos));
                                     else
                                         listeBonusToAdd.Add(new Bonus_BaseWeapon(T_Bonus_Weapon1, vaisseau.pos));
                                 }
