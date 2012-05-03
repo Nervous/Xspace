@@ -60,7 +60,7 @@ namespace MenuSample.Scenes
         bool lastKeyDown = true, end = false, endDead = false;
         private List<gestionLevels> infLevel, listeLevelToRemove;
         Renderer particleRenderer;
-        ParticleEffect particleEffect, particleEffectMoteur, particleEffectBoss1, particleBossExplosion;
+        ParticleEffect particleEffect, particleEffectMoteur, particleEffectBoss1, particleBossExplosion, particleEffectMissiles;
         private Boss boss1;
         List<Vaisseau> listeVaisseau, listeVaisseauToRemove;
         List<Missiles> listeMissile, listeMissileToRemove;
@@ -101,8 +101,6 @@ namespace MenuSample.Scenes
         }
         #endregion
 
-        private readonly Random _random = new Random();
-        private Random randomizer = new Random();
         private AffichageInformations HUD = new AffichageInformations();
 
         static bool IntersectPixels(Rectangle rectangleA, Texture2D s1,
@@ -229,15 +227,19 @@ namespace MenuSample.Scenes
             fond_ecran_front.Load(GraphicsDevice, _content.Load<Texture2D>("Sprites\\Background\\space-front"));
             #endregion
             #region Chargement particules
-            //Moteur
             particleRenderer.LoadContent(_content);
+            //Moteur
             particleEffectMoteur = _content.Load<ParticleEffect>("Collisions\\Moteur\\Moteurlocal");
             particleEffectMoteur.Initialise();
             particleEffectMoteur.LoadContent(_content);
+            //Moteur Missiles
+            particleEffectMissiles = _content.Load<ParticleEffect>("Collisions\\Moteur\\Missiles");
+            particleEffectMissiles.Initialise();
+            particleEffectMissiles.LoadContent(_content);
             //Boss1
-                particleEffectBoss1 = _content.Load<ParticleEffect>("Collisions\\Moteur\\Boss1");
-                particleEffectBoss1.Initialise();
-                particleEffectBoss1.LoadContent(_content);        
+            particleEffectBoss1 = _content.Load<ParticleEffect>("Collisions\\Moteur\\Boss1");
+            particleEffectBoss1.Initialise();
+            particleEffectBoss1.LoadContent(_content);        
             //Explosions
             particleEffect = _content.Load<ParticleEffect>("Collisions\\BasicExplosion\\BasicExplosion");
             particleEffect.Initialise();
@@ -346,10 +348,9 @@ namespace MenuSample.Scenes
             #endregion
         }
 
-        List<doneParticles> collisions(List<Vaisseau> listeVaisseau, List<Missiles> listeMissile, List<Bonus> listeBonus, List<Bonus> listeBonusToAdd, List<Obstacles> listeObstacles, Boss aBoss, float spentTime, ParticleEffect particleEffect, GameTime gametime, bool dead, Random rand)
+        List<doneParticles> collisions(List<Vaisseau> listeVaisseau, List<Missiles> listeMissile, List<Bonus> listeBonus, List<Bonus> listeBonusToAdd, List<Obstacles> listeObstacles, Boss aBoss, float spentTime, ParticleEffect particleEffect, GameTime gametime, bool dead)
         {
             List<doneParticles> listeParticules = new List<doneParticles>();
-            int randomed = 0;
             if (dead)
                 return null;
             #region Collision missile => boss
@@ -440,11 +441,10 @@ namespace MenuSample.Scenes
                                 if((!end)&&(!endDead))
                                     score += vaisseau.score;
 
-                                randomed = 0;
-                                randomed = rand.Next(0, 1000);
-                                if (randomed > 995)       // 0.5% - Bonus upgrade arme de base
+                                int random_bonus = r.Next(0, 1000);
+                                if (random_bonus > 995)       // 0.5% - Bonus upgrade arme de base
                                     listeBonusToAdd.Add(new Bonus_BaseWeapon(T_Bonus_Weapon1, vaisseau.pos));
-                                else if (randomed > 950) // 5%    - Bonus vie
+                                else if (random_bonus > 950) // 5%    - Bonus vie
                                     listeBonusToAdd.Add(new Bonus_Vie(T_Bonus_Vie, vaisseau.pos));
                                 
 
@@ -810,7 +810,7 @@ namespace MenuSample.Scenes
                     listeObstacles.Remove(obstacle);
                 #endregion
                 #region Collisions & Update des particules
-                partManage = collisions(listeVaisseau, listeMissile, listeBonus, listeBonusToAdd, listeObstacles, boss1, fps_fix, particleEffect, gameTime, listeVaisseau.Count == 0, randomizer);
+                partManage = collisions(listeVaisseau, listeMissile, listeBonus, listeBonusToAdd, listeObstacles, boss1, fps_fix, particleEffect, gameTime, listeVaisseau.Count == 0);
                 if (partManage != null)
                 {
                     foreach (doneParticles particle in partManage)
@@ -913,32 +913,35 @@ namespace MenuSample.Scenes
 
                 if ((end || endDead) && (first))
                 {
-                    path_level = "Scores\\Arcade\\lvl" + _level + ".score";
-                    sr_level = new StreamReader(path_level);
-                    score_level = System.IO.File.ReadAllLines(@path_level);
-                    stock_score_inferieur = "";
-                    stock_score_superieur = "";
-
-                    for (int i = 0; i < 10; i += 2)
-                    {
-                        if (score < Convert.ToInt32(score_level[i + 1]))
-                            stock_score_inferieur += score_level[i] + '\n' + score_level[i + 1] + '\n';
-                        else
-                            stock_score_superieur += score_level[i] + '\n' + score_level[i + 1] + '\n';
-                    }
-
-                    sr_level.Close();
-                    sw_level = new StreamWriter(path_level);
-
-                    sw_level.WriteLine(stock_score_inferieur + "Nervous" + '\n' + Convert.ToString(score) + '\n' + stock_score_superieur);
-                    sw_level.Close();
-                    first = false;
                     AudioPlayer.StopMusic();
                     SoundEffect.MasterVolume = 0.00f;
+                    AudioPlayer.PlayMusic("Musiques\\Menu\\Musique.flac");
+                    if (mode != GAME_MODE.LIBRE)
+                    {
+                        path_level = "Scores\\Arcade\\lvl" + _level + ".score";
+                        sr_level = new StreamReader(path_level);
+                        score_level = System.IO.File.ReadAllLines(@path_level);
+                        stock_score_inferieur = "";
+                        stock_score_superieur = "";
+
+                        for (int i = 0; i < 10; i += 2)
+                        {
+                            if (score < Convert.ToInt32(score_level[i + 1]))
+                                stock_score_inferieur += score_level[i] + '\n' + score_level[i + 1] + '\n';
+                            else
+                                stock_score_superieur += score_level[i] + '\n' + score_level[i + 1] + '\n';
+                        }
+
+                        sr_level.Close();
+                        sw_level = new StreamWriter(path_level);
+
+                        sw_level.WriteLine(stock_score_inferieur + "Nervous" + '\n' + Convert.ToString(score) + '\n' + stock_score_superieur);
+                        sw_level.Close();
+                    }
+                    first = false;
                 }
                 if (end || endDead)
                 {
-                    AudioPlayer.PlayMusic("Musiques\\Menu\\Musique.flac");
                     if (keyboardState.IsKeyDown(Keys.Enter))
                         Remove();
                 }
