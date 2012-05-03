@@ -41,7 +41,7 @@
           <FinalOpacity>0</FinalOpacity>
         </Item>
         <Item Type="ProjectMercury.Modifiers.ColourInterpolatorModifier">
-          <InitialColour>1 0.8784314 0.7529412</InitialColour>
+          <InitialColour>1 1 0.5019608</InitialColour>
           <MiddleColour>0.5019608 0.5019608 0.5019608</MiddleColour>
           <MiddlePosition>0.3</MiddlePosition>
           <FinalColour>0.2509804 0.2509804 0.2509804</FinalColour>
