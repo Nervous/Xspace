@@ -5,7 +5,7 @@
     <ProjectTypeGuids>{6D335F3A-9D43-41b4-9D22-F6F17C4BE596};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Xspace</RootNamespace>
     <AssemblyName>Xspace</AssemblyName>
@@ -16,8 +16,7 @@
     <XnaProfile>Reach</XnaProfile>
     <XnaCrossPlatformGroupID>7257c852-5775-4eb6-a4ae-226841c05bd1</XnaCrossPlatformGroupID>
     <XnaOutputType>Game</XnaOutputType>
-    <ApplicationIcon>
-    </ApplicationIcon>
+    <ApplicationIcon>spaceSymphonia.ico</ApplicationIcon>
     <Thumbnail>
     </Thumbnail>
     <IsWebBootstrapper>false</IsWebBootstrapper>
@@ -199,6 +198,7 @@
   <ItemGroup>
     <Content Include="GameThumbnail.png" />
     <Compile Include="Game.ico" />
+    <Content Include="spaceSymphonia.ico" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\XspaceContent\XspaceContent.contentproj">
