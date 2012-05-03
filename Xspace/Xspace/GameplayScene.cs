@@ -60,7 +60,7 @@ namespace MenuSample.Scenes
         bool lastKeyDown = true, end = false, endDead = false;
         private List<gestionLevels> infLevel, listeLevelToRemove;
         Renderer particleRenderer;
-        ParticleEffect particleEffect, particleEffectMoteur, particleEffectBoss1, particleBossExplosion, particleEffectMissiles;
+        ParticleEffect particleEffect, particleEffectMoteur, particleEffectBoss1, particleBossExplosion, particleEffectMissiles, particleExplosionAoE;
         private Boss boss1;
         List<Vaisseau> listeVaisseau, listeVaisseauToRemove;
         List<Missiles> listeMissile, listeMissileToRemove;
@@ -247,6 +247,9 @@ namespace MenuSample.Scenes
             particleBossExplosion = _content.Load<ParticleEffect>("Collisions\\BasicExplosion\\BossExplosion");
             particleBossExplosion.Initialise();
             particleBossExplosion.LoadContent(_content);
+            particleExplosionAoE = _content.Load<ParticleEffect>("Collisions\\BasicExplosion\\ExplosionAoE");
+            particleExplosionAoE.Initialise();
+            particleExplosionAoE.LoadContent(_content);
             #endregion
             #region Chargement textures vaisseaux
             T_Vaisseau_Joueur = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Joueur\\Joueur_1");
@@ -448,7 +451,7 @@ namespace MenuSample.Scenes
 
                             if (missile is Rocket) // AoE sur les roquettes
                             {
-                                foreach(Vaisseau v in listeVaisseau)
+                                foreach (Vaisseau v in listeVaisseau)
                                 {
                                     Rectangle recRoquette = missile.rectangle;
                                     double disX = Math.Abs(missile.pos.X - v.pos.X);
@@ -477,9 +480,12 @@ namespace MenuSample.Scenes
                                             }
                                         }
 
-                                        listeParticules.Add(new doneParticles(false, new Vector2(vaisseau.pos.X + vaisseau.sprite.Width / 2, vaisseau.pos.Y + vaisseau.sprite.Height / 2)));    
+                                        //listeParticules.Add(new doneParticles(false, new Vector2(vaisseau.pos.X + vaisseau.sprite.Width / 2, vaisseau.pos.Y + vaisseau.sprite.Height / 2)));    
                                     }
                                 }
+
+                                musique_bossExplosion.Play();
+                                particleExplosionAoE.Trigger(new Vector2(missile.pos.X + T_Missile_Rocket.Width / 2, missile.pos.Y + T_Missile_Rocket.Height / 2));
                             }
 
                             if (vaisseau.hurt(missile.degats, time)) // Mort du vaisseau
@@ -896,7 +902,7 @@ namespace MenuSample.Scenes
                 }
                 listeBonusToAdd.Clear();
                 particleEffect.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
-
+                particleExplosionAoE.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
 
                 if (listeVaisseau.Count > 0)
                 {
@@ -1084,6 +1090,7 @@ namespace MenuSample.Scenes
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive);
             particleRenderer.RenderEffect(particleEffect);
             particleRenderer.RenderEffect(particleBossExplosion);
+            particleRenderer.RenderEffect(particleExplosionAoE);
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
             #endregion
