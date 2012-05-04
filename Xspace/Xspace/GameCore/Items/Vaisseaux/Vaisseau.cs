@@ -215,9 +215,9 @@ namespace Xspace
              updateRectangle();
              if (this is Zebra) 
              {
-                 if (this._pos.Y > 560)
+                 if (_pos.Y - _sprite.Height / 2 > 550)
                      base._deplacement.Y = 1;
-                 else if (this._pos.Y < 15)
+                 if (_pos.Y - _sprite.Height / 2 < -5)
                      base._deplacement.Y = -1;
              }
         }
@@ -267,7 +267,7 @@ namespace Xspace
 
                 if (keyboard.IsKeyDown(Keys.S))
                 {
-                    if (_pos.Y - _sprite.Height / 2 <= 530)
+                    if (_pos.Y - _sprite.Height / 2 <= 541)
                         _pos.Y += _deplacement.Y * _vitesseVaisseau * fps_fix;
                 }
 
@@ -297,7 +297,10 @@ namespace Xspace
                     color = Color.Tomato;
                 else
                     color = Color.White;
-                batch.Draw(_sprite, _pos, color);
+                if (!(this is Zebra))
+                    batch.Draw(_sprite, _pos, color);
+                else
+                    batch.Draw(_sprite, rectangle, null, color, MathHelper.PiOver4 * _deplacement.Y, new Vector2(sprite.Width / 2, sprite.Height / 2), SpriteEffects.None, 0f);
             }
         }
     }

@@ -14,7 +14,7 @@ namespace Xspace
     class Zebra : Vaisseau
     {
         public Zebra(Texture2D sprite, Vector2 position)
-            : base(sprite, 10, 0, 0, 0, 30, 0.60f, position, Vector2.Normalize(new Vector2(1, 1)), true, -1, 130, -1)
+            : base(sprite, 5, 0, 0, 0, 30, 0.60f, position, Vector2.Normalize(new Vector2(1, 1)), true, -1, 120, -1)
         { }
 
     }

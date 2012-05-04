@@ -14,7 +14,7 @@ namespace Xspace
     class Rocket : Missiles
     {
         public Rocket(Texture2D texture, Vector2 position, Vaisseau owner, Boss ownerB)
-            : base(texture, false, 20000, position, new Vector2(2, 0), 0.30f, owner, ownerB)
+            : base(texture, false, 70, position, new Vector2(2, 0), 0.30f, owner, ownerB)
         { }
     }
 }

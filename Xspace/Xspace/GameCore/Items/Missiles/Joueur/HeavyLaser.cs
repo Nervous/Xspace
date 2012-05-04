@@ -14,7 +14,7 @@ namespace Xspace
     class HeavyLaser : Missiles
     {
         public HeavyLaser(Texture2D texture, Vector2 position, Vaisseau owner, Boss ownerB)
-            : base(texture, false, 80, position, new Vector2(1, 0), 0.65f, owner, ownerB)
+            : base(texture, false, 160, position, new Vector2(1, 0), 0.65f, owner, ownerB)
         { }
     }
 }
