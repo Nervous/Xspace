@@ -14,7 +14,7 @@ namespace Xspace
     class Targeter : Vaisseau
     {
         public Targeter(Texture2D sprite, Vector2 position)
-            : base(sprite, 50, 0, 0, 0, 20, 0.40f, position, Vector2.Normalize(new Vector2(1, 0)), true, 2400, 150, 3)
+            : base(sprite, 50, 0, 0, 0, 20, 0.10f, position, Vector2.Normalize(new Vector2(1, 0)), true, 7000, 150, 3)
         { }
     }
 }

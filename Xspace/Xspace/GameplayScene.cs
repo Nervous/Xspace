@@ -264,7 +264,6 @@ namespace MenuSample.Scenes
             /* WebClient wc = new WebClient();
             wc.DownloadFile("http://nathalie.bouquet.free.fr/epita/trombi2011-12/sup/login_x.jpg", "Content\\Sprites\\Vaisseaux\\logintmp.jpg");
             T_Vaisseau_Drone = Texture2D.FromStream(GraphicsDevice, new FileStream("Content\\Sprites\\Vaisseaux\\logintmp.jpg", FileMode.Open)); */
-
             #endregion
             #region Chargement textures HUD
             if(mode == GAME_MODE.EXTREME)
@@ -794,7 +793,11 @@ namespace MenuSample.Scenes
                 {
                     if ((missile.pos.X < 1150 && (missile.pos.Y > SCREEN_MAXTOP && missile.pos.Y < SCREEN_MAXBOT) && !missile.ennemi) || (missile.pos.X > 0 && (missile.pos.Y > SCREEN_MAXTOP && missile.pos.Y < SCREEN_MAXBOT) && missile.ennemi))
                     {
-                        missile.Update(fps_fix);
+                        if (missile is Autoguide && !endDead)
+                            missile.Update(fps_fix, listeVaisseau[0]);
+                        else
+                            missile.Update(fps_fix);
+
                         if (missile is Rocket)
                         {
                             particleEffectMissiles.Trigger(new Vector2(missile.pos.X, missile.pos.Y + T_Missile_Rocket.Height / 2));
@@ -843,13 +846,17 @@ namespace MenuSample.Scenes
                                     listeMissile.Add(new Blaster_Ennemi(T_Missile_Energie, spawn, vaisseau, null));
                                     break;
                                 case 3: // Missile autoguide
-                                    spawn = new Vector2(vaisseau.pos.X - 35, vaisseau.pos.Y + vaisseau.sprite.Height / 2 - 20);
+                                    spawn = new Vector2(vaisseau.pos.X - T_MissileAutoguide.Width/2, vaisseau.pos.Y + vaisseau.sprite.Height / 2 - 20);
                                     listeMissile.Add(new Autoguide(T_MissileAutoguide, spawn, vaisseau, null));
                                     break;
                                 default:
                                     break;
                             }
                             vaisseau.lastTir = time;
+                        }
+                        else if (vaisseau.lastTir == 0) // Si n'a jamais tiré, on va le faire tirer plus vite la première fois
+                        {
+                            vaisseau.lastTir = time - (vaisseau.timingAttack - vaisseau.timingAttack / 3);
                         }
                     }
                 }

@@ -166,7 +166,7 @@ namespace Xspace
                             vaisseau = new Zebra(listeTextureVaisseauxEnnemis[4], start);
                             break;
                         case "targeter":
-                            vaisseau = new Zebra(listeTextureVaisseauxEnnemis[5], start);
+                            vaisseau = new Targeter(listeTextureVaisseauxEnnemis[5], start);
                             break;
                         default:
                             break;

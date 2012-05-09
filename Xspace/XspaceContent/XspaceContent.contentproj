@@ -601,8 +601,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Sprites\Vaisseaux\Ennemi\autoguide.png">
-      <Name>autoguide</Name>
+    <Compile Include="Sprites\Vaisseaux\Ennemi\targeter.png">
+      <Name>targeter</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
