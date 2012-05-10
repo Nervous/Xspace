@@ -466,7 +466,7 @@ namespace MenuSample.Scenes
                                                 score += vaisseau.score;
 
                                             int random_bonus = r.Next(0, 100);
-                                            if (random_bonus > 90)       // 2% - Drop un bonus
+                                            if (random_bonus > 80)       // 2% - Drop un bonus
                                             {
                                                 random_bonus = r.Next(0, 100);
                                                 if (random_bonus < 50) // 50% que ce soit un bonus vie
@@ -495,7 +495,7 @@ namespace MenuSample.Scenes
                                     score += vaisseau.score;
 
                                 int random_bonus = r.Next(0, 100);
-                                if (random_bonus > 90)       // 2% - Drop un bonus
+                                if (random_bonus > 80)       // 2% - Drop un bonus
                                 {
                                     random_bonus = r.Next(0, 100);
                                     if(random_bonus < 50) // 50% que ce soit un bonus vie
@@ -569,7 +569,7 @@ namespace MenuSample.Scenes
                 #region Gestion de la musique en cas de pause
                 if (InputState.IsPauseGame())
                 {
-                    AudioPlayer.SetVolume(0.2f);
+                    AudioPlayer.PauseMusic();
                     pause = true;
                 }
                 else if (InputState.IsMenuSelect())
@@ -1028,7 +1028,10 @@ namespace MenuSample.Scenes
             else
             {
                 if ((InputState.IsMenuCancel())||(InputState.IsMenuSelect()))
+                {
                     pause = false;
+                    AudioPlayer.PauseMusic();
+                }
             }
         }
 
