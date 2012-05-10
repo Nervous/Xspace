@@ -16,8 +16,9 @@ namespace Xspace
         private Vaisseau _ownerV;
         private Boss _ownerB;
         protected int _degats;
-        private bool _ennemi;
+        protected bool _ennemi, noMoreChangeAboutMoves;
         float _vitesse;
+        double angle;
 
         public Missiles(Texture2D texture, bool ennemi, int degats, Vector2 emplacement, Vector2 deplacement, float vitesse, Vaisseau owner, Boss ownerB)
             :base(texture, emplacement, deplacement, 1, 0)
@@ -72,9 +73,34 @@ namespace Xspace
             updateRectangle();
         }
 
+        public void Update(float fps_fix, Vaisseau joueur)
+        {
+            if (!this.noMoreChangeAboutMoves)
+            {
+                float ecartX = Math.Abs(this.pos.X - joueur.pos.X), ecartY = Math.Abs(this.pos.Y - joueur.pos.Y);
+                _deplacement.X = (joueur.pos.X < this.pos.X) ? -ecartX : ecartX;
+                _deplacement.Y = (joueur.pos.Y < this.pos.Y) ? -ecartY : ecartY;
+                _deplacement = Vector2.Normalize(_deplacement);
+
+                angle = Math.Acos(Math.Cos(ecartX / Math.Sqrt(Math.Pow(ecartX, 2) + Math.Pow(ecartY, 2))));
+
+                if (Math.Sqrt(Math.Pow(ecartX, 2) + Math.Pow(ecartY, 2)) < 100)
+                    noMoreChangeAboutMoves = true;
+            }
+            this.Update(fps_fix);
+        }
+
         public void Draw(SpriteBatch batch)
         {
-            batch.Draw(_sprite, _pos, Color.White);
+            if(!(this is Autoguide))
+                batch.Draw(_sprite, _pos, Color.White);
+            else
+                batch.Draw(_sprite, rectangle, null, Color.White, (float)RadianToDegree(angle), new Vector2(sprite.Width / 2, sprite.Height / 2), SpriteEffects.None, 0f);
+        }
+
+        private double RadianToDegree(double angle)
+        {
+            return angle * (180.0 / Math.PI);
         }
     }
 }

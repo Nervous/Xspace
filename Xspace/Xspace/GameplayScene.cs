@@ -53,7 +53,7 @@ namespace MenuSample.Scenes
         private List<doneParticles> partManage;
         private ScrollingBackground fond_ecran, fond_ecran_front, fond_ecran_middle;
         public SpriteBatch spriteBatch;
-        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Vaisseau_Kamikaze, T_Missile_Joueur_1, T_Missile_Joueur_2, T_Missile_Joueur_3, T_Missile_HeavyLaser, T_Laser_Joueur, T_Missile_Drone, T_Missile_Rocket, T_Bonus_Vie, T_Bonus_Weapon1, T_Bonus_Score, T_Bonus_Energie, T_Obstacles_Hole, barre_vie, barre_energy, T_HUD, T_HUD_boss, T_HUD_bars, T_HUD_bar_boss, T_Divers_Levelcomplete, T_Divers_Levelfail, T_boss1, T_Vaisseau_Energizer, T_Vaisseau_Doubleshooter, T_Vaisseau_Zebra, T_Missile_Energie, T_boss2, T_boss3, T_HUD_basic, T_HUD_laser, T_HUD_Heavy, T_HUD_red_rect, T_HUD_rocket;
+        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Vaisseau_Kamikaze, T_Missile_Joueur_1, T_Missile_Joueur_2, T_Missile_Joueur_3, T_Missile_HeavyLaser, T_Laser_Joueur, T_Missile_Drone, T_Missile_Rocket, T_MissileAutoguide, T_Bonus_Vie, T_Bonus_Weapon1, T_Bonus_Score, T_Bonus_Energie, T_Obstacles_Hole, barre_vie, barre_energy, T_HUD, T_HUD_boss, T_HUD_bars, T_HUD_bar_boss, T_Divers_Levelcomplete, T_Divers_Levelfail, T_boss1, T_Vaisseau_Energizer, T_Vaisseau_Doubleshooter, T_Vaisseau_Zebra, T_Vaisseau_Targeter, T_Missile_Energie, T_boss2, T_boss3, T_HUD_basic, T_HUD_laser, T_HUD_Heavy, T_HUD_red_rect, T_HUD_rocket;
         private List<Texture2D> listeTextureVaisseauxEnnemis, listeTextureBonus, listeTextureObstacles, listeTextureBoss;
         private SoundEffect sonLaser, sonHeavyLaser, musique_bossExplosion;
         private KeyboardState keyboardState;
@@ -258,12 +258,12 @@ namespace MenuSample.Scenes
             T_Vaisseau_Energizer = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Ennemi\\energizer");
             T_Vaisseau_Doubleshooter = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Ennemi\\doubleshooter");
             T_Vaisseau_Zebra = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Ennemi\\Zebra");
+            T_Vaisseau_Targeter = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Ennemi\\targeter");
 			drawSpectre = false;
 
             /* WebClient wc = new WebClient();
             wc.DownloadFile("http://nathalie.bouquet.free.fr/epita/trombi2011-12/sup/login_x.jpg", "Content\\Sprites\\Vaisseaux\\logintmp.jpg");
             T_Vaisseau_Drone = Texture2D.FromStream(GraphicsDevice, new FileStream("Content\\Sprites\\Vaisseaux\\logintmp.jpg", FileMode.Open)); */
-
             #endregion
             #region Chargement textures HUD
             if(mode == GAME_MODE.EXTREME)
@@ -288,6 +288,7 @@ namespace MenuSample.Scenes
             T_Laser_Joueur = _content.Load<Texture2D>("Sprites\\Missiles\\Joueur\\Laser");
             T_Missile_Drone = _content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\missile_new1");
             T_Missile_Energie = _content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\missile_boule1");
+            T_MissileAutoguide = _content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\autoguide");
             #endregion
             #region Chargement textures bonus
             // TODO : Chargement de toutes les textures des bonus en dessous
@@ -329,6 +330,7 @@ namespace MenuSample.Scenes
             listeTextureVaisseauxEnnemis.Add(T_Vaisseau_Energizer);
             listeTextureVaisseauxEnnemis.Add(T_Vaisseau_Doubleshooter);
             listeTextureVaisseauxEnnemis.Add(T_Vaisseau_Zebra);
+            listeTextureVaisseauxEnnemis.Add(T_Vaisseau_Targeter);
 
             listeTextureBonus = new List<Texture2D>();
             listeTextureBonus.Add(T_Bonus_Vie);
@@ -791,7 +793,11 @@ namespace MenuSample.Scenes
                 {
                     if ((missile.pos.X < 1150 && (missile.pos.Y > SCREEN_MAXTOP && missile.pos.Y < SCREEN_MAXBOT) && !missile.ennemi) || (missile.pos.X > 0 && (missile.pos.Y > SCREEN_MAXTOP && missile.pos.Y < SCREEN_MAXBOT) && missile.ennemi))
                     {
-                        missile.Update(fps_fix);
+                        if (missile is Autoguide && !endDead)
+                            missile.Update(fps_fix, listeVaisseau[0]);
+                        else
+                            missile.Update(fps_fix);
+
                         if (missile is Rocket)
                         {
                             particleEffectMissiles.Trigger(new Vector2(missile.pos.X, missile.pos.Y + T_Missile_Rocket.Height / 2));
@@ -839,10 +845,18 @@ namespace MenuSample.Scenes
                                     spawn = new Vector2(vaisseau.pos.X - 35, vaisseau.pos.Y + vaisseau.sprite.Height / 2 - 20);
                                     listeMissile.Add(new Blaster_Ennemi(T_Missile_Energie, spawn, vaisseau, null));
                                     break;
+                                case 3: // Missile autoguide
+                                    spawn = new Vector2(vaisseau.pos.X - T_MissileAutoguide.Width/2, vaisseau.pos.Y + vaisseau.sprite.Height / 2 - 20);
+                                    listeMissile.Add(new Autoguide(T_MissileAutoguide, spawn, vaisseau, null));
+                                    break;
                                 default:
                                     break;
                             }
                             vaisseau.lastTir = time;
+                        }
+                        else if (vaisseau.lastTir == 0) // Si n'a jamais tiré, on va le faire tirer plus vite la première fois
+                        {
+                            vaisseau.lastTir = time - (vaisseau.timingAttack - vaisseau.timingAttack / 3);
                         }
                     }
                 }
