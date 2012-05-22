@@ -168,6 +168,9 @@ namespace Xspace
                         case "targeter":
                             vaisseau = new Targeter(listeTextureVaisseauxEnnemis[5], start);
                             break;
+                        case "BC":
+                            vaisseau = new BC(listeTextureVaisseauxEnnemis[5], start);
+                            break;
                         default:
                             break;
                     }

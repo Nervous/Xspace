@@ -826,7 +826,7 @@ namespace MenuSample.Scenes
 
                     if (vaisseau.ennemi && vaisseau.existe)
                     {
-                        if (time - vaisseau.lastTir > vaisseau.timingAttack && vaisseau.timingAttack != 0)
+                        if ((time - vaisseau.lastTir > vaisseau.timingAttack && vaisseau.timingAttack != 0) || (vaisseau is BC && vaisseau.isLoadingOrFire()))
                         {
                             Vector2 spawn, spawnHaut, spawnBas;
                             switch (vaisseau.armeActuelle)
@@ -848,6 +848,28 @@ namespace MenuSample.Scenes
                                 case 3: // Missile autoguide
                                     spawn = new Vector2(vaisseau.pos.X - T_MissileAutoguide.Width/2, vaisseau.pos.Y + vaisseau.sprite.Height / 2 - 20);
                                     listeMissile.Add(new Autoguide(T_MissileAutoguide, spawn, vaisseau, null));
+                                    break;
+                                case 4 : // Laser
+                                    if (vaisseau.isFire()) // Si le vaisseau doit tirer
+                                    {
+                                        if (!vaisseau.Fired)
+                                        {
+                                            spawn = new Vector2(vaisseau.pos.X - T_MissileAutoguide.Width / 2, vaisseau.pos.Y + vaisseau.sprite.Height / 2 - 20);
+                                            Laser_joueur l = new Laser_joueur(T_Laser_Joueur, spawn, vaisseau, null);
+                                            listeMissile.Add(l);
+                                            vaisseau.enableLaser(l);
+                                            vaisseau.Fired = true;
+                                        }
+                                        else if (!vaisseau.Fire(time)) // Doit arreter de tirer
+                                        {
+                                            listeMissileToRemove.Add(vaisseau.getLaser());
+                                            vaisseau.disableLaser();
+                                        }
+                                    }
+                                    else if (vaisseau.TimeToFire(time)) // Sil doit stop de charger
+                                    {
+                                        // Disable le draw du bouclier
+                                    }
                                     break;
                                 default:
                                     break;

@@ -17,9 +17,8 @@ namespace Xspace
         protected int _armure, _damageCollision, _armeActuelle, _baseWeapon, _vieMax, _energie, _energieMax;
         protected const int MAX_BASEWEAPON = 2;
         protected double _timingAttack;
-        protected bool _ennemi,_laser;
-        protected double _lastTir;
-        protected double _lastDamage;
+        protected bool _ennemi, _laser, timeToFire, invicible, fire, fired;
+        protected double _lastTir, _lastDamage, triggeredLoading, _loading, triggeredFire;
         protected Vector2 stucked;
         protected Laser_joueur pLaser;
 
@@ -44,6 +43,9 @@ namespace Xspace
             stucked = Vector2.Zero;
             _baseWeapon = 0;
             _laser = false;
+            invicible = false;
+            fire = false;
+            fired = false;
         }
 
         public void applyBonus(string effect, int amount, int time)
@@ -89,6 +91,12 @@ namespace Xspace
             get { return _energie; }
         }
 
+        public bool Fired
+        {
+            get { return fired; }
+            set { fired = value; }
+        }
+
         public int EnergieMax
         {
             get { return _energieMax; }
@@ -102,6 +110,72 @@ namespace Xspace
         public bool existe
         {
             get { return _existe; }
+        }
+
+        public bool TimeToFire(double time)
+        {
+            if (this._loading > 4000)
+            {
+                timeToFire = true;
+                triggerFire();
+            }
+            else if (this._loading == 0)
+            {
+                this.timeToFire = false;
+                triggeredLoading = time;
+                triggerLoading();
+            }
+            else
+            {
+                timeToFire = false;
+                this._loading = time - triggeredLoading;
+            }
+
+            return timeToFire;
+        }
+
+        public bool isLoadingOrFire()
+        {
+            return this._loading > 0 || this.isFire();
+        }
+
+        public bool isFire()
+        {
+            return fire;
+        }
+
+        public bool Fire(double time)
+        {
+            if (triggeredFire == 0)
+            {
+                triggeredFire = time;
+                fire = true;
+            }
+            else
+            {
+                if (time - triggeredFire > 3000)
+                    fire = false;
+                else
+                {
+                    fire = true;
+                    }
+            }
+
+            return fire;
+        }
+
+        public void triggerLoading()
+        {
+            this.invicible = true;
+            if(this._loading == 0)
+                this._loading = 1;
+        }
+
+        public void triggerFire()
+        {
+            this._loading = 0;
+            this.invicible = false;
+            this.fire = true;
         }
 
         public double timingAttack
@@ -127,8 +201,11 @@ namespace Xspace
 
         public bool hurt(int amount, double time)
         {
-            this._vie -= amount;
-            this._lastDamage = time;
+            if (this.invicible != true)
+            {
+                this._vie -= amount;
+                this._lastDamage = time;
+            }
             return (this._vie <= 0);
         }
 
