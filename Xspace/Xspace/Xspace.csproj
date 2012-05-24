@@ -132,6 +132,7 @@
     <Compile Include="GameCore\Items\Missiles\Boss\Missile1_DiagoBas_Boss.cs" />
     <Compile Include="GameCore\Items\Missiles\Boss\Missile1_DiagoHaut_Boss.cs" />
     <Compile Include="GameCore\Items\Missiles\Ennemi\Autoguide.cs" />
+    <Compile Include="GameCore\Items\Missiles\Ennemi\Laser_Ennemi.cs" />
     <Compile Include="GameCore\Items\Missiles\Joueur\Rocket.cs" />
     <Compile Include="GameCore\Items\Missiles\Joueur\HeavyLaser.cs" />
     <Compile Include="GameCore\Items\Missiles\Joueur\Laser_joueur.cs" />
@@ -151,6 +152,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Menu\Scenes\CoopChoiceMenu.cs" />
+    <Compile Include="Menu\Scenes\ScoreExtremeMenuScene.cs" />
     <Compile Include="Menu\Scenes\SongChoiceMenuScene.cs" />
     <Compile Include="Menu\Scenes\Core\AbstractGameScene.cs" />
     <Compile Include="Menu\Scenes\Core\AbstractMenuScene.cs" />

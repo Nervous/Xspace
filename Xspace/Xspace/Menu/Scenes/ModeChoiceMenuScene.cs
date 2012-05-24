@@ -33,7 +33,6 @@ namespace MenuSample.Scenes
 
             // Création des options
             var campagneMenuItem = new MenuItem("Campagne");
-            var coopMenuItem = new MenuItem("Cooperation");
             var extremMenuItem = new MenuItem("Extreme");
             var libreMenuItem = new MenuItem("Libre");
             var back = new MenuItem("Retour");
@@ -42,12 +41,10 @@ namespace MenuSample.Scenes
             campagneMenuItem.Selected += CampagneMenuItemSelected;
             extremMenuItem.Selected += ExtremMenuItemSelected;
             back.Selected += OnCancel;
-            coopMenuItem.Selected += CoopMenuItemSelected;
             libreMenuItem.Selected += LibreMenuItemSelected;
 
             // Ajout des options du menu
             MenuItems.Add(campagneMenuItem);
-            MenuItems.Add(coopMenuItem);
             MenuItems.Add(extremMenuItem);
             MenuItems.Add(libreMenuItem);
             MenuItems.Add(back);
@@ -73,11 +70,6 @@ namespace MenuSample.Scenes
             _level = 1;
             _act = 4;
             LoadingScene.Load(SceneManager, true, new GameplayScene(SceneManager, graphics, _level, _act, GameplayScene.GAME_MODE.EXTREME));
-        }
-
-        private void CoopMenuItemSelected(object sender, EventArgs e)
-        {
-            new CoopChoiceMenu(SceneManager, graphics).Add();
         }
 
         private void LibreMenuItemSelected(object sender, EventArgs e)

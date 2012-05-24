@@ -12,7 +12,6 @@ namespace MenuSample.Scenes
         {
             var scoreArcade = new MenuItem("Score mode arcade");
             var scoreExtreme = new MenuItem("  Score mode extreme");
-            var scoreCoop = new MenuItem("     Score mode cooperatif");
             var back = new MenuItem("Retour");
 
             back.Selected += OnCancel;
@@ -20,7 +19,6 @@ namespace MenuSample.Scenes
 
             MenuItems.Add(scoreArcade);
             MenuItems.Add(scoreExtreme);
-            MenuItems.Add(scoreCoop);
             MenuItems.Add(back);
 
             
@@ -30,6 +28,11 @@ namespace MenuSample.Scenes
         private void ScoreArcadeMenuItemSelected(object sender, EventArgs e)
         {
             new ScoreArcadeMenuScene(SceneManager).Add();
+        }
+
+        private void ScoreExtremeMenuItemSelected(object sender, EventArgs e)
+        {
+            new ScoreExtremeMenuScene(SceneManager).Add();
         }
     }
 }

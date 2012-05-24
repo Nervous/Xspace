@@ -53,7 +53,7 @@ namespace MenuSample.Scenes
         private List<doneParticles> partManage;
         private ScrollingBackground fond_ecran, fond_ecran_front, fond_ecran_middle;
         public SpriteBatch spriteBatch;
-        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Vaisseau_Kamikaze, T_Missile_Joueur_1, T_Missile_Joueur_2, T_Missile_Joueur_3, T_Missile_HeavyLaser, T_Laser_Joueur, T_Missile_Drone, T_Missile_Rocket, T_MissileAutoguide, T_Bonus_Vie, T_Bonus_Weapon1, T_Bonus_Score, T_Bonus_Energie, T_Obstacles_Hole, barre_vie, barre_energy, T_HUD, T_HUD_boss, T_HUD_bars, T_HUD_bar_boss, T_Divers_Levelcomplete, T_Divers_Levelfail, T_boss1, T_Vaisseau_Energizer, T_Vaisseau_Doubleshooter, T_Vaisseau_Zebra, T_Vaisseau_Targeter, T_Missile_Energie, T_boss2, T_boss3, T_HUD_basic, T_HUD_laser, T_HUD_Heavy, T_HUD_red_rect, T_HUD_rocket;
+        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Vaisseau_Kamikaze, T_Missile_Joueur_1, T_Missile_Joueur_2, T_Missile_Joueur_3, T_Missile_HeavyLaser, T_Laser_Joueur, T_Missile_Drone, T_Missile_Rocket, T_MissileAutoguide, T_LaserEnnemi, T_Bonus_Vie, T_Bonus_Weapon1, T_Bonus_Score, T_Bonus_Energie, T_Obstacles_Hole, barre_vie, barre_energy, T_HUD, T_HUD_boss, T_HUD_bars, T_HUD_bar_boss, T_Divers_Levelcomplete, T_Divers_Levelfail, T_boss1, T_Vaisseau_Energizer, T_Vaisseau_Doubleshooter, T_Vaisseau_Zebra, T_Vaisseau_Targeter, T_Missile_Energie, T_boss2, T_boss3, T_HUD_basic, T_HUD_laser, T_HUD_Heavy, T_HUD_red_rect, T_HUD_rocket;
         private List<Texture2D> listeTextureVaisseauxEnnemis, listeTextureBonus, listeTextureObstacles, listeTextureBoss;
         private SoundEffect sonLaser, sonHeavyLaser, musique_bossExplosion;
         private KeyboardState keyboardState;
@@ -289,6 +289,7 @@ namespace MenuSample.Scenes
             T_Missile_Drone = _content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\missile_new1");
             T_Missile_Energie = _content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\missile_boule1");
             T_MissileAutoguide = _content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\autoguide");
+            T_LaserEnnemi = _content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\Laser");
             #endregion
             #region Chargement textures bonus
             // TODO : Chargement de toutes les textures des bonus en dessous
@@ -448,7 +449,7 @@ namespace MenuSample.Scenes
                                 
                         if ((vaisseau.ennemi && !missile.ennemi) || (!vaisseau.ennemi && missile.ennemi))
                         {
-                            if(!(missile is Laser_joueur))
+                            if (!(missile is Laser_joueur) && !(missile is Laser_Ennemi))
                                 listeMissileToRemove.Add(missile);
 
                             if (missile is Rocket) // AoE sur les roquettes
@@ -519,7 +520,7 @@ namespace MenuSample.Scenes
                     #region Collision laser => missile
                     if (listeVaisseau[0].laser)
                     {
-                        if (!(missile is Laser_joueur) && missile.ennemi &&missile.rectangle.Intersects(listeVaisseau[0].getLaser().rectangle))
+                        if (listeVaisseau.Count > 0 && !listeVaisseau[0].ennemi && missile != null && !(missile is Laser_joueur) && missile.ennemi &&missile.rectangle.Intersects(listeVaisseau[0].getLaser().rectangle))
                         {
                             listeMissileToRemove.Add(missile);
                             missile.kill();
@@ -803,7 +804,7 @@ namespace MenuSample.Scenes
                             particleEffectMissiles.Trigger(new Vector2(missile.pos.X, missile.pos.Y + T_Missile_Rocket.Height / 2));
                         }
                     }
-                    else if (!(missile is Laser_joueur))
+                    else if (!(missile is Laser_joueur) && !(missile is Laser_Ennemi))
                         listeMissileToRemove.Add(missile);
                 }
                 particleEffectMissiles.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
@@ -826,7 +827,7 @@ namespace MenuSample.Scenes
 
                     if (vaisseau.ennemi && vaisseau.existe)
                     {
-                        if ((time - vaisseau.lastTir > vaisseau.timingAttack && vaisseau.timingAttack != 0) || (vaisseau is BC && vaisseau.isLoadingOrFire()))
+                        if ((time - vaisseau.lastTir > vaisseau.timingAttack && vaisseau.timingAttack != 0))
                         {
                             Vector2 spawn, spawnHaut, spawnBas;
                             switch (vaisseau.armeActuelle)
@@ -846,30 +847,11 @@ namespace MenuSample.Scenes
                                     listeMissile.Add(new Blaster_Ennemi(T_Missile_Energie, spawn, vaisseau, null));
                                     break;
                                 case 3: // Missile autoguide
-                                    spawn = new Vector2(vaisseau.pos.X - T_MissileAutoguide.Width/2, vaisseau.pos.Y + vaisseau.sprite.Height / 2 - 20);
+                                    spawn = new Vector2(vaisseau.pos.X - T_MissileAutoguide.Width/2, vaisseau.pos.Y + vaisseau.sprite.Height / 2);
                                     listeMissile.Add(new Autoguide(T_MissileAutoguide, spawn, vaisseau, null));
                                     break;
                                 case 4 : // Laser
-                                    if (vaisseau.isFire()) // Si le vaisseau doit tirer
-                                    {
-                                        if (!vaisseau.Fired)
-                                        {
-                                            spawn = new Vector2(vaisseau.pos.X - T_MissileAutoguide.Width / 2, vaisseau.pos.Y + vaisseau.sprite.Height / 2 - 20);
-                                            Laser_joueur l = new Laser_joueur(T_Laser_Joueur, spawn, vaisseau, null);
-                                            listeMissile.Add(l);
-                                            vaisseau.enableLaser(l);
-                                            vaisseau.Fired = true;
-                                        }
-                                        else if (!vaisseau.Fire(time)) // Doit arreter de tirer
-                                        {
-                                            listeMissileToRemove.Add(vaisseau.getLaser());
-                                            vaisseau.disableLaser();
-                                        }
-                                    }
-                                    else if (vaisseau.TimeToFire(time)) // Sil doit stop de charger
-                                    {
-                                        // Disable le draw du bouclier
-                                    }
+                                    vaisseau.activerChargement(time);
                                     break;
                                 default:
                                     break;
@@ -878,7 +860,25 @@ namespace MenuSample.Scenes
                         }
                         else if (vaisseau.lastTir == 0) // Si n'a jamais tiré, on va le faire tirer plus vite la première fois
                         {
-                            vaisseau.lastTir = time - (vaisseau.timingAttack - vaisseau.timingAttack / 3);
+                            vaisseau.lastTir = time - (vaisseau.timingAttack - vaisseau.timingAttack / 5);
+                        }
+                        else if (vaisseau is BC)
+                        {
+                            if (vaisseau.Chargement && vaisseau.finChargement(time)) // fin du chargement
+                            {
+                                vaisseau.terminerChargement();
+                                Vector2 spawn = new Vector2(vaisseau.pos.X - T_LaserEnnemi.Width, vaisseau.pos.Y - T_LaserEnnemi.Height / 2 + 29);
+                                Laser_Ennemi laser = new Laser_Ennemi(T_LaserEnnemi, spawn, vaisseau, null);
+                                vaisseau.enableLaserE(laser);
+                                listeMissile.Add(laser);
+                                vaisseau.activerTir(time);
+                            }
+                            else if (vaisseau.Tir && vaisseau.finTir(time))
+                            {
+                                vaisseau.terminerTir();
+                                listeMissileToRemove.Add(vaisseau.getLaserE());
+                                vaisseau.disableLaser();
+                            }
                         }
                     }
                 }

@@ -17,10 +17,14 @@ namespace Xspace
         protected int _armure, _damageCollision, _armeActuelle, _baseWeapon, _vieMax, _energie, _energieMax;
         protected const int MAX_BASEWEAPON = 2;
         protected double _timingAttack;
-        protected bool _ennemi, _laser, timeToFire, invicible, fire, fired;
-        protected double _lastTir, _lastDamage, triggeredLoading, _loading, triggeredFire;
+        protected bool _ennemi, _laser;
+        protected double _lastTir, _lastDamage;
         protected Vector2 stucked;
         protected Laser_joueur pLaser;
+        protected Laser_Ennemi pLaserEnnemi;
+
+        protected double tLancementChargement, tLancementLaser;
+        protected bool chargement, tir, invicible;
 
         public Vaisseau(Texture2D texture, int vie, int vieMax, int energieMax, int armure, int damageCollision, float vitesseVaisseau, Vector2 startPosition, Vector2 deplacement, bool ennemi, double timingAttack, int score, int arme)
             :base(texture, startPosition, deplacement, vie, score)
@@ -43,9 +47,56 @@ namespace Xspace
             stucked = Vector2.Zero;
             _baseWeapon = 0;
             _laser = false;
+
+
+        }
+
+        public bool Chargement
+        {
+            get { return chargement; }
+        }
+
+        public bool Tir
+        {
+            get { return tir; }
+        }
+
+        public void activerChargement(double time)
+        {
+            tLancementChargement = time;
+            invicible = true;
+            base._deplacement = new Vector2(0, 0);
+            chargement = true;
+        }
+
+        public bool finChargement(double time)
+        {
+            return time - tLancementChargement > 4000;
+        }
+
+        public void terminerChargement()
+        {
+            tLancementChargement = 0;
             invicible = false;
-            fire = false;
-            fired = false;
+            chargement = false;
+        }
+
+        public void activerTir(double time)
+        {
+            tir = true;
+            tLancementLaser = time;
+        }
+
+        public bool finTir(double time)
+        {
+            return time - tLancementLaser > 2000;
+        }
+
+        public void terminerTir()
+        {
+            tLancementLaser = 0;
+            tir = false;
+            base._deplacement = new Vector2(1, 0);
         }
 
         public void applyBonus(string effect, int amount, int time)
@@ -91,12 +142,6 @@ namespace Xspace
             get { return _energie; }
         }
 
-        public bool Fired
-        {
-            get { return fired; }
-            set { fired = value; }
-        }
-
         public int EnergieMax
         {
             get { return _energieMax; }
@@ -110,72 +155,6 @@ namespace Xspace
         public bool existe
         {
             get { return _existe; }
-        }
-
-        public bool TimeToFire(double time)
-        {
-            if (this._loading > 4000)
-            {
-                timeToFire = true;
-                triggerFire();
-            }
-            else if (this._loading == 0)
-            {
-                this.timeToFire = false;
-                triggeredLoading = time;
-                triggerLoading();
-            }
-            else
-            {
-                timeToFire = false;
-                this._loading = time - triggeredLoading;
-            }
-
-            return timeToFire;
-        }
-
-        public bool isLoadingOrFire()
-        {
-            return this._loading > 0 || this.isFire();
-        }
-
-        public bool isFire()
-        {
-            return fire;
-        }
-
-        public bool Fire(double time)
-        {
-            if (triggeredFire == 0)
-            {
-                triggeredFire = time;
-                fire = true;
-            }
-            else
-            {
-                if (time - triggeredFire > 3000)
-                    fire = false;
-                else
-                {
-                    fire = true;
-                    }
-            }
-
-            return fire;
-        }
-
-        public void triggerLoading()
-        {
-            this.invicible = true;
-            if(this._loading == 0)
-                this._loading = 1;
-        }
-
-        public void triggerFire()
-        {
-            this._loading = 0;
-            this.invicible = false;
-            this.fire = true;
         }
 
         public double timingAttack
@@ -269,10 +248,21 @@ namespace Xspace
             return pLaser;
         }
 
+        public Laser_Ennemi getLaserE()
+        {
+            return pLaserEnnemi;
+        }
+
         public void enableLaser(Laser_joueur l)
         {
             this._laser = true;
             pLaser = l;
+        }
+
+        public void enableLaserE(Laser_Ennemi l)
+        {
+            this._laser = true;
+            pLaserEnnemi = l;
         }
 
         public void changeWeapon(int nouveau)
@@ -374,7 +364,12 @@ namespace Xspace
                     color = Color.Tomato;
                 else
                     color = Color.White;
-                if (!(this is Zebra))
+
+                Random r = new Random();
+
+                if (this is BC && this.Chargement)
+                    batch.Draw(_sprite, _pos, new Color(r.Next(0,255), r.Next(0,255), r.Next(0,255)));
+                else if (!(this is Zebra))
                     batch.Draw(_sprite, _pos, color);
                 else
                     batch.Draw(_sprite, rectangle, null, color, MathHelper.PiOver4 * _deplacement.Y, new Vector2(sprite.Width / 2, sprite.Height / 2), SpriteEffects.None, 0f);
