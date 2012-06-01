@@ -85,6 +85,19 @@ namespace MenuSample.Scenes
             }
         };
 
+        List<lasersEnnemis> cleanLaser, cleanLaserToRemove;
+
+        struct lasersEnnemis
+        {
+            public Vaisseau v;
+            public Laser_Ennemi laser;
+            public lasersEnnemis(Vaisseau v, Laser_Ennemi l)
+            {
+                this.v = v;
+                this.laser = l;
+            }
+        };
+
         public enum GAME_MODE
         {
             CAMPAGNE,
@@ -102,6 +115,35 @@ namespace MenuSample.Scenes
         #endregion
 
         private AffichageInformations HUD = new AffichageInformations();
+
+        static List<lasersEnnemis> suppEntree(List<lasersEnnemis> liste, Vaisseau vais)
+        {
+            List<lasersEnnemis> remove = new List<lasersEnnemis>();
+            foreach (lasersEnnemis s in liste)
+            {
+                if (s.v == vais)
+                    remove.Add(s);
+            }
+
+            foreach (lasersEnnemis s in remove)
+            {
+                liste.Remove(s);
+            }
+
+            return liste;
+        }
+
+        static bool findIn(List<Vaisseau> liste, Vaisseau vais)
+        {
+            bool toReturn = false;
+            foreach (Vaisseau v in liste)
+            {
+                if (v == vais)
+                    toReturn = true;
+            }
+
+            return toReturn;
+        }
 
         static bool IntersectPixels(Rectangle rectangleA, Texture2D s1,
                             Rectangle rectangleB, Texture2D s2)
@@ -349,6 +391,8 @@ namespace MenuSample.Scenes
             
             infLevel = new List<gestionLevels>();
             listeLevelToRemove = new List<gestionLevels>();
+            cleanLaser = new List<lasersEnnemis>();
+            cleanLaserToRemove = new List<lasersEnnemis>();
             if (mode != GAME_MODE.LIBRE)
             {
                 gestionLevels thisLevel = new gestionLevels(_level, listeTextureVaisseauxEnnemis, listeTextureBonus, listeTextureObstacles, listeTextureBoss);
@@ -807,6 +851,19 @@ namespace MenuSample.Scenes
                     else if (!(missile is Laser_joueur) && !(missile is Laser_Ennemi))
                         listeMissileToRemove.Add(missile);
                 }
+                foreach (lasersEnnemis s in cleanLaser)
+                {
+                    if (!findIn(listeVaisseau, s.v))
+                    {
+                        listeMissileToRemove.Add(s.laser);
+                        cleanLaserToRemove.Add(s);
+                    }
+                }
+                foreach (lasersEnnemis s in cleanLaserToRemove)
+                {
+                    cleanLaser.Remove(s);
+                }
+                cleanLaserToRemove.Clear();
                 particleEffectMissiles.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
                 foreach (Missiles missile in listeMissileToRemove)
                 {
@@ -872,11 +929,13 @@ namespace MenuSample.Scenes
                                 vaisseau.enableLaserE(laser);
                                 listeMissile.Add(laser);
                                 vaisseau.activerTir(time);
+                                cleanLaser.Add(new lasersEnnemis(vaisseau, laser));
                             }
                             else if (vaisseau.Tir && vaisseau.finTir(time))
                             {
                                 vaisseau.terminerTir();
                                 listeMissileToRemove.Add(vaisseau.getLaserE());
+                                cleanLaser = suppEntree(cleanLaser, vaisseau);
                                 vaisseau.disableLaser();
                             }
                         }
