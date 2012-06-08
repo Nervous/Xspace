@@ -21,7 +21,7 @@ namespace Xspace
         {
             _position_bar.Y = 662;
             _position_energy.Y = 705;
-            for (int i = 0; i <= vieActuelle; i++)
+            for (int i = 0; i <= vieActuelle/1.66; i++)
             {
                 _position_bar.X = 405 + i;
 
