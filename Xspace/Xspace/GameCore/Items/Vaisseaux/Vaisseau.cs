@@ -334,7 +334,7 @@ namespace Xspace
 
                 if (keyboard.IsKeyDown(Keys.S))
                 {
-                    if (_pos.Y - _sprite.Height / 2 <= 541)
+                    if (_pos.Y - _sprite.Height / 2 <= 538)
                         _pos.Y += _deplacement.Y * _vitesseVaisseau * fps_fix;
                 }
 
