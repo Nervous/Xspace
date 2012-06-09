@@ -33,7 +33,7 @@ namespace MenuSample.Scenes
     /// </summary>
     public class GameplayScene : AbstractGameScene
     {
-        const int SCREEN_MAXTOP = 0, SCREEN_MAXBOT = 620;
+        const int SCREEN_MAXTOP = -30, SCREEN_MAXBOT = 620;
         #region Déclaration variables usuelles
         private int score, _level;
         private float fps_fix, _pauseAlpha;

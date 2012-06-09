@@ -18,7 +18,6 @@ namespace Xspace
         protected int _degats;
         protected bool _ennemi, noMoreChangeAboutMoves;
         float _vitesse;
-        double angle;
 
         public Missiles(Texture2D texture, bool ennemi, int degats, Vector2 emplacement, Vector2 deplacement, float vitesse, Vaisseau owner, Boss ownerB)
             :base(texture, emplacement, deplacement, 1, 0)
@@ -82,8 +81,6 @@ namespace Xspace
                 _deplacement.Y = (joueur.pos.Y < this.pos.Y) ? -ecartY : ecartY;
                 _deplacement = Vector2.Normalize(_deplacement);
 
-                angle = Math.Acos(Math.Cos(ecartX / Math.Sqrt(Math.Pow(ecartX, 2) + Math.Pow(ecartY, 2))));
-
                 if (Math.Sqrt(Math.Pow(ecartX, 2) + Math.Pow(ecartY, 2)) < 100)
                     noMoreChangeAboutMoves = true;
             }
@@ -92,10 +89,7 @@ namespace Xspace
 
         public void Draw(SpriteBatch batch)
         {
-            if(!(this is Autoguide))
-                batch.Draw(_sprite, _pos, Color.White);
-            else
-                batch.Draw(_sprite, rectangle, null, Color.White, (float)RadianToDegree(angle), new Vector2(sprite.Width / 2, sprite.Height / 2), SpriteEffects.None, 0f);
+            batch.Draw(_sprite, _pos, Color.White);
         }
 
         private double RadianToDegree(double angle)

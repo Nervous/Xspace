@@ -19,9 +19,5 @@ namespace Xspace
             this.chargement = false;
             this.tir = false;
         }
-
-        /*public void Update(float fps_fix)
-        {
-        }*/
     }
 }
