@@ -116,7 +116,7 @@ namespace MenuSample.Scenes
 
             public void recalculerRadius(double time, GraphicsDevice g)
             {
-                this.radius = 50 + (int)((time - this.v.tLancementAoE) / 100);
+                this.radius = 50 + (int)((time - this.v.tLancementAoE) / 70);
                 if (radius >= 2048)
                     radius = 2047;
                 this.circle = CreateCircle(radius, g);
