@@ -26,6 +26,9 @@ namespace Xspace
         protected double tLancementChargement, tLancementLaser;
         protected bool chargement, tir, invicible;
 
+        public double tLancementAoE;
+        public bool AoE;
+
         public Vaisseau(Texture2D texture, int vie, int vieMax, int energieMax, int armure, int damageCollision, float vitesseVaisseau, Vector2 startPosition, Vector2 deplacement, bool ennemi, double timingAttack, int score, int arme)
             :base(texture, startPosition, deplacement, vie, score)
         {
@@ -49,6 +52,11 @@ namespace Xspace
             _laser = false;
 
 
+        }
+
+        public void activerAoE()
+        {
+            this._deplacement.X = 0;
         }
 
         public bool Chargement

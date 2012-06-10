@@ -171,6 +171,9 @@ namespace Xspace
                         case "BC":
                             vaisseau = new BC(listeTextureVaisseauxEnnemis[5], start);
                             break;
+                        case "support":
+                            vaisseau = new Support(listeTextureVaisseauxEnnemis[5], start);
+                            break;
                         default:
                             break;
                     }

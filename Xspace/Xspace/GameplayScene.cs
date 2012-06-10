@@ -66,6 +66,7 @@ namespace MenuSample.Scenes
         List<Missiles> listeMissile, listeMissileToRemove;
         List<Bonus> listeBonus, listeBonusToRemove, listeBonusToAdd;
         List<Obstacles> listeObstacles, listeObstaclesToRemove;
+        List<supportAoe> listeSupportAoE, listeSupportAoEtoRemove;
         private ContentManager _content;
         private SpriteFont _gameFont, _ingameFont, _HUDfont;
         private GAME_MODE mode;
@@ -97,6 +98,35 @@ namespace MenuSample.Scenes
                 this.laser = l;
             }
         };
+
+        struct supportAoe
+        {
+            public Vaisseau v;
+            public Texture2D circle;
+            public Vector2 pos;
+            public int radius;
+
+            public supportAoe(Vaisseau v)
+            {
+                this.v = v;
+                circle = null;
+                radius = 0;
+                pos = Vector2.Zero;
+            }
+
+            public void recalculerRadius(double time, GraphicsDevice g)
+            {
+                this.radius = 50 + (int)((time - this.v.tLancementAoE) / 100);
+                if (radius >= 2048)
+                    radius = 2047;
+                this.circle = CreateCircle(radius, g);
+            }
+
+            public void setPosition(Vector2 newP)
+            {
+                pos = newP;
+            }
+        }
 
         public enum GAME_MODE
         {
@@ -143,6 +173,34 @@ namespace MenuSample.Scenes
             }
 
             return toReturn;
+        }
+
+        static public Texture2D CreateCircle(int radius, GraphicsDevice graphics)
+        {
+            int outerRadius = radius * 2 + 2; // So circle doesn't go out of bounds
+            Texture2D texture = new Texture2D(graphics, outerRadius, outerRadius);
+
+            Color[] data = new Color[outerRadius * outerRadius];
+
+            // Colour the entire texture transparent first.
+            for (int i = 0; i < data.Length; i++)
+            {
+                data[i] = Color.Transparent;
+            }
+
+            // Work out the minimum step necessary using trigonometry + sine approximation.
+            double angleStep = 1f / radius;
+
+            for (double angle = 0; angle < Math.PI * 2; angle += angleStep)
+            {
+                int x = (int)Math.Round(radius + radius * Math.Cos(angle));
+                int y = (int)Math.Round(radius + radius * Math.Sin(angle));
+
+                data[y * outerRadius + x + 1] = Color.White;
+            }
+
+            texture.SetData(data);
+            return texture;
         }
 
         static bool IntersectPixels(Rectangle rectangleA, Texture2D s1,
@@ -393,6 +451,9 @@ namespace MenuSample.Scenes
             listeLevelToRemove = new List<gestionLevels>();
             cleanLaser = new List<lasersEnnemis>();
             cleanLaserToRemove = new List<lasersEnnemis>();
+
+            listeSupportAoE = new List<supportAoe>();
+            listeSupportAoEtoRemove = new List<supportAoe>();
             if (mode != GAME_MODE.LIBRE)
             {
                 gestionLevels thisLevel = new gestionLevels(_level, listeTextureVaisseauxEnnemis, listeTextureBonus, listeTextureObstacles, listeTextureBoss);
@@ -407,6 +468,7 @@ namespace MenuSample.Scenes
             T_Divers_Levelcomplete = _content.Load<Texture2D>("Sprites\\Divers\\levelcompleted");
             T_Divers_Levelfail = _content.Load<Texture2D>("Sprites\\Divers\\gameover");
             #endregion
+            //circle = CreateCircle(150, SceneManager.GraphicsDevice);
         }
 
         List<doneParticles> collisions(List<Vaisseau> listeVaisseau, List<Missiles> listeMissile, List<Bonus> listeBonus, List<Bonus> listeBonusToAdd, List<Obstacles> listeObstacles, Boss aBoss, float spentTime, ParticleEffect particleEffect, GameTime gametime, bool dead)
@@ -496,6 +558,19 @@ namespace MenuSample.Scenes
                             if (!(missile is Laser_joueur) && !(missile is Laser_Ennemi))
                                 listeMissileToRemove.Add(missile);
 
+                            int degats = missile.degats;
+                            
+                            Rectangle rec;
+                            foreach(supportAoe aoe in listeSupportAoE)
+                            {
+                                aoe.recalculerRadius(time, SceneManager.GraphicsDevice);
+                                Vector2 position = new Vector2((aoe.v.pos.X + aoe.v.sprite.Width / 2) - aoe.radius, (aoe.v.pos.Y + aoe.v.sprite.Height / 2) - aoe.radius);
+                                aoe.setPosition(position);
+                                rec = new Rectangle((int)aoe.pos.X, (int)aoe.pos.Y, aoe.circle.Width, aoe.circle.Height);
+                                if (missile.rectangle.Intersects(rec)) // Si le missile est dans une AoE reduction damage
+                                    degats /= 4;
+                            }
+
                             if (missile is Rocket) // AoE sur les roquettes
                             {
                                 foreach (Vaisseau v in listeVaisseau)
@@ -506,7 +581,7 @@ namespace MenuSample.Scenes
                                     double distance = Math.Sqrt(Math.Pow(disX, 2) + Math.Pow(disY, 2));
                                     if (distance < 250 && !dead && v != listeVaisseau[0])
                                     {
-                                        if (v.hurt(missile.degats, time))
+                                        if (v.hurt(degats, time))
                                         {
                                             v.kill();
                                             if ((!end) && (!endDead))
@@ -535,7 +610,7 @@ namespace MenuSample.Scenes
                                 particleExplosionAoE.Trigger(new Vector2(missile.pos.X + T_Missile_Rocket.Width / 2, missile.pos.Y + T_Missile_Rocket.Height / 2));
                             }
 
-                            if (vaisseau.hurt(missile.degats, time)) // Mort du vaisseau
+                            if (vaisseau.hurt(degats, time)) // Mort du vaisseau
                             {
                                 vaisseau.kill();
                                 if((!end)&&(!endDead))
@@ -910,6 +985,16 @@ namespace MenuSample.Scenes
                                 case 4 : // Laser
                                     vaisseau.activerChargement(time);
                                     break;
+                                case 5 : // AoE du support
+                                    if (vaisseau.AoE == false)
+                                    {
+                                        supportAoe AoE = new supportAoe(vaisseau);
+                                        listeSupportAoE.Add(AoE);
+                                        vaisseau.AoE = true;
+                                        vaisseau.tLancementAoE = time;
+                                        vaisseau.activerAoE();
+                                    }
+                                    break;
                                 default:
                                     break;
                             }
@@ -980,6 +1065,18 @@ namespace MenuSample.Scenes
                     listeBonus.Remove(bonus);
                 foreach (Obstacles obstacle in listeObstaclesToRemove)
                     listeObstacles.Remove(obstacle);
+                #endregion
+                #region Update des AoE
+                foreach (supportAoe aoe in listeSupportAoE)
+                {
+                    if (!findIn(listeVaisseau, aoe.v))
+                        listeSupportAoEtoRemove.Add(aoe);
+                }
+
+                foreach (supportAoe aoe in listeSupportAoEtoRemove)
+                {
+                    listeSupportAoE.Remove(aoe);
+                }
                 #endregion
                 #region Collisions & Update des particules
                 partManage = collisions(listeVaisseau, listeMissile, listeBonus, listeBonusToAdd, listeObstacles, boss1, fps_fix, particleEffect, gameTime, listeVaisseau.Count == 0);
@@ -1181,6 +1278,15 @@ namespace MenuSample.Scenes
             foreach (Bonus bonus in listeBonus)
             {
                 bonus.Draw(spriteBatch);
+            }
+            #endregion
+            #region Draw des AoE
+            foreach (supportAoe aoe in listeSupportAoE)
+            {
+                aoe.recalculerRadius(time, SceneManager.GraphicsDevice);
+                Vector2 position = new Vector2((aoe.v.pos.X + aoe.v.sprite.Width / 2) - aoe.radius, (aoe.v.pos.Y + aoe.v.sprite.Height / 2) - aoe.radius);
+                aoe.setPosition(position);
+                spriteBatch.Draw(aoe.circle, position, Color.Blue); 
             }
             #endregion
             #region Draw des particules de collision
