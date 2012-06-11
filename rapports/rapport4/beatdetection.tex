@@ -1,6 +1,8 @@
 
 \subsubsection{Rappels sur le principe}
 
+\subsection{Analyse sonore et détection de battements}
+
 \subsubsection{Quelques optimisations directes}
 
 \par La version de l'algorithme présentée lors de la dernière soutenance était la version de base de l'algorithme,
@@ -10,25 +12,22 @@ au lieu des échantillons eux-mêmes, afin de ne plus avoir à calculer la moyenne 
 mais seulement celle des énergies instantanées $E$. Ce buffer d'énergie correspond à environ une seconde de musique,
 c'est à dire qu'il doit contenir un historique des énergies musicales sur 44032 échantillons (calculés en groupe de 1024)
 si la vitesse des échantillons est de 44100 par seconde.
-$
+
 \par On va donc créer un nouveau tableau des énergies $E$, où $E[0]$ va contenir la nouvelle énergie calculée sur les
 1024 nouveaux échantillons qui viennent d'être ajoutés dans le buffer et $E[42]$\footnote{Non, ce n'est pas fait exprès.}
 les 1024 derniers du buffer. On a donc 43 valeurs d'énergie dans l'historique, chacun calculés sur 1024 échantillons ce qui
 fait un historique de 44032 énergies d'échantillons, c'est à dire environ une seconde en temps réel.
 
-Notre algorithme devient donc :
+\par Notre algorithme devient donc :
 
-- On calcule, en utilisant la formule de l'algorithme de base, l'énergie instantanée $e$ des 1024 nouveaux échantillons dans le buffer :
-
-- On calcule l'énergie moyenne locale $<E>$ avc $E$, l'historique des énergies :
-
+\begin{itemize}
+\item On calcule, en utilisant la formule de l'algorithme de base, l'énergie instantanée $e$ des 1024 nouveaux échantillons dans le buffer :
+\item On calcule l'énergie moyenne locale $<E>$ avc $E$, l'historique des énergies :
 $$<E> = \frac{1}{43} \times \sum_{i=0}^{43} (E[i])^2$$
 
-- On décale le buffer d'énergies $E$ d'\em{un seul} index vers la droite.
-
-- On ajoute la nouvelle énergie instantanée $e$ à $E[0]$
-
-- On compare $e$ avec $C \times E$
+\item On décale le buffer d'énergies $E$ d'\em{un seul} index vers la droite.
+\item On ajoute la nouvelle énergie instantanée $e$ à $E[0]$
+\item On compare $e$ avec $C \times E$
 
 
 \subsubsection{Détection de sensibilité}
@@ -48,13 +47,13 @@ $$V = \frac{1}{43} \times \sum_{i=0}^{43} (E[i] - <E>)^2$$
 \par Plus cette variance est élevée, plus l'algorithme devrait être sensible, et donc plus $C$ devrait être basse.
 Nous allons donc utiliser une fonction affine décroissante pour calculer $C(V)$.
 
-XXX, l'auteur de YYY, a déterminé cette fonction en utilisant des « points » testés pour plusieurs chansons :
+\par Frédéric Patin, auteur de \emph{Beat Detection Algorithms}, a déterminé cette fonction en utilisant des « points » testés pour plusieurs chansons :
 $$
 C(200) = 1.0\\
 C(25) = 1.45\\
 $$
 
-Nous obtenons donc la fonction décroissante suivante :
+\par Nous obtenons donc la fonction décroissante suivante :
 
 $$C = (-0.0025714 \times V) + 1.5142857$$.
 
