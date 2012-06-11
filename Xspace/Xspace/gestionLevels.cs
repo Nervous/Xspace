@@ -108,34 +108,34 @@ namespace Xspace
                 switch (position)
                 {
                     case "0":
-                        start = new Vector2(1180, 5);
+                        start = new Vector2(1180, 0);
                         break;
                     case "1":
-                        start = new Vector2(1180, 67);
+                        start = new Vector2(1180, 62);
                         break;
                     case "2":
-                        start = new Vector2(1180, 129);
+                        start = new Vector2(1180, 124);
                         break;
                     case "3":
-                        start = new Vector2(1180, 191);
+                        start = new Vector2(1180, 186);
                         break;
                     case "4":
-                        start = new Vector2(1180, 253);
+                        start = new Vector2(1180, 248);
                             break;
                     case "5":
-                        start = new Vector2(1180, 315);
+                        start = new Vector2(1180, 310);
                             break;
                     case "6":
-                        start = new Vector2(1180, 377); 
+                        start = new Vector2(1180, 372); 
                             break;
                         case "7":
-                        start = new Vector2(1180, 439); 
+                        start = new Vector2(1180, 434); 
                             break;
                     case "8":
-                        start = new Vector2(1180, 501); 
+                        start = new Vector2(1180, 496); 
                             break;
                     case "9":
-                        start = new Vector2(1180, 563);
+                        start = new Vector2(1180, 558);
                             break;
                     default:
                         start = new Vector2(1180, 620 / 3);
