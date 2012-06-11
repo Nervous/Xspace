@@ -960,7 +960,7 @@ namespace MenuSample.Scenes
                     else if (vaisseau.ennemi)
                         vaisseau.Update(fps_fix);
                     else
-                        vaisseau.Update(fps_fix, keyboardState, listeObstacles);
+                        vaisseau.Update(fps_fix, time, keyboardState, listeObstacles);
 
                     if (vaisseau.ennemi && vaisseau.existe)
                     {

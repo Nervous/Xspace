@@ -297,10 +297,9 @@ namespace Xspace
              }
         }
 
-        public void Update(float fps_fix, KeyboardState keyboard, List<Obstacles> obstacles)
+        public void Update(float fps_fix, double time, KeyboardState keyboard, List<Obstacles> obstacles)
         {
             const float K_GRAVITE = 1000;
-            const float K_ANGLE_DELTA = 30;
 
             if (_energie < EnergieMax)
                 _energie++;
@@ -314,22 +313,26 @@ namespace Xspace
                     float ya = _pos.Y - obstacle.pos.Y;
                     float r = (float)Math.Sqrt(Math.Pow(xa, 2) + Math.Pow(ya, 2));
                     float theta = (float) Math.Atan2(ya, xa);
-                    
-                    if(r < 10)
-                        stucked = obstacle.pos;
+
+                    if (r < 20)
+                    {
+                        stucked.X = obstacle.pos.X - _sprite.Width / 2;
+                        stucked.Y = obstacle.pos.Y - _sprite.Height / 2;
+                    }
 
                     // On retourne en cartésien avec « x = (r - dr) * cos(θ - dθ) »,
                     // Puis on retourne dans le repère d'origine avec « + obstacle.position.X ».
                     if (stucked == Vector2.Zero)
                     {
-                        _pos.X = (float)((r - fps_fix * K_GRAVITE / Math.Pow(r, 2)) * Math.Cos(theta - fps_fix * K_ANGLE_DELTA / (Math.Pow(r, 2))) + obstacle.pos.X);
-                        _pos.Y = (float)((r - fps_fix * K_GRAVITE / Math.Pow(r, 2)) * Math.Sin(theta - fps_fix * K_ANGLE_DELTA / (Math.Pow(r, 2))) + obstacle.pos.Y);
+                        _pos.X = (float)((r - fps_fix * K_GRAVITE / Math.Pow(r, 2)) * Math.Cos(theta) + obstacle.pos.X);
+                        _pos.Y = (float)((r - fps_fix * K_GRAVITE / Math.Pow(r, 2)) * Math.Sin(theta) + obstacle.pos.Y);
                     }
                 }
             }
 
             if (stucked != Vector2.Zero)
             {
+                hurt(1, time);
                 _pos = stucked;
             }
             else
