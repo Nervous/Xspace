@@ -1,0 +1,7 @@
+*/*.aux
+*/*.pdf
+*/*.txt
+*/*.gz
+*/*.log
+*/*.toc
+*/images
