@@ -169,10 +169,10 @@ namespace Xspace
                             vaisseau = new Targeter(listeTextureVaisseauxEnnemis[5], start);
                             break;
                         case "BC":
-                            vaisseau = new BC(listeTextureVaisseauxEnnemis[5], start);
+                            vaisseau = new BC(listeTextureVaisseauxEnnemis[6], start);
                             break;
                         case "support":
-                            vaisseau = new Support(listeTextureVaisseauxEnnemis[5], start);
+                            vaisseau = new Support(listeTextureVaisseauxEnnemis[7], start);
                             break;
                         default:
                             break;

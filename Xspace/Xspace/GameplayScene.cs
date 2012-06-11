@@ -53,7 +53,7 @@ namespace MenuSample.Scenes
         private List<doneParticles> partManage;
         private ScrollingBackground fond_ecran, fond_ecran_front, fond_ecran_middle;
         public SpriteBatch spriteBatch;
-        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Vaisseau_Kamikaze, T_Missile_Joueur_1, T_Missile_Joueur_2, T_Missile_Joueur_3, T_Missile_HeavyLaser, T_Laser_Joueur, T_Missile_Drone, T_Missile_Rocket, T_MissileAutoguide, T_LaserEnnemi, T_Bonus_Vie, T_Bonus_Weapon1, T_Bonus_Score, T_Bonus_Energie, T_Obstacles_Hole, barre_vie, barre_energy, T_HUD, T_HUD_boss, T_HUD_bars, T_HUD_bar_boss, T_Divers_Levelcomplete, T_Divers_Levelfail, T_boss1, T_Vaisseau_Energizer, T_Vaisseau_Doubleshooter, T_Vaisseau_Zebra, T_Vaisseau_Targeter, T_Missile_Energie, T_boss2, T_boss3, T_HUD_basic, T_HUD_laser, T_HUD_Heavy, T_HUD_red_rect, T_HUD_rocket;
+        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Vaisseau_Kamikaze, T_Missile_Joueur_1, T_Missile_Joueur_2, T_Missile_Joueur_3, T_Missile_HeavyLaser, T_Laser_Joueur, T_Missile_Drone, T_Missile_Rocket, T_MissileAutoguide, T_LaserEnnemi, T_Bonus_Vie, T_Bonus_Weapon1, T_Bonus_Score, T_Bonus_Energie, T_Obstacles_Hole, barre_vie, barre_energy, T_HUD, T_HUD_boss, T_HUD_bars, T_HUD_bar_boss, T_Divers_Levelcomplete, T_Divers_Levelfail, T_boss1, T_Vaisseau_Energizer, T_Vaisseau_Doubleshooter, T_Vaisseau_Zebra, T_Vaisseau_Targeter, T_Vaisseau_BC, T_Vaisseau_Support, T_Missile_Energie, T_boss2, T_boss3, T_HUD_basic, T_HUD_laser, T_HUD_Heavy, T_HUD_red_rect, T_HUD_rocket;
         private List<Texture2D> listeTextureVaisseauxEnnemis, listeTextureBonus, listeTextureObstacles, listeTextureBoss;
         private SoundEffect sonLaser, sonHeavyLaser, musique_bossExplosion;
         private KeyboardState keyboardState;
@@ -359,6 +359,8 @@ namespace MenuSample.Scenes
             T_Vaisseau_Doubleshooter = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Ennemi\\doubleshooter");
             T_Vaisseau_Zebra = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Ennemi\\Zebra");
             T_Vaisseau_Targeter = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Ennemi\\targeter");
+            T_Vaisseau_BC = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Ennemi\\BC");
+            T_Vaisseau_Support = _content.Load<Texture2D>("Sprites\\Vaisseaux\\Ennemi\\support");
 			drawSpectre = false;
 
             /* WebClient wc = new WebClient();
@@ -432,6 +434,9 @@ namespace MenuSample.Scenes
             listeTextureVaisseauxEnnemis.Add(T_Vaisseau_Doubleshooter);
             listeTextureVaisseauxEnnemis.Add(T_Vaisseau_Zebra);
             listeTextureVaisseauxEnnemis.Add(T_Vaisseau_Targeter);
+            listeTextureVaisseauxEnnemis.Add(T_Vaisseau_BC);
+            listeTextureVaisseauxEnnemis.Add(T_Vaisseau_Support);
+
 
             listeTextureBonus = new List<Texture2D>();
             listeTextureBonus.Add(T_Bonus_Vie);
