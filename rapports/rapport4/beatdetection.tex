@@ -1,0 +1,74 @@
+
+\subsubsection{Rappels sur le principe}
+
+\subsubsection{Quelques optimisations directes}
+
+\par La version de l'algorithme présentée lors de la dernière soutenance était la version de base de l'algorithme,
+sa vitesse et ses résultats peuvent être améliorés assez facilement. L'algorithme peut tout d'abord être optimisé en
+conservant les différentes valeurs de l'énergie musicale calculée sur 1024 échantillons dans notre "historique"
+au lieu des échantillons eux-mêmes, afin de ne plus avoir à calculer la moyenne des énergies sur un buffer de 44100 échantillons
+mais seulement celle des énergies instantanées $E$. Ce buffer d'énergie correspond à environ une seconde de musique,
+c'est à dire qu'il doit contenir un historique des énergies musicales sur 44032 échantillons (calculés en groupe de 1024)
+si la vitesse des échantillons est de 44100 par seconde.
+$
+\par On va donc créer un nouveau tableau des énergies $E$, où $E[0]$ va contenir la nouvelle énergie calculée sur les
+1024 nouveaux échantillons qui viennent d'être ajoutés dans le buffer et $E[42]$\footnote{Non, ce n'est pas fait exprès.}
+les 1024 derniers du buffer. On a donc 43 valeurs d'énergie dans l'historique, chacun calculés sur 1024 échantillons ce qui
+fait un historique de 44032 énergies d'échantillons, c'est à dire environ une seconde en temps réel.
+
+Notre algorithme devient donc :
+
+- On calcule, en utilisant la formule de l'algorithme de base, l'énergie instantanée $e$ des 1024 nouveaux échantillons dans le buffer :
+
+- On calcule l'énergie moyenne locale $<E>$ avc $E$, l'historique des énergies :
+
+$$<E> = \frac{1}{43} \times \sum_{i=0}^{43} (E[i])^2$$
+
+- On décale le buffer d'énergies $E$ d'\em{un seul} index vers la droite.
+
+- On ajoute la nouvelle énergie instantanée $e$ à $E[0]$
+
+- On compare $e$ avec $C \times E$
+
+
+\subsubsection{Détection de sensibilité}
+
+\par Un des autres problèmes de cet algorithme « de base » est le choix de la constante $C$. Nous avions vu que 1,3 une bonne valeur pour
+l'utilisation que nous en faisions, pourtant elle varie en fonction du style de la musique. Nous devons pallier le fait que notre
+algorithmene peut pas reconnaître les différents instruments : par exemple, une musique de techno ou de rap est assez marquée par
+les différents battements (où un choix de $C = 1,4$ pourrait être justifié), bien plus précisément que pour le Rock'N'Roll qui contiennent beaucoup de « bruit », les battements
+sont moins marqués et la constante $C$ devrait être plus basse (environ $1,1$).
+
+\par Il nous a donc fallu trouver un moyen de faire en sorte que l'algorithme détermine automatiquement une bonne valeur pour $C$.
+Pour cela, nous calculons la variation des énergies conetenues dans le buffer d'historique $E$.
+Cette variance n'est en fait rien d'autre que la différence $V = E - <E>$. Dans notre cas, nous avons donc :
+
+$$V = \frac{1}{43} \times \sum_{i=0}^{43} (E[i] - <E>)^2$$
+
+\par Plus cette variance est élevée, plus l'algorithme devrait être sensible, et donc plus $C$ devrait être basse.
+Nous allons donc utiliser une fonction affine décroissante pour calculer $C(V)$.
+
+XXX, l'auteur de YYY, a déterminé cette fonction en utilisant des « points » testés pour plusieurs chansons :
+$$
+C(200) = 1.0\\
+C(25) = 1.45\\
+$$
+
+Nous obtenons donc la fonction décroissante suivante :
+
+$$C = (-0.0025714 \times V) + 1.5142857$$.
+
+\subsubsection{Résultats}
+\par Les résultats obtenus sont bien plus efficaces qu'avec la version précédente de l'algorithme. Les battements sont détectés de manière
+bien moins approximative que lors de la précédente soutenance. Ils ont été testés avec plusieurs types de musiques,
+parmi lesquelles : pop, rock, metal, techno, rap, classique, punk. Encore une fois, les résultats sont extrêmement précis et
+semblent juste pour la techno et le rap. Pourtant il arrive que l'algorithme soit parfois trop approximatif pour des musiques
+contenant plus de bruit.
+
+\par Détecter des battements est extrêmement frustrant. Nous entendons naturellement ces battements et il nous est très difficile
+de les formaliser. Nous avons essayé d'approximer plus ou moins efficacement cette détection, mais le rendu n'est pas
+toujours parfait. Cependant, le problème que nous cherchions à résoudre avec cet algorithme, à savoir faire intéragir notre perception
+du son et celle du jeu, est amplement\footnote{Puisqu'on parle d'amplitudes.} résolu. Les autres méthodes de détection de battement,
+passant par le calcul de FFT\footnote{Fast Fourier Transform} sont bien trop lentes (après quelques expériences, il nous a 
+fallu plus de 5 minutes pour analyser une musique de 2 minutes 30) pour être utilisées efficacement ici, et l'algorithme expliqué ici
+répond parfaitement à nos attentes.
