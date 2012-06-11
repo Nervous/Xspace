@@ -35,7 +35,7 @@ namespace MenuSample.Scenes
     {
         const int SCREEN_MAXTOP = -30, SCREEN_MAXBOT = 620;
         #region Déclaration variables usuelles
-        private int score, _level;
+        private int score, _level, score_extreme;
         private float fps_fix, _pauseAlpha;
         private double time, lastTime, lastTimeSpectre, lastTimeEnergy, bossTime, compteur, lastTimeRandomSpawn, lastTimeMusic;
         private string path_level, stock_score_inferieur, stock_score_superieur;
@@ -1190,13 +1190,24 @@ namespace MenuSample.Scenes
                     AudioPlayer.StopMusic();
                     SoundEffect.MasterVolume = 0.00f;
                     AudioPlayer.PlayMusic("Musiques\\Menu\\Musique.flac");
-                    if (mode != GAME_MODE.LIBRE)
+                    if (mode == GAME_MODE.CAMPAGNE)
                     {
                         path_level = "Scores\\Arcade\\lvl" + _level + ".score";
                         sr_level = new StreamReader(path_level);
                         score_level = System.IO.File.ReadAllLines(@path_level);
                         stock_score_inferieur = "";
                         stock_score_superieur = "";
+
+                        if (score_level.Length < 10)
+                        {
+                            for (int i = score_level.Length; i < 10; i++)
+                            {
+                                if (i % 2 == 0)
+                                    score_level[i] = "-";
+                                else
+                                    score_level[i] = "0";
+                            }
+                        }
 
                         for (int i = 0; i < 10; i += 2)
                         {
@@ -1210,6 +1221,40 @@ namespace MenuSample.Scenes
                         sw_level = new StreamWriter(path_level);
 
                         sw_level.WriteLine(stock_score_inferieur + "Nervous" + '\n' + Convert.ToString(score) + '\n' + stock_score_superieur);
+                        sw_level.Close();
+                    }
+                    else if (mode == GAME_MODE.EXTREME)
+                    {
+                        score_extreme = Convert.ToInt32(compteur/1000);
+                        path_level = "Scores\\Extreme\\lvl.score";
+                        sr_level = new StreamReader(path_level);
+                        score_level = System.IO.File.ReadAllLines(@path_level);
+                        stock_score_inferieur = "";
+                        stock_score_superieur = "";
+
+                        if (score_level.Length < 10)
+                        {
+                            for (int i = score_level.Length; i < 10; i++)
+                            {
+                                if (i % 2 == 0)
+                                    score_level[i] = "-";
+                                else
+                                    score_level[i] = "0";
+                            }
+                        }
+
+                        for (int i = 0; i < 10; i += 2)
+                        {
+                            if (score_extreme > Convert.ToInt32(score_level[i + 1]))
+                                stock_score_inferieur += score_level[i] + '\n' + score_level[i + 1] + '\n';
+                            else
+                                stock_score_superieur += score_level[i] + '\n' + score_level[i + 1] + '\n';
+                        }
+
+                        sr_level.Close();
+                        sw_level = new StreamWriter(path_level);
+
+                        sw_level.WriteLine(stock_score_inferieur + "Nervous" + '\n' + Convert.ToString(score_extreme) + '\n' + stock_score_superieur);
                         sw_level.Close();
                     }
                     first = false;
@@ -1377,6 +1422,8 @@ namespace MenuSample.Scenes
             spriteBatch.Draw(T_HUD_bars, new Vector2(380, 630), Color.White);
             if (mode != GAME_MODE.EXTREME)
                 spriteBatch.DrawString(_HUDfont, Convert.ToString(score), new Vector2(95, 628), new Color(30, 225, 30));
+            else
+                spriteBatch.DrawString(_HUDfont, Convert.ToString(compteur/1000), new Vector2(95, 628), new Color(30, 225, 30));
 
             Color laser, red_laser, rocket;
             Vector2 rect_vect;
@@ -1447,7 +1494,11 @@ namespace MenuSample.Scenes
             if (end)
             {
                 spriteBatch.Draw(T_Divers_Levelcomplete, new Vector2(0, 0), Color.White);
+                if(mode != GAME_MODE.EXTREME)
                 spriteBatch.DrawString(_gameFont, Convert.ToString(score), new Vector2(530,276), Color.Green);
+                else
+                    spriteBatch.DrawString(_gameFont, Convert.ToString(score_extreme), new Vector2(530, 276), Color.Green);
+
             }
             else if (endDead)
             {

@@ -29,11 +29,6 @@ namespace MenuSample.Scenes
         private int i;
         private bool  firstTime;
 
-        /* Be careful, level ID begins at 0. (level 1 has ID 0, for score / i / lvl) */
-        /*
-         * TODO:
-         * Nothin???!!!*/
-
         public ScoreExtremeMenuScene(SceneManager sceneMgr)
             : base(sceneMgr, "Score Arcade")
         {
