@@ -16,6 +16,7 @@ namespace MenuSample.Scenes
 
             back.Selected += OnCancel;
             scoreArcade.Selected += ScoreArcadeMenuItemSelected;
+            scoreExtreme.Selected += ScoreExtremeMenuItemSelected;
 
             MenuItems.Add(scoreArcade);
             MenuItems.Add(scoreExtreme);

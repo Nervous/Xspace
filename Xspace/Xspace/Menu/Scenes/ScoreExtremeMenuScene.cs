@@ -20,15 +20,14 @@ namespace MenuSample.Scenes
         private ContentManager _content;
         private SpriteFont _gamefont;
         private Texture2D _score_board, _score_surbrillance, _score_lvl, _score_surbrillance2;
-        private StreamReader sr_arcade, sr_arcade_level; //sr_level, 
-        private string path_arcade, path_level, path_extreme_level, path_extreme_level_best;
+        private string path_extreme_level;
         private Vector2 position_Nv;
         private Vector2 position_board;
         public string[] score_extreme, score_level, score_extreme_level, score_extreme_level_best;
         private static KeyboardState _keyboardState;
         private static KeyboardState _lastKeyboardState;
         private int i;
-        private bool level_selected, backSelected, firstTime;
+        private bool  firstTime;
 
         /* Be careful, level ID begins at 0. (level 1 has ID 0, for score / i / lvl) */
         /*
@@ -44,17 +43,13 @@ namespace MenuSample.Scenes
             i = 0;
             var back = new MenuItem("Retour");
             var Nv1 = new MenuItem("Nv.1");
-            sr_arcade = new StreamReader(path_arcade);
             position_board = new Vector2();
             MenuItems.Add(back);
-
         }
 
         public override void Initialize()
         {
             base.Initialize();
-            level_selected = true;
-            backSelected = false;
             firstTime = true;
         }
         public override void Draw(GameTime gameTime)
@@ -77,17 +72,17 @@ namespace MenuSample.Scenes
             position_Nv.X = 250;
             position_Nv.Y = 253;
 
-                spriteBatch.DrawString(_gamefont, score_extreme_level[0], new Vector2(220 + 373 * ((i) / 5), (240 + ((i) % 5) * 47)), Color.LightGreen, 0, new Vector2(0, 0), 0.7f, SpriteEffects.None, 0);
-
-                score_level = System.IO.File.ReadAllLines(@path_level);
+                score_level = System.IO.File.ReadAllLines(@path_extreme_level);
 
                 if (score_level.Length < 10)
                 {
-                    FileStream fs = new FileStream(@path_level, FileMode.Open);
+                    FileStream fs = new FileStream(@path_extreme_level, FileMode.Open);
                     StreamReader sr = new StreamReader(fs);
                     sr.ReadToEnd();
                     StreamWriter sw = new StreamWriter(fs);
-                    sw.Write("\n");
+                    if (score_level.Length > 0)
+                        sw.Write('\n');
+
                     for (int k = score_level.Length; k < 10; k++)
                     {
                         if (k % 2 == 0)
@@ -108,23 +103,24 @@ namespace MenuSample.Scenes
                 else
                     for (int pos = 0; pos < 10; pos++) // score for each levels (5)
                         spriteBatch.DrawString(_gamefont, score_level[pos], new Vector2(452 + 151 * ((pos) % 2), 240 + (pos / 2) * (55)), Color.LightGreen, 0, new Vector2(0, 0), 0.7f, SpriteEffects.None, 0);
-            
-            spriteBatch.End();
-            sr_arcade.Close();
-            sr_arcade_level.Close();
+
+                spriteBatch.End();
         }
 
         public override void Update(GameTime gameTime)
         {
-            path_level = "Scores\\Extreme\\lvl.score";
-
             position_Nv.X = 359 * (i / 5) + 109;
             position_Nv.Y = 230 + (i % 5) * 56;
 
             _keyboardState = Keyboard.GetState();
 
-            if (_keyboardState.IsKeyDown(Keys.Enter)) // removing the scene
+            if (_keyboardState.IsKeyDown(Keys.Enter) && _lastKeyboardState.IsKeyUp(Keys.Enter)) // removing the scene
+            {
+                if (firstTime)
+                    firstTime = false;
+                else
                 Remove();
+            }
 
             _lastKeyboardState = _keyboardState;
             base.Update(gameTime);
