@@ -134,7 +134,7 @@ namespace MenuSample.Scenes
             CAMPAGNE,
             EXTREME,
             LIBRE,
-            COOP,
+            CUSTOM,
         }
         public enum BEAT_SPAWNED
         {
@@ -292,24 +292,31 @@ namespace MenuSample.Scenes
             sonLaser = _content.Load<SoundEffect>("Sons\\Tir\\Tir");
             sonHeavyLaser = _content.Load<SoundEffect>("Sons\\Tir\\HeavyLaser");
             musique_bossExplosion = _content.Load<SoundEffect>("Sons\\BossExplosion");
+            if (mode != GAME_MODE.CUSTOM)
+            {
+                MD5CryptoServiceProvider md5crypto = new MD5CryptoServiceProvider();
+                Stream s = (Stream)new FileStream("Musiques\\Jeu\\" + song_path, FileMode.Open);
+                byte[] music_md5_bytes = md5crypto.ComputeHash(s);
+                string music_md5 = Encoding.ASCII.GetString(music_md5_bytes);
+                int music_md5_seed = BitConverter.ToInt32(music_md5_bytes, 0);
+                s.Close();
 
-            MD5CryptoServiceProvider md5crypto = new MD5CryptoServiceProvider();
-            Stream s = (Stream)new FileStream("Musiques\\Jeu\\" + song_path, FileMode.Open);
-            byte[] music_md5_bytes = md5crypto.ComputeHash(s);
-            string music_md5 = Encoding.ASCII.GetString(music_md5_bytes);
-            int music_md5_seed = BitConverter.ToInt32(music_md5_bytes, 0);
-            s.Close();
+                r = new Random(music_md5_seed);
+                int loop = (mode == GAME_MODE.LIBRE) ? 0 : -1;
+                AudioPlayer.PlayMusic("Musiques\\Jeu\\" + song_path, loop, true);
+                AudioPlayer.SetVolume(1f);
 
-            r = new Random(music_md5_seed);
-
-            int loop = (mode == GAME_MODE.LIBRE) ? 0 : -1;
-            AudioPlayer.PlayMusic("Musiques\\Jeu\\" + song_path, loop, true);
-            AudioPlayer.SetVolume(1f);
-
-            BeatDetector.Initialize();
-            BeatDetector.audio_process();
-            moy_energie1024 = BeatDetector.get_moy_energie1024();
-            AudioPlayer.PauseMusic();
+                BeatDetector.Initialize();
+                BeatDetector.audio_process();
+                moy_energie1024 = BeatDetector.get_moy_energie1024();
+                AudioPlayer.PauseMusic();
+            }
+            else
+            {
+                AudioPlayer.PlayMusic("Musiques\\Jeu\\fat1.wav");
+                AudioPlayer.SetVolume(1f);
+                r = new Random();
+            }
 
             #endregion
             #region Chargement des polices d'écritures
@@ -488,8 +495,17 @@ namespace MenuSample.Scenes
             listeSupportAoEtoRemove = new List<supportAoe>();
             if (mode != GAME_MODE.LIBRE)
             {
-                gestionLevels thisLevel = new gestionLevels(_level, listeTextureVaisseauxEnnemis, listeTextureBonus, listeTextureObstacles, listeTextureBoss);
-                thisLevel.readInfos(delimitationFilesInfo, delimitationFilesInfo2, delimitationFilesInfo3, infLevel);
+                if (mode != GAME_MODE.CUSTOM)
+                {
+                    gestionLevels thisLevel = new gestionLevels(_level, listeTextureVaisseauxEnnemis, listeTextureBonus, listeTextureObstacles, listeTextureBoss);
+                    thisLevel.readInfos(delimitationFilesInfo, delimitationFilesInfo2, delimitationFilesInfo3, infLevel);
+                }
+                else
+                {
+                    string[] nb_level = song_path.Split('.');
+                    gestionLevels thisLevel = new gestionLevels(Convert.ToInt16(nb_level[0]), listeTextureVaisseauxEnnemis, listeTextureBonus, listeTextureObstacles, listeTextureBoss);
+                    thisLevel.readInfos(delimitationFilesInfo, delimitationFilesInfo2, delimitationFilesInfo3, infLevel);
+                }
             }
             #endregion
             #region Chargement barre de vie
@@ -1163,52 +1179,55 @@ namespace MenuSample.Scenes
 
                 #endregion
                 #region Gestion du mode Libre
-                if (AudioPlayer.IsPlaying())
+                if (GAME_MODE.LIBRE == mode)
                 {
-                    int time_music = (int)((AudioPlayer.GetCurrentTime() % (AudioPlayer.GetLength() - 1024)) / 1024f);
-                    float energy_1024_music = (float)BeatDetector.get_energie1024()[(int)time_music];
-
-                    position_spawn = new Vector2(1180, r.Next(5, 564));
-                    if (mode == GAME_MODE.LIBRE && lastTimeMusic < time_music)
+                    if (AudioPlayer.IsPlaying())
                     {
-                        if ((time_music - lastTimeRandomSpawn > 10) && (BeatDetector.get_beat()[(int)time_music] > 0))
+                        int time_music = (int)((AudioPlayer.GetCurrentTime() % (AudioPlayer.GetLength() - 1024)) / 1024f);
+                        float energy_1024_music = (float)BeatDetector.get_energie1024()[(int)time_music];
+
+                        position_spawn = new Vector2(1180, r.Next(5, 564));
+                        if (mode == GAME_MODE.LIBRE && lastTimeMusic < time_music)
                         {
-                            if (energy_1024_music / moy_energie1024 > 1.8)
+                            if ((time_music - lastTimeRandomSpawn > 10) && (BeatDetector.get_beat()[(int)time_music] > 0))
                             {
-                                listeVaisseau.Add(new kamikaze(T_Vaisseau_Kamikaze, position_spawn));
-                                beat_spawned = BEAT_SPAWNED.ENEMY;
-                            }
-                            else if (energy_1024_music / moy_energie1024 > 1.5)
-                            {
-                                listeVaisseau.Add(new RapidShooter(T_Vaisseau_Doubleshooter, position_spawn));
-                                beat_spawned = BEAT_SPAWNED.ENEMY;
-                            }
-                            else if (energy_1024_music / moy_energie1024 > 1.2)
-                            {
-                                listeVaisseau.Add(new Blasterer(T_Vaisseau_Energizer, position_spawn));
-                                beat_spawned = BEAT_SPAWNED.ENEMY;
-                            }
-                            else if (energy_1024_music / moy_energie1024 > 1)
-                            {
-                                listeVaisseau.Add(new Drone(T_Vaisseau_Drone, position_spawn));
-                                beat_spawned = BEAT_SPAWNED.ENEMY;
-                            }
-                            else
-                            {
-                                beat_spawned = BEAT_SPAWNED.NOTHING;
+                                if (energy_1024_music / moy_energie1024 > 1.8)
+                                {
+                                    listeVaisseau.Add(new kamikaze(T_Vaisseau_Kamikaze, position_spawn));
+                                    beat_spawned = BEAT_SPAWNED.ENEMY;
+                                }
+                                else if (energy_1024_music / moy_energie1024 > 1.5)
+                                {
+                                    listeVaisseau.Add(new RapidShooter(T_Vaisseau_Doubleshooter, position_spawn));
+                                    beat_spawned = BEAT_SPAWNED.ENEMY;
+                                }
+                                else if (energy_1024_music / moy_energie1024 > 1.2)
+                                {
+                                    listeVaisseau.Add(new Blasterer(T_Vaisseau_Energizer, position_spawn));
+                                    beat_spawned = BEAT_SPAWNED.ENEMY;
+                                }
+                                else if (energy_1024_music / moy_energie1024 > 1)
+                                {
+                                    listeVaisseau.Add(new Drone(T_Vaisseau_Drone, position_spawn));
+                                    beat_spawned = BEAT_SPAWNED.ENEMY;
+                                }
+                                else
+                                {
+                                    beat_spawned = BEAT_SPAWNED.NOTHING;
+                                }
+
+                                lastTimeRandomSpawn = time_music;
                             }
 
-                            lastTimeRandomSpawn = time_music;
+                            lastTimeMusic = time_music;
                         }
+                    }
 
-                        lastTimeMusic = time_music;
+                    else
+                    {
+                        end = true;
                     }
                 }
-                else
-                {
-                    end = true;
-                }
-
                 #endregion
                 #region Fin du level
 

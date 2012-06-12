@@ -187,6 +187,7 @@
     <Compile Include="GameCore\Coopération\Server.cs" />
     <Compile Include="GameCore\Items\Obstacles\Obstacles.cs" />
     <Compile Include="GameCore\Items\Obstacles\Obstacles_Hole.cs" />
+    <Compile Include="Menu\Scenes\UserMenuScene.cs" />
     <Compile Include="ScrollingBackground.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GameCore\Son\AudioPlayer.cs" />

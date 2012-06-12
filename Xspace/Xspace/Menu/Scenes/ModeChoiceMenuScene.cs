@@ -35,6 +35,7 @@ namespace MenuSample.Scenes
             var campagneMenuItem = new MenuItem("Campagne");
             var extremMenuItem = new MenuItem("Extreme");
             var libreMenuItem = new MenuItem("Libre");
+            var userMenuItem = new MenuItem("Mes niveaux");
             var back = new MenuItem("Retour");
 
             // Gestion des évènements
@@ -42,11 +43,13 @@ namespace MenuSample.Scenes
             extremMenuItem.Selected += ExtremMenuItemSelected;
             back.Selected += OnCancel;
             libreMenuItem.Selected += LibreMenuItemSelected;
+            userMenuItem.Selected += UserMenuItemSelected;
 
             // Ajout des options du menu
             MenuItems.Add(campagneMenuItem);
             MenuItems.Add(extremMenuItem);
             MenuItems.Add(libreMenuItem);
+            MenuItems.Add(userMenuItem);
             MenuItems.Add(back);
 
 
@@ -63,6 +66,11 @@ namespace MenuSample.Scenes
         private void CampagneMenuItemSelected(object sender, EventArgs e)
         {
             new ActChoiceMenuScene(SceneManager, graphics).Add();
+        }
+
+        private void UserMenuItemSelected(object sender, EventArgs e)
+        {
+            new UserMenuScene(SceneManager, graphics).Add();
         }
 
         private void ExtremMenuItemSelected(object sender, EventArgs e)
