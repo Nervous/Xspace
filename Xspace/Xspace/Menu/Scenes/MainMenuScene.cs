@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using System.Diagnostics;
 
 using Xspace;
 
@@ -34,6 +35,7 @@ namespace MenuSample.Scenes
             
             // Création des options
             var playGameMenuItem = new MenuItem("Lancer le jeu");
+            var createGameMenuItem = new MenuItem("Editeur de niveau");
             var ScoreMenuItem = new MenuItem("Scores");
             var OptionMenuItem = new MenuItem("Options");
             var exitMenuItem = new MenuItem("Quitter");
@@ -44,9 +46,11 @@ namespace MenuSample.Scenes
             OptionMenuItem.Selected += OptionMenuItemSelected;
             exitMenuItem.Selected += ConfirmExitMessageBoxAccepted;
             ScoreMenuItem.Selected += ScoreMenuItemSelected;
+            createGameMenuItem.Selected += CreateGameMenuItemSelected;
 
             // Ajout des options du menu
             MenuItems.Add(playGameMenuItem);
+            MenuItems.Add(createGameMenuItem);
             MenuItems.Add(ScoreMenuItem);
             MenuItems.Add(OptionMenuItem);
             MenuItems.Add(exitMenuItem);
@@ -79,6 +83,14 @@ namespace MenuSample.Scenes
         private void ScoreMenuItemSelected(object sender, EventArgs e)
         {
             new ScoreMenuScene(SceneManager).Add();
+        }
+
+        private void CreateGameMenuItemSelected(object sender, EventArgs e)
+        {
+            Process myInfo = new Process();
+            myInfo.StartInfo.FileName = "LevelEditor.exe";
+            myInfo.StartInfo.WorkingDirectory = "Editeur";
+            myInfo.Start(); 
         }
 
         protected override void OnCancel() // unused
