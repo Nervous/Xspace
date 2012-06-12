@@ -25,3 +25,12 @@ C:\Users\Nervous\Desktop\LevelEditor\LevelEditor\obj\x86\Debug\LevelEditor.Prope
 C:\Users\Nervous\Desktop\LevelEditor\LevelEditor\obj\x86\Debug\GenerateResource.read.1.tlog
 C:\Users\Nervous\Desktop\LevelEditor\LevelEditor\obj\x86\Debug\GenerateResource.write.1.tlog
 C:\Users\Nervous\Desktop\LevelEditor\LevelEditor\obj\x86\Debug\LevelEditor.exe
+I:\Documents\Space Symphonia\Xspace\New\Xspace\LevelEditor\LevelEditor\obj\x86\Debug\LevelEditor.exe
+I:\Documents\Space Symphonia\Xspace\New\Xspace\LevelEditor\LevelEditor\obj\x86\Debug\LevelEditor.pdb
+I:\Documents\Space Symphonia\Xspace\New\Xspace\LevelEditor\LevelEditor\bin\Debug\LevelEditor.exe
+I:\Documents\Space Symphonia\Xspace\New\Xspace\LevelEditor\LevelEditor\bin\Debug\LevelEditor.pdb
+I:\Documents\Space Symphonia\Xspace\New\Xspace\LevelEditor\LevelEditor\obj\x86\Debug\ResolveAssemblyReference.cache
+I:\Documents\Space Symphonia\Xspace\New\Xspace\LevelEditor\LevelEditor\obj\x86\Debug\LevelEditor.LevelEditor.resources
+I:\Documents\Space Symphonia\Xspace\New\Xspace\LevelEditor\LevelEditor\obj\x86\Debug\LevelEditor.Properties.Resources.resources
+I:\Documents\Space Symphonia\Xspace\New\Xspace\LevelEditor\LevelEditor\obj\x86\Debug\GenerateResource.read.1.tlog
+I:\Documents\Space Symphonia\Xspace\New\Xspace\LevelEditor\LevelEditor\obj\x86\Debug\GenerateResource.write.1.tlog

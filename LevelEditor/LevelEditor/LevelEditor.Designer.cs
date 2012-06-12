@@ -120,6 +120,8 @@
             this.quitterToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
+            this.aideToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.jouerÀMonNiveauToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox64)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox28)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox81)).BeginInit();
@@ -1115,7 +1117,8 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fichierToolStripMenuItem});
+            this.fichierToolStripMenuItem,
+            this.aideToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1076, 24);
@@ -1152,6 +1155,21 @@
             this.quitterToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.quitterToolStripMenuItem1.Text = "Quitter";
             this.quitterToolStripMenuItem1.Click += new System.EventHandler(this.quitterToolStripMenuItem1_Click);
+            // 
+            // aideToolStripMenuItem
+            // 
+            this.aideToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.jouerÀMonNiveauToolStripMenuItem});
+            this.aideToolStripMenuItem.Name = "aideToolStripMenuItem";
+            this.aideToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
+            this.aideToolStripMenuItem.Text = "Aide";
+            // 
+            // jouerÀMonNiveauToolStripMenuItem
+            // 
+            this.jouerÀMonNiveauToolStripMenuItem.Name = "jouerÀMonNiveauToolStripMenuItem";
+            this.jouerÀMonNiveauToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.jouerÀMonNiveauToolStripMenuItem.Text = "Jouer à mon niveau";
+            this.jouerÀMonNiveauToolStripMenuItem.Click += new System.EventHandler(this.jouerÀMonNiveauToolStripMenuItem_Click);
             // 
             // LevelEditor
             // 
@@ -1424,6 +1442,8 @@
         private System.Windows.Forms.ToolStripMenuItem quitterToolStripMenuItem1;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.OpenFileDialog openFileDialog2;
+        private System.Windows.Forms.ToolStripMenuItem aideToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem jouerÀMonNiveauToolStripMenuItem;
     }
 }
 

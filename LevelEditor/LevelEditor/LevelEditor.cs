@@ -923,5 +923,13 @@ namespace LevelEditor
                  plot.Load(boxList, page);
              
          }
+
+         private void jouerÀMonNiveauToolStripMenuItem_Click(object sender, EventArgs e)
+         {
+             if (MessageBox.Show("Pour jouer sur votre niveau, il suffit de l'enregistrer dans le dossier levels de votre jeu, sous le nom 1, ou 2...99. Par exemple, mon premier niveau se situera par défaut dans le répertoire suivant: C:/Program Files/Space Symphonia/levels/1.xpa (1.xpa étant le niveau que vous avez créé !) Compris ?",
+          "Message de confirmation",
+              MessageBoxButtons.YesNo) == DialogResult.No)
+                 MessageBox.Show("Vous devez enregistrer votre niveau par défaut dans C:/Program Files/Space Symphonia/Levels sous le nom 1 si c'est votre 1er niveau, puis 2 pour votre deuxième, etc..");
+         }
     }
 }
