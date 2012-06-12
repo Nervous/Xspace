@@ -1,0 +1,27 @@
+c:\users\nervous\documents\visual studio 2010\Projects\LevelEditor\LevelEditor\bin\Debug\LevelEditor.exe
+c:\users\nervous\documents\visual studio 2010\Projects\LevelEditor\LevelEditor\bin\Debug\LevelEditor.pdb
+c:\users\nervous\documents\visual studio 2010\Projects\LevelEditor\LevelEditor\obj\x86\Debug\ResolveAssemblyReference.cache
+c:\users\nervous\documents\visual studio 2010\Projects\LevelEditor\LevelEditor\obj\x86\Debug\LevelEditor.LevelEditor.resources
+c:\users\nervous\documents\visual studio 2010\Projects\LevelEditor\LevelEditor\obj\x86\Debug\LevelEditor.Properties.Resources.resources
+c:\users\nervous\documents\visual studio 2010\Projects\LevelEditor\LevelEditor\obj\x86\Debug\GenerateResource.read.1.tlog
+c:\users\nervous\documents\visual studio 2010\Projects\LevelEditor\LevelEditor\obj\x86\Debug\GenerateResource.write.1.tlog
+c:\users\nervous\documents\visual studio 2010\Projects\LevelEditor\LevelEditor\obj\x86\Debug\LevelEditor.exe
+c:\users\nervous\documents\visual studio 2010\Projects\LevelEditor\LevelEditor\obj\x86\Debug\LevelEditor.pdb
+C:\Users\Nervous\Desktop\LevelEditor\LevelEditor\LevelEditor\obj\x86\Debug\LevelEditor.exe
+C:\Users\Nervous\Desktop\LevelEditor\LevelEditor\LevelEditor\obj\x86\Debug\LevelEditor.pdb
+C:\Users\Nervous\Desktop\LevelEditor\LevelEditor\LevelEditor\bin\Debug\LevelEditor.exe
+C:\Users\Nervous\Desktop\LevelEditor\LevelEditor\LevelEditor\bin\Debug\LevelEditor.pdb
+C:\Users\Nervous\Desktop\LevelEditor\LevelEditor\LevelEditor\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Nervous\Desktop\LevelEditor\LevelEditor\LevelEditor\obj\x86\Debug\LevelEditor.LevelEditor.resources
+C:\Users\Nervous\Desktop\LevelEditor\LevelEditor\LevelEditor\obj\x86\Debug\LevelEditor.Properties.Resources.resources
+C:\Users\Nervous\Desktop\LevelEditor\LevelEditor\LevelEditor\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\Nervous\Desktop\LevelEditor\LevelEditor\LevelEditor\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\Nervous\Desktop\LevelEditor\LevelEditor\obj\x86\Debug\LevelEditor.pdb
+C:\Users\Nervous\Desktop\LevelEditor\LevelEditor\bin\Debug\LevelEditor.exe
+C:\Users\Nervous\Desktop\LevelEditor\LevelEditor\bin\Debug\LevelEditor.pdb
+C:\Users\Nervous\Desktop\LevelEditor\LevelEditor\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Nervous\Desktop\LevelEditor\LevelEditor\obj\x86\Debug\LevelEditor.LevelEditor.resources
+C:\Users\Nervous\Desktop\LevelEditor\LevelEditor\obj\x86\Debug\LevelEditor.Properties.Resources.resources
+C:\Users\Nervous\Desktop\LevelEditor\LevelEditor\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\Nervous\Desktop\LevelEditor\LevelEditor\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\Nervous\Desktop\LevelEditor\LevelEditor\obj\x86\Debug\LevelEditor.exe
