@@ -266,16 +266,16 @@ namespace Xspace
             energieN[0] = 0;
 
             int div = energie44100.Length / size;
-            float somme;
+            int somme;
 
             for (int i = 0; i < size; i++)
             {
                 somme = 0;
                 for (int j = 0; j < div; j++)
                 {
-                    somme = somme + energie44100[i * div + j];
+                    somme = somme + (int) energie44100[i * div + j];
                 }
-                energieN[i] = (int)somme / div;
+                energieN[i] = (int)(somme / div);
             }
 
             return energieN;
