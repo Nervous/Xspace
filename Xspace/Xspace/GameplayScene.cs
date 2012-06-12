@@ -44,6 +44,7 @@ namespace MenuSample.Scenes
         private StreamReader sr_level;
         private char[] delimitationFilesInfo = new char[] { ' ' }, delimitationFilesInfo2 = new char[] { ';' }, delimitationFilesInfo3 = new char[] { ':' };
         private float[] spectre;
+        private int[] progressionMusic;
         private bool drawSpectre, aBossWasThere, first, pause;
         private float amplitude_sum_music, moy_energie1024;
         private Random r;
@@ -53,7 +54,7 @@ namespace MenuSample.Scenes
         private List<doneParticles> partManage;
         private ScrollingBackground fond_ecran, fond_ecran_front, fond_ecran_middle;
         public SpriteBatch spriteBatch;
-        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Vaisseau_Kamikaze, T_Missile_Joueur_1, T_Missile_Joueur_2, T_Missile_Joueur_3, T_Missile_HeavyLaser, T_Laser_Joueur, T_Missile_Drone, T_Missile_Rocket, T_MissileAutoguide, T_LaserEnnemi, T_Bonus_Vie, T_Bonus_Weapon1, T_Bonus_Score, T_Bonus_Energie, T_Obstacles_Hole, barre_vie, barre_energy, T_HUD, T_HUD_boss, T_HUD_bars, T_HUD_bar_boss, T_Divers_Levelcomplete, T_Divers_Levelfail, T_boss1, T_Vaisseau_Energizer, T_Vaisseau_Doubleshooter, T_Vaisseau_Zebra, T_Vaisseau_Targeter, T_Vaisseau_BC, T_Vaisseau_Support, T_Missile_Energie, T_boss2, T_boss3, T_HUD_basic, T_HUD_laser, T_HUD_Heavy, T_HUD_red_rect, T_HUD_rocket;
+        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Vaisseau_Kamikaze, T_Missile_Joueur_1, T_Missile_Joueur_2, T_Missile_Joueur_3, T_Missile_HeavyLaser, T_Laser_Joueur, T_Missile_Drone, T_Missile_Rocket, T_MissileAutoguide, T_LaserEnnemi, T_Bonus_Vie, T_Bonus_Weapon1, T_Bonus_Score, T_Bonus_Energie, T_Obstacles_Hole, barre_vie, barre_energy, T_HUD, T_HUD_boss, T_HUD_bars, T_HUD_bar_boss, T_Divers_Levelcomplete, T_Divers_Levelfail, T_boss1, T_Vaisseau_Energizer, T_Vaisseau_Doubleshooter, T_Vaisseau_Zebra, T_Vaisseau_Targeter, T_Vaisseau_BC, T_Vaisseau_Support, T_Missile_Energie, T_boss2, T_boss3, T_HUD_basic, T_HUD_laser, T_HUD_Heavy, T_HUD_red_rect, T_HUD_rocket, T_HUD_musicProgression;
         private List<Texture2D> listeTextureVaisseauxEnnemis, listeTextureBonus, listeTextureObstacles, listeTextureBoss;
         private SoundEffect sonLaser, sonHeavyLaser, musique_bossExplosion;
         private KeyboardState keyboardState;
@@ -380,6 +381,32 @@ namespace MenuSample.Scenes
             T_HUD_red_rect = _content.Load<Texture2D>("Sprites\\HUD\\rect_hud");
             T_HUD_Heavy = _content.Load<Texture2D>("Sprites\\HUD\\red_laser_choice");
             T_HUD_rocket = _content.Load<Texture2D>("Sprites\\HUD\\rocket");
+            if (mode == GAME_MODE.LIBRE)
+            {
+                T_HUD_musicProgression = new Texture2D(GraphicsDevice, 450, 128);
+                Color[] progressionColors = new Color[T_HUD_musicProgression.Width * T_HUD_musicProgression.Height];
+                for (int x = 0; x < T_HUD_musicProgression.Width; x++)
+                    for (int y = 0; y < T_HUD_musicProgression.Height; y++)
+                        progressionColors[x + y * T_HUD_musicProgression.Width] = Color.Transparent;
+
+                int[] values = BeatDetector.get_array_energieN(T_HUD_musicProgression.Width);
+                progressionMusic = new int[values.Length];
+                int rapport = values.Max() / (T_HUD_musicProgression.Height * 3 / 4);
+                for (int i = 0; i < values.Length; i++)
+                    progressionMusic[i] = values[i] / rapport;
+                
+                for (int i = 0; i < values.Length; i++ )
+                {
+                    for (int j = 0; j < progressionMusic[i]; j++)
+                    {
+                        progressionColors[i + (T_HUD_musicProgression.Height - j - 1) * T_HUD_musicProgression.Width] = new Color(0, 255, 0, 2*j);
+                    }
+                }
+
+                T_HUD_musicProgression.SetData<Color>(progressionColors);
+            }
+            else
+                T_HUD_musicProgression = null;
             #endregion
             #region Chargement textures missiles
             T_Missile_Joueur_1 = _content.Load<Texture2D>("Sprites\\Missiles\\Joueur\\1");
@@ -1352,35 +1379,6 @@ namespace MenuSample.Scenes
             Rectangle rect;
             Texture2D empty_texture = new Texture2D(SceneManager.GraphicsDevice, 1, 1, true, SurfaceFormat.Color);
             empty_texture.SetData(new[] { Color.White });
-            spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
-            if (beat_spawned != BEAT_SPAWNED.NO_BEAT)
-            {
-                Color color = new Color();
-                switch (beat_spawned)
-                {
-                    case BEAT_SPAWNED.BONUS:
-                        color = new Color(0, 255, 0, 0);
-                        break;
-                    case BEAT_SPAWNED.ENEMY:
-                        color = new Color(255, 0, 0, 0);
-                        break;
-                    case BEAT_SPAWNED.NOTHING:
-                        color = new Color(5, 130, 255, 0);
-                        break;
-                    default:
-                        break;
-                }
-                beat_spawned = BEAT_SPAWNED.NO_BEAT;
-                for (int i = 0; i <= 100; i++)
-                {
-                    color.A = (byte) ((100 - i));
-                    rect = new Rectangle(Xspace.Xspace.window_width - i, 0, 1, 622);
-                    spriteBatch.Draw(empty_texture, rect, color);
-                }
-            }
-            spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
 
             if (spectre.Length == 128 && drawSpectre)
             {
@@ -1420,10 +1418,44 @@ namespace MenuSample.Scenes
             if (listeVaisseau.Count != 0)
                 HUD.Drawbar(spriteBatch, barre_vie, barre_energy, listeVaisseau[0].vie, listeVaisseau[0].vieMax, listeVaisseau[0].Energie, listeVaisseau[0].EnergieMax);
             spriteBatch.Draw(T_HUD_bars, new Vector2(380, 630), Color.White);
-            if (mode != GAME_MODE.EXTREME)
-                spriteBatch.DrawString(_HUDfont, Convert.ToString(score), new Vector2(95, 628), new Color(30, 225, 30));
-            else
+            if (mode == GAME_MODE.EXTREME)
                 spriteBatch.DrawString(_HUDfont, Convert.ToString(compteur/1000), new Vector2(95, 628), new Color(30, 225, 30));
+            else
+                spriteBatch.DrawString(_HUDfont, Convert.ToString(score), new Vector2(95, 628), new Color(30, 225, 30));
+
+            if (mode == GAME_MODE.LIBRE)
+            {
+                spriteBatch.End();
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
+                rect = new Rectangle(726, 246 + 380, 450, 128);
+                spriteBatch.Draw(empty_texture, rect, Color.Black);
+                if (beat_spawned != BEAT_SPAWNED.NO_BEAT)
+                {
+                    Color color = new Color();
+                    switch (beat_spawned)
+                    {
+                        case BEAT_SPAWNED.BONUS:
+                            color = new Color(0, 255, 0, 90);
+                            break;
+                        case BEAT_SPAWNED.ENEMY:
+                            color = new Color(255, 0, 0, 90);
+                            break;
+                        case BEAT_SPAWNED.NOTHING:
+                            color = new Color(5, 130, 255, 90);
+                            break;
+                        default:
+                            break;
+                    }
+                    beat_spawned = BEAT_SPAWNED.NO_BEAT;
+                    spriteBatch.Draw(empty_texture, rect, color);
+                }
+                spriteBatch.Draw(T_HUD_musicProgression, new Vector2(726, 626), Color.White);
+
+                int position_progression = (int)((progressionMusic.Length * (int)AudioPlayer.GetCurrentTime()) / AudioPlayer.GetLength());
+                spriteBatch.Draw(empty_texture, new Rectangle(position_progression + 726, 626 + T_HUD_musicProgression.Height - progressionMusic[position_progression], 1, progressionMusic[position_progression] - 1), Color.Red);
+                spriteBatch.End();
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
+            }
 
             Color laser, red_laser, rocket;
             Vector2 rect_vect;

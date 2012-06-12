@@ -259,5 +259,26 @@ namespace Xspace
         {
             return tempo;
         }
+
+        public static int[] get_array_energieN(int size)
+        {
+            int[] energieN = new int[size];
+            energieN[0] = 0;
+
+            int div = energie44100.Length / size;
+            float somme;
+
+            for (int i = 0; i < size; i++)
+            {
+                somme = 0;
+                for (int j = 0; j < div; j++)
+                {
+                    somme = somme + energie44100[i * div + j];
+                }
+                energieN[i] = (int)somme / div;
+            }
+
+            return energieN;
+        }
     }
 }
