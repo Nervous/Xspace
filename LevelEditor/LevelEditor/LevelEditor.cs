@@ -23,6 +23,11 @@ namespace LevelEditor
         public LevelEditor()
         {
             InitializeComponent();
+            saveimage = pictureBox4.Image;
+            resetPictures(new object(), new EventArgs(), 1);
+            pictureBox4.Image = global::LevelEditor.Properties.Resources.dronebrillance;
+            selected = 1;   
+             Plot plot = new Plot("3", "0", 0, 0, 0, pictureBox8, global::LevelEditor.Properties.Resources.Sans_titre);
             #region list/arrays
             boxList.Add(pictureBox7);
             boxList.Add(pictureBox8);
@@ -96,7 +101,6 @@ namespace LevelEditor
             boxList.Add(pictureBox77);
             boxList.Add(pictureBox76);
             boxList.Add(pictureBox74);
-            selected = 0;
             page = 0;
             compteur = 0;
             #endregion

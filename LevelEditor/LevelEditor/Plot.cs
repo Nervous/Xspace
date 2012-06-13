@@ -20,10 +20,15 @@ namespace LevelEditor
             _selected = selected;
             _page = page;
             _compteur = compteur;
-            if(_compteur == 0&&_page==0&&_selected!=(-1)) //suppression de l'ancien fichier de travail
-                 stream = new FileStream("Work", FileMode.Create);
+            if (_compteur == 0 && _page == 0 && _selected != (-1)) //suppression de l'ancien fichier de travail
+            {
+                stream = new FileStream("Work", FileMode.Create);
+                /*StreamWriter sw2 = new StreamWriter(stream);
+                for (int i = 0; i < 72; i++)
+                    sw2.Write('\n');*/
+            }
             else
-                 stream = new FileStream("Work", FileMode.Open);
+                stream = new FileStream("Work", FileMode.Open);
             StreamWriter sw = new StreamWriter(stream);
             StreamReader sr = new StreamReader(stream);
             string vaisseau;
@@ -55,9 +60,9 @@ namespace LevelEditor
                         vaisseau = "drone";
                         break;
                 }
-                if (_selected >0)
-                {
-                    if (page == 0)
+             //   if (_selected >0)
+               // {
+                    if ((page == 0)||(selected == 0))
                     {
                         if (_compteur == 0)
                         {
@@ -98,7 +103,7 @@ namespace LevelEditor
                             }
                         }
                     }
-                }
+               // }
                 sw.Close();
                 stream.Close();
                 Stream stream_int = new FileStream("Work", FileMode.Open);
