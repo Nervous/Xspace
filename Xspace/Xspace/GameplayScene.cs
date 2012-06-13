@@ -73,7 +73,6 @@ namespace MenuSample.Scenes
         private SpriteFont _gameFont, _ingameFont, _HUDfont;
         private GAME_MODE mode;
         private Vector2 position_spawn;
-        private BEAT_SPAWNED beat_spawned;
         #endregion
         #region Déclaration structures relatives au jeu
         struct doneParticles
@@ -136,13 +135,6 @@ namespace MenuSample.Scenes
             EXTREME,
             LIBRE,
             CUSTOM,
-        }
-        public enum BEAT_SPAWNED
-        {
-            NO_BEAT,
-            NOTHING,
-            BONUS,
-            ENEMY
         }
         #endregion
         #region Fonctions
@@ -271,7 +263,6 @@ namespace MenuSample.Scenes
             this.mode = mode;
             this.song_path = song_path;
             position_spawn = new Vector2();
-            beat_spawned = BEAT_SPAWNED.NO_BEAT;
             #endregion
         }
 
@@ -1222,26 +1213,21 @@ namespace MenuSample.Scenes
                                 if (energy_1024_music / moy_energie1024 > 1.8)
                                 {
                                     listeVaisseau.Add(new kamikaze(T_Vaisseau_Kamikaze, position_spawn));
-                                    beat_spawned = BEAT_SPAWNED.ENEMY;
                                 }
                                 else if (energy_1024_music / moy_energie1024 > 1.5)
                                 {
                                     listeVaisseau.Add(new RapidShooter(T_Vaisseau_Doubleshooter, position_spawn));
-                                    beat_spawned = BEAT_SPAWNED.ENEMY;
                                 }
                                 else if (energy_1024_music / moy_energie1024 > 1.2)
                                 {
                                     listeVaisseau.Add(new Blasterer(T_Vaisseau_Energizer, position_spawn));
-                                    beat_spawned = BEAT_SPAWNED.ENEMY;
                                 }
                                 else if (energy_1024_music / moy_energie1024 > 1)
                                 {
                                     listeVaisseau.Add(new Drone(T_Vaisseau_Drone, position_spawn));
-                                    beat_spawned = BEAT_SPAWNED.ENEMY;
                                 }
                                 else
                                 {
-                                    beat_spawned = BEAT_SPAWNED.NOTHING;
                                 }
 
                                 lastTimeRandomSpawn = time_music;
@@ -1477,26 +1463,7 @@ namespace MenuSample.Scenes
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
                 rect = new Rectangle(726, 246 + 380, 450, 128);
                 spriteBatch.Draw(empty_texture, rect, Color.Black);
-                if (beat_spawned != BEAT_SPAWNED.NO_BEAT)
-                {
-                    Color color = new Color();
-                    switch (beat_spawned)
-                    {
-                        case BEAT_SPAWNED.BONUS:
-                            color = new Color(0, 255, 0, 90);
-                            break;
-                        case BEAT_SPAWNED.ENEMY:
-                            color = new Color(255, 0, 0, 90);
-                            break;
-                        case BEAT_SPAWNED.NOTHING:
-                            color = new Color(5, 130, 255, 90);
-                            break;
-                        default:
-                            break;
-                    }
-                    beat_spawned = BEAT_SPAWNED.NO_BEAT;
-                    spriteBatch.Draw(empty_texture, rect, color);
-                }
+
                 spriteBatch.Draw(T_HUD_musicProgression, new Vector2(726, 626), Color.White);
 
                 int position_progression = (int)((progressionMusic.Length * (int)AudioPlayer.GetCurrentTime()) / AudioPlayer.GetLength());
