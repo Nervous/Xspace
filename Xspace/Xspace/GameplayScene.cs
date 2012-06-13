@@ -45,7 +45,7 @@ namespace MenuSample.Scenes
         private char[] delimitationFilesInfo = new char[] { ' ' }, delimitationFilesInfo2 = new char[] { ';' }, delimitationFilesInfo3 = new char[] { ':' };
         private float[] spectre;
         private int[] progressionMusic;
-        private bool drawSpectre, aBossWasThere, first, pause;
+        private bool drawSpectre, aBossWasThere, first, pause, aButton;
         private float amplitude_sum_music, moy_energie1024;
         private Random r;
         private string song_path;
@@ -58,6 +58,7 @@ namespace MenuSample.Scenes
         private List<Texture2D> listeTextureVaisseauxEnnemis, listeTextureBonus, listeTextureObstacles, listeTextureBoss;
         private SoundEffect sonLaser, sonHeavyLaser, musique_bossExplosion;
         private KeyboardState keyboardState;
+        private GamePadState gamepadState;
         bool lastKeyDown = true, end = false, endDead = false;
         private List<gestionLevels> infLevel, listeLevelToRemove;
         Renderer particleRenderer;
@@ -144,7 +145,7 @@ namespace MenuSample.Scenes
             ENEMY
         }
         #endregion
-
+        #region Fonctions
         private AffichageInformations HUD = new AffichageInformations();
 
         static List<lasersEnnemis> suppEntree(List<lasersEnnemis> liste, Vaisseau vais)
@@ -246,6 +247,8 @@ namespace MenuSample.Scenes
             return false;
         }
 
+        #endregion
+
         public GameplayScene(SceneManager sceneMgr, GraphicsDeviceManager graphics, int level, int act, GAME_MODE mode, string song_path = "fat1.wav")
             : base(sceneMgr)
         {
@@ -279,6 +282,7 @@ namespace MenuSample.Scenes
             bossTime = 0;
             partManage = new List<doneParticles>();
             pause = false;
+            aButton = false;
         }
 
         protected override void LoadContent()
@@ -712,6 +716,7 @@ namespace MenuSample.Scenes
             if (!pause)
             {
                 keyboardState = Keyboard.GetState();
+                gamepadState = GamePad.GetState(PlayerIndex.One);
                 _pauseAlpha = coveredByOtherscene ? Math.Min(_pauseAlpha + 1f / 32, 1) : Math.Max(_pauseAlpha - 1f / 32, 0);
 
                 fps_fix = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -796,7 +801,7 @@ namespace MenuSample.Scenes
                 else if (keyboardState.IsKeyUp(Keys.F1))
                     lastKeyDown = true;
 
-                if ((keyboardState.IsKeyDown(Keys.Space) && (listeVaisseau.Count != 0)))
+                if (((keyboardState.IsKeyDown(Keys.Space) || (GamePad.GetCapabilities(PlayerIndex.One).IsConnected && GamePad.GetCapabilities(PlayerIndex.One).HasRightTrigger && gamepadState.IsButtonDown(Buttons.RightTrigger))) && (listeVaisseau.Count != 0)))
                 {
                     switch (listeVaisseau[0].armeActuelle)
                     {
@@ -921,6 +926,29 @@ namespace MenuSample.Scenes
                     listeVaisseau[0].changeWeapon(2);
                 else if ((keyboardState.IsKeyDown(Keys.D4) && (listeVaisseau.Count != 0)))
                     listeVaisseau[0].changeWeapon(3);
+                else
+                {
+                    if (GamePad.GetCapabilities(PlayerIndex.One).IsConnected && GamePad.GetCapabilities(PlayerIndex.One).HasAButton)
+                    {
+                        if (gamepadState.IsButtonDown(Buttons.A) && !aButton)
+                        {
+                            if (listeVaisseau[0].laser)
+                            {
+                                listeMissileToRemove.Add(listeVaisseau[0].getLaser());
+                                listeVaisseau[0].disableLaser();
+                            }
+                            listeVaisseau[0]._armeActuelle++;
+                            if (listeVaisseau[0]._armeActuelle > 3)
+                                listeVaisseau[0]._armeActuelle = 0;
+
+                            aButton = true;
+                        }
+                        else if (gamepadState.IsButtonUp(Buttons.A))
+                        {
+                            aButton = false;
+                        }
+                    }
+                }
 
 
                 #endregion
@@ -1003,7 +1031,7 @@ namespace MenuSample.Scenes
                     else if (vaisseau.ennemi)
                         vaisseau.Update(fps_fix);
                     else
-                        vaisseau.Update(fps_fix, time, keyboardState, listeObstacles);
+                        vaisseau.Update(fps_fix, time, keyboardState, gamepadState, listeObstacles);
 
                     if (vaisseau.ennemi && vaisseau.existe)
                     {

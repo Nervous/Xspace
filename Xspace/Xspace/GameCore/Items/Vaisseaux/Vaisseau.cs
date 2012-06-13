@@ -14,7 +14,8 @@ namespace Xspace
     class Vaisseau : Item
     {
         public float _vitesseVaisseau;
-        protected int _armure, _damageCollision, _armeActuelle, _baseWeapon, _vieMax, _energie, _energieMax;
+        protected int _armure, _damageCollision, _baseWeapon, _vieMax, _energie, _energieMax;
+        public int _armeActuelle;
         protected const int MAX_BASEWEAPON = 2;
         protected double _timingAttack;
         protected bool _ennemi, _laser;
@@ -297,7 +298,7 @@ namespace Xspace
              }
         }
 
-        public void Update(float fps_fix, double time, KeyboardState keyboard, List<Obstacles> obstacles)
+        public void Update(float fps_fix, double time, KeyboardState keyboard, GamePadState gamepadState, List<Obstacles> obstacles)
         {
             const float K_GRAVITE = 1000;
 
@@ -359,6 +360,53 @@ namespace Xspace
                 {
                     if (_pos.X - _sprite.Width / 2 - 10 <= 1070)
                         _pos.X += _deplacement.X * _vitesseVaisseau * fps_fix;
+                }
+            }
+
+            if (gamepadState.IsConnected)
+            {
+                GamePadCapabilities gamepadCaps = GamePad.GetCapabilities(PlayerIndex.One);
+                if (gamepadCaps.HasLeftXThumbStick && gamepadCaps.HasLeftYThumbStick)
+                {
+                    _pos.X += gamepadState.ThumbSticks.Left.X * _vitesseVaisseau * 12;
+                    _pos.Y += -gamepadState.ThumbSticks.Left.Y * _vitesseVaisseau * 12;
+                    if (_pos.X - _sprite.Width / 2 <= -18)
+                        _pos.X = -17 + _sprite.Width / 2;
+
+                    if (_pos.Y - _sprite.Height / 2 <= -18)
+                        _pos.Y = -17 + _sprite.Height / 2;
+
+                    if (_pos.Y - _sprite.Height / 2 >= 538)
+                        _pos.Y = 537 + _sprite.Width / 2;
+
+                    if (_pos.X - _sprite.Width / 2 - 10 >= 1070)
+                        _pos.X = 1069 + _sprite.Width / 2;
+                }
+                else if (gamepadCaps.HasLeftXThumbStick && gamepadCaps.HasLeftYThumbStick)
+                    _pos += gamepadState.ThumbSticks.Right * _vitesseVaisseau * 10;
+
+                else if (gamepadCaps.HasDPadUpButton && gamepadCaps.HasDPadLeftButton && gamepadCaps.HasDPadRightButton && gamepadCaps.HasDPadDownButton)
+                {
+                    if (gamepadState.IsButtonDown(Buttons.DPadUp))
+                    {
+                        if (_pos.Y - _sprite.Height / 2 >= -18)
+                            _pos.Y -= _deplacement.Y * _vitesseVaisseau * fps_fix;
+                    }
+                    if (gamepadState.IsButtonDown(Buttons.DPadDown))
+                    {
+                        if (_pos.Y - _sprite.Height / 2 <= 538)
+                            _pos.Y += _deplacement.Y * _vitesseVaisseau * fps_fix;
+                    }
+                    if (gamepadState.IsButtonDown(Buttons.DPadLeft))
+                    {
+                        if (_pos.X - _sprite.Width / 2 >= -18)
+                            _pos.X -= _deplacement.X * _vitesseVaisseau * fps_fix;
+                    }
+                    if (gamepadState.IsButtonDown(Buttons.DPadRight))
+                    {
+                        if (_pos.X - _sprite.Width / 2 - 10 <= 1070)
+                            _pos.X += _deplacement.X * _vitesseVaisseau * fps_fix;
+                    }
                 }
             }
 
