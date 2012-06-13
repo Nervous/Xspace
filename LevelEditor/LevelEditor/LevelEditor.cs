@@ -846,7 +846,7 @@ namespace LevelEditor
             Plot plot2 = new Plot(position, time, page, compteur, selected, pictureBox74, saveimage);
             compteur = plot2.New_compteur();
         }
-
+        #endregion
         private void button2_Click(object sender, EventArgs e) // next
         {
             string position = "1";
@@ -856,7 +856,7 @@ namespace LevelEditor
             plot.Load(boxList, page);
 
         }
-        #endregion 
+
         #region Bouton précédent
          private void button1_Click_1(object sender, EventArgs e) // back
         {

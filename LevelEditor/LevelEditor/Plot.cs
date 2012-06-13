@@ -62,7 +62,7 @@ namespace LevelEditor
                 }
                if (_selected >=0)
                 {
-                    if ((page == 0)||(selected == 0))
+                    if (((page == 0))||((selected == 0)&&(page==0)))
                     {
                         if (_compteur == 0)
                         {
@@ -125,10 +125,11 @@ namespace LevelEditor
                     type = "vaisseau";
 
                 if ((selected == 0)&&(compteur!=0))
-                    textArray[Convert.ToInt16(_position) + page * 72 - 1 + 9 * ((Convert.ToInt32(_time) - 400) / ((400 + 3200 * page)))] = ("                                                                                                                       ");// epic bug de buffer confirmed by nurelin, xavier, et lecuyer, don't try to guess why.
-                else if ((selected < 10)&&(selected >0))
-                    textArray[Convert.ToInt16(_position) + page * 72 - 1 + 9 * ((Convert.ToInt32(_time) - 400) / ((400 + 3200*page)))] = (type + ";" + vaisseau + ":" + position + " " + time);
-
+                    textArray[Convert.ToInt16(_position) + page * 72 - 1 + 9 * ((((Convert.ToInt32(_time) - 400) % 3200) / (400)))] = ("                                                                                                                       ");// epic bug de buffer confirmed by nurelin, xavier, et lecuyer, don't try to guess why.
+                else if ((selected < 10) && (selected > 0))
+                {
+                    textArray[Convert.ToInt16(_position) + page * 72 - 1 +  9*((((Convert.ToInt32(_time) -400) % 3200) / (400)))] = (type + ";" + vaisseau + ":" + position + " " + time);
+                }
                 StreamWriter sw_new = new StreamWriter(stream_new);
                 for (int i = 0; i < textArray.Length; i++)
                 {
