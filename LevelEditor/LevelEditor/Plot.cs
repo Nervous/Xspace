@@ -60,8 +60,8 @@ namespace LevelEditor
                         vaisseau = "drone";
                         break;
                 }
-             //   if (_selected >0)
-               // {
+               if (_selected >=0)
+                {
                     if ((page == 0)||(selected == 0))
                     {
                         if (_compteur == 0)
@@ -103,7 +103,7 @@ namespace LevelEditor
                             }
                         }
                     }
-               // }
+               }
                 sw.Close();
                 stream.Close();
                 Stream stream_int = new FileStream("Work", FileMode.Open);
