@@ -119,7 +119,7 @@ namespace LevelEditor
                 else
                     type = "vaisseau";
 
-                if (selected == 0)
+                if ((selected == 0)&&(compteur!=0))
                     textArray[Convert.ToInt16(_position) + page * 72 - 1 + 9 * ((Convert.ToInt32(_time) - 400) / ((400 + 3200 * page)))] = ("                                                                                                                       ");// epic bug de buffer confirmed by nurelin, xavier, et lecuyer, don't try to guess why.
                 else if ((selected < 10)&&(selected >0))
                     textArray[Convert.ToInt16(_position) + page * 72 - 1 + 9 * ((Convert.ToInt32(_time) - 400) / ((400 + 3200*page)))] = (type + ";" + vaisseau + ":" + position + " " + time);
