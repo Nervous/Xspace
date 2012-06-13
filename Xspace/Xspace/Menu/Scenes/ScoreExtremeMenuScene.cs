@@ -49,6 +49,8 @@ namespace MenuSample.Scenes
         }
         public override void Draw(GameTime gameTime)
         {
+            FileStream fs1 = new FileStream(@path_extreme_level, FileMode.OpenOrCreate);
+            fs1.Close();
             score_extreme_level = System.IO.File.ReadAllLines(@path_extreme_level);
 
             if (_content == null)

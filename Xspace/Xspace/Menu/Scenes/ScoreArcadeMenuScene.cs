@@ -39,7 +39,11 @@ namespace MenuSample.Scenes
             : base(sceneMgr, "Score Arcade")
         {
             path_arcade = "Scores\\Arcade\\Arcade.score";
-            path_arcade_level = "Scores\\Arcade\\lvl" + (i+1) + ".score";
+            path_arcade_level = "Scores\\Arcade\\lvl" + (i + 1) + ".score";
+            FileStream fs1 = new FileStream(@path_arcade, FileMode.OpenOrCreate);
+            fs1.Close();
+            FileStream fs2 = new FileStream(@path_arcade_level, FileMode.OpenOrCreate);
+            fs2.Close();
             _keyboardState = new KeyboardState();
             _lastKeyboardState = new KeyboardState();
             i = 0;

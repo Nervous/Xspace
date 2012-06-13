@@ -1273,7 +1273,8 @@ namespace MenuSample.Scenes
                     {
                         score_extreme = Convert.ToInt32(compteur/1000);
                         path_level = "Scores\\Extreme\\lvl.score";
-                        sr_level = new StreamReader(path_level);
+                        FileStream fs = new FileStream(path_level, FileMode.OpenOrCreate);
+                        sr_level = new StreamReader(fs);
                         score_level = System.IO.File.ReadAllLines(@path_level);
                         stock_score_inferieur = "";
                         stock_score_superieur = "";
