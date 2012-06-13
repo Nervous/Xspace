@@ -118,6 +118,8 @@
     <Compile Include="GameCore\afficherInformation.cs" />
     <Compile Include="GameCore\Boss\Boss2.cs" />
     <Compile Include="GameCore\Boss\Boss3.cs" />
+    <Compile Include="GameCore\Boss\Boss4.cs" />
+    <Compile Include="GameCore\Boss\Boss5.cs" />
     <Compile Include="GameCore\Items\Bonus\Bonus.cs" />
     <Compile Include="GameCore\Items\Bonus\Bonus_BaseWeapon.cs" />
     <Compile Include="GameCore\Items\Bonus\Bonus_Energie.cs" />
