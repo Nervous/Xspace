@@ -371,7 +371,7 @@ namespace MenuSample.Scenes
             #region Chargement particules
             particleRenderer.LoadContent(_content);
             //Moteur
-            particleEffectMoteur = _content.Load<ParticleEffect>("Collisions\\Moteur\\Moteurlocal");
+            particleEffectMoteur = _content.Load<ParticleEffect>("Collisions\\Moteur\\Moteur");
             particleEffectMoteur.Initialise();
             particleEffectMoteur.LoadContent(_content);
             //Moteur Missiles
