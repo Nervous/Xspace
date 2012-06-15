@@ -1491,7 +1491,7 @@ namespace MenuSample.Scenes
 
                 spriteBatch.Draw(T_HUD_musicProgression, new Vector2(726, 626), Color.White);
 
-                int position_progression = (int)((progressionMusic.Length * (int)AudioPlayer.GetCurrentTime()) / AudioPlayer.GetLength());
+                int position_progression = (int)(((long)progressionMusic.Length * (long)AudioPlayer.GetCurrentTime()) / (long)AudioPlayer.GetLength());
                 spriteBatch.Draw(empty_texture, new Rectangle(position_progression + 726, 626 + T_HUD_musicProgression.Height - progressionMusic[position_progression], 1, progressionMusic[position_progression] - 1), Color.Red);
                 spriteBatch.End();
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
