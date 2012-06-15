@@ -13,12 +13,12 @@ namespace Xspace
 {
     class Boss4 : Boss
     {
-        public Texture2D _T_Missile1, _T_Missile2, _T_Missile3, _T_Missile_Laser, _T_Missile_Diago, _T_Missile_DiagoHaut, _T_Missile_DiagoBas, _T_Enrage, _T_Meteore, _T_blasterer, _T_Kamikaze, _T_doubleshooter,  _T_drone;
-        protected int addX, addY, i, i1, i3, type;
+        public Texture2D _T_Missile1, _T_Missile2, _T_Missile3, _T_Missile_Laser, _T_Missile_Diago, _T_Missile_DiagoHaut, _T_Missile_DiagoBas, _T_Enrage, _T_Meteore, _T_blasterer, _T_Kamikaze, _T_doubleshooter,  _T_drone, _T_phase2, _T_phase3, _T_Cercle;
+        protected int addX, addY, i, i1, i3, type, _timingAttack2;
         protected double pausetime, pausetime2, lastpausetime;
 
         public Boss4(Texture2D _sprite, int[] phaseArray)
-            : base(_sprite, 1700, 1700, 100, phaseArray, 1, new Vector2(1400, 150), 100, 1000, 2, "TIE Supressor")
+            : base(_sprite, 1700, 1700, 100, phaseArray, 1, new Vector2(1400, 150), 100, 1000, 2, "The All-Seeing Eye")
         {
             addX = 10;
             addY = 10;
@@ -29,6 +29,7 @@ namespace Xspace
             i1 = 0;
             i3 = 0;
             type = 0;
+            _timingAttack2 = 1500;
         }
 
         override public void LoadContent(ContentManager content)
@@ -40,12 +41,14 @@ namespace Xspace
             _T_Missile_DiagoBas = content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\missile_boule1_diago_b");
             _T_Missile_Diago = content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\missile_boule1");
             _T_Missile_Laser = content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\Laser");
-            _T_Enrage = content.Load<Texture2D>("Sprites\\Vaisseaux\\Boss\\boss2-enrage");
+            _T_phase2 = content.Load<Texture2D>("Sprites\\Vaisseaux\\Boss\\oeil2");
+            _T_phase3 = content.Load<Texture2D>("Sprites\\Vaisseaux\\Boss\\oeil3");
             _T_Meteore = content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\sun-boss2");
             _T_Kamikaze = content.Load<Texture2D>("Sprites\\Vaisseaux\\Ennemi\\Kamikaze");
             _T_drone = content.Load<Texture2D>("Sprites\\Vaisseaux\\Ennemi\\drone");
             _T_doubleshooter = content.Load<Texture2D>("Sprites\\Vaisseaux\\Ennemi\\doubleshooter");
             _T_blasterer = content.Load<Texture2D>("Sprites\\Vaisseaux\\Ennemi\\energizer");
+            _T_Cercle = content.Load<Texture2D>("Sprites\\Vaisseaux\\Boss\\cercle");
         }
 
         override public void Update(float fps_fix, double time, List<Missiles> listeMissile, List<Vaisseau> listeVaisseau)
@@ -55,45 +58,17 @@ namespace Xspace
             {
                 switch (Phase)
                 {
-                    case 2:
+                    case 1:
                         {
-                            if (time - LastTir > _timingAttack) // tir de laser
+                            _sprite = _T_Cercle;
+                            if (time - LastTir > _timingAttack)
                             {
                                 _timingAttack = 1800;
                                 Vector2 pos = new Vector2(Position.X, Position.Y + _sprite.Height / 2);
-                                if (pos.Y < 0)
-                                {
-                                    if (type == 0)
-                                    {
-                                        listeVaisseau.Add(new kamikaze(_T_Kamikaze, new Vector2(1200, 500)));
-                                        listeVaisseau.Add(new kamikaze(_T_Kamikaze, new Vector2(1200, 200)));
-                                        type = 1;
-                                    }
-                                    else if (type == 1)
-                                    {
-                                        listeVaisseau.Add(new Drone(_T_drone, new Vector2(1200, 200)));
-                                        listeVaisseau.Add(new Drone(_T_drone, new Vector2(1100, 300)));
-                                        listeVaisseau.Add(new Drone(_T_drone, new Vector2(1200, 400)));
-                                        type = 2;
-                                    }
-                                    else if (type == 2)
-                                    {
-                                        listeVaisseau.Add(new RapidShooter(_T_doubleshooter, new Vector2(1200, 200)));
-                                        listeVaisseau.Add(new RapidShooter(_T_doubleshooter, new Vector2(1100, 300)));
-                                        listeVaisseau.Add(new RapidShooter(_T_doubleshooter, new Vector2(1200, 400)));
-                                        type = 3;
-                                    }
-                                    else if (type == 3)
-                                    {
-                                        listeVaisseau.Add(new Blasterer(_T_blasterer, new Vector2(1200, 200)));
-                                        listeVaisseau.Add(new Blasterer(_T_blasterer, new Vector2(1200, 400)));
-                                        type = 0;
-                                    }
-                                }
-                                else
-                                {
-                                    listeMissile.Add(new Missile1_boss(_T_Missile3, new Vector2(pos.X, pos.Y - 20), null, this));
-                                }
+
+
+                               listeMissile.Add(new Missile1_boss(_T_Missile3, new Vector2(pos.X, pos.Y - 20), null, this));
+                                
                                 LastTir = time;
                                 pausetime = time;
                                 Vitesse = 0.2f;
@@ -102,11 +77,14 @@ namespace Xspace
 
                         }
                         break;
-                    case 1:
+                    case 2:
                         {
-                            if (time - LastTir > _timingAttack) // tir de laser
+
+                            if (time - LastTir > _timingAttack) 
                             {
-                                _timingAttack = 600;
+                                addX = 0;
+                                addY = 0;
+                                _timingAttack = 3000;
                                 Vector2 pos = new Vector2(Position.X, Position.Y + _sprite.Height / 2);
                                 listeMissile.Add(new Missile1_boss(_T_Missile1, new Vector2(pos.X+200, pos.Y - 100), null, this));
                                 listeMissile.Add(new Missile1_boss(_T_Missile1, new Vector2(pos.X+200, pos.Y + 100), null, this));
@@ -114,6 +92,32 @@ namespace Xspace
                                 pausetime = time;
                                 pausetime2 = time;
                                 LastTir = time;
+
+                                Random r = new Random();
+                                int nbX = r.Next(100, 1000);
+                                int nbY = r.Next(150, 350);
+                                PositionX = nbX;
+                                PositionY = nbY;
+                                i = 0;
+                            }
+
+                            if (time - LastTir < _timingAttack2)
+                            {
+                                    _sprite = _T_phase2;
+                                    _timingAttack2 = 1000;
+                                
+                            }
+                            else
+                            {
+                                if (i == 0)
+                                {
+                                    PositionX -= 200;
+                                    PositionY -= 200;
+                                    i++;
+                                }
+
+                                listeVaisseau[0]._vitesseVaisseau = 0.3f;
+                                _sprite = _T_Cercle;
                             }
 
                         }
