@@ -340,7 +340,6 @@ namespace MenuSample.Scenes
             int loop = (mode == GAME_MODE.LIBRE) ? 0 : -1;
             AudioPlayer.PlayMusic("Musiques\\Jeu\\" + song_path, loop, true);
             AudioPlayer.SetVolume(1f);
-            AudioPlayer.PauseMusic();
             BeatDetector.Initialize();
             BeatDetector.audio_process();
             moy_energie1024 = BeatDetector.get_moy_energie1024();
@@ -538,6 +537,8 @@ namespace MenuSample.Scenes
             T_Divers_Levelfail = _content.Load<Texture2D>("Sprites\\Divers\\gameover");
             #endregion
             //circle = CreateCircle(150, SceneManager.GraphicsDevice);
+
+            AudioPlayer.PauseMusic();
         }
 
         List<doneParticles> collisions(List<Vaisseau> listeVaisseau, List<Missiles> listeMissile, List<Bonus> listeBonus, List<Bonus> listeBonusToAdd, List<Obstacles> listeObstacles, Boss aBoss, float spentTime, ParticleEffect particleEffect, GameTime gametime, bool dead)
@@ -1493,7 +1494,7 @@ namespace MenuSample.Scenes
 
                 spriteBatch.Draw(T_HUD_musicProgression, new Vector2(726, 626), Color.White);
 
-                int position_progression = (int)(((long)progressionMusic.Length * (long)AudioPlayer.GetCurrentTime()) / (long)AudioPlayer.GetLength());
+                int position_progression = (int)(((long)progressionMusic.Length * (long)AudioPlayer.GetCurrentTime()) / (long)AudioPlayer.GetLength() % (long)progressionMusic.Length);
                 spriteBatch.Draw(empty_texture, new Rectangle(position_progression + 726, 626 + T_HUD_musicProgression.Height - progressionMusic[position_progression], 1, progressionMusic[position_progression] - 1), Color.Red);
                 spriteBatch.End();
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
