@@ -1056,7 +1056,7 @@ namespace MenuSample.Scenes
 
                     if (vaisseau.ennemi && vaisseau.existe)
                     {
-                        if ((time - vaisseau.lastTir > vaisseau.timingAttack && vaisseau.timingAttack != 0))
+                        if ((time - vaisseau.lastTir > vaisseau.timingAttack && vaisseau.lastTir != 0 && vaisseau.timingAttack != 0))
                         {
                             Vector2 spawn, spawnHaut, spawnBas;
                             switch (vaisseau.armeActuelle)
@@ -1096,6 +1096,10 @@ namespace MenuSample.Scenes
                                     break;
                             }
                             vaisseau.lastTir = time;
+                        }
+                        else if (vaisseau.lastTir == 0) // Si n'a jamais tiré, on va le faire tirer plus vite la première fois	  	
+                        {
+                            vaisseau.lastTir = time - (vaisseau.timingAttack - vaisseau.timingAttack / 5);
                         }
                         else if (vaisseau is BC)
                         {
