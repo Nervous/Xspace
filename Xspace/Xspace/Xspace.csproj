@@ -144,6 +144,7 @@
     <Compile Include="GameCore\Items\Vaisseaux\Support.cs" />
     <Compile Include="GameCore\Items\Vaisseaux\Targeter.cs" />
     <Compile Include="GameCore\Items\Vaisseaux\Zebra.cs" />
+    <Compile Include="GameCore\Son\LoadSong.cs" />
     <Compile Include="gestionLevels.cs" />
     <Compile Include="GameCore\Items\Item.cs" />
     <Compile Include="Menu\InputState.cs" />
@@ -153,7 +154,6 @@
     <Compile Include="Menu\Scenes\BackgroundScene.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Menu\Scenes\CoopChoiceMenu.cs" />
     <Compile Include="Menu\Scenes\ScoreExtremeMenuScene.cs" />
     <Compile Include="Menu\Scenes\SongChoiceMenuScene.cs" />
     <Compile Include="Menu\Scenes\Core\AbstractGameScene.cs" />
