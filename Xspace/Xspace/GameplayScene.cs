@@ -175,6 +175,8 @@ namespace MenuSample.Scenes
         static public Texture2D CreateCircle(int radius, GraphicsDevice graphics)
         {
             int outerRadius = radius * 2 + 2; // So circle doesn't go out of bounds
+            if (outerRadius >= 2046)
+                outerRadius = 2046;
             Texture2D texture = new Texture2D(graphics, outerRadius, outerRadius);
 
             Color[] data = new Color[outerRadius * outerRadius];
@@ -1054,7 +1056,7 @@ namespace MenuSample.Scenes
 
                     if (vaisseau.ennemi && vaisseau.existe)
                     {
-                        if ((time - vaisseau.lastTir > vaisseau.timingAttack && vaisseau.timingAttack != 0))
+                        if ((time - vaisseau.lastTir > vaisseau.timingAttack && vaisseau.lastTir != 0 && vaisseau.timingAttack != 0))
                         {
                             Vector2 spawn, spawnHaut, spawnBas;
                             switch (vaisseau.armeActuelle)
@@ -1095,7 +1097,7 @@ namespace MenuSample.Scenes
                             }
                             vaisseau.lastTir = time;
                         }
-                        else if (vaisseau.lastTir == 0) // Si n'a jamais tiré, on va le faire tirer plus vite la première fois
+                        else if (vaisseau.lastTir == 0) // Si n'a jamais tiré, on va le faire tirer plus vite la première fois	  	
                         {
                             vaisseau.lastTir = time - (vaisseau.timingAttack - vaisseau.timingAttack / 5);
                         }
@@ -1234,23 +1236,40 @@ namespace MenuSample.Scenes
                         float energy_1024_music = (float)BeatDetector.get_energie1024()[(int)time_music];
 
                         position_spawn = new Vector2(1180, r.Next(5, 564));
-                        if (mode == GAME_MODE.LIBRE && lastTimeMusic < time_music)
+                        if (mode == GAME_MODE.LIBRE && lastTimeMusic + 1 < time_music)
                         {
                             if ((time_music - lastTimeRandomSpawn > 10) && (BeatDetector.get_beat()[(int)time_music] > 0))
                             {
-                                if (energy_1024_music / moy_energie1024 > 1.8)
+                                float ratio = energy_1024_music / moy_energie1024;
+                                if (ratio > 2.03)
                                 {
                                     listeVaisseau.Add(new kamikaze(T_Vaisseau_Kamikaze, position_spawn));
                                 }
-                                else if (energy_1024_music / moy_energie1024 > 1.5)
+                                if (ratio > 2.0)
+                                {
+                                    listeVaisseau.Add(new Targeter(T_Vaisseau_Targeter, position_spawn));
+                                }
+                                else if (ratio > 1.96)
+                                {
+                                    listeVaisseau.Add(new Support(T_Vaisseau_Support, position_spawn));
+                                }
+                                else if (ratio > 1.9)
+                                {
+                                    listeVaisseau.Add(new BC(T_Vaisseau_BC, position_spawn));
+                                }
+                                else if (ratio > 1.7)
+                                {
+                                    listeVaisseau.Add(new Zebra(T_Vaisseau_Zebra, position_spawn));
+                                }
+                                else if (ratio > 1.5)
                                 {
                                     listeVaisseau.Add(new RapidShooter(T_Vaisseau_Doubleshooter, position_spawn));
                                 }
-                                else if (energy_1024_music / moy_energie1024 > 1.2)
+                                else if (ratio > 1.3)
                                 {
                                     listeVaisseau.Add(new Blasterer(T_Vaisseau_Energizer, position_spawn));
                                 }
-                                else if (energy_1024_music / moy_energie1024 > 1)
+                                else if (ratio > 1)
                                 {
                                     listeVaisseau.Add(new Drone(T_Vaisseau_Drone, position_spawn));
                                 }
