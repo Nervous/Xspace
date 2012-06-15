@@ -153,7 +153,6 @@
     <Compile Include="Menu\Scenes\BackgroundScene.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Menu\Scenes\CoopChoiceMenu.cs" />
     <Compile Include="Menu\Scenes\ScoreExtremeMenuScene.cs" />
     <Compile Include="Menu\Scenes\SongChoiceMenuScene.cs" />
     <Compile Include="Menu\Scenes\Core\AbstractGameScene.cs" />
