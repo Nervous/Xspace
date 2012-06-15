@@ -34,7 +34,7 @@ namespace MenuSample.Scenes
     public class GameplayScene : AbstractGameScene
     {
         private const int SCREEN_MAXTOP = -30, SCREEN_MAXBOT = 620;
-        private const int BONUS_EASY = 30, BONUS_NORMAL = 13, BONUS_HARD = 5, BONUS_HC = 0;
+        private const int BONUS_EASY = 30, BONUS_NORMAL = 15, BONUS_HARD = 5, BONUS_HC = 0;
         private const int ETL_EASY = 500, ETL_NORMAL = 200, ETL_HARD = 125, ETL_HC = 50;
         private int bonus_diff, etl_diff;
         #region Déclaration variables usuelles
