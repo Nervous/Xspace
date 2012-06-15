@@ -175,6 +175,8 @@ namespace MenuSample.Scenes
         static public Texture2D CreateCircle(int radius, GraphicsDevice graphics)
         {
             int outerRadius = radius * 2 + 2; // So circle doesn't go out of bounds
+            if (outerRadius >= 2046)
+                outerRadius = 2046;
             Texture2D texture = new Texture2D(graphics, outerRadius, outerRadius);
 
             Color[] data = new Color[outerRadius * outerRadius];
@@ -1094,10 +1096,6 @@ namespace MenuSample.Scenes
                                     break;
                             }
                             vaisseau.lastTir = time;
-                        }
-                        else if (vaisseau.lastTir == 0) // Si n'a jamais tiré, on va le faire tirer plus vite la première fois
-                        {
-                            vaisseau.lastTir = time - (vaisseau.timingAttack - vaisseau.timingAttack / 5);
                         }
                         else if (vaisseau is BC)
                         {

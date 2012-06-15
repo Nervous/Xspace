@@ -14,7 +14,7 @@ namespace Xspace
     class Support : Vaisseau
     {
         public Support(Texture2D sprite, Vector2 position)
-            : base(sprite, 50, 0, 0, 0, 20, 0.50f, position, Vector2.Normalize(new Vector2(1, 0)), true, 6000, 50, 5)
+            : base(sprite, 50, 0, 0, 0, 20, 0.50f, position, Vector2.Normalize(new Vector2(1, 0)), true, 3000, 50, 5)
         { }
     }
 }
