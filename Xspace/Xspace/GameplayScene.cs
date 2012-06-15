@@ -829,7 +829,7 @@ namespace MenuSample.Scenes
                             switch (listeVaisseau[0].baseWeapon)
                             {
                                 case 0:
-                                    if (time - lastTime > 150 || lastTime == 0)
+                                    if (time - lastTime > 225 || lastTime == 0)
                                     {
                                         sonLaser.Play();
                                         Vector2 spawn = new Vector2(listeVaisseau[0].pos.X + listeVaisseau[0].sprite.Width - 1, listeVaisseau[0].pos.Y + listeVaisseau[0].sprite.Height / 2 - 2);
@@ -838,7 +838,7 @@ namespace MenuSample.Scenes
                                     }
                                     break;
                                 case 1:
-                                    if (time - lastTime > 150 || lastTime == 0)
+                                    if (time - lastTime > 225 || lastTime == 0)
                                     {
                                         sonLaser.Play();
                                         Vector2 spawn1 = new Vector2(listeVaisseau[0].pos.X + 35, listeVaisseau[0].pos.Y + listeVaisseau[0].sprite.Height / 3 - 18);
@@ -849,7 +849,7 @@ namespace MenuSample.Scenes
                                     }
                                     break;
                                 case 2:
-                                    if (time - lastTime > 150 || lastTime == 0)
+                                    if (time - lastTime > 225 || lastTime == 0)
                                     {
                                         sonLaser.Play();
                                         Vector2 spawn1 = new Vector2(listeVaisseau[0].pos.X + 35, listeVaisseau[0].pos.Y + listeVaisseau[0].sprite.Height / 3 - 18);
