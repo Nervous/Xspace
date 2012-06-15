@@ -333,14 +333,10 @@ namespace MenuSample.Scenes
             sonLaser = _content.Load<SoundEffect>("Sons\\Tir\\Tir");
             sonHeavyLaser = _content.Load<SoundEffect>("Sons\\Tir\\HeavyLaser");
             musique_bossExplosion = _content.Load<SoundEffect>("Sons\\BossExplosion");
-            MD5CryptoServiceProvider md5crypto = new MD5CryptoServiceProvider();
-            Stream s = (Stream)new FileStream("Musiques\\Jeu\\" + song_path, FileMode.Open);
-            byte[] music_md5_bytes = md5crypto.ComputeHash(s);
-            string music_md5 = Encoding.ASCII.GetString(music_md5_bytes);
-            int music_md5_seed = BitConverter.ToInt32(music_md5_bytes, 0);
-            s.Close();
 
-            r = new Random(music_md5_seed);
+            LoadSong song = new LoadSong(song_path);
+            r = new Random(song.md5_seed);
+
             int loop = (mode == GAME_MODE.LIBRE) ? 0 : -1;
             AudioPlayer.PlayMusic("Musiques\\Jeu\\" + song_path, loop, true);
             AudioPlayer.SetVolume(1f);
