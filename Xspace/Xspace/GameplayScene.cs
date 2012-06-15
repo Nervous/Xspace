@@ -1234,7 +1234,7 @@ namespace MenuSample.Scenes
                         float energy_1024_music = (float)BeatDetector.get_energie1024()[(int)time_music];
 
                         position_spawn = new Vector2(1180, r.Next(5, 564));
-                        if (mode == GAME_MODE.LIBRE && lastTimeMusic < time_music)
+                        if (mode == GAME_MODE.LIBRE && lastTimeMusic + 1 < time_music)
                         {
                             if ((time_music - lastTimeRandomSpawn > 10) && (BeatDetector.get_beat()[(int)time_music] > 0))
                             {
@@ -1245,15 +1245,15 @@ namespace MenuSample.Scenes
                                 }
                                 if (ratio > 2.0)
                                 {
-                                    listeVaisseau.Add(new Targeter(T_Vaisseau_Kamikaze, position_spawn));
+                                    listeVaisseau.Add(new Targeter(T_Vaisseau_Targeter, position_spawn));
                                 }
                                 else if (ratio > 1.96)
                                 {
-                                    listeVaisseau.Add(new Support(T_Vaisseau_Kamikaze, position_spawn));
+                                    listeVaisseau.Add(new Support(T_Vaisseau_Support, position_spawn));
                                 }
                                 else if (ratio > 1.9)
                                 {
-                                    listeVaisseau.Add(new BC(T_Vaisseau_Kamikaze, position_spawn));
+                                    listeVaisseau.Add(new BC(T_Vaisseau_BC, position_spawn));
                                 }
                                 else if (ratio > 1.7)
                                 {
