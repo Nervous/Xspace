@@ -81,7 +81,7 @@ namespace Xspace
                 _deplacement.Y = (joueur.pos.Y < this.pos.Y) ? -ecartY : ecartY;
                 _deplacement = Vector2.Normalize(_deplacement);
 
-                if (Math.Sqrt(Math.Pow(ecartX, 2) + Math.Pow(ecartY, 2)) < 125)
+                if (Math.Sqrt(Math.Pow(ecartX, 2) + Math.Pow(ecartY, 2)) < 95)
                     noMoreChangeAboutMoves = true;
             }
             this.Update(fps_fix);
