@@ -10,7 +10,7 @@ namespace MenuSample.Scenes
         protected int _level, _act = 1;
         Microsoft.Xna.Framework.GraphicsDeviceManager graphics;
         public UserMenuScene(SceneManager sceneMgr, Microsoft.Xna.Framework.GraphicsDeviceManager graphicsReceive)
-            : base(sceneMgr, "Chanson")
+            : base(sceneMgr, "Niveaux :")
         {
             string[] filePaths = Directory.GetFiles(@"Levels");
             List<string> allowed_exts = new List<string>() { ".xpa" };

@@ -244,7 +244,7 @@ namespace MenuSample.Scenes
 
         #endregion
 
-        public GameplayScene(SceneManager sceneMgr, GraphicsDeviceManager graphics, int level, int act, GAME_MODE mode, string song_path = "fat1.wav")
+        public GameplayScene(SceneManager sceneMgr, GraphicsDeviceManager graphics, int level, int act, GAME_MODE mode, string custom_path = "")
             : base(sceneMgr)
         {
             particleRenderer = new SpriteBatchRenderer
@@ -264,7 +264,18 @@ namespace MenuSample.Scenes
             spectre = new float[128];
             SoundEffect.MasterVolume = 0.15f;
             this.mode = mode;
-            this.song_path = song_path;
+            
+            if (mode == GAME_MODE.LIBRE)
+                this.song_path = custom_path;
+            else
+                this.song_path = "fat1.wav";
+            
+            if (mode == GAME_MODE.CUSTOM)
+            {
+                string[] nb_level = custom_path.Split('.');
+                _level = Convert.ToInt16(nb_level[0]);
+            }
+            
             position_spawn = new Vector2();
             #endregion
         }
@@ -322,31 +333,21 @@ namespace MenuSample.Scenes
             sonLaser = _content.Load<SoundEffect>("Sons\\Tir\\Tir");
             sonHeavyLaser = _content.Load<SoundEffect>("Sons\\Tir\\HeavyLaser");
             musique_bossExplosion = _content.Load<SoundEffect>("Sons\\BossExplosion");
-            if (mode != GAME_MODE.CUSTOM)
-            {
-                MD5CryptoServiceProvider md5crypto = new MD5CryptoServiceProvider();
-                Stream s = (Stream)new FileStream("Musiques\\Jeu\\" + song_path, FileMode.Open);
-                byte[] music_md5_bytes = md5crypto.ComputeHash(s);
-                string music_md5 = Encoding.ASCII.GetString(music_md5_bytes);
-                int music_md5_seed = BitConverter.ToInt32(music_md5_bytes, 0);
-                s.Close();
+            MD5CryptoServiceProvider md5crypto = new MD5CryptoServiceProvider();
+            Stream s = (Stream)new FileStream("Musiques\\Jeu\\" + song_path, FileMode.Open);
+            byte[] music_md5_bytes = md5crypto.ComputeHash(s);
+            string music_md5 = Encoding.ASCII.GetString(music_md5_bytes);
+            int music_md5_seed = BitConverter.ToInt32(music_md5_bytes, 0);
+            s.Close();
 
-                r = new Random(music_md5_seed);
-                int loop = (mode == GAME_MODE.LIBRE) ? 0 : -1;
-                AudioPlayer.PlayMusic("Musiques\\Jeu\\" + song_path, loop, true);
-                AudioPlayer.SetVolume(1f);
-
-                BeatDetector.Initialize();
-                BeatDetector.audio_process();
-                moy_energie1024 = BeatDetector.get_moy_energie1024();
-                AudioPlayer.PauseMusic();
-            }
-            else
-            {
-                AudioPlayer.PlayMusic("Musiques\\Jeu\\fat1.wav");
-                AudioPlayer.SetVolume(1f);
-                r = new Random();
-            }
+            r = new Random(music_md5_seed);
+            int loop = (mode == GAME_MODE.LIBRE) ? 0 : -1;
+            AudioPlayer.PlayMusic("Musiques\\Jeu\\" + song_path, loop, true);
+            AudioPlayer.SetVolume(1f);
+            AudioPlayer.PauseMusic();
+            BeatDetector.Initialize();
+            BeatDetector.audio_process();
+            moy_energie1024 = BeatDetector.get_moy_energie1024();
 
             #endregion
             #region Chargement des polices d'écritures
@@ -525,17 +526,8 @@ namespace MenuSample.Scenes
             listeSupportAoEtoRemove = new List<supportAoe>();
             if (mode != GAME_MODE.LIBRE)
             {
-                if (mode != GAME_MODE.CUSTOM)
-                {
-                    gestionLevels thisLevel = new gestionLevels(_level, listeTextureVaisseauxEnnemis, listeTextureBonus, listeTextureObstacles, listeTextureBoss);
-                    thisLevel.readInfos(delimitationFilesInfo, delimitationFilesInfo2, delimitationFilesInfo3, infLevel);
-                }
-                else
-                {
-                    string[] nb_level = song_path.Split('.');
-                    gestionLevels thisLevel = new gestionLevels(Convert.ToInt16(nb_level[0]), listeTextureVaisseauxEnnemis, listeTextureBonus, listeTextureObstacles, listeTextureBoss);
-                    thisLevel.readInfos(delimitationFilesInfo, delimitationFilesInfo2, delimitationFilesInfo3, infLevel);
-                }
+                gestionLevels thisLevel = new gestionLevels(_level, listeTextureVaisseauxEnnemis, listeTextureBonus, listeTextureObstacles, listeTextureBoss);
+                thisLevel.readInfos(delimitationFilesInfo, delimitationFilesInfo2, delimitationFilesInfo3, infLevel);
             }
             #endregion
             #region Chargement barre de vie
