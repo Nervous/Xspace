@@ -33,7 +33,10 @@ namespace MenuSample.Scenes
     /// </summary>
     public class GameplayScene : AbstractGameScene
     {
-        const int SCREEN_MAXTOP = -30, SCREEN_MAXBOT = 620;
+        private const int SCREEN_MAXTOP = -30, SCREEN_MAXBOT = 620;
+        private const int BONUS_EASY = 30, BONUS_NORMAL = 13, BONUS_HARD = 5, BONUS_HC = 0;
+        private const int ETL_EASY = 500, ETL_NORMAL = 200, ETL_HARD = 125, ETL_HC = 50;
+        private int bonus_diff, etl_diff;
         #region Déclaration variables usuelles
         private int score, _level, score_extreme;
         private float fps_fix, _pauseAlpha;
@@ -274,6 +277,38 @@ namespace MenuSample.Scenes
             partManage = new List<doneParticles>();
             pause = false;
             aButton = false;
+
+            try
+            {
+                switch (int.Parse(new StreamReader("DIFF").ReadToEnd()))
+                {
+                    case 0: // Easy
+                        bonus_diff = BONUS_EASY;
+                        etl_diff = ETL_EASY;
+                        break;
+                    case 1: // Normal
+                        bonus_diff = BONUS_NORMAL;
+                        etl_diff = ETL_NORMAL;
+                        break;
+                    case 2: // Hard
+                        bonus_diff = BONUS_HARD;
+                        etl_diff = ETL_HARD;
+                        break;
+                    case 3: // HC
+                        bonus_diff = BONUS_HC;
+                        etl_diff = ETL_HC;
+                        break;
+                    default:
+                        bonus_diff = BONUS_NORMAL;
+                        etl_diff = ETL_NORMAL;
+                        break;
+                }
+            }
+            catch
+            {
+                bonus_diff = BONUS_NORMAL;
+                etl_diff = ETL_NORMAL;
+            }
         }
 
         protected override void LoadContent()
@@ -631,16 +666,16 @@ namespace MenuSample.Scenes
                                                 score += vaisseau.score;
 
                                             int random_bonus = r.Next(0, 100);
-                                            if (random_bonus > 80)       // 2% - Drop un bonus
+                                            if (random_bonus < bonus_diff)       // Drop un bonus
                                             {
                                                 random_bonus = r.Next(0, 100);
                                                 if (random_bonus < 50) // 50% que ce soit un bonus vie
                                                     listeBonusToAdd.Add(new Bonus_Vie(T_Bonus_Vie, vaisseau.pos));
-                                                else if (random_bonus < 70) // 20% - Bonus score
-                                                    listeBonusToAdd.Add(new Bonus_Score(T_Bonus_Score, vaisseau.pos));
-                                                else if (random_bonus < 90) // 20% - Bonus énergie
+                                                else if (random_bonus < 75) // 25% - Bonus énergie
                                                     listeBonusToAdd.Add(new Bonus_Energie(T_Bonus_Energie, vaisseau.pos));
-                                                else
+                                                else if (random_bonus < 95) // 20% - Bonus score
+                                                    listeBonusToAdd.Add(new Bonus_Score(T_Bonus_Score, vaisseau.pos));
+                                                else                        // 5% - Bonus arme
                                                     listeBonusToAdd.Add(new Bonus_BaseWeapon(T_Bonus_Weapon1, vaisseau.pos));
                                             }
                                         }
@@ -660,16 +695,16 @@ namespace MenuSample.Scenes
                                     score += vaisseau.score;
 
                                 int random_bonus = r.Next(0, 100);
-                                if (random_bonus > 80)       // 2% - Drop un bonus
+                                if (random_bonus < bonus_diff)       // Drop un bonus
                                 {
                                     random_bonus = r.Next(0, 100);
-                                    if(random_bonus < 50) // 50% que ce soit un bonus vie
+                                    if (random_bonus < 50) // 50% que ce soit un bonus vie
                                         listeBonusToAdd.Add(new Bonus_Vie(T_Bonus_Vie, vaisseau.pos));
-                                    else if (random_bonus < 70) // 20% - Bonus score
-                                        listeBonusToAdd.Add(new Bonus_Score(T_Bonus_Score, vaisseau.pos));
-                                    else if (random_bonus < 90) // 20% - Bonus énergie
+                                    else if (random_bonus < 75) // 25% - Bonus énergie
                                         listeBonusToAdd.Add(new Bonus_Energie(T_Bonus_Energie, vaisseau.pos));
-                                    else
+                                    else if (random_bonus < 95) // 20% - Bonus score
+                                        listeBonusToAdd.Add(new Bonus_Score(T_Bonus_Score, vaisseau.pos));
+                                    else                        // 5% - Bonus arme
                                         listeBonusToAdd.Add(new Bonus_BaseWeapon(T_Bonus_Weapon1, vaisseau.pos));
                                 }
                                 
@@ -917,28 +952,29 @@ namespace MenuSample.Scenes
                     listeVaisseau[0].changeWeapon(2);
                 else if ((keyboardState.IsKeyDown(Keys.D4) && (listeVaisseau.Count != 0)))
                     listeVaisseau[0].changeWeapon(3);
-                else
+                else if (GamePad.GetCapabilities(PlayerIndex.One).IsConnected && GamePad.GetCapabilities(PlayerIndex.One).HasAButton)
                 {
-                    if (GamePad.GetCapabilities(PlayerIndex.One).IsConnected && GamePad.GetCapabilities(PlayerIndex.One).HasAButton)
+                    if (gamepadState.IsButtonDown(Buttons.A) && !aButton)
                     {
-                        if (gamepadState.IsButtonDown(Buttons.A) && !aButton)
+                        if (listeVaisseau[0].laser)
                         {
-                            if (listeVaisseau[0].laser)
-                            {
-                                listeMissileToRemove.Add(listeVaisseau[0].getLaser());
-                                listeVaisseau[0].disableLaser();
-                            }
-                            listeVaisseau[0]._armeActuelle++;
-                            if (listeVaisseau[0]._armeActuelle > 3)
-                                listeVaisseau[0]._armeActuelle = 0;
+                            listeMissileToRemove.Add(listeVaisseau[0].getLaser());
+                            listeVaisseau[0].disableLaser();
+                        }
+                        listeVaisseau[0]._armeActuelle++;
+                        if (listeVaisseau[0]._armeActuelle > 3)
+                            listeVaisseau[0]._armeActuelle = 0;
 
-                            aButton = true;
-                        }
-                        else if (gamepadState.IsButtonUp(Buttons.A))
-                        {
-                            aButton = false;
-                        }
+                        aButton = true;
                     }
+                    else if (gamepadState.IsButtonUp(Buttons.A))
+                    {
+                        aButton = false;
+                    }
+                }
+                else if (keyboardState.IsKeyDown(Keys.R)) // Echange energie => vie
+                {
+                    listeVaisseau[0].energyToLife(time, etl_diff);
                 }
 
 

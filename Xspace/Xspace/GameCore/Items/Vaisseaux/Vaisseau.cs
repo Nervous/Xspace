@@ -30,6 +30,8 @@ namespace Xspace
         public double tLancementAoE;
         public bool AoE;
 
+        public double tNextEnergyToLife;
+
         public Vaisseau(Texture2D texture, int vie, int vieMax, int energieMax, int armure, int damageCollision, float vitesseVaisseau, Vector2 startPosition, Vector2 deplacement, bool ennemi, double timingAttack, int score, int arme)
             :base(texture, startPosition, deplacement, vie, score)
         {
@@ -51,8 +53,18 @@ namespace Xspace
             stucked = Vector2.Zero;
             _baseWeapon = 0;
             _laser = false;
+            tNextEnergyToLife = 0;
 
+        }
 
+        public void energyToLife(double time, int life)
+        {
+            if (this._energie == this.EnergieMax && time > tNextEnergyToLife)
+            {
+                this.heal(life);
+                this.useEnergy(this._energieMax);
+                this.tNextEnergyToLife = time + 60000;
+            }
         }
 
         public void activerAoE()
