@@ -20,7 +20,10 @@ namespace Xspace
         public LoadSong(string filename)
         {
             path = "Musiques\\Jeu\\" + filename;
-            singer = album = year = title = "????";
+            title = filename;
+            singer = "";
+            album = "";
+            year = "";
             LoadInfos();
             LoadMD5();
         }
