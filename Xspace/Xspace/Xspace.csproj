@@ -129,6 +129,7 @@
     <Compile Include="GameCore\Boss\Boss1.cs" />
     <Compile Include="GameCore\Items\Missiles\Boss\Boss2_Met_Vert_Droite.cs" />
     <Compile Include="GameCore\Items\Missiles\Boss\Boss2_Met_Vert_Gauche.cs" />
+    <Compile Include="GameCore\Items\Missiles\Boss\Boss5_partiel.cs" />
     <Compile Include="GameCore\Items\Missiles\Boss\Laser_boss.cs" />
     <Compile Include="GameCore\Items\Missiles\Boss\Boss2_Met_Hori_Gauche.cs" />
     <Compile Include="GameCore\Items\Missiles\Boss\Missile1_DiagoBas_Boss.cs" />

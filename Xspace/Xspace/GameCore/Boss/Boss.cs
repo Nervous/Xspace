@@ -13,13 +13,14 @@ namespace Xspace
 {
     abstract class Boss : Item
     {
-        protected int _vieMax, _armeActuelle, _phase, _lastVie, _number;
+        protected int _vieMax, _armeActuelle, _phase, _lastVie, _number, _angle;
+        protected Vector2 _origin;
         protected float _vitesse;
         protected int[] _phaseArray;
         protected double _timingAttack, _lastTir;
         protected bool _invincible, _init, color;
         private Vector2 _position_bar;
-        public static int[] phaseArray1 = { 2000, 1200, 800 }, phaseArray2 = { 2000, 1600, 800 }, phaseArray3 = { 1700, 1400, 0 };
+        public static int[] phaseArray1 = { 2000, 1200, 800 }, phaseArray2 = { 2000, 1600, 800 }, phaseArray3 = { 1700, 1400, 0 }, phaseArray5 = { 0, 0, 0 };
         protected string _name;
         /* Phase list: Example: [100,60,20]: As soon as phase[0] < vie, second phase begin, then third phase when phase[1] (so at 20 of life) < vie, etc..
          * So, you should ALWAYS have phase[0] >= vieMax        
@@ -43,6 +44,8 @@ namespace Xspace
             _lastVie = vie;
             _invincible = true;
             _init = true;
+            _angle = 0;
+            _origin = Vector2.Zero;
         }
 
         public Vector2 Position
@@ -218,16 +221,16 @@ namespace Xspace
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            Color couleur = Color.White;
             if (_vie < _lastVie)
             {
-                spriteBatch.Draw(_sprite, _pos, Color.Red);
+                couleur = Color.Red;
                 _lastVie = _vie;
             }
             else if ((_invincible)&&(!_init)&&(!color))
-                spriteBatch.Draw(_sprite, _pos, Color.Blue);
-            else
-                spriteBatch.Draw(_sprite, _pos, Color.White);
+                couleur = Color.Blue;
 
+            spriteBatch.Draw(_sprite, _pos, null, couleur, MathHelper.ToRadians(_angle), _origin, 1.0f, SpriteEffects.None, 0);
         }
     }
 }
