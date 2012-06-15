@@ -17,7 +17,7 @@ namespace Xspace
         protected float _vitesse;
         protected int[] _phaseArray;
         protected double _timingAttack, _lastTir;
-        protected bool _invincible, _init;
+        protected bool _invincible, _init, color;
         private Vector2 _position_bar;
         public static int[] phaseArray1 = { 2000, 1200, 800 }, phaseArray2 = { 2000, 1600, 800 }, phaseArray3 = { 1700, 1400, 0 };
         protected string _name;
@@ -223,7 +223,7 @@ namespace Xspace
                 spriteBatch.Draw(_sprite, _pos, Color.Red);
                 _lastVie = _vie;
             }
-            else if ((_invincible)&&(!_init))
+            else if ((_invincible)&&(!_init)&&(!color))
                 spriteBatch.Draw(_sprite, _pos, Color.Blue);
             else
                 spriteBatch.Draw(_sprite, _pos, Color.White);

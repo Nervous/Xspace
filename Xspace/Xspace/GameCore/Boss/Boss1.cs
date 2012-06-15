@@ -122,7 +122,7 @@ namespace Xspace
                 //Mouvements
                 PositionY += addY * Vitesse;
 
-                if (Position.Y - _sprite.Height / 2 < -_sprite.Height / 2) // haut   
+                if (Position.Y - _sprite.Height / 2 < -_sprite.Height / 2 + 50) // haut   
                     addY = -addY;
 
                 if (Position.Y - _sprite.Height / 2 > 380) // bas

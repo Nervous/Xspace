@@ -13,9 +13,9 @@ namespace Xspace
 {
     class Boss4 : Boss
     {
-        public Texture2D _T_Missile1, _T_Missile2, _T_Missile3, _T_Missile_Laser, _T_Missile_Diago, _T_Missile_DiagoHaut, _T_Missile_DiagoBas, _T_Enrage, _T_Meteore, _T_blasterer, _T_Kamikaze, _T_doubleshooter,  _T_drone, _T_phase2, _T_phase3, _T_Cercle;
+        public Texture2D _T_Missile3, _T_phase2, _T_phase3, _T_Cercle;
         protected int addX, addY, i, i1, i3, type, _timingAttack2;
-        protected double pausetime, pausetime2, lastpausetime;
+        protected double pausetime, lastpausetime;
 
         public Boss4(Texture2D _sprite, int[] phaseArray)
             : base(_sprite, 1700, 1700, 100, phaseArray, 1, new Vector2(1400, 150), 100, 1000, 2, "The All-Seeing Eye")
@@ -34,20 +34,10 @@ namespace Xspace
 
         override public void LoadContent(ContentManager content)
         {
-            _T_Missile1 = content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\missilenew1");
-            _T_Missile2 = content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\missile_new1");
+          
             _T_Missile3 = content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\missile_boule1");
-            _T_Missile_DiagoHaut = content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\missile_boule1_diago_h");
-            _T_Missile_DiagoBas = content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\missile_boule1_diago_b");
-            _T_Missile_Diago = content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\missile_boule1");
-            _T_Missile_Laser = content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\Laser");
             _T_phase2 = content.Load<Texture2D>("Sprites\\Vaisseaux\\Boss\\oeil2");
             _T_phase3 = content.Load<Texture2D>("Sprites\\Vaisseaux\\Boss\\oeil3");
-            _T_Meteore = content.Load<Texture2D>("Sprites\\Missiles\\Ennemi\\sun-boss2");
-            _T_Kamikaze = content.Load<Texture2D>("Sprites\\Vaisseaux\\Ennemi\\Kamikaze");
-            _T_drone = content.Load<Texture2D>("Sprites\\Vaisseaux\\Ennemi\\drone");
-            _T_doubleshooter = content.Load<Texture2D>("Sprites\\Vaisseaux\\Ennemi\\doubleshooter");
-            _T_blasterer = content.Load<Texture2D>("Sprites\\Vaisseaux\\Ennemi\\energizer");
             _T_Cercle = content.Load<Texture2D>("Sprites\\Vaisseaux\\Boss\\cercle");
         }
 
@@ -60,81 +50,82 @@ namespace Xspace
                 {
                     case 1:
                         {
-                            _sprite = _T_Cercle;
                             if (time - LastTir > _timingAttack)
                             {
                                 _timingAttack = 1800;
                                 Vector2 pos = new Vector2(Position.X, Position.Y + _sprite.Height / 2);
-
-
                                listeMissile.Add(new Missile1_boss(_T_Missile3, new Vector2(pos.X, pos.Y - 20), null, this));
-                                
                                 LastTir = time;
                                 pausetime = time;
                                 Vitesse = 0.2f;
-                                i1++;
                             }
 
                         }
                         break;
                     case 2:
                         {
-
-                            if (time - LastTir > _timingAttack) 
+                            if (i1 < 4)
                             {
-                                addX = 0;
-                                addY = 0;
-                                _timingAttack = 3000;
-                                Vector2 pos = new Vector2(Position.X, Position.Y + _sprite.Height / 2);
-                                listeMissile.Add(new Missile1_boss(_T_Missile1, new Vector2(pos.X+200, pos.Y - 100), null, this));
-                                listeMissile.Add(new Missile1_boss(_T_Missile1, new Vector2(pos.X+200, pos.Y + 100), null, this));
-                                Vitesse = 0.1f;
-                                pausetime = time;
-                                pausetime2 = time;
-                                LastTir = time;
-
-                                Random r = new Random();
-                                int nbX = r.Next(100, 1000);
-                                int nbY = r.Next(150, 350);
-                                PositionX = nbX;
-                                PositionY = nbY;
-                                i = 0;
-                            }
-
-                            if (time - LastTir < _timingAttack2)
-                            {
-                                    _sprite = _T_phase2;
-                                    _timingAttack2 = 1000;
-                                
-                            }
-                            else
-                            {
-                                if (i == 0)
+                                if (time - LastTir > _timingAttack)
                                 {
-                                    PositionX -= 200;
-                                    PositionY -= 200;
-                                    i++;
+                                    _invincible = true;
+                                    color = true;
+                                    addX = 0;
+                                    addY = 0;
+                                    _timingAttack = 1800;
+                                    Vector2 pos = new Vector2(Position.X, Position.Y + _sprite.Height / 2);
+                                    Vitesse = 0.1f;
+                                    LastTir = time;
+                                    Random r = new Random();
+                                    int nbX = r.Next(100, 1000);
+                                    int nbY = r.Next(150, 320);
+                                    PositionX = nbX;
+                                    PositionY = nbY;
+                                    i = 0;
+                                    i1++;
                                 }
 
-                                listeVaisseau[0]._vitesseVaisseau = 0.3f;
-                                _sprite = _T_Cercle;
-                            }
+                                if (time - LastTir < _timingAttack2)
+                                {
+                                    _sprite = _T_phase2;
+                                    _timingAttack2 = 1000;
 
-                        }
-                        break;
-                    case 3:
-                        {
-                            if ((time - LastTir > _timingAttack))
-                            {
-                                _timingAttack = 400;
-                                Vector2 pos = new Vector2(Position.X - 50, Position.Y + _sprite.Height / 3 - 6);
-                                listeMissile.Add(new Missile1_DiagoBas_Boss(_T_Missile_DiagoBas, pos, null, this));
-                                listeMissile.Add(new Missile1_DiagoHaut_Boss(_T_Missile_DiagoHaut, pos, null, this));
-                                listeMissile.Add(new Missile1_boss(_T_Missile_Diago, pos, null, this));
-                                LastTir = time;
-                                Vitesse = 0.3f;
-                                pausetime = time;
+                                }
+                                else
+                                {
+                                    if (i == 0)
+                                    {
+                                        PositionX -= 200;
+                                        PositionY -= 200;
+                                        i++;
+                                    }
+
+                                    listeVaisseau[0]._vitesseVaisseau = 0.3f;
+                                    _sprite = _T_Cercle;
+                                }
                             }
+                            else if (i1 < 15)
+                            {
+                                listeVaisseau[0]._vitesseVaisseau = 0.7f;
+                                if (time - LastTir > _timingAttack)
+                                {
+                                    _invincible = false;
+                                    _sprite = _T_phase3;
+                                    addX = 0;
+                                    addY = 0;
+                                    _timingAttack = 1000;
+                                    Vector2 pos = new Vector2(Position.X, Position.Y + _sprite.Height / 2);
+                                    listeMissile.Add(new Missile1_boss(_T_Missile3, new Vector2(pos.X, pos.Y), null, this));
+                                    Vitesse = 0.1f;
+                                    PositionX = 800;
+                                    PositionY = 300;
+                                    LastTir = time;
+                                    i1++;
+                                }
+                            }
+                            else
+                                i1 = 0;
+
                         }
                         break;
                     default:
@@ -142,7 +133,7 @@ namespace Xspace
                             if (time - LastTir > Vitesse)
                             {
                                 Vector2 pos = new Vector2(Position.X - 35, Position.Y + _sprite.Height / 3 - 6);
-                                listeMissile.Add(new Missile2_boss(_T_Missile1, pos, null, this));
+                                listeMissile.Add(new Missile2_boss(_T_Missile3, pos, null, this));
                                 LastTir = time;
                             }
 
