@@ -57,7 +57,7 @@ namespace MenuSample.Scenes
         private List<doneParticles> partManage;
         private ScrollingBackground fond_ecran, fond_ecran_front, fond_ecran_middle;
         public SpriteBatch spriteBatch;
-        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Vaisseau_Kamikaze, T_Missile_Joueur_1, T_Missile_Joueur_2, T_Missile_Joueur_3, T_Missile_HeavyLaser, T_Laser_Joueur, T_Missile_Drone, T_Missile_Rocket, T_MissileAutoguide, T_LaserEnnemi, T_Bonus_Vie, T_Bonus_Weapon1, T_Bonus_Score, T_Bonus_Energie, T_Obstacles_Hole, barre_vie, barre_energy, T_HUD, T_HUD_boss, T_HUD_bars, T_HUD_bar_boss, T_Divers_Levelcomplete, T_Divers_Levelfail, T_boss1, T_Vaisseau_Energizer, T_Vaisseau_Doubleshooter, T_Vaisseau_Zebra, T_Vaisseau_Targeter, T_Vaisseau_BC, T_Vaisseau_Support, T_Missile_Energie, T_boss2, T_boss3, T_HUD_basic, T_HUD_laser, T_HUD_Heavy, T_HUD_red_rect, T_HUD_rocket, T_HUD_musicProgression;
+        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Vaisseau_Kamikaze, T_Missile_Joueur_1, T_Missile_Joueur_2, T_Missile_Joueur_3, T_Missile_HeavyLaser, T_Laser_Joueur, T_Missile_Drone, T_Missile_Rocket, T_MissileAutoguide, T_LaserEnnemi, T_Bonus_Vie, T_Bonus_Weapon1, T_Bonus_Score, T_Bonus_Energie, T_Obstacles_Hole, barre_vie, barre_energy, T_HUD, T_HUD_boss, T_HUD_bars, T_HUD_bar_boss, T_Divers_Levelcomplete, T_Divers_Levelfail, T_boss1, T_Vaisseau_Energizer, T_Vaisseau_Doubleshooter, T_Vaisseau_Zebra, T_Vaisseau_Targeter, T_Vaisseau_BC, T_Vaisseau_Support, T_Missile_Energie, T_boss2, T_boss3, T_HUD_basic, T_HUD_laser, T_HUD_Heavy, T_HUD_red_rect, T_HUD_rocket, T_HUD_musicProgression, T_HUD_vie;
         private List<Texture2D> listeTextureVaisseauxEnnemis, listeTextureBonus, listeTextureObstacles, listeTextureBoss;
         private SoundEffect sonLaser, sonHeavyLaser, musique_bossExplosion;
         private KeyboardState keyboardState;
@@ -415,6 +415,7 @@ namespace MenuSample.Scenes
             T_HUD_red_rect = _content.Load<Texture2D>("Sprites\\HUD\\rect_hud");
             T_HUD_Heavy = _content.Load<Texture2D>("Sprites\\HUD\\red_laser_choice");
             T_HUD_rocket = _content.Load<Texture2D>("Sprites\\HUD\\rocket");
+            T_HUD_vie = _content.Load<Texture2D>("Sprites\\HUD\\hud_vie");
             if (mode == GAME_MODE.LIBRE)
             {
                 T_HUD_musicProgression = new Texture2D(GraphicsDevice, 450, 128);
@@ -1496,7 +1497,7 @@ namespace MenuSample.Scenes
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
             }
 
-            Color laser, red_laser, rocket;
+            Color laser, red_laser, rocket, regen;
             Vector2 rect_vect;
             if (listeVaisseau.Count != 0)
             {
@@ -1534,10 +1535,17 @@ namespace MenuSample.Scenes
                 else
                     rocket = Color.Red;
 
+                if ((time >= listeVaisseau[0].tNextEnergyToLife) && (listeVaisseau[0].Energie == listeVaisseau[0].EnergieMax))
+                    regen = Color.White;
+                else
+                    regen = Color.Red;
+
+
                 spriteBatch.Draw(T_HUD_laser, new Vector2(90, 710), laser);
                 spriteBatch.Draw(T_HUD_basic, new Vector2(10, 710), Color.White);
                 spriteBatch.Draw(T_HUD_Heavy, new Vector2(50, 710), red_laser);
                 spriteBatch.Draw(T_HUD_rocket, new Vector2(130, 710), rocket);
+                spriteBatch.Draw(T_HUD_vie, new Vector2(323, 712), regen);
                 spriteBatch.Draw(T_HUD_red_rect, rect_vect, Color.White);
             }
             #endregion

@@ -67,6 +67,11 @@ namespace Xspace
             }
         }
 
+        public double TNextEnergyToLife
+        {
+            get { return tNextEnergyToLife; }
+        }
+
         public void activerAoE()
         {
             this._deplacement.X = 0;
