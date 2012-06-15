@@ -36,7 +36,8 @@ namespace MenuSample.Scenes
         private const int SCREEN_MAXTOP = -30, SCREEN_MAXBOT = 620;
         private const int BONUS_EASY = 30, BONUS_NORMAL = 15, BONUS_HARD = 5, BONUS_HC = 0;
         private const int ETL_EASY = 500, ETL_NORMAL = 200, ETL_HARD = 125, ETL_HC = 50;
-        private int bonus_diff, etl_diff;
+        private const int DSL_EASY = 5, DSL_NORMAL = 3, DSL_HARD = 1, DSL_HC = 0;
+        private int bonus_diff, etl_diff, delay_spawn_libre;
         #region Déclaration variables usuelles
         private int score, _level, score_extreme;
         private float fps_fix, _pauseAlpha;
@@ -298,22 +299,27 @@ namespace MenuSample.Scenes
                     case 0: // Easy
                         bonus_diff = BONUS_EASY;
                         etl_diff = ETL_EASY;
+                        delay_spawn_libre = DSL_EASY;
                         break;
                     case 1: // Normal
                         bonus_diff = BONUS_NORMAL;
                         etl_diff = ETL_NORMAL;
+                        delay_spawn_libre = DSL_NORMAL;
                         break;
                     case 2: // Hard
                         bonus_diff = BONUS_HARD;
                         etl_diff = ETL_HARD;
+                        delay_spawn_libre = DSL_HARD;
                         break;
                     case 3: // HC
                         bonus_diff = BONUS_HC;
                         etl_diff = ETL_HC;
+                        delay_spawn_libre = DSL_HC;
                         break;
                     default:
                         bonus_diff = BONUS_NORMAL;
                         etl_diff = ETL_NORMAL;
+                        delay_spawn_libre = DSL_NORMAL;
                         break;
                 }
             }
@@ -1236,16 +1242,16 @@ namespace MenuSample.Scenes
                         float energy_1024_music = (float)BeatDetector.get_energie1024()[(int)time_music];
 
                         position_spawn = new Vector2(1180, r.Next(5, 564));
-                        if (mode == GAME_MODE.LIBRE && lastTimeMusic + 1 < time_music)
+                        if (mode == GAME_MODE.LIBRE && lastTimeMusic + delay_spawn_libre < time_music)
                         {
                             if ((time_music - lastTimeRandomSpawn > 10) && (BeatDetector.get_beat()[(int)time_music] > 0))
                             {
                                 float ratio = energy_1024_music / moy_energie1024;
-                                if (ratio > 2.03)
+                                if (ratio > 2.1)
                                 {
                                     listeVaisseau.Add(new kamikaze(T_Vaisseau_Kamikaze, position_spawn));
                                 }
-                                if (ratio > 2.0)
+                                else if (ratio > 2.0)
                                 {
                                     listeVaisseau.Add(new Targeter(T_Vaisseau_Targeter, position_spawn));
                                 }
