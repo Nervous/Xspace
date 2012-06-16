@@ -1642,7 +1642,7 @@ namespace MenuSample.Scenes
                 spriteBatch.Draw(T_Divers_Levelfail, new Vector2(0, 0), Color.White);
             }
             #endregion
-            spriteBatch.DrawString(_gameFont, name, new Vector2(0, 300), Color.Green);
+           spriteBatch.DrawString(_gameFont, name, new Vector2(0, 300), Color.Green);
             spriteBatch.End();
         }
 
