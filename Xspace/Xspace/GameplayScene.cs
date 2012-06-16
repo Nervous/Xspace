@@ -1245,7 +1245,7 @@ namespace MenuSample.Scenes
                 {
                     if (AudioPlayer.IsPlaying())
                     {
-                        int time_music = (int)((AudioPlayer.GetCurrentTime() % (AudioPlayer.GetLength() - 1024)) / 1024f);
+                        int time_music = (int)((AudioPlayer.GetCurrentTime() % (AudioPlayer.GetLength() - 1024)) / 1024f) % BeatDetector.get_energie1024().Length;
                         float energy_1024_music = (float)BeatDetector.get_energie1024()[(int)time_music];
 
                         position_spawn = new Vector2(1180, r.Next(5, 564));
