@@ -63,7 +63,7 @@ namespace MenuSample.Scenes
         private SoundEffect sonLaser, sonHeavyLaser, musique_bossExplosion;
         private KeyboardState keyboardState;
         private GamePadState gamepadState;
-        bool lastKeyDown = true, end = false, endDead = false;
+        bool lastKeyDown = true, lastAKeyDown = true, lastEKeyDown = true, end = false, endDead = false;
         private List<gestionLevels> infLevel, listeLevelToRemove;
         Renderer particleRenderer;
         ParticleEffect particleEffect, particleEffectMoteur, particleEffectBoss1, particleBossExplosion, particleEffectMissiles, particleExplosionAoE;
@@ -836,21 +836,21 @@ namespace MenuSample.Scenes
                 else if (keyboardState.IsKeyUp(Keys.F1))
                     lastKeyDown = true;
 
-                if (keyboardState.IsKeyDown(Keys.A) && lastKeyDown)
+                if (keyboardState.IsKeyDown(Keys.A) && lastAKeyDown)
                 {
-                    lastKeyDown = false;
+                    lastAKeyDown = false;
                     AudioPlayer.UpSpeed();
                 }
                 else if (keyboardState.IsKeyUp(Keys.A))
-                    lastKeyDown = true;
+                    lastAKeyDown = true;
 
-                if (keyboardState.IsKeyDown(Keys.E) && lastKeyDown)
+                if (keyboardState.IsKeyDown(Keys.E) && lastEKeyDown)
                 {
-                    lastKeyDown = false;
+                    lastEKeyDown = false;
                     AudioPlayer.DownSpeed();
                 }
                 else if (keyboardState.IsKeyUp(Keys.E))
-                    lastKeyDown = true;
+                    lastEKeyDown = true;
 
                 if (((keyboardState.IsKeyDown(Keys.Space) || (GamePad.GetCapabilities(PlayerIndex.One).IsConnected && GamePad.GetCapabilities(PlayerIndex.One).HasRightTrigger && gamepadState.IsButtonDown(Buttons.RightTrigger))) && (listeVaisseau.Count != 0)))
                 {
