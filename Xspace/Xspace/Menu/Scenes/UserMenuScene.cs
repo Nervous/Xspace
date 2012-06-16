@@ -12,7 +12,7 @@ namespace MenuSample.Scenes
         public UserMenuScene(SceneManager sceneMgr, Microsoft.Xna.Framework.GraphicsDeviceManager graphicsReceive)
             : base(sceneMgr, "Niveaux :")
         {
-            string[] filePaths = Directory.GetFiles(@"Levels");
+            string[] filePaths = Directory.GetFiles(@"Levels\Custom");
             List<string> allowed_exts = new List<string>() { ".xpa" };
 
             MenuItem back = new MenuItem("Retour");

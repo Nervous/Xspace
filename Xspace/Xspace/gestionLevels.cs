@@ -42,7 +42,7 @@ namespace Xspace
 
         public gestionLevels(string file, List<Texture2D> texturesVaisseaux, List<Texture2D> texturesBonus, List<Texture2D> textureObstacles, List<Texture2D> textureBoss)
         {
-            pathLevel = "levels/" + file + ".xpa"; ;
+            pathLevel = "levels/Custom/" + file + ".xpa"; ;
             infosLevel = lireFichier(pathLevel);
             listeTextureVaisseauxEnnemis = texturesVaisseaux;
             listeTextureBonus = texturesBonus;
