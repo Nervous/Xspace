@@ -32,12 +32,14 @@ namespace MenuSample.Scenes
         protected string name;
         protected bool lastKeyDown;
         private Keys[] allowedKeys;
+        private SpriteFont font;
 
-        public NameScene(SceneManager sceneMgr, GameTime gameTime)
+        public NameScene(SceneManager sceneMgr, GameTime gameTime, SpriteFont font)
             : base(sceneMgr)
         {
             name = "";
             this.Update(gameTime);
+            this.font = font;
             allowedKeys = new Keys[26] { Keys.A, Keys.B, Keys.C, Keys.D, Keys.E, Keys.F, Keys.G, Keys.H, Keys.I, Keys.J, Keys.K, Keys.L, Keys.M, Keys.N, Keys.O, Keys.P, Keys.Q, Keys.R, Keys.S, Keys.T, Keys.U, Keys.V, Keys.W, Keys.X, Keys.Y, Keys.Z };
         }
 
@@ -48,9 +50,9 @@ namespace MenuSample.Scenes
             
             if (keyboardState.IsKeyUp(lastKey))
                 lastKeyDown = true;
-            if (keyboardState.GetPressedKeys().Length == 1)
+            if (keyboardState.GetPressedKeys().Length == 1 && allowedKeys != null)
             {
-                if (name.Length < 5)
+                if (name.Length < 10)
                 {
                     Keys pressedKey = keyboardState.GetPressedKeys()[0];
                     if (lastKeyDown)
@@ -71,6 +73,14 @@ namespace MenuSample.Scenes
                     Remove();
             }
 
+        }
+
+        public override void Draw(GameTime gameTime)
+        {
+            SpriteBatch spriteBatch = SceneManager.SpriteBatch;
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
+            spriteBatch.DrawString(font, "Entrez votre nom :\n" + name, new Vector2(400, 350), Color.Green);
+            spriteBatch.End();
         }
 
         public string Name

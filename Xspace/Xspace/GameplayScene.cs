@@ -1308,7 +1308,7 @@ namespace MenuSample.Scenes
                 if ((end || endDead) && (first))
                 {
 
-                    NameScene named = new NameScene(SceneManager, gameTime);
+                    NameScene named = new NameScene(SceneManager, gameTime, _gameFont);
                     AudioPlayer.StopMusic();
                     SoundEffect.MasterVolume = 0.00f;
                     AudioPlayer.PlayMusic("Musiques\\Menu\\Musique.flac");
@@ -1387,7 +1387,7 @@ namespace MenuSample.Scenes
                     }
                     first = false;
                 }
-                if ((end || endDead)&&typed)
+                if ((end || endDead))//&&typed)
                 {
                     if (keyboardState.IsKeyDown(Keys.Enter))
                         Remove();
