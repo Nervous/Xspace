@@ -22,7 +22,7 @@ namespace Xspace
         private static Channel musicChannel = null;
         private static uint length;
         private static int[] data_channel;
-
+        private static float baseFrequency, current_speed;
         private static FMOD.CHANNEL_CALLBACK channelCallback;
         public static event EndMusicEventHandler EndMusic;
 
@@ -136,6 +136,8 @@ namespace Xspace
                 music.@unlock(ptr1, ptr2, len1, len2);
                 result = system.playSound(CHANNELINDEX.FREE, music, paused, ref musicChannel);
                 ErrCheck(result);
+
+                musicChannel.getFrequency(ref baseFrequency);
                 musicChannel.setCallback(channelCallback);
                 
                 currentMusicPath = path;
@@ -244,6 +246,28 @@ namespace Xspace
             if (musicChannel != null)
                 musicChannel.isPlaying(ref isPlaying);
             return isPlaying;
+        }
+
+        public static void SetSpeed(float speed)
+        {
+            current_speed = speed;
+            musicChannel.setFrequency(baseFrequency * speed);
+        }
+
+        public static void DownSpeed()
+        {
+            if (current_speed >= 0.3)
+            {
+                SetSpeed(current_speed - 0.1f);
+            }
+        }
+
+        public static void UpSpeed()
+        {
+            if (current_speed <= 1.7)
+            {
+                SetSpeed(current_speed + 0.1f);
+            }
         }
     }
 }

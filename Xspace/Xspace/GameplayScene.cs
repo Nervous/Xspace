@@ -834,6 +834,22 @@ namespace MenuSample.Scenes
                 else if (keyboardState.IsKeyUp(Keys.F1))
                     lastKeyDown = true;
 
+                if (keyboardState.IsKeyDown(Keys.A) && lastKeyDown)
+                {
+                    lastKeyDown = false;
+                    AudioPlayer.UpSpeed();
+                }
+                else if (keyboardState.IsKeyUp(Keys.A))
+                    lastKeyDown = true;
+
+                if (keyboardState.IsKeyDown(Keys.E) && lastKeyDown)
+                {
+                    lastKeyDown = false;
+                    AudioPlayer.DownSpeed();
+                }
+                else if (keyboardState.IsKeyUp(Keys.E))
+                    lastKeyDown = true;
+
                 if (((keyboardState.IsKeyDown(Keys.Space) || (GamePad.GetCapabilities(PlayerIndex.One).IsConnected && GamePad.GetCapabilities(PlayerIndex.One).HasRightTrigger && gamepadState.IsButtonDown(Buttons.RightTrigger))) && (listeVaisseau.Count != 0)))
                 {
                     switch (listeVaisseau[0].armeActuelle)
