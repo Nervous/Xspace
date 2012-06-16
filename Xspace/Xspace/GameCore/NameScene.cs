@@ -48,7 +48,7 @@ namespace MenuSample.Scenes
             
             if (keyboardState.IsKeyUp(lastKey))
                 lastKeyDown = true;
-            else if (keyboardState.GetPressedKeys().Length == 1)
+            if (keyboardState.GetPressedKeys().Length == 1)
             {
                 if (name.Length < 5)
                 {
