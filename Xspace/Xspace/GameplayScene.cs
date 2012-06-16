@@ -42,17 +42,16 @@ namespace MenuSample.Scenes
         private int score, _level, score_extreme, z;
         private float fps_fix, _pauseAlpha;
         private double time, lastTime, lastTimeSpectre, lastTimeEnergy, bossTime, compteur, lastTimeRandomSpawn, lastTimeMusic;
-        private string path_level, stock_score_inferieur, stock_score_superieur, name;
-        private string[] score_level, nom;
+        private string path_level, stock_score_inferieur, stock_score_superieur, name, name_level;
+        private string[] score_level;
         private StreamWriter sw_level;
         private StreamReader sr_level;
         private char[] delimitationFilesInfo = new char[] { ' ' }, delimitationFilesInfo2 = new char[] { ';' }, delimitationFilesInfo3 = new char[] { ':' };
         private float[] spectre;
         private int[] progressionMusic;
-        private bool drawSpectre, aBossWasThere, first, pause, aButton, typed;
+        private bool drawSpectre, aBossWasThere, first, pause, aButton;
         private float amplitude_sum_music, moy_energie1024;
         private Random r;
-        private Keys lastKey;
         private string song_path;
         #endregion
         #region Déclaration variables relatives au jeu
@@ -277,7 +276,7 @@ namespace MenuSample.Scenes
             if (mode == GAME_MODE.CUSTOM)
             {
                 string[] nb_level = custom_path.Split('.');
-                _level = Convert.ToInt16(nb_level[0]);
+                name_level = nb_level[0];
             }
             
             position_spawn = new Vector2();
@@ -293,7 +292,6 @@ namespace MenuSample.Scenes
             partManage = new List<doneParticles>();
             pause = false;
             aButton = false;
-            typed = false;
             z = 0;
 
             try
@@ -538,7 +536,11 @@ namespace MenuSample.Scenes
             listeSupportAoEtoRemove = new List<supportAoe>();
             if (mode != GAME_MODE.LIBRE)
             {
-                gestionLevels thisLevel = new gestionLevels(_level, listeTextureVaisseauxEnnemis, listeTextureBonus, listeTextureObstacles, listeTextureBoss);
+                gestionLevels thisLevel;
+                if (mode == GAME_MODE.CUSTOM)
+                    thisLevel = new gestionLevels(name_level, listeTextureVaisseauxEnnemis, listeTextureBonus, listeTextureObstacles, listeTextureBoss);
+                else
+                    thisLevel = new gestionLevels(_level, listeTextureVaisseauxEnnemis, listeTextureBonus, listeTextureObstacles, listeTextureBoss);
                 thisLevel.readInfos(delimitationFilesInfo, delimitationFilesInfo2, delimitationFilesInfo3, infLevel);
             }
             #endregion
@@ -1270,19 +1272,19 @@ namespace MenuSample.Scenes
                             if ((time_music - lastTimeRandomSpawn > 10) && (BeatDetector.get_beat()[(int)time_music] > 0))
                             {
                                 float ratio = energy_1024_music / moy_energie1024;
-                                if (ratio > 2.1)
+                                if (ratio > 2.00)
                                 {
                                     listeVaisseau.Add(new kamikaze(T_Vaisseau_Kamikaze, position_spawn));
                                 }
-                                else if (ratio > 2.0)
+                                else if (ratio > 1.90)
                                 {
                                     listeVaisseau.Add(new Targeter(T_Vaisseau_Targeter, position_spawn));
                                 }
-                                else if (ratio > 1.96)
+                                else if (ratio > 1.83)
                                 {
                                     listeVaisseau.Add(new Support(T_Vaisseau_Support, position_spawn));
                                 }
-                                else if (ratio > 1.9)
+                                else if (ratio > 1.75)
                                 {
                                     listeVaisseau.Add(new BC(T_Vaisseau_BC, position_spawn));
                                 }
@@ -1294,7 +1296,7 @@ namespace MenuSample.Scenes
                                 {
                                     listeVaisseau.Add(new RapidShooter(T_Vaisseau_Doubleshooter, position_spawn));
                                 }
-                                else if (ratio > 1.3)
+                                else if (ratio > 1.4)
                                 {
                                     listeVaisseau.Add(new Blasterer(T_Vaisseau_Energizer, position_spawn));
                                 }
@@ -1323,16 +1325,19 @@ namespace MenuSample.Scenes
 
                 if ((end || endDead) && (first))
                 {
-
-                    NameScene named = new NameScene(SceneManager, gameTime, _gameFont);
+                    NameScene named;
                     AudioPlayer.StopMusic();
                     SoundEffect.MasterVolume = 0.00f;
                     AudioPlayer.PlayMusic("Musiques\\Menu\\Musique.flac");
-                    SceneManager.AddScene(named);
-                    name = named.Name;
+                    //SceneManager.AddScene(named);
+                    //name = named.Name;
 
                     if (mode == GAME_MODE.CAMPAGNE)
                     {
+                        if (endDead)
+                            named = new NameScene(SceneManager, gameTime, _gameFont, Color.DarkRed);
+                        else
+                            named = new NameScene(SceneManager, gameTime, _gameFont, Color.Green);
 
                         path_level = "Scores\\Arcade\\lvl" + _level + ".score";
                         sr_level = new StreamReader(path_level);
@@ -1365,8 +1370,10 @@ namespace MenuSample.Scenes
                         sw_level.WriteLine(stock_score_inferieur + name + '\n' + Convert.ToString(score) + '\n' + stock_score_superieur);
                         sw_level.Close();
                     }
-                    else if (mode == GAME_MODE.EXTREME)
+                    else if ((mode == GAME_MODE.EXTREME)&&(!endDead))
                     {
+                            named = new NameScene(SceneManager, gameTime, _gameFont, Color.Green);
+
                         score_extreme = Convert.ToInt32(compteur/1000);
                         path_level = "Scores\\Extreme\\lvl.score";
                         FileStream fs = new FileStream(path_level, FileMode.OpenOrCreate);
@@ -1642,7 +1649,11 @@ namespace MenuSample.Scenes
                 spriteBatch.Draw(T_Divers_Levelfail, new Vector2(0, 0), Color.White);
             }
             #endregion
-           spriteBatch.DrawString(_gameFont, name, new Vector2(0, 300), Color.Green);
+
+            if(endDead)
+           spriteBatch.DrawString(_gameFont, name, new Vector2(0, 300), Color.Red);
+            else
+                spriteBatch.DrawString(_gameFont, name, new Vector2(0, 300), Color.Red);
             spriteBatch.End();
         }
 

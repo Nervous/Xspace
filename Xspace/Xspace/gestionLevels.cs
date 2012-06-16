@@ -40,6 +40,16 @@ namespace Xspace
             listeTextureBoss = textureBoss;
         }
 
+        public gestionLevels(string file, List<Texture2D> texturesVaisseaux, List<Texture2D> texturesBonus, List<Texture2D> textureObstacles, List<Texture2D> textureBoss)
+        {
+            pathLevel = "levels/" + file + ".xpa"; ;
+            infosLevel = lireFichier(pathLevel);
+            listeTextureVaisseauxEnnemis = texturesVaisseaux;
+            listeTextureBonus = texturesBonus;
+            listeTextureObstacles = textureObstacles;
+            listeTextureBoss = textureBoss;
+        }
+
         public gestionLevels(string setCategorie, Vaisseau setAdresse, Bonus adresseBonus, Obstacles adresseObstacle, Boss adresseBoss, int setTime, string setPosition)
         {
             categorie = setCategorie;

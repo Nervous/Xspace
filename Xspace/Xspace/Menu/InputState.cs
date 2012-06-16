@@ -63,7 +63,7 @@ namespace MenuSample.Inputs
 
         public static bool IsPauseGame()
         {
-            return IsNewKeyPress(Keys.Escape);
+          return IsNewKeyPress(Keys.Escape);
         }
 
     }

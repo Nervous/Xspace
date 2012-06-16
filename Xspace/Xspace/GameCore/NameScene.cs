@@ -33,10 +33,12 @@ namespace MenuSample.Scenes
         protected bool lastKeyDown;
         private Keys[] allowedKeys;
         private SpriteFont font;
+        private Color _color;
 
-        public NameScene(SceneManager sceneMgr, GameTime gameTime, SpriteFont font)
+        public NameScene(SceneManager sceneMgr, GameTime gameTime, SpriteFont font, Color color)
             : base(sceneMgr)
         {
+            _color = color;
             name = "";
             this.Update(gameTime);
             this.font = font;
@@ -52,7 +54,7 @@ namespace MenuSample.Scenes
                 lastKeyDown = true;
             if (keyboardState.GetPressedKeys().Length == 1 && allowedKeys != null)
             {
-                if (name.Length < 10)
+                if (name.Length < 6)
                 {
                     Keys pressedKey = keyboardState.GetPressedKeys()[0];
                     if (lastKeyDown)
@@ -79,7 +81,7 @@ namespace MenuSample.Scenes
         {
             SpriteBatch spriteBatch = SceneManager.SpriteBatch;
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
-            spriteBatch.DrawString(font, "Entrez votre nom :\n" + name, new Vector2(400, 350), Color.Green);
+            spriteBatch.DrawString(font, "Entrez votre nom :\n" + name, new Vector2(400, 400), _color);
             spriteBatch.End();
         }
 
