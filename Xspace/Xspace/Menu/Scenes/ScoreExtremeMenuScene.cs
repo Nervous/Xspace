@@ -85,7 +85,7 @@ namespace MenuSample.Scenes
                         if (k % 2 == 0)
                             sw.WriteLine("-");
                         else
-                            sw.WriteLine("0");
+                            sw.WriteLine("9999");
                     }
                     sw.Close();
                     sr.Close();

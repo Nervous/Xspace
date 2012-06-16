@@ -20,7 +20,7 @@ namespace MenuSample.Scenes
         private ContentManager _content;
         private SpriteFont _gamefont;
         private Texture2D _score_board, _score_surbrillance, _score_lvl, _score_surbrillance2;
-        private StreamReader sr_arcade, sr_arcade_level; //sr_level, 
+        private StreamReader sr_arcade;
         private string path_arcade, path_level, path_arcade_level, path_arcade_level_best;
         private Vector2 position_Nv;
         private Vector2 position_board;
@@ -88,9 +88,11 @@ namespace MenuSample.Scenes
             for (int lvl = 0; lvl < 15; lvl++) 
             {
                 path_arcade_level_best = "Scores\\Arcade\\lvl" + (lvl+1) + ".score";
-                sr_arcade_level = new StreamReader(path_arcade_level_best);
+               // sr_arcade_level = new StreamReader(path_arcade_level_best);
+                FileStream fs3 = new FileStream(@path_arcade_level_best, FileMode.OpenOrCreate);
+                fs3.Close();
                 score_arcade_level_best = System.IO.File.ReadAllLines(@path_arcade_level_best);
-                sr_arcade_level.Close();
+                //sr_arcade_level.Close();
                 if (score_arcade_level_best.Length == 0)
                 {
                     FileStream fs = new FileStream(path_arcade_level_best, FileMode.Open);
@@ -146,7 +148,6 @@ namespace MenuSample.Scenes
             } 
             spriteBatch.End();
             sr_arcade.Close();
-            sr_arcade_level.Close();
         }
 
         public override void Update(GameTime gameTime)

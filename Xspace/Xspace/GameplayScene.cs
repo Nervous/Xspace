@@ -39,7 +39,7 @@ namespace MenuSample.Scenes
         private const int DSL_EASY = 5, DSL_NORMAL = 3, DSL_HARD = 1, DSL_HC = 0;
         private int bonus_diff, etl_diff, delay_spawn_libre;
         #region Déclaration variables usuelles
-        private int score, _level, score_extreme, z;
+        private int score, _level, score_extreme;
         private float fps_fix, _pauseAlpha;
         private double time, lastTime, lastTimeSpectre, lastTimeEnergy, bossTime, compteur, lastTimeRandomSpawn, lastTimeMusic;
         private string path_level, stock_score_inferieur, stock_score_superieur, name, name_level;
@@ -292,7 +292,6 @@ namespace MenuSample.Scenes
             partManage = new List<doneParticles>();
             pause = false;
             aButton = false;
-            z = 0;
 
             try
             {
@@ -1329,8 +1328,6 @@ namespace MenuSample.Scenes
                     AudioPlayer.StopMusic();
                     SoundEffect.MasterVolume = 0.00f;
                     AudioPlayer.PlayMusic("Musiques\\Menu\\Musique.flac");
-                    //SceneManager.AddScene(named);
-                    //name = named.Name;
 
                     if (mode == GAME_MODE.CAMPAGNE)
                     {
@@ -1339,41 +1336,47 @@ namespace MenuSample.Scenes
                         else
                             named = new NameScene(SceneManager, gameTime, _gameFont, Color.Green);
 
-                        path_level = "Scores\\Arcade\\lvl" + _level + ".score";
-                        sr_level = new StreamReader(path_level);
-                        score_level = System.IO.File.ReadAllLines(@path_level);
-                        stock_score_inferieur = "";
-                        stock_score_superieur = "";
+                        SceneManager.AddScene(named);
+                        name = named.Name;
 
-                        if (score_level.Length < 10)
-                        {
-                            for (int i = score_level.Length; i < 10; i++)
+                            path_level = "Scores\\Arcade\\lvl" + _level + ".score";
+                            sr_level = new StreamReader(path_level);
+                            score_level = System.IO.File.ReadAllLines(@path_level);
+                            stock_score_inferieur = "";
+                            stock_score_superieur = "";
+                            if (score_level.Length < 10)
                             {
-                                if (i % 2 == 0)
-                                    score_level[i] = "-";
-                                else
-                                    score_level[i] = "0";
+                                for (int i = score_level.Length; i < 10; i++)
+                                {
+                                    if (i % 2 == 0)
+                                        score_level[i] = "-";
+                                    else
+                                        score_level[i] = "0";
+                                }
                             }
-                        }
 
-                        for (int i = 0; i < 10; i += 2)
-                        {
-                            if (score < Convert.ToInt32(score_level[i + 1]))
-                                stock_score_inferieur += score_level[i] + '\n' + score_level[i + 1] + '\n';
-                            else
-                                stock_score_superieur += score_level[i] + '\n' + score_level[i + 1] + '\n';
-                        }
+                            for (int i = 0; i < 10; i += 2)
+                            {
+                                if (score < Convert.ToInt32(score_level[i + 1]))
+                                    stock_score_inferieur += score_level[i] + '\n' + score_level[i + 1] + '\n';
+                                else
+                                    stock_score_superieur += score_level[i] + '\n' + score_level[i + 1] + '\n';
+                            }
 
-                        sr_level.Close();
-                        sw_level = new StreamWriter(path_level);
+                            sr_level.Close();
+                            sw_level = new StreamWriter(path_level);
 
-                        sw_level.WriteLine(stock_score_inferieur + name + '\n' + Convert.ToString(score) + '\n' + stock_score_superieur);
-                        sw_level.Close();
+                            sw_level.WriteLine(stock_score_inferieur + "Nervous" + '\n' + Convert.ToString(score) + '\n' + stock_score_superieur);
+                            sw_level.Close();
+                        
+
                     }
                     else if ((mode == GAME_MODE.EXTREME)&&(!endDead))
                     {
                             named = new NameScene(SceneManager, gameTime, _gameFont, Color.Green);
 
+                            SceneManager.AddScene(named);
+                            name = named.Name;
                         score_extreme = Convert.ToInt32(compteur/1000);
                         path_level = "Scores\\Extreme\\lvl.score";
                         FileStream fs = new FileStream(path_level, FileMode.OpenOrCreate);
@@ -1383,30 +1386,31 @@ namespace MenuSample.Scenes
                         stock_score_inferieur = "";
                         stock_score_superieur = "";
 
-                        if (score_level.Length < 10)
-                        {
-                            for (int i = score_level.Length; i < 10; i++)
+                            if (score_level.Length < 10)
                             {
-                                if (i % 2 == 0)
-                                    score_level[i] = "-";
-                                else
-                                    score_level[i] = "9999";
+                                for (int i = score_level.Length; i < 10; i++)
+                                {
+                                    if (i % 2 == 0)
+                                        score_level[i] = "-";
+                                    else
+                                        score_level[i] = "9999";
+                                }
                             }
-                        }
 
-                        for (int i = 0; i < 10; i += 2)
-                        {
-                            if (score_extreme > Convert.ToInt32(score_level[i + 1]))
-                                stock_score_inferieur += score_level[i] + '\n' + score_level[i + 1] + '\n';
-                            else
-                                stock_score_superieur += score_level[i] + '\n' + score_level[i + 1] + '\n';
-                        }
+                            for (int i = 0; i < 10; i += 2)
+                            {
+                                if (score_extreme > Convert.ToInt32(score_level[i + 1]))
+                                    stock_score_inferieur += score_level[i] + '\n' + score_level[i + 1] + '\n';
+                                else
+                                    stock_score_superieur += score_level[i] + '\n' + score_level[i + 1] + '\n';
+                            }
 
-                        sr_level.Close();
-                        sw_level = new StreamWriter(path_level);
+                            sr_level.Close();
+                            sw_level = new StreamWriter(path_level);
 
-                        sw_level.WriteLine(stock_score_inferieur + name + '\n' + Convert.ToString(score_extreme) + '\n' + stock_score_superieur);
-                        sw_level.Close();
+                            sw_level.WriteLine(stock_score_inferieur + "Nervous" + '\n' + Convert.ToString(score_extreme) + '\n' + stock_score_superieur);
+                            sw_level.Close();
+                        
                     }
                     first = false;
                 }

@@ -34,6 +34,7 @@ namespace MenuSample.Scenes
         private Keys[] allowedKeys;
         private SpriteFont font;
         private Color _color;
+        private bool _ok=false;
 
         public NameScene(SceneManager sceneMgr, GameTime gameTime, SpriteFont font, Color color)
             : base(sceneMgr)
@@ -54,7 +55,7 @@ namespace MenuSample.Scenes
                 lastKeyDown = true;
             if (keyboardState.GetPressedKeys().Length == 1 && allowedKeys != null)
             {
-                if (name.Length < 6)
+                if (name.Length < 7)
                 {
                     Keys pressedKey = keyboardState.GetPressedKeys()[0];
                     if (lastKeyDown)
@@ -67,12 +68,16 @@ namespace MenuSample.Scenes
                         }
                         else if (pressedKey == Keys.Enter)
                         {
+                            _ok = true;
                             Remove();
                         }
                     }
                 }
                 else
+                {
+                    _ok = true;
                     Remove();
+                }
             }
 
         }
@@ -90,6 +95,10 @@ namespace MenuSample.Scenes
             get { return name; }
         }
 
+        public bool Ok
+        {
+            get { return _ok; }
+        }
 
 
     }
