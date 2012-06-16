@@ -145,6 +145,7 @@
     <Compile Include="GameCore\Items\Vaisseaux\Support.cs" />
     <Compile Include="GameCore\Items\Vaisseaux\Targeter.cs" />
     <Compile Include="GameCore\Items\Vaisseaux\Zebra.cs" />
+    <Compile Include="GameCore\NameScene.cs" />
     <Compile Include="GameCore\Son\LoadSong.cs" />
     <Compile Include="gestionLevels.cs" />
     <Compile Include="GameCore\Items\Item.cs" />

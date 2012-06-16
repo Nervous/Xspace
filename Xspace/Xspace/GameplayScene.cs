@@ -39,19 +39,20 @@ namespace MenuSample.Scenes
         private const int DSL_EASY = 5, DSL_NORMAL = 3, DSL_HARD = 1, DSL_HC = 0;
         private int bonus_diff, etl_diff, delay_spawn_libre;
         #region Déclaration variables usuelles
-        private int score, _level, score_extreme;
+        private int score, _level, score_extreme, z;
         private float fps_fix, _pauseAlpha;
         private double time, lastTime, lastTimeSpectre, lastTimeEnergy, bossTime, compteur, lastTimeRandomSpawn, lastTimeMusic;
-        private string path_level, stock_score_inferieur, stock_score_superieur;
-        private string[] score_level;
+        private string path_level, stock_score_inferieur, stock_score_superieur, name;
+        private string[] score_level, nom;
         private StreamWriter sw_level;
         private StreamReader sr_level;
         private char[] delimitationFilesInfo = new char[] { ' ' }, delimitationFilesInfo2 = new char[] { ';' }, delimitationFilesInfo3 = new char[] { ':' };
         private float[] spectre;
         private int[] progressionMusic;
-        private bool drawSpectre, aBossWasThere, first, pause, aButton;
+        private bool drawSpectre, aBossWasThere, first, pause, aButton, typed;
         private float amplitude_sum_music, moy_energie1024;
         private Random r;
+        private Keys lastKey;
         private string song_path;
         #endregion
         #region Déclaration variables relatives au jeu
@@ -288,9 +289,12 @@ namespace MenuSample.Scenes
 		    base.Initialize();
             aBossWasThere = false;
             bossTime = 0;
+            name = "";
             partManage = new List<doneParticles>();
             pause = false;
             aButton = false;
+            typed = false;
+            z = 0;
 
             try
             {
@@ -769,6 +773,7 @@ namespace MenuSample.Scenes
 
                 AudioPlayer.Update();
                 #endregion
+
                 #region Gestion de la musique en cas de pause
                 if (InputState.IsPauseGame())
                 {
@@ -1302,11 +1307,17 @@ namespace MenuSample.Scenes
 
                 if ((end || endDead) && (first))
                 {
+
+                    NameScene named = new NameScene(SceneManager, gameTime);
                     AudioPlayer.StopMusic();
                     SoundEffect.MasterVolume = 0.00f;
                     AudioPlayer.PlayMusic("Musiques\\Menu\\Musique.flac");
+                    SceneManager.AddScene(named);
+                    name = named.Name;
+
                     if (mode == GAME_MODE.CAMPAGNE)
                     {
+
                         path_level = "Scores\\Arcade\\lvl" + _level + ".score";
                         sr_level = new StreamReader(path_level);
                         score_level = System.IO.File.ReadAllLines(@path_level);
@@ -1335,7 +1346,7 @@ namespace MenuSample.Scenes
                         sr_level.Close();
                         sw_level = new StreamWriter(path_level);
 
-                        sw_level.WriteLine(stock_score_inferieur + "Nervous" + '\n' + Convert.ToString(score) + '\n' + stock_score_superieur);
+                        sw_level.WriteLine(stock_score_inferieur + name + '\n' + Convert.ToString(score) + '\n' + stock_score_superieur);
                         sw_level.Close();
                     }
                     else if (mode == GAME_MODE.EXTREME)
@@ -1344,6 +1355,7 @@ namespace MenuSample.Scenes
                         path_level = "Scores\\Extreme\\lvl.score";
                         FileStream fs = new FileStream(path_level, FileMode.OpenOrCreate);
                         sr_level = new StreamReader(fs);
+                        fs.Close();
                         score_level = System.IO.File.ReadAllLines(@path_level);
                         stock_score_inferieur = "";
                         stock_score_superieur = "";
@@ -1355,7 +1367,7 @@ namespace MenuSample.Scenes
                                 if (i % 2 == 0)
                                     score_level[i] = "-";
                                 else
-                                    score_level[i] = "0";
+                                    score_level[i] = "9999";
                             }
                         }
 
@@ -1370,12 +1382,12 @@ namespace MenuSample.Scenes
                         sr_level.Close();
                         sw_level = new StreamWriter(path_level);
 
-                        sw_level.WriteLine(stock_score_inferieur + "Nervous" + '\n' + Convert.ToString(score_extreme) + '\n' + stock_score_superieur);
+                        sw_level.WriteLine(stock_score_inferieur + name + '\n' + Convert.ToString(score_extreme) + '\n' + stock_score_superieur);
                         sw_level.Close();
                     }
                     first = false;
                 }
-                if (end || endDead)
+                if ((end || endDead)&&typed)
                 {
                     if (keyboardState.IsKeyDown(Keys.Enter))
                         Remove();
@@ -1614,6 +1626,7 @@ namespace MenuSample.Scenes
                 spriteBatch.Draw(T_Divers_Levelfail, new Vector2(0, 0), Color.White);
             }
             #endregion
+            spriteBatch.DrawString(_gameFont, name, new Vector2(0, 300), Color.Green);
             spriteBatch.End();
         }
 
