@@ -4,7 +4,8 @@
 */*.gz
 */*.log
 */*.toc
-*/images
+rapport3/images
+rapport2/images
 */*/*.aux
 */*/*.pdf
 */*/*.txt
