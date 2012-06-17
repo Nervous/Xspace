@@ -58,7 +58,7 @@ namespace MenuSample.Scenes
         private List<doneParticles> partManage;
         private ScrollingBackground fond_ecran, fond_ecran_front, fond_ecran_middle;
         public SpriteBatch spriteBatch;
-        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Vaisseau_Kamikaze, T_Missile_Joueur_1, T_Missile_Joueur_2, T_Missile_Joueur_3, T_Missile_HeavyLaser, T_Laser_Joueur, T_Missile_Drone, T_Missile_Rocket, T_MissileAutoguide, T_LaserEnnemi, T_Bonus_Vie, T_Bonus_Weapon1, T_Bonus_Score, T_Bonus_Energie, T_Bonus_Speed, T_Obstacles_Hole, barre_vie, barre_energy, T_HUD, T_HUD_boss, T_HUD_bars, T_HUD_bar_boss, T_Divers_Levelcomplete, T_Divers_Levelfail, T_boss1, T_Vaisseau_Energizer, T_Vaisseau_Doubleshooter, T_Vaisseau_Zebra, T_Vaisseau_Targeter, T_Vaisseau_BC, T_Vaisseau_Support, T_Missile_Energie, T_boss2, T_boss3, T_HUD_basic, T_HUD_laser, T_HUD_Heavy, T_HUD_red_rect, T_HUD_rocket, T_HUD_musicProgression, T_HUD_vie, T_boss4, T_boss5;
+        private Texture2D T_Vaisseau_Joueur, T_Vaisseau_Drone, T_Vaisseau_Kamikaze, T_Missile_Joueur_1, T_Missile_Joueur_2, T_Missile_Joueur_3, T_Missile_HeavyLaser, T_Laser_Joueur, T_Missile_Drone, T_Missile_Rocket, T_MissileAutoguide, T_LaserEnnemi, T_Bonus_Vie, T_Bonus_Weapon1, T_Bonus_Score, T_Bonus_Energie, T_Bonus_Speed, T_Bonus_Shootspeed, T_Obstacles_Hole, barre_vie, barre_energy, T_HUD, T_HUD_boss, T_HUD_bars, T_HUD_bar_boss, T_Divers_Levelcomplete, T_Divers_Levelfail, T_boss1, T_Vaisseau_Energizer, T_Vaisseau_Doubleshooter, T_Vaisseau_Zebra, T_Vaisseau_Targeter, T_Vaisseau_BC, T_Vaisseau_Support, T_Missile_Energie, T_boss2, T_boss3, T_HUD_basic, T_HUD_laser, T_HUD_Heavy, T_HUD_red_rect, T_HUD_rocket, T_HUD_musicProgression, T_HUD_vie, T_boss4, T_boss5;
         private List<Texture2D> listeTextureVaisseauxEnnemis, listeTextureBonus, listeTextureObstacles, listeTextureBoss;
         private SoundEffect sonLaser, sonHeavyLaser, musique_bossExplosion;
         private KeyboardState keyboardState;
@@ -470,6 +470,7 @@ namespace MenuSample.Scenes
             T_Bonus_Score = _content.Load<Texture2D>("Sprites\\Bonus\\Score");
             T_Bonus_Energie = _content.Load<Texture2D>("Sprites\\Bonus\\Energie");
             T_Bonus_Speed = _content.Load<Texture2D>("Sprites\\Bonus\\Speed");
+            T_Bonus_Shootspeed = _content.Load<Texture2D>("Sprites\\Bonus\\Shootspeed");
             #endregion
             #region Chargement textures obstacles
             T_Obstacles_Hole = _content.Load<Texture2D>("Sprites\\Obstacles\\Hole");
@@ -517,6 +518,7 @@ namespace MenuSample.Scenes
             listeTextureBonus.Add(T_Bonus_Score);
             listeTextureBonus.Add(T_Bonus_Energie);
             listeTextureBonus.Add(T_Bonus_Speed);
+            listeTextureBonus.Add(T_Bonus_Shootspeed);
 
             listeTextureObstacles = new List<Texture2D>();
             listeTextureObstacles.Add(T_Obstacles_Hole);
@@ -860,7 +862,7 @@ namespace MenuSample.Scenes
                             switch (listeVaisseau[0].baseWeapon)
                             {
                                 case 0:
-                                    if (time - lastTime > 225 || lastTime == 0)
+                                    if (time - lastTime > listeVaisseau[0].timingAttackPlayerBaseWeapon || lastTime == 0)
                                     {
                                         sonLaser.Play();
                                         Vector2 spawn = new Vector2(listeVaisseau[0].pos.X + listeVaisseau[0].sprite.Width - 1, listeVaisseau[0].pos.Y + listeVaisseau[0].sprite.Height / 2 - 2);
@@ -869,7 +871,7 @@ namespace MenuSample.Scenes
                                     }
                                     break;
                                 case 1:
-                                    if (time - lastTime > 225 || lastTime == 0)
+                                    if (time - lastTime > listeVaisseau[0].timingAttackPlayerBaseWeapon || lastTime == 0)
                                     {
                                         sonLaser.Play();
                                         Vector2 spawn1 = new Vector2(listeVaisseau[0].pos.X + 35, listeVaisseau[0].pos.Y + listeVaisseau[0].sprite.Height / 3 - 18);
@@ -880,7 +882,7 @@ namespace MenuSample.Scenes
                                     }
                                     break;
                                 case 2:
-                                    if (time - lastTime > 225 || lastTime == 0)
+                                    if (time - lastTime > listeVaisseau[0].timingAttackPlayerBaseWeapon || lastTime == 0)
                                     {
                                         sonLaser.Play();
                                         Vector2 spawn1 = new Vector2(listeVaisseau[0].pos.X + 35, listeVaisseau[0].pos.Y + listeVaisseau[0].sprite.Height / 3 - 18);
