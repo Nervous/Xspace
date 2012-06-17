@@ -1340,21 +1340,42 @@ namespace MenuSample.Scenes
                         name = named.Name;
 
                             path_level = "Scores\\Arcade\\lvl" + _level + ".score";
-                            sr_level = new StreamReader(path_level);
-                            score_level = System.IO.File.ReadAllLines(@path_level);
+                            FileStream fs = new FileStream(path_level, FileMode.OpenOrCreate);
+                            sr_level = new StreamReader(fs);
+                            string score_level_test = sr_level.ReadToEnd();
+                            StreamWriter sw = new StreamWriter(fs);
                             stock_score_inferieur = "";
                             stock_score_superieur = "";
-                            if (score_level.Length < 10)
+                            if (score_level_test.Length == 0)
                             {
-                                for (int i = score_level.Length; i < 10; i++)
+                                for (int k = score_level_test.Length; k < 10; k++)
                                 {
-                                    if (i % 2 == 0)
-                                        score_level[i] = "-";
+                                    if (k % 2 == 0)
+                                        sw.WriteLine("-");
                                     else
-                                        score_level[i] = "0";
+                                        sw.WriteLine("0");
+                                }
+                                sw.Close();
+                                fs.Close();
+                            }
+                            else
+                            {
+                                fs.Close();
+                                score_level = System.IO.File.ReadAllLines(@path_level);
+
+
+                                if (score_level.Length < 10)
+                                {
+                                    for (int i = score_level.Length; i < 10; i++)
+                                    {
+                                        if (i % 2 == 0)
+                                            score_level[i] = "-";
+                                        else
+                                            score_level[i] = "0";
+                                    }
                                 }
                             }
-
+                            score_level = System.IO.File.ReadAllLines(@path_level);
                             for (int i = 0; i < 10; i += 2)
                             {
                                 if (score < Convert.ToInt32(score_level[i + 1]))
@@ -1381,11 +1402,26 @@ namespace MenuSample.Scenes
                         path_level = "Scores\\Extreme\\lvl.score";
                         FileStream fs = new FileStream(path_level, FileMode.OpenOrCreate);
                         sr_level = new StreamReader(fs);
-                        fs.Close();
-                        score_level = System.IO.File.ReadAllLines(@path_level);
+                        string score_level_test = sr_level.ReadToEnd();
+                        StreamWriter sw = new StreamWriter(fs);
                         stock_score_inferieur = "";
                         stock_score_superieur = "";
-
+                        if (score_level_test.Length == 0)
+                        {
+                            for (int k = score_level_test.Length; k < 10; k++)
+                            {
+                                if (k % 2 == 0)
+                                    sw.WriteLine("-");
+                                else
+                                    sw.WriteLine("9999");
+                            }
+                            sw.Close();
+                            fs.Close();
+                        }
+                        else
+                        {
+                        fs.Close();
+                        score_level = System.IO.File.ReadAllLines(@path_level);
                             if (score_level.Length < 10)
                             {
                                 for (int i = score_level.Length; i < 10; i++)
@@ -1396,7 +1432,8 @@ namespace MenuSample.Scenes
                                         score_level[i] = "9999";
                                 }
                             }
-
+                        }
+                        score_level = System.IO.File.ReadAllLines(@path_level);
                             for (int i = 0; i < 10; i += 2)
                             {
                                 if (score_extreme > Convert.ToInt32(score_level[i + 1]))

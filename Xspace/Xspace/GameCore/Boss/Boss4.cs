@@ -101,6 +101,7 @@ namespace Xspace
                                     }
 
                                     listeVaisseau[0]._vitesseVaisseau = 0.3f;
+                                    if(_invincible)
                                     _sprite = _T_Cercle;
                                 }
                             }
@@ -115,7 +116,7 @@ namespace Xspace
                                     addY = 0;
                                     _timingAttack = 1000;
                                     Vector2 pos = new Vector2(Position.X, Position.Y + _sprite.Height / 2);
-                                    listeMissile.Add(new Missile1_boss(_T_Missile3, new Vector2(pos.X, pos.Y), null, this));
+                                    listeMissile.Add(new Missile1_boss(_T_Missile3, new Vector2(pos.X, pos.Y-30), null, this));
                                     Vitesse = 0.1f;
                                     PositionX = 800;
                                     PositionY = 300;
@@ -154,7 +155,7 @@ namespace Xspace
                         addY = -addY;
                 }
 
-                    if (Position.Y - _sprite.Height / 2 > 180) // bas
+                    if (Position.Y - _sprite.Height / 2 > 500) // bas
                         addY = -addY;
                 
 
