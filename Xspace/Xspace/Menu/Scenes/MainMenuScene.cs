@@ -37,7 +37,7 @@ namespace MenuSample.Scenes
             var playGameMenuItem = new MenuItem("Lancer le jeu");
             var createGameMenuItem = new MenuItem("Editeur de niveau");
             var ScoreMenuItem = new MenuItem("Scores");
-            var OptionMenuItem = new MenuItem("Options");
+            var OptionMenuItem = new MenuItem("Difficulte");
             var exitMenuItem = new MenuItem("Quitter");
             var completeItem = new MenuItem("Complete");
 
