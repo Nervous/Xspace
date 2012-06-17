@@ -361,6 +361,13 @@ namespace Xspace
                 }
             }
 
+            foreach (removeBonus o in effectToRemove)
+            {
+                effect.Remove(o);
+            }
+
+            effectToRemove.Clear();
+
             const float K_GRAVITE = 1000;
 
             if (_energie < EnergieMax)
