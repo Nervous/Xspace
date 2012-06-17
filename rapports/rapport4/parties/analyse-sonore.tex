@@ -7,7 +7,29 @@ dynamise entièrement le jeu.
 \subsubsection{Utilisation de FMOD}
 
 La première chose dont nous avions besoin pour débuter dans l'analyse de la musique était une bibliothèque
-qui nous permettait d'accéder aux données d'onde. Nous avons choisi FMOD, qui fournit un wrapper en C\#
+qui nous permettait d'accéder aux données d'onde. Nous avons choisi FMOD, qui fournit un adaptateur (ou « wrapper ») en C\#. Puis, il a fallu que nous développions notre propre surcouche de l'API de FMOD qui répondait à nos attentes
+(jouer de la musique, récupérer des données de la fonction d'onde, \ldots).
+
+\subsubsection{Spectre sonore}
+
+Une des premières avancées de l'analyse musicale a été l'ajout de la visualisation d'un spectre sonore.
+Pour se faire, nous nous sommes servis de la fonction GetSpectrum() fournie par FMOD qui nous donne toutes les
+25 ms la liste des amplitudes pour chacune des fréquences.
+Le spectre et les infos sonores sont toujours visibles en jeu en appuyant sur F1 :
+
+\begin{center}
+	\includegraphics[width=8cm]{images/spectre.png}
+\end{center}
+
+\subsubsection{Récupération de l'énergie musicale}
+Nous avons ensuite trouvé comment extraire, à partir des amplitudes des données d'onde, l'\emph{énergie} de la musique à un instant précis.
+FMOD nous permet d'obtenir un tableau de $2^k$ amplitudes correspondant chacune à une fréquence de chaque sortie audio toutes les 25 millièmes de secondes. Pour obtenir l'énergie de la musique, nous utilisons la formule suivante :
+$$E_t = \sqrt{\sum_{i=0}^{2^k - 1} A\footnotesize{\texttt{Left}}_i(t)^2 + A\footnotesize{\texttt{Right}}_i(t)^2}$$
+Cependant, comme nous ne faisons pas de distinction des sorties (Stéréo), la formule se simplifie ainsi :
+$$E_t = \sum_{i=0}^{2^k - 1} A_i(t)$$
+
+Cette énergie nous sert pour régler la vitesse du fond défilant mais aussi pour moduler la taille des particules
+derrière le moteur du vaisseau du joueur.
 
 \subsubsection{Détection de battements : algorithme de base}
 
@@ -102,7 +124,7 @@ contenant plus de bruit.
 
 \par Détecter des battements est extrêmement frustrant. Nous entendons naturellement ces battements et il nous est très difficile
 de les formaliser. Nous avons essayé d'approximer plus ou moins efficacement cette détection, mais le rendu n'est pas
-toujours parfait. Cependant, le problème que nous cherchions à résoudre avec cet algorithme, à savoir faire intéragir notre perception
+toujours parfait. Cependant, le problème que nous cherchions à résoudre avec cet algorithme, à savoir faire interagir notre perception
 du son et celle du jeu, est bien résolu. Les autres méthodes de détection de battement,
 passant par le calcul de FFT\footnote{Fast Fourier Transform} sont bien trop lentes (après quelques expériences, il nous a 
 fallu plus de 5 minutes pour analyser une musique de 2 minutes 30) pour être utilisées efficacement ici, et l'algorithme expliqué ici

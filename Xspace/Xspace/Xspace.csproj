@@ -122,6 +122,7 @@
     <Compile Include="GameCore\Boss\Boss5.cs" />
     <Compile Include="GameCore\Items\Bonus\Bonus.cs" />
     <Compile Include="GameCore\Items\Bonus\Bonus_BaseWeapon.cs" />
+    <Compile Include="GameCore\Items\Bonus\Bonus_Cadence.cs" />
     <Compile Include="GameCore\Items\Bonus\Bonus_Energie.cs" />
     <Compile Include="GameCore\Items\Bonus\Bonus_Score.cs" />
     <Compile Include="GameCore\Items\Bonus\Bonus_Speed.cs" />

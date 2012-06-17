@@ -32,6 +32,8 @@ namespace Xspace
 
         public double tNextEnergyToLife;
 
+        public int timingAttackPlayerBaseWeapon;
+
         private struct removeBonus
         {
             public string type;
@@ -69,6 +71,7 @@ namespace Xspace
             _baseWeapon = 0;
             _laser = false;
             tNextEnergyToLife = 0;
+            timingAttackPlayerBaseWeapon = 200;
 
             effect = new List<removeBonus>();
             effectToRemove = new List<removeBonus>();
@@ -160,9 +163,13 @@ namespace Xspace
                     if (this._energie > this._energieMax)
                         this._energie = this._energieMax;
                     break;
-                case "speed":
+                case "vitesse":
                     this._vitesseVaisseau = 1.5f;
-                    this.effect.Add(new removeBonus("speed", rTime + 10000));
+                    this.effect.Add(new removeBonus("vitesse", rTime + 10000));
+                    break;
+                case "shootspeed":
+                    this.timingAttackPlayerBaseWeapon = 100;
+                    this.effect.Add(new removeBonus("shootspeed", rTime + 10000));
                     break;
                 default:
                     break;
@@ -342,17 +349,24 @@ namespace Xspace
             {
                 if (o.time <= time)
                 {
-                    if (o.type == "speed")
+                    if (o.type == "vitesse")
                     {
                         this._vitesseVaisseau = 0.70f;
                     }
-                    else if (o.type == "shotspeed")
+                    else if (o.type == "shootspeed")
                     {
-
+                        this.timingAttackPlayerBaseWeapon = 200;
                     }
                     effectToRemove.Add(o);
                 }
             }
+
+            foreach (removeBonus o in effectToRemove)
+            {
+                effect.Remove(o);
+            }
+
+            effectToRemove.Clear();
 
             const float K_GRAVITE = 1000;
 

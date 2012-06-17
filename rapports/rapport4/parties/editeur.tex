@@ -1,12 +1,17 @@
-subsection{Editeur de niveau}
-\par Notre jeu étant un shoot them all, il nous a paru évident que nous aurions besoin d'un éditeur de niveau, et ce, dès le départ. Ce dernier permettrait aux joueurs de renouveller eux même le contenu.
-\par Le développeur de l'éditeur a débuté pour la soutenance 3, le début fut laborieux: La prise en main des winforms, le design de l'éditeur.. Mais une fois le tout bien lancé, le développement était bien partit. Toutefois, développer l'éditeur de niveau a été une rude tâche. L'écriture des niveaux repose sur les streamwriter, les buffers.. bel apprentissage. Si ce n'est qu'il fallait pouvoir rendre possible l'édition d'un vaisseau déjà placé.
-\par Le premier problème se trouver là, il fallait pouvoir développer un système permettant de se déplacer très aisement dans un fichier de niveau, ce ne fut pas simple, mais d'autres épreuves firent leurs apparitions. Tout d'abord, gérer le temps. En effet, il est impossible d'afficher un niveau entier dans l'éditeur, nous avons donc fractionné ces niveaux en "pages" de 3200ms, puis en colonnes de 400ms. Toutefois, si nous voulions rendre possible l'édition de page précédemment remplies, il fallait pouvoir lire un fichier de niveau et l'interpreter convenablement.
-\par La plus grosse difficultée de l'éditeur fut ici: L'interpretation d'un fichier de niveau. Replacer au bon endroit les vaisseaux, dans la bonne colonne, avec l'image correspondante. Cela n'était pas encore possible à la soutenance 3, mais ça l'est pour la version finale.
-\par L'interpretation nous permet aussi donc d'importer des fichiers de niveaux: Chaque joueur pourra donc modifier n'importe quel niveau du jeu, qu'il a créé, ou qu'un ami lui a donné. L'éditeur lui permet de tout modifier. L'exportation du niveau du joueur était aussi bien sûr nécessaire, dans le but de sauvegarder ce dernier, et de jouer sur le niveau.
-\par Ainsi, l'éditeur est donc très complet: Il regroupe tout le contenu du jeu, il est possible d'importer, d'exporter des niveaux, et donc de les partager avec vos amis ! Même si graphiquement il semble basique, notre éditeur est donc un outils très puissant, qui nous fut d'ailleurs très utile pour construire nos niveaux dans le mode Campagne.
-Evolution de l'éditeur de niveau:
-Soutenance 3:
-\includegraphics{images/leveleditor2.jpg}
-Version finale:
-\includegraphics{images/leveleditor.jpg}
+\par Le membre du groupe responsable de cette partie Ã©tait Antoine VallÃ©e.
+
+\par Notre jeu Ã©tant un Shoot Them All, il nous semblÃ© logique que nous aurions besoin d'un Ã©diteur de niveau. Ce dernier permettrait aux joueurs de renouveler eux mÃªme le contenu.
+\par Le dÃ©veloppeur de l'Ã©diteur a dÃ©butÃ© pour la soutenance 3, le dÃ©but fut laborieux: La prise en main des Winforms, le design de l'Ã©diteur\ldots Mais une fois le tout bien lancÃ©, le dÃ©veloppement Ã©tait bien parti. Toutefois, dÃ©velopper l'Ã©diteur de niveau a Ã©tÃ© une rude tÃ¢che. Il fallait par exemple pouvoir rendre possible l'Ã©dition d'un vaisseau dÃ©jÃ  placÃ©.
+\par Le premier problÃ¨me se trouvait lÃ , il fallait pouvoir dÃ©velopper un systÃ¨me permettant de se dÃ©placer trÃ¨s aisÃ©ment dans un fichier de niveau, ce ne fut pas simple, mais d'autres Ã©preuves firent leurs apparitions. Tout d'abord, gÃ©rer le temps. En effet, il est impossible d'afficher un niveau entier dans l'Ã©diteur, nous avons donc fractionnÃ© ces niveaux en Â« pages Â» de 3200ms, puis en colonnes de 400ms. Toutefois, si nous voulions rendre possible l'Ã©dition de page prÃ©cÃ©demment remplies, il fallait pouvoir lire un fichier de niveau et l'interprÃ©ter convenablement.
+\par La plus grosse difficultÃ© de l'Ã©diteur fut ici: L'interprÃ©tation d'un fichier de niveau. Replacer au bon endroit les vaisseaux, dans la bonne colonne, avec l'image correspondante. Cela n'Ã©tait pas encore possible Ã  la soutenance 3, mais Ã§a l'est pour la version finale.
+\par L'interprÃ©tation nous permet aussi donc d'importer des fichiers de niveaux: Chaque joueur pourra donc modifier n'importe quel niveau du jeu, qu'il a crÃ©Ã©, ou qu'un ami lui a donnÃ©. L'Ã©diteur lui permet de tout modifier. L'exportation du niveau du joueur Ã©tait aussi bien sÃ»r nÃ©cessaire, dans le but de sauvegarder ce dernier, et de jouer sur le niveau.
+\par Ainsi, l'Ã©diteur est donc trÃ¨s complet: Il regroupe tout le contenu du jeu, il est possible d'importer, d'exporter des niveaux, et donc de les partager avec vos amis ! MÃªme si graphiquement il semble basique, notre Ã©diteur est donc un outils trÃ¨s puissant, qui nous fut d'ailleurs trÃ¨s utile pour construire nos niveaux dans le mode Campagne.
+\par Vous pouvez voir ici l'Ã©volution de cet Ã©diteur :
+
+\begin{center}
+	\par Soutenance 3:
+	\par \includegraphics[width=13cm]{images/leveleditor2.jpg}
+	\vspace{1cm}
+	\par Version finale:
+	\par \includegraphics[width=13cm]{images/leveleditor.jpg}
+\end{center}
