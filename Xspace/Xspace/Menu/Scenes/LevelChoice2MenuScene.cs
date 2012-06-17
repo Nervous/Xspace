@@ -11,7 +11,7 @@ namespace MenuSample.Scenes
             : base(sceneMgr, "Niveaux")
         {
             var Level3 = new MenuItem("Niveau 3");
-            var Level1 = new MenuItem("Niveau 2");
+            var Level1 = new MenuItem("Niveau 1");
             var Level2 = new MenuItem("Niveau 2");
             var back = new MenuItem("Retour");
             //GameplayScene gameplayscene = new GameplayScene(sceneMgr, graphicsReceive, _level, _act);
