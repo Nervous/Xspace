@@ -32,6 +32,21 @@ namespace Xspace
 
         public double tNextEnergyToLife;
 
+        private struct removeBonus
+        {
+            public string type;
+            public double time;
+
+            public removeBonus(string type, double time)
+            {
+                this.type = type;
+                this.time = time;
+            }
+        };
+
+        private List<removeBonus> effect;
+        private List<removeBonus> effectToRemove;
+
         public Vaisseau(Texture2D texture, int vie, int vieMax, int energieMax, int armure, int damageCollision, float vitesseVaisseau, Vector2 startPosition, Vector2 deplacement, bool ennemi, double timingAttack, int score, int arme)
             :base(texture, startPosition, deplacement, vie, score)
         {
@@ -55,6 +70,8 @@ namespace Xspace
             _laser = false;
             tNextEnergyToLife = 0;
 
+            effect = new List<removeBonus>();
+            effectToRemove = new List<removeBonus>();
         }
 
         public void energyToLife(double time, int life)
@@ -125,7 +142,7 @@ namespace Xspace
             base._deplacement = new Vector2(1, 0);
         }
 
-        public void applyBonus(string effect, int amount, int time)
+        public void applyBonus(string effect, int amount, int time, double rTime)
         {
             switch (effect)
             {
@@ -142,6 +159,10 @@ namespace Xspace
                     this._energie += amount;
                     if (this._energie > this._energieMax)
                         this._energie = this._energieMax;
+                    break;
+                case "speed":
+                    this._vitesseVaisseau = 1.5f;
+                    this.effect.Add(new removeBonus("speed", rTime + 10000));
                     break;
                 default:
                     break;
@@ -317,6 +338,22 @@ namespace Xspace
 
         public void Update(float fps_fix, double time, KeyboardState keyboard, GamePadState gamepadState, List<Obstacles> obstacles)
         {
+            foreach (removeBonus o in effect)
+            {
+                if (o.time <= time)
+                {
+                    if (o.type == "speed")
+                    {
+                        this._vitesseVaisseau = 0.70f;
+                    }
+                    else if (o.type == "shotspeed")
+                    {
+
+                    }
+                    effectToRemove.Add(o);
+                }
+            }
+
             const float K_GRAVITE = 1000;
 
             if (_energie < EnergieMax)
