@@ -10,9 +10,9 @@ namespace MenuSample.Scenes
         public LevelChoice2MenuScene(SceneManager sceneMgr, Microsoft.Xna.Framework.GraphicsDeviceManager graphicsReceive)
             : base(sceneMgr, "Niveaux")
         {
-            var Level3 = new MenuItem("Boss 3");
-            var Level1 = new MenuItem("Bonus");
-            var Level2 = new MenuItem("Boss 2");
+            var Level3 = new MenuItem("Niveau 3");
+            var Level1 = new MenuItem("Niveau 2");
+            var Level2 = new MenuItem("Niveau 2");
             var back = new MenuItem("Retour");
             //GameplayScene gameplayscene = new GameplayScene(sceneMgr, graphicsReceive, _level, _act);
             graphics = graphicsReceive;
