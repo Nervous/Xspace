@@ -41,12 +41,13 @@ namespace MenuSample.Scenes
 
              FileStream fs1 = new FileStream("DIFF", FileMode.OpenOrCreate);
             StreamReader sr = new StreamReader(fs1);
-            int nb = int.Parse(sr.ReadToEnd());
-
-            if (sr.ReadToEnd().Length == 0)
+            
+            string diffcontent = sr.ReadToEnd();
+            if (diffcontent.Length == 0)
                 easy = "Facile: En cours.";
             else
             {
+                int nb = int.Parse(diffcontent);
                 switch (nb)
                 {
                     case 0:
