@@ -163,9 +163,9 @@ namespace Xspace
                     if (this._energie > this._energieMax)
                         this._energie = this._energieMax;
                     break;
-                case "speed":
+                case "vitesse":
                     this._vitesseVaisseau = 1.5f;
-                    this.effect.Add(new removeBonus("speed", rTime + 10000));
+                    this.effect.Add(new removeBonus("vitesse", rTime + 10000));
                     break;
                 case "shootspeed":
                     this.timingAttackPlayerBaseWeapon = 100;
@@ -349,7 +349,7 @@ namespace Xspace
             {
                 if (o.time <= time)
                 {
-                    if (o.type == "speed")
+                    if (o.type == "vitesse")
                     {
                         this._vitesseVaisseau = 0.70f;
                     }

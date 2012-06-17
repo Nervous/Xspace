@@ -206,7 +206,7 @@ namespace Xspace
                         case "energie":
                             bonus = new Bonus_Energie(listeTextureBonus[3], start);
                             break;
-                        case "speed":
+                        case "vitesse":
                             bonus = new Bonus_Speed(listeTextureBonus[4], start);
                             break;
                         case "shootspeed":
