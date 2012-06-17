@@ -1,0 +1,105 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[14pt]{extsizes}
+\usepackage[french]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{wrapfig}
+\usepackage{amsmath}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{tikz}
+
+\title{}
+\author{}
+\date{}
+
+\newcommand{\subtitle}{Rapport de projet\\Soutenance IV}
+
+\begin{document}
+	\begin{titlepage}
+		\begin{center}
+			\vspace{8cm}
+			\includegraphics[width=15cm]{images/spacesymphonia.png}
+			\vspace{0.5cm}
+			\par \LARGE{\textbf{\subtitle}}
+			\vspace{1cm}
+			\par \large{\textsf{
+				Emmanuel `Green` \bsc{Guet} \\
+				Antoine `Nervous` \bsc{Vallée} \\
+				Antoine `serialk` \bsc{Pietri}}}
+			\vspace{2cm}
+			\par \large{\textsf{Projet d'InfoSup --- EPITA}}
+		\end{center}
+	\end{titlepage}
+	
+	\newpage
+	Cette page est laissée intentionnellement vide.	
+	
+	\newpage
+	\par \textbf{Avertissement}
+	\vspace{2cm}
+	\par Ce rapport est vendu avec les éléments suivants :
+	\begin{itemize}
+		\item Un DVD-ROM d'installation avec une jaquette super bien faite ;
+		\item Un manuel d'utilisation ;
+		\item Un manuel d'installation ;
+		\item Un plan de soutenance\footnote{Pour ne pas se perdre dans la soutenance.}.
+	\end{itemize}
+	\vspace{1cm}
+	\par Ces éléments ne peuvent être vendus séparément.
+	\par Si ce rapport vous a été vendu
+	sans un de ces éléments, contactez au plus vite le service de répression des fraudes
+	au 04 04 13 37 42. 
+	
+	\newpage
+	\setcounter{tocdepth}{3}
+	\tableofcontents
+	
+	\newpage
+	\pagestyle{headings}
+	
+	\section{Introduction}
+		\par
+		L'objectif de ce rapport de projet est de présenter l'ensemble du travail
+		accompli durant l'année par l'équipe \texttt{TEUH TEUH TEUH} sur le projet de jeu \emph{Space Symphonia}.
+		\par La présentation de ce travail se fera de manière chronologique, et chacune des parties sera détaillée pour vous présenter le contenu ajouté progressivement au fil des soutenances. S'ensuivra ensuite un récit de la réalisation et des difficultés que nous avons pu rencontrer au cours du développement de ce projet, puis un bref récapitulatif sur la correspondance du résultat final par rapport à nos attentes.
+		\vspace{2cm}
+		\par \emph{Oh, you should have seen it! That old planet... The second sun would rise in the south, and the mountains would shine. The leaves on the trees were silver, when they caught the light, every morning it looked like a forest on fire. When the autumn came, a brilliant glow though the branches\ldots}
+	
+	\newpage
+	\section{Rappels sur le principe du jeu}
+		\input{parties/rappel-cahier.tex}	
+	
+	\newpage
+	\section{Frise chronologique de l'avancement}
+		\input{parties/timeline.tex}
+	
+	\newpage
+	\section{Présentation globale du contenu}
+		\subsection{Vaisseaux}
+			\input{parties/vaisseaux.tex}
+		\subsection{Armes, bonus et améliorations}
+			\input{parties/armes-bonus.tex}
+		\subsection{Boss, mode extrême}
+			\input{parties/boss.tex}
+		\subsection{Obstacles}
+			\input{parties/obstacles.tex}
+		\subsection{Éditeur de niveau}
+			\input{parties/editeur.tex}
+		\subsection{Analyse sonore et mode libre}
+			\input{parties/analyse-sonore.tex}
+		\subsection{Site Web}
+			\input{parties/site.tex}
+	
+	\section{Récit du déroulement du projet}
+		\input{parties/recit.tex}	
+			
+	\section{Résultat final par rapport à nos attentes}
+		\input{parties/resultat-final.tex}
+	
+	\section{Conclusion}
+		\par En conclusion, ce projet dépasse la hauteur de nos espérances et il a été pour nous tous un grand enrichissement personnel. Gérer les tensions nous en a appris beaucoup sur la gestion d'un projet et la fierté de voir un projet de cette ampleur abouti est inégalable.
+		\par Nous espérons continuer dans cette lignée au cours des 4 prochaines années qui nous séparent du diplôme d'ingénieur, et espérons reproduire cette expérience formidable qu'a été le développement d'un jeu vidéo.
+		\vspace{2cm}		
+		\par \emph{We will sing to you, Doctor. The universe will sing you to your sleep. This song is ending. But the story never ends.}
+\end{document}

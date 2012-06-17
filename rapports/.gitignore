@@ -5,3 +5,9 @@
 */*.log
 */*.toc
 */images
+*/*/*.aux
+*/*/*.pdf
+*/*/*.txt
+*/*/*.gz
+*/*/*.log
+*/*/*.toc
